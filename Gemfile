@@ -50,6 +50,9 @@ gem "sassc-rails"
 # Ruby vips
 gem "ruby-vips", "~> 2.0"
 
+# Gemfile
+gem "pundit"
+
 group :development, :test do
   gem "dotenv-rails"
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
