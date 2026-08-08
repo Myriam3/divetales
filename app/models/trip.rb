@@ -1,8 +1,8 @@
 class Trip < ApplicationRecord
   belongs_to :user
-  has_many :dives
+  has_many :dives, dependent: :destroy
   has_many :pictures, through: :dives
-  has_many :trip_countries
+  has_many :trip_countries, dependent: :destroy
   has_many :countries, through: :trip_countries
 
   validate :title, presence: true, uniqueness: true, length: { maximum: 150 }

@@ -1,6 +1,6 @@
 class Species < ApplicationRecord
   belongs_to :category
-  has_many :picture_species
+  has_many :picture_species, dependent: :destroy
   has_many :pictures, through: :picture_species
 
   validate :name, presence: true, length: { maximum: 150 }

@@ -1,7 +1,7 @@
 class Dive < ApplicationRecord
   belongs_to :trip
   belongs_to :location
-  has_many :pictures
+  has_many :pictures, dependent: :destroy
   has_many :species, through: :pictures
 
   validates :trip, :location, :type, :date, presence: true
