@@ -1,0 +1,9 @@
+<div class="identification-page">
+  <h1>Marine Life ID</h1>
+  <%= render "form" %>
+
+  <% if @results.present? %>
+    <%= render "results", results: @results %>
+  <% end %>
+
+</div>

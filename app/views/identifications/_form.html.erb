@@ -1,0 +1,12 @@
+<%= simple_form_for :identification, url: identification_path do |f| %>
+  <%= f.input :description,
+    as: :text,
+    input_html: { rows: 5 },
+    hint: sanitize("<li>Describe the Marine Life you saw if you couldn't capture it...</li>\n\n<li>Or give more context of your picture so that the Identification could be more accurate.</li>"),
+    placeholder: "Describe your amazing encounter here...",
+    required: false
+  %>
+  <%= f.input :upload, as: :file, required: false %>
+  <%= f.input :camera, as: :file, input_html: { capture: 'environment', accept: 'image/*' }, required: false %>
+  <%= f.submit "Identify" %>
+<% end %>
