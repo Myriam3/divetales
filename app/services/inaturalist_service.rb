@@ -1,4 +1,4 @@
-require "net/http"
+require "open-uri"
 require "json"
 require "uri"
 
@@ -19,9 +19,9 @@ class InaturalistService
     uri = URI("#{BASE_URL}/taxa/autocomplete")
     uri.query = URI.encode_www_form(q: @query)
 
-    response = Net::HTTP.get_response(uri)
+    response = URI.open(uri)
 
-    data = JSON.parse(response.body)
+    data = JSON.parse(response.read)
 
     data["results"].first(3).map do |taxon|
       {

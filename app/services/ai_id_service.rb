@@ -5,6 +5,8 @@ class AiIdService
   end
 
   def call
+    response = RubyLLM.chat.with_instructions(SpeciesIdSystemPrompt::SYSTEM_PROMPT).ask(user_prompt)
+    JSON.parse(response.content)
   end
 
   private
