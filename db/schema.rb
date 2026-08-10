@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_08_070322) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_10_031903) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -36,6 +36,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_08_070322) do
     t.date "date", null: false
     t.text "depth_over_time", default: ""
     t.string "dive_site_name", default: "", null: false
+    t.string "dive_types", default: [], array: true
     t.integer "duration"
     t.decimal "latitude"
     t.bigint "location_id", null: false
@@ -45,7 +46,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_08_070322) do
     t.float "min_temp"
     t.text "note"
     t.bigint "trip_id", null: false
-    t.integer "type", default: [], array: true
     t.datetime "updated_at", null: false
     t.index ["location_id"], name: "index_dives_on_location_id"
     t.index ["trip_id"], name: "index_dives_on_trip_id"
