@@ -3,19 +3,41 @@ class IdentificationsController < ApplicationController
   end
 
   def create
-    description = identification_params[:description]
     upload = identification_params[:upload]
     camera = identification_params[:camera]
     image = upload || camera
 
-    if description.blank? && upload.blank? && camera.blank?
+    observation = identification_params.slice(
+      :color,
+      :size,
+      :shape,
+      :behavior
+    ).compact_blank
+
+    dive_context = identification_params.slice(
+      :location,
+      :dive_site,
+      :date,
+      :depth,
+      :habitat
+    ).compact_blank
+
+    additional_info = identification_params[:additional_info]
+
+    if image.blank? && observation.blank? && dive_context.blank? && additional_info.blank?
       flash.now[:alert] = "Please provide a description or upload an image."
       render :index, status: :unprocessable_entity
       return
     end
 
+    user_prompt = SpeciesIdUserPrompt.call(
+      observation: observation,
+      dive_context: dive_context,
+      additional_info: additional_info
+    )
+
     @results = IdentificationService.new(
-      description: description,
+      user_prompt: user_prompt,
       image: image
     ).call
 
@@ -31,6 +53,19 @@ class IdentificationsController < ApplicationController
   private
 
   def identification_params
-    params.require(:identification).permit(:description, :upload, :camera)
+    params.require(:identification).permitt(
+      :upload,
+      :camera,
+      :color,
+      :size,
+      :shape,
+      :behavior,
+      :location,
+      :dive_site,
+      :date,
+      :depth,
+      :habitat,
+      :additional_info
+    )
   end
 end

@@ -3,7 +3,7 @@
   <%= f.input :camera, as: :file, input_html: { capture: 'environment', accept: 'image/*' }, required: false %>
   <div data-controller="identification-form">
 
-    <div class="identification-section" data-identification-form-target="section">
+    <div class="identification-section">
       <button
         type="button"
         class="identification-question"
@@ -64,7 +64,7 @@
           placeholder: "e.g. Komodo National Park",
           required: false
         %>
-        <%= f.input :divesite,
+        <%= f.input :dive_site,
           as: :text,
           label: "Dive site",
           placeholder: "e.g. shotgun",
