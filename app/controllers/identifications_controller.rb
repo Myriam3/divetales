@@ -41,7 +41,10 @@ class IdentificationsController < ApplicationController
       image: image
     ).call
 
-    render :index
+    respond_to do |format|
+      format.html { render :index, status: :unprocessable_entity }
+      format.turbo_stream
+    end
   end
 
   def confirm
@@ -53,7 +56,7 @@ class IdentificationsController < ApplicationController
   private
 
   def identification_params
-    params.require(:identification).permitt(
+    params.require(:identification).permit(
       :upload,
       :camera,
       :color,

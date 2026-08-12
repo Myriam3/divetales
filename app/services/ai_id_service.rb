@@ -1,27 +1,17 @@
 class AiIdService
-  def initialize(image:, description:, dive: nil)
+  def initialize(image:, user_prompt:)
     @image = image
-    @description = description
-    @dive = dive
+    @user_prompt = user_prompt
   end
 
   def call
     chat = RubyLLM.chat(model: "gpt-5.4-mini").with_instructions(SpeciesIdSystemPrompt::SYSTEM_PROMPT)
     response =
       if @image.present?
-        chat.ask(user_prompt, with: @image)
+        chat.ask(@user_prompt, with: @image)
       else
-        chat.ask(user_prompt)
+        chat.ask(@user_prompt)
       end
     JSON.parse(response.content)
-  end
-
-  private
-
-  def user_prompt
-    SpeciesIdUserPrompt.call(
-      description: @description,
-      dive: @dive
-    )
   end
 end

@@ -1,0 +1,17 @@
+<div id="identification-results">
+  <% if @results.present? && @results.any? %>
+    <h2 class="text-2xl font-bold mb-6">Identification Candidates</h2>
+
+    <div class="space-y-4">
+      <% @results.each do |result| %>
+        <%= render "result_card", result: result %>
+      <% end %>
+    </div>
+
+  <% elsif params[:commit].present? %>
+    <!-- Optional: Show a message if a search was run but no results came back -->
+    <div class="bg-gray-100 p-6 rounded-lg text-center">
+      <p class="text-gray-600">No candidates found based on the provided details.</p>
+    </div>
+  <% end %>
+</div>
