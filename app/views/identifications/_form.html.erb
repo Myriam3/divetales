@@ -1,12 +1,116 @@
 <%= simple_form_for :identification, url: identification_path do |f| %>
-  <%= f.input :description,
-    as: :text,
-    input_html: { rows: 5 },
-    hint: sanitize("<li>Describe the Marine Life you saw if you couldn't capture it...</li>\n\n<li>Or give more context of your picture so that the Identification could be more accurate.</li>"),
-    placeholder: "Describe your amazing encounter here...",
-    required: false
-  %>
   <%= f.input :upload, as: :file, required: false %>
   <%= f.input :camera, as: :file, input_html: { capture: 'environment', accept: 'image/*' }, required: false %>
+  <div data-controller="identification-form">
+
+    <div class="identification-section" data-identification-form-target="section">
+      <button
+        type="button"
+        class="identification-question"
+        data-action="click->identification-form#toggle"
+        data-identification-form-target="question"
+      >
+        <span>What did you see?</span>
+      </button>
+      <p class="identification-description">color, size, shape, behavior, etc.</p>
+
+      <div
+        class="identification-content d-none"
+        data-identification-form-target="content"
+      >
+        <%= f.input :color,
+          as: :text,
+          label: "Color & Pattern",
+          placeholder: "e.g. blue body with yellow stripes",
+          required: false
+        %>
+        <%= f.input :size,
+          as: :text,
+          label: "Approximate size",
+          placeholder: "e.g. about 10 cm",
+          required: false
+        %>
+        <%= f.input :shape,
+          as: :text,
+          label: "Shape & Features",
+          placeholder: "e.g. long body, pointed nose, large eyes",
+          required: false
+        %>
+        <%= f.input :behavior,
+          as: :text,
+          label: "Behavior",
+          placeholder: "e.g. hiding under rocks, swimming in a group",
+          required: false
+        %>
+      </div>
+    </div>
+    <div class="identification-section">
+      <button
+        type="button"
+        class="identification-question"
+        data-action="click->identification-form#toggle"
+        data-identification-form-target="question"
+      >
+        <span>Where and when did you see it?</span>
+      </button>
+      <p class="identification-description">location, dive site, date, depth, etc.</p>
+
+      <div
+        class="identification-content d-none"
+        data-identification-form-target="content"
+      >
+        <%= f.input :location,
+          as: :text,
+          placeholder: "e.g. Komodo National Park",
+          required: false
+        %>
+        <%= f.input :divesite,
+          as: :text,
+          label: "Dive site",
+          placeholder: "e.g. shotgun",
+          required: false
+        %>
+        <%= f.input :date,
+          as: :text,
+          placeholder: "e.g. 2025-10-01",
+          required: false
+        %>
+        <%= f.input :depth,
+          as: :text,
+          placeholder: "e.g. around 15m",
+          required: false
+        %>
+        <%= f.input :habitat,
+          as: :text,
+          placeholder: "e.g. fan coral",
+          required: false
+        %>
+      </div>
+    </div>
+    <div class="identification-section">
+      <button
+        type="button"
+        class="identification-question"
+        data-action="click->identification-form#toggle"
+        data-identification-form-target="question"
+      >
+        <span>What else would you like to add?</span>
+      </button>
+
+      <div
+        class="identification-content d-none"
+        data-identification-form-target="content"
+      >
+        <%= f.input :additional_info,
+          as: :text,
+          label: "Anything else...",
+          input_html: { rows: 5 },
+          # hint: sanitize("<li>Describe the Marine Life you saw if you couldn't capture it...</li>\n\n<li>Or give more context of your picture so that the Identification could be more accurate.</li>"),
+          placeholder: "Anything else that might help identify it...",
+          required: false
+        %>
+      </div>
+    </div>
+  </div>
   <%= f.submit "Identify" %>
 <% end %>

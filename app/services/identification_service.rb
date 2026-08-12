@@ -1,5 +1,5 @@
 class IdentificationService
-  def initialze(image:, description:)
+  def initialize(image:, description:)
     @image = image
     @description = description
   end
