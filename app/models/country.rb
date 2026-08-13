@@ -3,5 +3,5 @@ class Country < ApplicationRecord
   has_many :trip_countries, dependent: :destroy
   has_many :countries, through: :trip_countries
 
-  validate :name, presence: true, uniqueness: true, length: { maximum: 150 }
+  validates :name, presence: true, uniqueness: true, length: { maximum: 150 }
 end
