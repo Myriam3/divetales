@@ -1,0 +1,145 @@
+<h1>Test</h1>
+
+<% @trips.each do |trip| %>
+  <section>
+    <h2><%= trip.title %></h2>
+
+    <p>
+      <strong>Dates:</strong>
+      <%= trip.start_date.to_date %>
+      -
+      <%= trip.end_date.to_date %>
+    </p>
+
+    <% if trip.info.present? %>
+      <p>
+        <strong>Info:</strong>
+        <%= trip.info %>
+      </p>
+    <% end %>
+
+    <% if trip.countries.any? %>
+      <p>
+        <strong>Countries:</strong>
+        <%= trip.countries.map(&:name).join(", ") %>
+      </p>
+    <% end %>
+
+    <% trip.dives.each do |dive| %>
+      <article>
+        <h3>
+          <%= dive.dive_site_name %>
+        </h3>
+
+        <p>
+          <strong>Date:</strong>
+          <%= dive.date %>
+        </p>
+
+        <p>
+          <strong>Location:</strong>
+          <%= dive.location.name %>
+        </p>
+
+        <p>
+          <strong>Duration:</strong>
+          <%= dive.duration %> min
+        </p>
+
+        <% if dive.dive_types.present? %>
+          <p>
+            <strong>Dive types:</strong>
+            <%= dive.dive_types.join(", ") %>
+          </p>
+        <% end %>
+
+        <p>
+          <strong>Max depth:</strong>
+          <%= dive.max_depth %> m
+        </p>
+
+        <p>
+          <strong>Average depth:</strong>
+          <%= dive.avg_depth %> m
+        </p>
+
+        <p>
+          <strong>Max temperature:</strong>
+          <%= dive.max_temp %> °C
+        </p>
+
+        <p>
+          <strong>Min temperature:</strong>
+          <%= dive.min_temp %> °C
+        </p>
+
+        <p>
+          <strong>Average temperature:</strong>
+          <%= dive.avg_temp %> °C
+        </p>
+
+        <% if dive.note.present? %>
+          <p>
+            <strong>Note:</strong>
+            <%= dive.note %>
+          </p>
+        <% end %>
+
+        <% if dive.pictures.any? %>
+
+          <div>
+            <% dive.pictures.each do |picture| %>
+
+              <div>
+                <% if picture.image.attached? %>
+                  <%= image_tag picture.image, width: 300 %>
+                <% else %>
+                  <p>No image attached</p>
+                <% end %>
+
+                <p>
+                  <strong>Picture:</strong>
+                  #<%= picture.id %>
+                </p>
+
+                <p>
+                  <strong>Date:</strong>
+                  <%= picture.date_time %>
+                </p>
+
+                <% if picture.species.any? %>
+                  <strong>Species:</strong>
+
+                  <ul>
+                    <% picture.species.each do |species| %>
+                      <li>
+                        <%= species.name %>
+                        (<%= species.scientific_name %>)
+                      </li>
+                    <% end %>
+                  </ul>
+                <% else %>
+                  <p>No species associated</p>
+                <% end %>
+
+              </div>
+
+              <hr>
+
+            <% end %>
+          </div>
+
+        <% else %>
+          <p>No pictures for this dive.</p>
+        <% end %>
+
+      </article>
+
+      <hr>
+
+    <% end %>
+
+  </section>
+
+  <hr>
+<% end %>
