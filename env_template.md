@@ -1,0 +1,2 @@
+OPENAI_API_KEY =
+RUBYLLM_DEBUG = true

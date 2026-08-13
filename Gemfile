@@ -46,11 +46,12 @@ gem "autoprefixer-rails"
 gem "font-awesome-sass", "~> 6.1"
 gem "simple_form", github: "heartcombo/simple_form"
 gem "sassc-rails"
+gem "ruby_llm"
 
 # Ruby vips
 gem "ruby-vips", "~> 2.0"
 
-# Gemfile
+# authorization
 gem "pundit"
 
 group :development, :test do
