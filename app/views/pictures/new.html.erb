@@ -8,5 +8,6 @@
 <% if @picture.photos.attached? %>
   <% @picture.photos.each do |photo| %>
     <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
+    <p>Uploaded: <%= photo.created_at.strftime("%B %d, %Y") %></p>
   <% end %>
 <% end %>
