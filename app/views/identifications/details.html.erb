@@ -1,0 +1,3 @@
+<%= turbo_frame_tag "species-details-#{@scientific_name.parameterize}" do %>
+  <%= render "identifications/species_details", details: @details %>
+<% end %>

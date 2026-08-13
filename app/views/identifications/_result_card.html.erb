@@ -36,13 +36,20 @@
       </div>
     <% end %>
     <!-- View More Details -->
-    <div class="text-end mt-4">
-      <%= button_to "View more details →",
-      identification_details_path,
-      method: :post,
-      params: { scientific_name: result[:scientific_name]},
-      class: "btn btn-outline-primary" %>
-    </div>
+    <%= turbo_frame_tag "species-details-#{result[:scientific_name].parameterize}" do %>
+
+      <div class="mt-4 text-end">
+        <%= button_to "View more details →",
+                      identification_details_path,
+                      method: :post,
+                      params: {
+                        scientific_name: result[:scientific_name],
+                        common_name: result[:common_name]
+                      },
+                      class: "btn btn-outline-primary" %>
+      </div>
+
+    <% end %>
   </div> <!-- CLOSING THE CARD BODY HERE -->
 
   <!-- Uncertainty / Limitations in a Card Footer -->
