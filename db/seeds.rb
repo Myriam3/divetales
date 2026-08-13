@@ -352,11 +352,13 @@ end
 # ==========================================
 
 japan = Country.find_or_create_by!(
-  name: "Japan"
+  name: "Japan",
+  code: "jp"
 )
 
 indonesia = Country.find_or_create_by!(
-  name: "Indonesia"
+  name: "Indonesia",
+  code: "id"
 )
 
 
@@ -412,6 +414,8 @@ Dive.find_or_create_by!(
   date: Date.new(2026, 7, 11),
   dive_site_name: "Manta Point"
 ) do |dive|
+  dive.latitude = -8.55047
+  dive.longitude = 119.59923
   dive.location = komodo
   dive.dive_types = ["boat", "drift"]
   dive.duration = 52
@@ -429,6 +433,8 @@ Dive.find_or_create_by!(
   date: Date.new(2026, 7, 11),
   dive_site_name: "Batu Bolong"
 ) do |dive|
+  dive.latitude = -8.53608
+  dive.longitude = 119.61399
   dive.location = komodo
   dive.dive_types = ["boat", "wall"]
   dive.duration = 48
@@ -446,6 +452,8 @@ Dive.find_or_create_by!(
   date: Date.new(2026, 7, 12),
   dive_site_name: "Castle Rock"
 ) do |dive|
+  dive.latitude = -8.42890
+  dive.longitude = 119.56284
   dive.location = komodo
   dive.dive_types = ["boat", "drift"]
   dive.duration = 50
@@ -463,6 +471,8 @@ Dive.find_or_create_by!(
   date: Date.new(2026, 7, 13),
   dive_site_name: "Crystal Rock"
 ) do |dive|
+  dive.latitude = -8.43903
+  dive.longitude = 119.56660
   dive.location = komodo
   dive.dive_types = ["boat", "wall"]
   dive.duration = 46
@@ -480,6 +490,8 @@ Dive.find_or_create_by!(
   date: Date.new(2026, 7, 14),
   dive_site_name: "Siaba Besar"
 ) do |dive|
+  dive.latitude = -8.54826
+  dive.longitude = 119.64884
   dive.location = komodo
   dive.dive_types = ["boat", "drift"]
   dive.duration = 55
@@ -497,6 +509,8 @@ Dive.find_or_create_by!(
   date: Date.new(2026, 7, 15),
   dive_site_name: "Manta Point Night Dive"
 ) do |dive|
+  dive.latitude = -8.55047
+  dive.longitude = 119.59923
   dive.location = komodo
   dive.dive_types = ["boat", "night"]
   dive.duration = 47
@@ -514,6 +528,8 @@ Dive.find_or_create_by!(
   date: Date.new(2026, 9, 20),
   dive_site_name: "Mikomoto Main Rock"
 ) do |dive|
+  dive.latitude = 34.57604
+  dive.longitude = 138.94140
   dive.location = mikomoto
   dive.dive_types = ["boat", "drift"]
   dive.duration = 42
@@ -531,6 +547,8 @@ Dive.find_or_create_by!(
   date: Date.new(2026, 9, 20),
   dive_site_name: "Mikomoto South Point"
 ) do |dive|
+  dive.latitude = 34.57604
+  dive.longitude = 138.94140
   dive.location = mikomoto
   dive.dive_types = ["boat", "drift", "deep"]
   dive.duration = 39

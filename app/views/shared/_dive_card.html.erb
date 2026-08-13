@@ -1,0 +1,36 @@
+<% if dive %>
+  <%
+    dive_title = "##{number} "
+    dive_title += dive.dive_site_name.blank? ? dive.location.name : dive.dive_site_name
+    dive_title += ", #{dive.date}"
+  %>
+
+  <%= link_to dive_path(dive), class: 'text-decoration-none text-reset' do %>
+    <h2><%= dive_title %></h2>
+    <p>
+      <%= render "shared/icon", icon_name: "calendar", label: "Date: " %>
+      <%= dive.date %>
+    </p>
+
+    <% unless dive.dive_site_name.blank? %>
+    <p>
+      <%= render "shared/icon", icon_name: "anchor", label: "Dive site: " %>
+      <%= dive.dive_site_name %>
+    </p>
+    <% end %>
+
+    <p>
+      <%= render "shared/icon", icon_name: "world-pin", label: "Location: " %>
+      <%= dive.location.name %>
+    </p>
+
+    <% unless dive.max_depth.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "arrows-down" %>
+        <span>Max-depth:</span>
+        <%= number_with_precision(dive.max_depth, precision: 1, strip_insignificant_zeros: true) %>m
+      </p>
+    <% end %>
+
+  <% end %>
+<% end %>
