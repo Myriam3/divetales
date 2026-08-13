@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_10_031903) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_10_044421) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -84,6 +84,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_031903) do
     t.text "description"
     t.string "name", limit: 150, null: false
     t.string "scientific_name", limit: 150
+    t.string "tags", default: [], array: true
     t.datetime "updated_at", null: false
     t.string "wiki_link"
     t.index ["category_id"], name: "index_species_on_category_id"
@@ -127,7 +128,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_031903) do
   add_foreign_key "locations", "countries"
   add_foreign_key "picture_species", "pictures"
   add_foreign_key "picture_species", "species"
-  add_foreign_key "pictures", "dives", column: "dive_id"
+  add_foreign_key "pictures", "dives"
   add_foreign_key "species", "categories"
   add_foreign_key "trip_countries", "countries"
   add_foreign_key "trip_countries", "trips"
