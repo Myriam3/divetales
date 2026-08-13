@@ -1,0 +1,48 @@
+<% content_for :title, "Trips | DiveTales" %>
+
+<section class="trips-page">
+  <div class="trips-hero">
+    <h1>DiveTales</h1>
+    <p>Keep track of your dives and underwater memories.</p>
+  </div>
+
+  <div class="trips-content">
+    <div class="trips-heading">
+      <h2>Previous trips</h2>
+      <span><%= pluralize(@trips.count, "trip") %></span>
+    </div>
+
+    <% if @trips.any? %>
+      <div class="trips-grid">
+        <% @trips.each do |trip| %>
+          <%= link_to trip_path(trip), class: "trip-card-link" do %>
+            <article class="trip-card">
+              <div class="trip-card__image">
+                <span>🌊</span>
+              </div>
+
+              <div class="trip-card__body">
+                <h3><%= trip.title %></h3>
+
+                <p>
+                  <%= trip.start_date.strftime("%d %B %Y") %>
+                  -
+                  <%= trip.end_date.strftime("%d %B %Y") %>
+                </p>
+
+                <% if trip.info.present? %>
+                  <p><%= trip.info %></p>
+                <% end %>
+              </div>
+            </article>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="trips-empty">
+        <h3>No trips yet</h3>
+        <p>Your saved trips will appear here.</p>
+      </div>
+    <% end %>
+  </div>
+</section>
