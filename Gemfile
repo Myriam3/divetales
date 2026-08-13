@@ -53,6 +53,7 @@ gem "ruby-vips", "~> 2.0"
 
 # authorization
 gem "pundit"
+gem "cloudinary"
 
 group :development, :test do
   gem "dotenv-rails"
