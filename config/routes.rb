@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   get "/identification", to: "identifications#index"
   post "/identification", to: "identifications#create"
+  post "/identification/details", to: "identifications#details"
   post "/identification/confirm", to: "identifications#confirm"
   post "/identification/save", to: "identifications#save"
   # Defines the root path route ("/")

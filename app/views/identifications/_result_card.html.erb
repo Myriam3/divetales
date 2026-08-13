@@ -35,6 +35,14 @@
         </ul>
       </div>
     <% end %>
+    <!-- View More Details -->
+    <div class="text-end mt-4">
+      <%= button_to "View more details →",
+      identification_details_path,
+      method: :post,
+      params: { scientific_name: result[:scientific_name]},
+      class: "btn btn-outline-primary" %>
+    </div>
   </div> <!-- CLOSING THE CARD BODY HERE -->
 
   <!-- Uncertainty / Limitations in a Card Footer -->

@@ -47,6 +47,19 @@ class IdentificationsController < ApplicationController
     end
   end
 
+  def details
+    @scientific_name = params[:scientific_name]
+    @common_name = params[:common_name]
+
+    @details = SpeciesDetailsService.new(
+      scientific_name: @scientific_name,
+      common_name: @common_name
+    ).call
+
+    render partial: "identifications/species_details",
+          locals: { details: @details }
+  end
+
   def confirm
   end
 
