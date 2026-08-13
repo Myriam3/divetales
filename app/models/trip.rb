@@ -1,6 +1,6 @@
 class Trip < ApplicationRecord
   belongs_to :user
-  has_many :dives, dependent: :destroy
+  has_many :dives, class_name: "Dive", dependent: :destroy
   has_many :pictures, through: :dives
   has_many :trip_countries, dependent: :destroy
   has_many :countries, through: :trip_countries

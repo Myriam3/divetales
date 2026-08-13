@@ -1,0 +1,40 @@
+<% content_for :title, "#{@trip.title} | DiveTales" %>
+
+<section class="trip-show">
+  <%= link_to "← Back to trips", trips_path %>
+
+  <h1><%= @trip.title %></h1>
+
+  <p>
+    <%= @trip.start_date.strftime("%d %B %Y") %>
+    -
+    <%= @trip.end_date.strftime("%d %B %Y") %>
+  </p>
+
+  <% if @trip.info.present? %>
+    <p><%= @trip.info %></p>
+  <% end %>
+
+  <% if @trip.countries.any? %>
+    <p>
+      <strong>Countries:</strong>
+      <%= @trip.countries.map(&:name).join(", ") %>
+    </p>
+  <% end %>
+
+  <h2>Dives</h2>
+
+  <% if @trip.dives.any? %>
+    <ul>
+      <% @trip.dives.each do |dive| %>
+        <li>
+          <strong><%= dive.dive_site_name %></strong>
+          -
+          <%= dive.date.strftime("%d %B %Y") %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No dives have been added yet.</p>
+  <% end %>
+</section>

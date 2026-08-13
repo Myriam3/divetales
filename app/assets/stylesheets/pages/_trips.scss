@@ -90,3 +90,25 @@
 .trip-card-link:hover {
   text-decoration: none;
 }
+
+.trip-show {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+.trip-show h1 {
+  margin: 2rem 0 0.5rem;
+}
+
+.trip-show h2 {
+  margin-top: 2rem;
+}
+
+.trip-show p {
+  margin: 0.75rem 0;
+}
+
+.trip-show li {
+  margin-bottom: 0.5rem;
+}

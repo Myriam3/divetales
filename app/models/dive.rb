@@ -4,9 +4,9 @@ class Dive < ApplicationRecord
   has_many :pictures, dependent: :destroy
   has_many :species, through: :pictures
 
-  validates :trip, :location, :type, :date, presence: true
-  validates :dive_site_name, presence: true, limit: { maximum: 150 }
-  validates :note, limit: { maximum: 500 }
+  validates :trip, :location, :dive_types, presence: true
+  validates :dive_site_name, presence: true, length: { maximum: 150 }
+  validates :note, length: { maximum: 500 }
 
   # TODO
   # depth_over_time -> JSON
