@@ -1,0 +1,7 @@
+<% if @picture %>
+  <% if @picture.photo.attached? %>
+    <%= cl_image_tag @picture.photo.key, width: 400, crop: :fit %>
+    <p>Date: <%= @picture.date_time %>(TODO)</p>
+    <p>Uploaded: <%= @picture.photo.created_at.strftime("%B %d, %Y") %></p>
+  <% end %>
+<% end %>

@@ -1,0 +1,6 @@
+<h1>Upload Photos Here</h1>
+
+<%= simple_form_for(@picture, html: { multipart: true }) do |f| %>
+  <%= f.input :photo, as: :file %>
+  <%= f.button :submit, "Upload" %>
+<% end %>
