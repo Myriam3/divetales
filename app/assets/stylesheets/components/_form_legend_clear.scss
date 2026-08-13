@@ -8,3 +8,11 @@
 legend ~ div.form-check:first-of-type {
   clear: left;
 }
+
+.identification-question::after {
+  content: "+";
+}
+
+.identification-question.active::after {
+  content: "−";
+}
