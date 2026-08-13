@@ -6,12 +6,12 @@ class PicturesController < ApplicationController
 
   def create
     @picture = Picture.new(picture_params)
-    dive = Dive.find(1)
+    dive = Dive.first
     @picture.dive = dive
     puts @picture.valid?
-    @picture.errors
+    puts @picture.errors
     if @picture.save
-      redirect_to pictures_path, notice: "Uploaded!"
+      redirect_to picture_path(@picture), notice: "Uploaded!"
     else
       render :new
     end
@@ -21,9 +21,14 @@ class PicturesController < ApplicationController
     @pictures = Picture.all
   end
 
+  def show
+    @picture = Picture.find(params[:id])
+    authorize @picture
+  end
+
   private
 
   def picture_params
-    params.require(:picture).permit(photos: [])
+    params.require(:picture).permit(:photo)
   end
 end
