@@ -64,6 +64,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_13_091947) do
     t.date "date", null: false
     t.text "depth_over_time", default: ""
     t.string "dive_site_name", default: "", null: false
+    t.string "dive_types", default: [], array: true
     t.integer "duration"
     t.decimal "latitude"
     t.bigint "location_id", null: false
@@ -73,7 +74,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_13_091947) do
     t.float "min_temp"
     t.text "note"
     t.bigint "trip_id", null: false
-    t.integer "type", default: [], array: true
     t.datetime "updated_at", null: false
     t.index ["location_id"], name: "index_dives_on_location_id"
     t.index ["trip_id"], name: "index_dives_on_trip_id"
@@ -112,6 +112,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_13_091947) do
     t.text "description"
     t.string "name", limit: 150, null: false
     t.string "scientific_name", limit: 150
+    t.string "tags", default: [], array: true
     t.datetime "updated_at", null: false
     t.string "wiki_link"
     t.index ["category_id"], name: "index_species_on_category_id"
@@ -157,7 +158,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_13_091947) do
   add_foreign_key "locations", "countries"
   add_foreign_key "picture_species", "pictures"
   add_foreign_key "picture_species", "species"
-  add_foreign_key "pictures", "dives", column: "dive_id"
+  add_foreign_key "pictures", "dives"
   add_foreign_key "species", "categories"
   add_foreign_key "trip_countries", "countries"
   add_foreign_key "trip_countries", "trips"
