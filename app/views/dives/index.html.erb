@@ -2,7 +2,7 @@
 <% if @dives.any? %>
   <ul class="list-unstyled">
   <% @dives.each_with_index do |dive, index| %>
-    <li><%= render "shared/dive_card", dive: dive, number: index + 1 %></li>
+    <li><%= render "shared/dive_card", dive: dive, number: index + 1, all: true %></li>
   <% end %>
   </ul>
 <% end %>

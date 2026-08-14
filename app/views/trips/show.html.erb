@@ -1,11 +1,15 @@
 <% content_for :title, "#{@trip.title} | DiveTales" %>
 
 <section class="trip-show">
-  <%= link_to "← Back to trips", trips_path %>
+  <%= link_to trips_path do %>
+    <%= render "shared/icon", icon_name: "arrow-left" %>
+    Back to trips
+  <% end %>
 
   <h1><%= @trip.title %></h1>
 
   <p>
+    <%= render "shared/icon", icon_name: "calendar-week", label: "Date: " %>
     <%= @trip.start_date.strftime("%d %B %Y") %>
     -
     <%= @trip.end_date.strftime("%d %B %Y") %>
@@ -18,21 +22,25 @@
   <% if @trip.countries.any? %>
     <p>
       <strong>Countries:</strong>
-      <%= @trip.countries.map(&:name).join(", ") %>
+      <% @trip.countries.each do |country| %>
+        <span>
+          <%= icon country.code.downcase, library: "flags", width: 20, height: 20 %>
+          <%= country.name %>
+        </span>
+      <% end %>
     </p>
   <% end %>
 
-  <h2>Dives</h2>
+  <h2>
+    <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 40 %>
+    Dives
+  </h2>
 
   <% if @trip.dives.any? %>
-    <ul>
-      <% @trip.dives.each do |dive| %>
-        <li>
-          <strong><%= dive.dive_site_name %></strong>
-          -
-          <%= dive.date.strftime("%d %B %Y") %>
-        </li>
-      <% end %>
+    <ul class="list-unstyled">
+    <% @trip.dives.each_with_index do |dive, index| %>
+      <li><%= render "shared/dive_card", dive: dive, number: index + 1, heading_level: 3 %></li>
+    <% end %>
     </ul>
   <% else %>
     <p>No dives have been added yet.</p>

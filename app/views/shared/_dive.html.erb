@@ -43,13 +43,35 @@
   <hr>
 
   <p>
-    <%= link_to "#", class: "text-decoration-none" do %>
+    <%= link_to trip_path(dive.trip), class: "text-decoration-none" do %>
       <%= render "shared/icon", icon_name: "luggage", label: "Trip:" %>
       <%= @dive.trip.title %>
     <% end %>
   </p>
 
   <hr>
+
+  <!-- TODO -->
+  <p>
+    <%= render "shared/icon", icon_name: "camera-spark" %>
+    20 pictures (TODO)
+    <br>
+    <%= link_to "See pictures", "#species"%>
+  </p>
+
+  <p>
+    <%= render "shared/icon", icon_name: "fish" %>
+    15 species (TODO) <br>
+    <span class="badge text-bg-secondary">Frogfish</span>
+    <span class="badge text-bg-secondary">Mantas</span>
+    <span class="badge text-bg-secondary">Whitetip reef shark</span>
+    <br>
+    <%= link_to "See all species", "#species"%>
+  </p>
+
+  <hr>
+
+  <h2>Log</h2>
 
   <% unless dive.duration.blank? %>
     <p>
@@ -58,6 +80,30 @@
       <%= dive.duration %>min
     </p>
   <% end %>
+
+  <!-- TODO -->
+
+  <p>
+    <%= render "shared/icon", icon_name: "ripple-down" %>
+    <span>Start:</span>
+    datetime (TODO)
+  </p>
+
+  <p>
+    <%= render "shared/icon", icon_name: "ripple-up" %>
+    <span>End:</span>
+    datetime (TODO)
+  </p>
+
+  <p>
+    <%= render "shared/icon", icon_name: "scuba-diving-tank", label: "Tank:" %>
+    Air or Nitrox (TODO)
+  </p>
+
+  <p>
+    <%= render "shared/icon", icon_name: "gauge", label: "Gauge:" %>
+    Pressure start / end (TODO)
+  </p>
 
   <% unless dive.max_depth.blank? %>
     <p>
@@ -101,6 +147,8 @@
 
   <hr>
 
+  <h2>Memo</h2>
+
   <% unless dive.note.blank? %>
     <p>
       <%= render "shared/icon", icon_name: "notebook" %>
@@ -108,3 +156,9 @@
     </p>
   <% end %>
 <% end %>
+
+<hr>
+
+<h2 id="species">Pictures/Species</h2>
+
+TODO
