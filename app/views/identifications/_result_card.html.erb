@@ -49,14 +49,16 @@
 
     <!-- View More Details -->
     <div class="mt-4 text-end">
-      <%= button_to "View more details →",
-                    identification_details_path,
-                    method: :post,
-                    params: {
-                      scientific_name: result[:scientific_name],
-                      common_name: result[:common_name]
-                    },
-                    class: "btn btn-outline-primary" %>
+      <%= link_to "View more details →",
+            identification_details_path(
+              scientific_name: result[:scientific_name],
+              common_name: result[:common_name]
+            ),
+            class: "btn btn-outline-primary",
+            data: {
+              turbo_frame: "identification-content",
+              turbo_action: "advance"
+            } %>
     </div>
 
   </div>
