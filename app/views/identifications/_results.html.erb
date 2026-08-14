@@ -1,17 +1,17 @@
-<!-- 1. Connect the controller -->
 <div id="identification-results" data-controller="results">
 
-  <% if @results.present? && @results.any? %>
+  <% if results.present? && results.any? %>
     <h2 class="mb-4">Identification Candidates</h2>
 
     <!-- Tab Headers -->
     <div class="nav nav-tabs mb-4">
-      <% @results.each_with_index do |result, index| %>
+      <% results.each_with_index do |result, index| %>
         <button type="button"
                 data-results-target="tab"
                 data-action="click->results#show"
                 class="nav-link <%= 'active' if index == 0 %>">
           <%= result[:common_name].presence || result[:scientific_name] %>
+
           <span class="ms-2 badge bg-secondary">
             <%= result[:confidence] %>%
           </span>
@@ -21,17 +21,16 @@
 
     <!-- Tab Contents -->
     <div>
-      <% @results.each_with_index do |result, index| %>
-        <!-- 2. Set the content target and hide non-first elements -->
-        <div data-results-target="content" class="<%= 'd-none' unless index == 0 %>">
-          <%= render "result_card", result: result %>
+      <% results.each_with_index do |result, index| %>
+        <div data-results-target="content"
+            class="<%= 'd-none' unless index == 0 %>">
+
+          <%= render "identifications/result_card", result: result %>
+
         </div>
       <% end %>
     </div>
 
-  <% elsif params[:commit].present? %>
-    <div class="p-4 text-center bg-light rounded">
-      <p>No candidates found based on the provided details.</p>
-    </div>
   <% end %>
+
 </div>

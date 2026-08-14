@@ -55,9 +55,6 @@ class IdentificationsController < ApplicationController
       scientific_name: @scientific_name,
       common_name: @common_name
     ).call
-
-    # render partial: "identifications/species_details",
-    #       locals: { details: @details }
   end
 
   def confirm
