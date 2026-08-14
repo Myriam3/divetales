@@ -3,10 +3,11 @@
   <div class="species-details-page">
 
     <div class="mb-4">
-      <%= button_to "← Back to possible matches",
-                    identification_path,
-                    method: :get,
-                    class: "btn btn-outline-secondary" %>
+      <button type="button"
+              class="btn btn-outline-secondary"
+              onclick="history.back()">
+        ← Back to possible matches
+      </button>
     </div>
 
     <%= render "identifications/species_details",
