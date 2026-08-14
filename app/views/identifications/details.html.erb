@@ -1,0 +1,17 @@
+<%= turbo_frame_tag "identification-content" do %>
+
+  <div class="species-details-page">
+
+    <div class="mb-4">
+      <%= button_to "← Back to possible matches",
+                    identification_path,
+                    method: :get,
+                    class: "btn btn-outline-secondary" %>
+    </div>
+
+    <%= render "identifications/species_details",
+              details: @details %>
+
+  </div>
+
+<% end %>
