@@ -1,0 +1,18 @@
+<%= turbo_frame_tag "identification-content" do %>
+
+  <div class="species-details-page">
+
+    <div class="mb-4">
+      <button type="button"
+              class="btn btn-outline-secondary"
+              onclick="history.back()">
+        ← Back to possible matches
+      </button>
+    </div>
+
+    <%= render "identifications/species_details",
+              details: @details %>
+
+  </div>
+
+<% end %>
