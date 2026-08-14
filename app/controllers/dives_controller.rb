@@ -15,9 +15,10 @@ class DivesController < ApplicationController
 
   def show
     @dive = Dive.find(params[:id])
-    puts "USER: #{current_user.id}"
-    puts "TRIP USER: #{@dive.trip.user.id}"
-    puts "POLICY: #{DivePolicy.new(current_user, @dive).show?}"
+    @species = @dive.pictures
+                    .includes(:species)
+                    .flat_map(&:species)
+                    .uniq
     authorize @dive
   end
 

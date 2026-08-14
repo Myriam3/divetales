@@ -1,0 +1,23 @@
+<p>
+  <% unless picture.date_time.blank? %>
+    <%= render "shared/icon", icon_name: "calendar", label: "Date: " %>
+    <%= picture.date_time.strftime("%d/%m/%Y %H:%M") %>
+  <% end %>
+</p>
+
+<% unless dive.dive_site_name.blank? %>
+  <p>
+    <%= render "shared/icon", icon_name: "anchor", label: "Dive site: " %>
+    <%= dive.dive_site_name %>
+  </p>
+<% end %>
+
+<p>
+  <%= render "shared/icon", icon_name: "world-pin", label: "Location: " %>
+  <%= dive.location.name %>
+</p>
+
+<p>
+  <%= icon dive.location.country.code.downcase, library: "flags", width: 20, height: 20 %>
+  <%= dive.location.country.name %>
+</p>

@@ -7,6 +7,8 @@
 # The data can then be loaded with the bin/rails db:seed command
 # (or created alongside the database with db:setup).
 
+require "open-uri"
+
 
 # ==========================================
 # Clean database
@@ -18,7 +20,7 @@ Dive.destroy_all
 TripCountry.destroy_all
 Trip.destroy_all
 
-Species.destroy_all
+#Species.destroy_all
 Category.destroy_all
 
 Location.destroy_all
@@ -214,6 +216,14 @@ species = [
     description: "A large predatory fish found in tropical and subtropical coastal and open waters.",
     wiki_link: "https://en.wikipedia.org/wiki/Great_barracuda"
   },
+  {
+    name: "Scalloped Hammerhead Shark",
+    scientific_name: "Sphyrna lewini",
+    category: "Sharks",
+    tags: ["tropical", "pelagic"],
+    description: "A hammerhead shark commonly encountered in large schools around oceanic islands and offshore reefs.",
+    wiki_link: "https://en.wikipedia.org/wiki/Scalloped_hammerhead"
+  },
 
 
   # ----------------------------------------
@@ -274,7 +284,14 @@ species = [
     description: "A small brightly colored nudibranch known for its yellow body and distinctive dark markings.",
     wiki_link: "https://en.wikipedia.org/wiki/Thecacera_pacifica"
   },
-
+  {
+    name: "Oreo Nudibranch",
+    scientific_name: "Jorunna funebris",
+    category: "Nudibranchs",
+    tags: ["tropical", "reef", "macro"],
+    description: "A black-and-white nudibranch commonly found on tropical reefs, recognizable by its dark spots and white body.",
+    wiki_link: "https://en.wikipedia.org/wiki/Jorunna_funebris"
+  },
 
   # ----------------------------------------
   # Cnidarians
@@ -376,7 +393,6 @@ komodo = Location.find_or_create_by!(
   country: indonesia
 )
 
-
 # ==========================================
 # Trips
 # ==========================================
@@ -408,6 +424,7 @@ mikomoto_trip.countries << japan unless mikomoto_trip.countries.include?(japan)
 # ==========================================
 # Dives
 # ==========================================
+
 
 Dive.find_or_create_by!(
   trip: komodo_trip,
@@ -559,3 +576,206 @@ Dive.find_or_create_by!(
   dive.avg_temp = 23.0
   dive.note = "Deep drift dive with excellent visibility and pelagic life."
 end
+
+# ==========================================
+# Pictures
+# ==========================================
+
+puts "Creating pictures (can take few minutes)"
+
+# Dives
+
+manta_point = Dive.find_by!(
+  trip: komodo_trip,
+  dive_site_name: "Manta Point",
+  date: Date.new(2026, 7, 11)
+)
+
+batu_bolong = Dive.find_by!(
+  trip: komodo_trip,
+  dive_site_name: "Batu Bolong"
+)
+
+crystal_rock = Dive.find_by!(
+  trip: komodo_trip,
+  dive_site_name: "Crystal Rock"
+)
+
+siaba_besar = Dive.find_by!(
+  trip: komodo_trip,
+  dive_site_name: "Siaba Besar"
+)
+
+manta_point_night = Dive.find_by!(
+  trip: komodo_trip,
+  dive_site_name: "Manta Point Night Dive"
+)
+
+mikomoto_main = Dive.find_by!(
+  trip: mikomoto_trip,
+  dive_site_name: "Mikomoto Main Rock"
+)
+
+# Species
+
+manta = Species.find_by!(
+  scientific_name: "Mobula birostris"
+)
+
+clownfish = Species.find_by!(
+  scientific_name: "Amphiprion ocellaris"
+)
+
+hammerhead = Species.find_by!(
+  scientific_name: "Sphyrna lewini"
+)
+
+whitetip_reef_shark = Species.find_by!(
+  scientific_name: "Triaenodon obesus"
+)
+
+green_turtle = Species.find_by!(
+  scientific_name: "Chelonia mydas"
+)
+
+mantis_shrimp = Species.find_by!(
+  scientific_name: "Odontodactylus scyllarus"
+)
+
+octopus = Species.find_by!(
+  scientific_name: "Octopus vulgaris"
+)
+
+pikachu_nudi = Species.find_by!(
+  scientific_name: "Thecacera pacifica"
+)
+
+oreo_nudi = Species.find_by!(
+  scientific_name: "Jorunna funebris"
+)
+
+ocean_sunfish = Species.find_by!(
+  scientific_name: "Mola mola"
+)
+
+def create_picture(dive:, date_time:, image_url: nil, species: nil)
+  picture = Picture.find_or_create_by!(
+    dive: dive,
+    date_time: date_time
+  )
+
+  if image_url.present? && !picture.photo.attached?
+    picture.photo.attach(
+      io: URI.open(image_url),
+      filename: File.basename(URI.parse(image_url).path),
+      content_type: "image/jpeg"
+    )
+
+    sleep 10
+  end
+
+  Array(species).each do |species|
+    picture.species << species unless picture.species.include?(species)
+  end
+
+  puts "one picture created"
+
+  picture
+end
+
+# Komodo pictures
+
+create_picture(
+  dive: manta_point,
+  date_time: "2026-07-11 09:30",
+  species: manta,
+  image_url: "https://images.unsplash.com/photo-1532007356923-2f7d881227c2"
+)
+
+create_picture(
+  dive: manta_point,
+  date_time: "2026-07-11 09:42",
+  species: [manta, ocean_sunfish],
+  image_url: "https://images.unsplash.com/photo-1669669714014-70f6cadb221b"
+)
+
+create_picture(
+  dive: manta_point,
+  date_time: "2026-07-11 09:55",
+  image_url: "https://images.unsplash.com/photo-1644027616320-b378fc57f78e"
+)
+
+create_picture(
+  dive: batu_bolong,
+  date_time: "2026-07-11 14:15",
+  species: clownfish,
+  image_url: "https://images.unsplash.com/photo-1524096613842-71a8c45f08a2"
+)
+
+create_picture(
+  dive: crystal_rock,
+  date_time: "2026-07-13 10:30",
+  species: [clownfish],
+  image_url: "https://images.unsplash.com/photo-1659557172364-1096136a7528"
+)
+
+create_picture(
+  dive: crystal_rock,
+  date_time: "2026-07-13 10:05",
+  species: whitetip_reef_shark,
+  image_url: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Whitetip-reef-shark.jpg"
+)
+
+create_picture(
+  dive: batu_bolong,
+  date_time: "2026-07-11 14:30",
+  image_url: "https://images.unsplash.com/photo-1515555585025-54136276b6e3"
+)
+
+create_picture(
+  dive: batu_bolong,
+  date_time: "2026-07-12 09:25",
+  species: green_turtle,
+  image_url: "https://images.unsplash.com/photo-1709483095301-2d1f3e95b1d4"
+)
+
+create_picture(
+  dive: mikomoto_main,
+  date_time: "2026-09-20 08:15",
+  species: hammerhead,
+  image_url: "https://images.unsplash.com/photo-1706957782008-c26bd6c10840"
+)
+
+create_picture(
+  dive: manta_point_night,
+  date_time: "2026-07-15 20:10",
+  species: octopus,
+  image_url: "https://images.unsplash.com/photo-1758792723811-2ec88d00904c"
+)
+
+create_picture(
+  dive: siaba_besar,
+  date_time: "2026-07-14 09:35",
+  species: pikachu_nudi,
+  image_url: "https://upload.wikimedia.org/wikipedia/commons/2/2d/Thecacera_sp._(Polyceridae_nudibranch).jpg"
+)
+
+create_picture(
+  dive: siaba_besar,
+  date_time: "2026-07-14 09:55",
+  species: oreo_nudi,
+  image_url: "https://images.unsplash.com/photo-1702046942191-bd5201cdb58d"
+)
+
+create_picture(
+  dive: siaba_besar,
+  date_time: "2026-07-14 09:40",
+  image_url: "https://images.unsplash.com/photo-1731486014172-8efff1cf31f1?q=80&w=687"
+)
+
+create_picture(
+  dive: siaba_besar,
+  date_time: "2026-07-14 10:05",
+  species: mantis_shrimp,
+  image_url: "https://commons.wikimedia.org/wiki/Special:Redirect/file/OdontodactylusScyllarus.jpg"
+)

@@ -1,3 +1,8 @@
+<%= link_to pictures_path do %>
+  <%= render "shared/icon", icon_name: "arrow-left" %>
+  All dives
+<% end %>
+
 <% if @dive %>
   <%
     dive_title = @dive.dive_site_name.blank? ? @dive.location.name : @dive.dive_site_name
@@ -7,11 +12,4 @@
   <h1><%= render "shared/icon", icon_name: "scuba-mask", icon_size: 40 %><%= dive_title %></h1>
 
   <%= render "shared/dive", dive: @dive %>
-<% end %>
-
-<hr>
-
-<%= link_to dives_path do %>
-  <%= render "shared/icon", icon_name: "arrow-left" %>
-  All dives
 <% end %>
