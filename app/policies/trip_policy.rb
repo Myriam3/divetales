@@ -9,6 +9,10 @@ class TripPolicy < ApplicationPolicy
     true
   end
 
+  def create?
+    true
+  end
+
   def show?
     record.user == user
   end
