@@ -1,8 +1,10 @@
 class IdentificationsController < ApplicationController
   def index
+    @dive = Dive.find_by(id: params[:dive_id])
   end
 
   def create
+    @dive = Dive.find_by(id: params[:dive_id])
     upload = identification_params[:upload]
     camera = identification_params[:camera]
     image = upload || camera
