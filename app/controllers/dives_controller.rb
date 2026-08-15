@@ -8,13 +8,28 @@ class DivesController < ApplicationController
   end
 
   def new
-    @dive = Dive.new
+    if params[:trip_id]
+      @trip = Trip.find(params[:trip_id])
+      @dive = @trip.dives.new
+    else
+      @dive = Dive.new
+    end
+
     authorize @dive
   end
 
   def create
-    @dive = Dive.new
+    @trip = Trip.find(params[:trip_id]) if params[:trip_id]
+
+    @dive = @trip ? @trip.dives.new(dive_params) : Dive.new(dive_params)
+
     authorize @dive
+
+    if @dive.save
+      redirect_to @dive, notice: "Dive created!"
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def show
@@ -29,5 +44,25 @@ class DivesController < ApplicationController
   def destroy
     @dive = Dive.find(params[:id])
     authorize @dive
+  end
+
+  private
+
+  def dive_params
+    params.require(:dive).permit(
+      :date,
+      :dive_site_name,
+      :location_id,
+      :duration,
+      :max_depth,
+      :avg_depth,
+      :max_temp,
+      :min_temp,
+      :avg_temp,
+      :latitude,
+      :longitude,
+      :note,
+      dive_types: []
+    )
   end
 end
