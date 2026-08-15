@@ -59,7 +59,7 @@
   </p>
 
   <p>
-  <%= render "shared/icon", icon_name: "fish" %>
+    <%= render "shared/icon", icon_name: "fish" %>
     <% species = @dive.pictures.flat_map(&:species).uniq %>
     <%= species.count %> species
 
