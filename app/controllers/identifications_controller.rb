@@ -7,6 +7,8 @@ class IdentificationsController < ApplicationController
     camera = identification_params[:camera]
     image = upload || camera
 
+    blob = nil
+
     if image.present?
       blob = ActiveStorage::Blob.create_and_upload!(
         io: image.tempfile,
@@ -15,6 +17,7 @@ class IdentificationsController < ApplicationController
       )
 
       session[:identification_image_blob_id] = blob.id
+      image.tempfile.rewind
     else
       session.delete(:identification_image_blob_id)
     end
