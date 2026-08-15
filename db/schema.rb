@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_13_141035) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_14_091521) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -103,6 +103,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_13_141035) do
     t.datetime "created_at", null: false
     t.datetime "date_time"
     t.bigint "dive_id", null: false
+    t.integer "source"
     t.datetime "updated_at", null: false
     t.index ["dive_id"], name: "index_pictures_on_dive_id"
   end
@@ -110,7 +111,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_13_141035) do
   create_table "species", force: :cascade do |t|
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false
-    t.string "default_img"
     t.text "description"
     t.string "name", limit: 150, null: false
     t.string "scientific_name", limit: 150
