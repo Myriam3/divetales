@@ -1,3 +1,5 @@
+require "open-uri"
+
 class IdentificationsController < ApplicationController
   def index
   end
@@ -6,21 +8,6 @@ class IdentificationsController < ApplicationController
     upload = identification_params[:upload]
     camera = identification_params[:camera]
     image = upload || camera
-
-    blob = nil
-
-    if image.present?
-      blob = ActiveStorage::Blob.create_and_upload!(
-        io: image.tempfile,
-        filename: image.original_filename,
-        content_type: image.content_type
-      )
-
-      session[:identification_image_blob_id] = blob.id
-      image.tempfile.rewind
-    else
-      session.delete(:identification_image_blob_id)
-    end
 
     observation = identification_params.slice(
       :color,
@@ -56,6 +43,21 @@ class IdentificationsController < ApplicationController
       image: image
     ).call
 
+    if image.present?
+      # Rewind the file so ActiveStorage can read it from the beginning
+      image.tempfile.rewind
+
+      blob = ActiveStorage::Blob.create_and_upload!(
+        io: image.tempfile,
+        filename: image.original_filename,
+        content_type: image.content_type
+      )
+
+      session[:identification_image_blob_id] = blob.id
+    else
+      session.delete(:identification_image_blob_id)
+    end
+
     Rails.logger.debug "=== IDENTIFICATION RESULTS ==="
     Rails.logger.debug @results.inspect
     Rails.logger.debug "=============================="
@@ -79,7 +81,7 @@ class IdentificationsController < ApplicationController
   def confirm
     @scientific_name = params[:scientific_name].to_s.strip
     @common_name = params[:common_name].to_s.strip
-
+    @default_photo_url = params[:default_photo_url]
     @species = Species.find_by(
       scientific_name: @scientific_name
     )
@@ -92,6 +94,57 @@ class IdentificationsController < ApplicationController
   end
 
   def save
+    @dive = Dive.find(params[:dive_id])
+    scientific_name = params[:scientific_name].to_s.strip
+    common_name = params[:common_name].to_s.strip
+
+    # --- STEP 1: Find or Initialize the Species ---
+    @species = Species.find_or_initialize_by(scientific_name: scientific_name)
+
+    if @species.new_record?
+      @species.name = common_name.presence || scientific_name
+      @species.category = Category.first
+
+      # Download the Wikipedia/iNaturalist image instead of using AI
+      if params[:default_photo_url].present?
+        begin
+          downloaded_image = URI.open(params[:default_photo_url])
+          @species.default_photo.attach(
+            io: downloaded_image,
+            filename: "#{scientific_name.parameterize}-default.jpg",
+            # ActiveStorage will infer content type from the file, but we can safely default to jpeg
+            content_type: 'image/jpeg'
+          )
+        rescue StandardError => e
+          Rails.logger.error "Failed to download reference image: #{e.message}"
+        end
+      end
+
+      @species.save!
+    end
+
+    # --- STEP 2: Create the Dive's Picture Record ---
+    @picture = @dive.pictures.build
+
+    if session[:identification_image_blob_id].present?
+      # User uploaded an image
+      blob = ActiveStorage::Blob.find(session[:identification_image_blob_id])
+      @picture.source = :user_uploaded
+      @picture.photo.attach(blob)
+    elsif @species.default_photo.attached?
+      # User didn't upload, but we successfully saved the web image
+      @picture.source = :species_default
+      @picture.photo.attach(@species.default_photo.blob)
+    end
+
+    # --- STEP 3: Save and Associate ---
+    # We only save the picture if it actually has a photo attached
+    if @picture.photo.attached? && @picture.save
+      PictureSpecy.create!(picture: @picture, species: @species)
+    end
+
+    session.delete(:identification_image_blob_id)
+    redirect_to dive_path(@dive), notice: "Successfully added #{@species.name} to your dive!"
   end
 
   private
