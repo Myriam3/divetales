@@ -62,22 +62,34 @@
         <%= f.input :location,
           as: :text,
           placeholder: "e.g. Komodo National Park",
+          input_html: {
+            value: @dive&.location&.name
+          },
           required: false
         %>
         <%= f.input :dive_site,
           as: :text,
           label: "Dive site",
           placeholder: "e.g. shotgun",
+          input_html: {
+            value: @dive&.dive_site_name
+          },
           required: false
         %>
         <%= f.input :date,
           as: :text,
           placeholder: "e.g. 2025-10-01",
+          input_html: {
+            value: @dive&.date
+          },
           required: false
         %>
         <%= f.input :depth,
           as: :text,
           placeholder: "e.g. around 15m",
+          input_html: {
+            value: @dive&.max_depth
+          },
           required: false
         %>
         <%= f.input :habitat,
@@ -104,7 +116,10 @@
         <%= f.input :additional_info,
           as: :text,
           label: "Anything else...",
-          input_html: { rows: 5 },
+          input_html: {
+            rows: 5,
+            value: @dive&.dive_types&.any? ? "Dive type: #{@dive.dive_types.join(", ")}" : nil
+          },
           # hint: sanitize("<li>Describe the Marine Life you saw if you couldn't capture it...</li>\n\n<li>Or give more context of your picture so that the Identification could be more accurate.</li>"),
           placeholder: "Anything else that might help identify it...",
           required: false
