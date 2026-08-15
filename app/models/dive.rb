@@ -15,12 +15,14 @@ class Dive < ApplicationRecord
   has_many :pictures, dependent: :destroy
   has_many :species, through: :pictures
 
-  validates :trip, :location, :date, :dive_types, presence: true
+  validates :trip, :location, :date, presence: true
   validates :dive_site_name, presence: true, length: { maximum: 150 }
   validates :note, length: { maximum: 500 }
 
   validates_each :dive_types do |record, attr, value|
     value.each do |type|
+      next if type.blank?
+
       record.errors.add(attr, "Not a valid type") unless DIVE_TYPES.include?(type)
     end
   end

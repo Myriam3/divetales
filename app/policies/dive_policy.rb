@@ -19,4 +19,12 @@ class DivePolicy < ApplicationPolicy
   def show?
     record.trip.user == user
   end
+
+  def new?
+    record.trip.user == user
+  end
+
+  def create?
+    record.trip.user == user
+  end
 end
