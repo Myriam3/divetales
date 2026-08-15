@@ -1,0 +1,61 @@
+<% if dive %>
+  <%
+    dive_title = "##{number} "
+    dive_title += dive.dive_site_name.blank? ? dive.location.name : dive.dive_site_name
+
+    if local_assigns[:all] == true
+      dive_title += ", #{dive.date}"
+    end
+  %>
+
+  <%= link_to dive_path(dive), class: 'card text-decoration-none text-reset' do %>
+    <div class="card-body">
+      <% if local_assigns[:heading_level] == 3 %>
+        <h3 class="card-title"><%= dive_title %></h3>
+      <% else %>
+        <h2 class="card-title"><%= dive_title %></h2>
+      <% end %>
+      <p>
+        <%= render "shared/icon", icon_name: "calendar", label: "Date: " %>
+        <%= dive.date.strftime("%d %B %Y") %>
+      </p>
+
+      <% unless dive.dive_site_name.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "anchor", label: "Dive site: " %>
+        <%= dive.dive_site_name %>
+      </p>
+      <% end %>
+
+      <p>
+        <%= render "shared/icon", icon_name: "world-pin", label: "Location: " %>
+        <%= dive.location.name %>
+        <%= icon dive.location.country.code.downcase, library: "flags", width: 20, height: 20 %>
+        <span class="visually-hidden"><%= dive.location.country.name %></span>
+      </p>
+
+      <% species = dive.pictures.flat_map(&:species).uniq %>
+      <% if species.any? %>
+        <p>
+          <%= render "shared/icon", icon_name: "fish" %>
+          <%= species.count %> species identified
+        </p>
+      <% end %>
+
+      <% if dive.pictures.any? %>
+        <p>
+          <%= render "shared/icon", icon_name: "camera-spark" %>
+          <%= dive.pictures.count %> pictures
+        </p>
+      <% end %>
+
+      <% unless dive.max_depth.blank? %>
+        <p>
+          <%= render "shared/icon", icon_name: "arrow-bar-to-down" %>
+          <span>Max-depth:</span>
+          <%= number_with_precision(dive.max_depth, precision: 1, strip_insignificant_zeros: true) %>m
+        </p>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

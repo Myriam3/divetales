@@ -1,0 +1,29 @@
+<% if species.any? %>
+  <ul class="list-unstyled">
+    <% species.each do |species| %>
+      <li class="mb-3">
+        <p><span class="badge text-bg-secondary fs-5"><%= species.name %></span></p>
+        <p class="fs-4"><em><%= species.scientific_name %></em></p>
+
+        <p>
+          <%= render "shared/icon", icon_name: "binary-tree", icon_size: 36 %>
+          <span class="fw-bold"><%= species.category.classification.humanize %>
+          </span></p>
+        <p>
+          <%= render "shared/icon", icon_name: "fish", icon_size: 36 %>
+          <span class="fw-bold"><%= species.category.name %>
+          </span>
+        </p>
+        <% unless species.wiki_link.blank? %>
+          <p>
+            <a href="<%= species.wiki_link %>" class="text-decoration-none" target="_blank">
+              <%= render "shared/icon", icon_name: "brand-wikipedia" %>
+              Wikipedia
+            </a>
+          </p>
+        <% end %>
+
+      </li>
+    <% end %>
+  </ul>
+<% end %>
