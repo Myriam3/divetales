@@ -7,6 +7,18 @@ class IdentificationsController < ApplicationController
     camera = identification_params[:camera]
     image = upload || camera
 
+    if image.present?
+      blob = ActiveStorage::Blob.create_and_upload!(
+        io: image.tempfile,
+        filename: image.original_filename,
+        content_type: image.content_type
+      )
+
+      session[:identification_image_blob_id] = blob.id
+    else
+      session.delete(:identification_image_blob_id)
+    end
+
     observation = identification_params.slice(
       :color,
       :size,
@@ -41,6 +53,10 @@ class IdentificationsController < ApplicationController
       image: image
     ).call
 
+    Rails.logger.debug "=== IDENTIFICATION RESULTS ==="
+    Rails.logger.debug @results.inspect
+    Rails.logger.debug "=============================="
+
     respond_to do |format|
       format.html { render :index, status: :unprocessable_entity }
       format.turbo_stream
@@ -58,6 +74,18 @@ class IdentificationsController < ApplicationController
   end
 
   def confirm
+    @scientific_name = params[:scientific_name].to_s.strip
+    @common_name = params[:common_name].to_s.strip
+
+    @species = Species.find_by(
+      scientific_name: @scientific_name
+    )
+
+    @image_blob = if session[:identification_image_blob_id].present?
+                    ActiveStorage::Blob.find_by(
+                      id: session[:identification_image_blob_id]
+                    )
+                  end
   end
 
   def save
