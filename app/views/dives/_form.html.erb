@@ -1,0 +1,51 @@
+<%= simple_form_for [@trip, dive] do |f| %>
+
+  <%= f.input :date,
+      label: "Date",
+      as: :date %>
+
+  <%= f.input :dive_site_name,
+      label: "Dive site" %>
+
+  <%= f.input :location_id,
+      label: "Location (Can only select existing one for new)",
+      collection: Location.all,
+      label_method: :name,
+      value_method: :id %>
+
+  <%= f.input :dive_types,
+      label: "Dive types",
+      collection: Dive::DIVE_TYPES,
+      as: :check_boxes %>
+
+  <%= f.input :duration,
+      label: "Duration (minutes)" %>
+
+  <%= f.input :max_depth,
+      label: "Maximum depth (m)" %>
+
+  <%= f.input :avg_depth,
+      label: "Average depth (m)" %>
+
+  <%= f.input :max_temp,
+      label: "Maximum temperature (°C)" %>
+
+  <%= f.input :min_temp,
+      label: "Minimum temperature (°C)" %>
+
+  <%= f.input :avg_temp,
+      label: "Average temperature (°C)" %>
+
+  <%= f.input :latitude,
+      label: "Latitude" %>
+
+  <%= f.input :longitude,
+      label: "Longitude" %>
+
+  <%= f.input :note,
+      label: "Note",
+      as: :text %>
+
+  <%= f.button :submit, "Add dive", class: "btn btn-primary" %>
+
+<% end %>
