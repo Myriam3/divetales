@@ -1,6 +1,6 @@
 <h1>Upload Photos Here</h1>
 
-<% picture.photos.each do |photo| %>
-  <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
-  <p>Taken: <%= photo.metadata["date_taken"] %></p>
+<%= simple_form_for(@picture) do |f| %>
+  <%= f.input :photos, as: :file, input_html: { multiple: true } %>
+  <%= f.button :submit, "Upload" %>
 <% end %>

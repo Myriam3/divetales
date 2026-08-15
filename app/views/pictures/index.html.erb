@@ -30,3 +30,20 @@
 <% else %>
   No picture yet
 <% end %>
+
+<h1>Uploaded Photos</h1>
+
+<% @pictures.each do |picture| %>
+  <div class="picture-group">
+    <% picture.photos.each do |photo| %>
+      <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
+      <p>
+        <% if photo.metadata["date_taken"].present? %>
+          Taken: <%= photo.metadata["date_taken"] %>
+        <% else %>
+          Taken: Unknown
+        <% end %>
+      </p>
+    <% end %>
+  </div>
+<% end %>
