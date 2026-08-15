@@ -51,31 +51,32 @@
 
   <hr>
 
+  <% if @dive.pictures.any? %>
   <p>
     <%= render "shared/icon", icon_name: "camera-spark" %>
     <%= @dive.pictures.size %> pictures
     <br>
     <%= link_to "See pictures", "#pictures" %>
   </p>
+  <% end %>
 
+  <% species = @dive.pictures.flat_map(&:species).uniq %>
+
+  <% if species.any? %>
   <p>
     <%= render "shared/icon", icon_name: "fish" %>
-    <% species = @dive.pictures.flat_map(&:species).uniq %>
     <%= species.count %> species
-
-    <% if species.any? %>
       <br>
-      <% species.each do |species| %>
-        <span class="badge text-bg-secondary">
-          <%= species.name %>
-        </span>
-      <% end %>
-      <br>
-      <%= link_to "See all species", "#species" %>
+    <% species.each do |species| %>
+      <span class="badge text-bg-secondary">
+        <%= species.name %>
+      </span>
     <% end %>
+      <br>
+    <%= link_to "See all species", "#species" %>
   </p>
-
-  <hr>
+    <hr>
+  <% end %>
 
   <h2>Log</h2>
 
