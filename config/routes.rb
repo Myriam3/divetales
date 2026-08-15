@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount RailsIcons::Engine, at: '/rails_icons'
   devise_for :users
   root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -23,4 +24,9 @@ Rails.application.routes.draw do
   resources :pictures, only: [:index, :show, :new, :create]
 
   get "test", to: "pages#test"
+  get "/dives", to: "dives#index", as: "dives"
+  get "/dives/new", to: "dives#new"
+  post "/dives", to: "dives#create"
+  get "/dives/:id", to: "dives#show", as: "dive"
+  delete "/dives/:id", to: "dives#destroy"
 end

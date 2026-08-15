@@ -10,9 +10,17 @@ class PicturePolicy < ApplicationPolicy
     # def resolve
     #   scope.all
     # end
+
+    def resolve
+      scope.joins(dive: :trip).where(trips: { user: user })
+    end
   end
 
   def show?
-    true
+    record.dive.trip.user == user
+  end
+
+  def index?
+    record.dive.trip.user == user
   end
 end

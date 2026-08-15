@@ -1,0 +1,14 @@
+<% if local_assigns[:icon_name] %>
+  <% size = local_assigns.fetch(:icon_size, 20) %>
+
+  <% if local_assigns[:label] %>
+    <span class="visually-hidden"><%= label %></span>
+  <% end %>
+
+  <%=
+    icon icon_name,
+    width: size,
+    height: size,
+    aria: { hidden: "true" }
+  %>
+<% end %>

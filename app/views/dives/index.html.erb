@@ -1,0 +1,32 @@
+<h1 class="mt-5 mb-5">All my dives</h1>
+
+<p>
+  <%= render "shared/icon", icon_name: "scuba-mask" %>
+  <%= pluralize(@dives.count, "dive") %>
+</p>
+
+<p>
+  <%= render "shared/icon", icon_name: "scuba-mask" %>
+  <%= @countries_count %>
+  <%= "country".pluralize(@countries_count) %>
+</p>
+
+<p>
+  <%= render "shared/icon", icon_name: "camera-spark" %>
+  <%= @pictures_count %>
+  <%= "picture".pluralize(@pictures_count) %>
+</p>
+
+<p>
+  <%= render "shared/icon", icon_name: "fish" %>
+  <%= @species_count %>
+  <%= "species" %> identified
+</p>
+
+<% if @dives.any? %>
+  <ul class="list-unstyled mt-5">
+    <% @dives.each_with_index do |dive, index| %>
+    <li class="mt-3"><%= render "shared/dive_card", dive: dive, number: @dives.length - index, all: true %></li>
+  <% end %>
+  </ul>
+<% end %>
