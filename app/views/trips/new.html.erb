@@ -1,0 +1,21 @@
+<% content_for :title, "Create a trip | DiveTales" %>
+
+<section class="trip-form-page">
+  <h1>Create a trip</h1>
+
+  <%= simple_form_for @trip do |f| %>
+    <%= f.input :title, label: "Trip name" %>
+
+    <%= f.input :start_date, as: :date, html5: true %>
+
+    <%= f.input :end_date, as: :date, html5: true %>
+
+    <%= f.association :countries, as: :check_boxes %>
+
+    <%= f.input :info, label: "More information" %>
+
+    <%= f.button :submit, "Save", class: "btn btn-primary" %>
+  <% end %>
+
+  <%= link_to "Back to trips", trips_path %>
+</section>

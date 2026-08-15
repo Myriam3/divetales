@@ -7,9 +7,6 @@
 # The data can then be loaded with the bin/rails db:seed command
 # (or created alongside the database with db:setup).
 
-require "open-uri"
-
-
 # ==========================================
 # Clean database
 # ==========================================
@@ -19,6 +16,8 @@ require "open-uri"
 Dive.destroy_all
 TripCountry.destroy_all
 Trip.destroy_all
+
+Picture.destroy_all
 
 #Species.destroy_all
 Category.destroy_all
@@ -658,27 +657,28 @@ ocean_sunfish = Species.find_by!(
   scientific_name: "Mola mola"
 )
 
-def create_picture(dive:, date_time:, image_url: nil, species: nil)
+# JPEG only
+def create_picture(dive:, date_time:, image_path: nil, species: nil)
   picture = Picture.find_or_create_by!(
     dive: dive,
     date_time: date_time
   )
 
-  if image_url.present? && !picture.photo.attached?
+  if image_path.present? && !picture.photo.attached?
+    file_path = Rails.root.join("db", "seed_images", "#{image_path}.jpg")
+
     picture.photo.attach(
-      io: URI.open(image_url),
-      filename: File.basename(URI.parse(image_url).path),
+      io: File.open(file_path),
+      filename: File.basename(file_path),
       content_type: "image/jpeg"
     )
-
-    sleep 10
   end
 
   Array(species).each do |species|
     picture.species << species unless picture.species.include?(species)
   end
 
-  puts "one picture created"
+  puts "#{image_path} picture created"
 
   picture
 end
@@ -689,93 +689,95 @@ create_picture(
   dive: manta_point,
   date_time: "2026-07-11 09:30",
   species: manta,
-  image_url: "https://images.unsplash.com/photo-1532007356923-2f7d881227c2"
+  image_path: "dummy-manta"
 )
 
 create_picture(
   dive: manta_point,
   date_time: "2026-07-11 09:42",
   species: [manta, ocean_sunfish],
-  image_url: "https://images.unsplash.com/photo-1669669714014-70f6cadb221b"
+  image_path: "dummy-manta-molamola"
 )
 
 create_picture(
   dive: manta_point,
   date_time: "2026-07-11 09:55",
-  image_url: "https://images.unsplash.com/photo-1644027616320-b378fc57f78e"
+  image_path: "dummy-reef"
 )
 
 create_picture(
   dive: batu_bolong,
   date_time: "2026-07-11 14:15",
   species: clownfish,
-  image_url: "https://images.unsplash.com/photo-1524096613842-71a8c45f08a2"
+  image_path: "dummy-nemo"
 )
 
 create_picture(
   dive: crystal_rock,
   date_time: "2026-07-13 10:30",
   species: [clownfish],
-  image_url: "https://images.unsplash.com/photo-1659557172364-1096136a7528"
+  image_path: "dummy-nemo-02"
 )
 
 create_picture(
   dive: crystal_rock,
   date_time: "2026-07-13 10:05",
   species: whitetip_reef_shark,
-  image_url: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Whitetip-reef-shark.jpg"
+  image_path: "dummy-whitetip-reef-shark"
 )
 
 create_picture(
   dive: batu_bolong,
   date_time: "2026-07-11 14:30",
-  image_url: "https://images.unsplash.com/photo-1515555585025-54136276b6e3"
+  image_path: "dummy-reef-02"
 )
 
 create_picture(
   dive: batu_bolong,
   date_time: "2026-07-12 09:25",
   species: green_turtle,
-  image_url: "https://images.unsplash.com/photo-1709483095301-2d1f3e95b1d4"
+  image_path: "dummy-green-turtle"
 )
 
 create_picture(
   dive: mikomoto_main,
   date_time: "2026-09-20 08:15",
   species: hammerhead,
-  image_url: "https://images.unsplash.com/photo-1706957782008-c26bd6c10840"
+  image_path: "dummy-hammerhead"
 )
 
 create_picture(
   dive: manta_point_night,
   date_time: "2026-07-15 20:10",
   species: octopus,
-  image_url: "https://images.unsplash.com/photo-1758792723811-2ec88d00904c"
+  image_path: "dummy-octopus-night"
 )
 
 create_picture(
   dive: siaba_besar,
   date_time: "2026-07-14 09:35",
   species: pikachu_nudi,
-  image_url: "https://upload.wikimedia.org/wikipedia/commons/2/2d/Thecacera_sp._(Polyceridae_nudibranch).jpg"
+  image_path: "dummy-pikachu-nudi"
 )
 
 create_picture(
   dive: siaba_besar,
   date_time: "2026-07-14 09:55",
   species: oreo_nudi,
-  image_url: "https://images.unsplash.com/photo-1702046942191-bd5201cdb58d"
+  image_path: "dummy-oreo-nudi"
 )
 
 create_picture(
   dive: siaba_besar,
   date_time: "2026-07-14 09:40",
-  image_url: "https://images.unsplash.com/photo-1731486014172-8efff1cf31f1?q=80&w=687"
+  image_path: "dummy-boxfish"
 )
 
 create_picture(
   dive: siaba_besar,
   date_time: "2026-07-14 10:05",
   species: mantis_shrimp,
-  image_url: "https://commons.wikimedia.org/wiki/Special:Redirect/file/OdontodactylusScyllarus.jpg"
+  image_path: "dummy-mantis"
 )
+
+puts "Done!"
