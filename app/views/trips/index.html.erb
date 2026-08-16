@@ -2,27 +2,31 @@
 
 <section class="trips-page">
   <div class="trips-hero">
-    <h1>DiveTales</h1>
+    <h1 class="mt-5">DiveTales</h1>
     <p>Keep track of your dives and underwater memories.</p>
   </div>
 
   <div class="trips-content">
+    <%= link_to "Create a trip", new_trip_path, class: "btn btn-primary mb-4" %>
     <div class="trips-heading">
-      <h2>Previous trips</h2>
+      <h2 class="mt-5">Previous trips</h2>
       <span><%= pluralize(@trips.count, "trip") %></span>
     </div>
 
     <% if @trips.any? %>
-      <div class="trips-grid">
+      <div class="trips-grid mt-5">
         <% @trips.each do |trip| %>
-          <%= link_to trip_path(trip), class: "trip-card-link" do %>
-            <article class="trip-card">
-              <div class="trip-card__image">
+          <%= link_to trip_path(trip), class: "trip-card-link text-decoration-none text-reset" do %>
+            <article class="trip-card mb-5">
+              <%# <div class="trip-card__image">
                 <span>🌊</span>
-              </div>
+              </div> %>
 
               <div class="trip-card__body">
-                <h3><%= trip.title %></h3>
+                <h3>
+                  <%= render "shared/icon", icon_name: "luggage", icon_size: 36 %>
+                  <%= trip.title %>
+                </h3>
 
                 <p>
                   <%= trip.start_date.strftime("%d %B %Y") %>
