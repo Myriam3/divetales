@@ -49,7 +49,7 @@ class IdentificationsController < ApplicationController
 
       @results = IdentificationService.new(
         user_prompt: user_prompt,
-        image: nil
+        image: image
       ).call
 
       Rails.logger.debug "=== AFTER AI ==="

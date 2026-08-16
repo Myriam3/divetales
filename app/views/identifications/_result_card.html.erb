@@ -62,13 +62,13 @@
     </div>
 
     <%= button_to "Confirm this species",
-              identification_confirm_path,
-              method: :post,
-              params: {
-                scientific_name: details["scientific_name"],
-                common_name: details["common_name"]
-              },
-              class: "btn btn-primary" %>
+      identification_confirm_path,
+      method: :post,
+      params: {
+        scientific_name: result[:scientific_name],
+        common_name: result[:common_name]
+      },
+      class: "btn btn-primary" %>
 
   </div>
 

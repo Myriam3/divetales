@@ -1,5 +1,16 @@
 <div class="species-details">
 
+  <div class="mt-4 text-end">
+    <%= button_to "Confirm this species",
+          identification_confirm_path,
+          method: :post,
+          params: {
+            scientific_name: @scientific_name,
+            common_name: @common_name
+          },
+          class: "btn btn-primary" %>
+  </div>
+
   <!-- Species -->
   <div class="mb-4">
     <h4 class="mb-1">
