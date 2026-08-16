@@ -39,11 +39,40 @@ class IdentificationsController < ApplicationController
       dive_context: dive_context,
       additional_info: additional_info
     )
+    begin
+      Rails.logger.debug "=== BEFORE AI ==="
+      Rails.logger.debug "IMAGE: #{image.inspect}"
+      Rails.logger.debug "USER PROMPT: #{user_prompt.inspect}"
+      if image.present?
+        image.tempfile.rewind
+      end
 
-    @results = IdentificationService.new(
-      user_prompt: user_prompt,
-      image: image
-    ).call
+      @results = IdentificationService.new(
+        user_prompt: user_prompt,
+        image: nil
+      ).call
+
+      Rails.logger.debug "=== AFTER AI ==="
+      Rails.logger.debug "RESULTS: #{@results.inspect}"
+
+      if @results.blank?
+        flash.now[:alert] = "The identification service didn't return any results. Please try again."
+        render :index, status: :unprocessable_entity
+        return
+      end
+    rescue StandardError => e
+      Rails.logger.error "=== IDENTIFICATION ERROR ==="
+      Rails.logger.error "CLASS: #{e.class}"
+      Rails.logger.error "MESSAGE: #{e.message}"
+      Rails.logger.error e.full_message
+      Rails.logger.error "============================"
+
+      flash.now[:alert] =
+        "We encountered an issue connecting to the AI service. Please try again later."
+
+      render :index, status: :unprocessable_entity
+      return
+    end
 
     if image.present?
       # Rewind the file so ActiveStorage can read it from the beginning
@@ -108,7 +137,7 @@ class IdentificationsController < ApplicationController
       @species.category = Category.first
 
       # Download the Wikipedia/iNaturalist image instead of using AI
-      if params[:default_photo_url].present?
+      if !@species.default_photo.attached? && params[:default_photo_url].present?
         begin
           downloaded_image = URI.open(params[:default_photo_url])
           @species.default_photo.attach(
@@ -130,7 +159,7 @@ class IdentificationsController < ApplicationController
 
     if session[:identification_image_blob_id].present?
       # User uploaded an image
-      blob = ActiveStorage::Blob.find(session[:identification_image_blob_id])
+      blob = ActiveStorage::Blob.find_by(id: session[:identification_image_blob_id])
       @picture.source = :user_uploaded
       @picture.photo.attach(blob)
     elsif @species.default_photo.attached?
