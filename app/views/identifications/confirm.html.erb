@@ -55,9 +55,10 @@
 
         <div class="list-group">
 
-          <% @dives.each do |dive| %>
+          <% @dives.each_with_index do |dive, index| %>
 
-            <% dive_title = "##{dive.number} " %>
+            <% dive_number = @dives.length - index %>
+            <% dive_title = "##{dive_number} " %>
             <% dive_title += dive.dive_site_name.blank? ? dive.location.name : dive.dive_site_name %>
 
             <%= button_to "Add to #{dive_title}",

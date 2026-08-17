@@ -140,7 +140,7 @@ class IdentificationsController < ApplicationController
                   end
 
     @dive = Dive.find_by(id: params[:dive_id])
-    @trips = current_user.trips.includes(:dives).order(created_at: :desc)
+    @trip = current_user.trips.find_by(id: params[:trip_id])
     if @trip
       @dives = @trip.dives.order(date: :desc)
     else
