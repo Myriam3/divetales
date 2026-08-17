@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_14_091521) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_17_142915) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -79,6 +79,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_14_091521) do
     t.datetime "updated_at", null: false
     t.index ["location_id"], name: "index_dives_on_location_id"
     t.index ["trip_id"], name: "index_dives_on_trip_id"
+  end
+
+  create_table "identifications", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "dive_id"
+    t.jsonb "results"
+    t.bigint "species_id"
+    t.string "status"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.text "user_prompt"
+    t.index ["dive_id"], name: "index_identifications_on_dive_id"
+    t.index ["species_id"], name: "index_identifications_on_species_id"
+    t.index ["user_id"], name: "index_identifications_on_user_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -157,6 +171,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_14_091521) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "dives", "locations"
   add_foreign_key "dives", "trips"
+  add_foreign_key "identifications", "dives"
+  add_foreign_key "identifications", "species"
+  add_foreign_key "identifications", "users"
   add_foreign_key "locations", "countries"
   add_foreign_key "picture_species", "pictures"
   add_foreign_key "picture_species", "species"

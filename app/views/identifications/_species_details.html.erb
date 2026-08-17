@@ -6,10 +6,10 @@
         scientific_name: details["scientific_name"],
         common_name: details["common_name"],
         default_photo_url: details["default_photo_url"],
-        dive_id: @dive&.id
+        dive_id: dive_id,
+        identification_id: identification_id
       ),
-      class: "btn btn-primary",
-      data: { turbo_frame: "_top" } %>
+      class: "btn btn-primary" %>
   </div>
 
   <!-- Species -->

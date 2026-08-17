@@ -25,7 +25,10 @@
         <div data-results-target="content"
             class="<%= 'd-none' unless index == 0 %>">
 
-          <%= render "identifications/result_card", result: result %>
+          <%= render "identifications/result_card",
+                      result: result,
+                      dive: @dive,
+                      identification: @identification %>
 
         </div>
       <% end %>

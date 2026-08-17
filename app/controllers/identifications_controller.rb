@@ -2,17 +2,19 @@ require "open-uri"
 
 class IdentificationsController < ApplicationController
   def index
-    @dive = Dive.find_by(id: params[:dive_id] || session[:identification_dive_id])
+    @dive = Dive.find_by(id: params[:dive_id])
+    if params[:identification_id].present?
+      @identification = current_user.identifications.find(
+        params[:identification_id]
+      )
+
+      @results = @identification.results
+    end
   end
 
   def create
-    session.delete(:species_details)
     @dive = Dive.find_by(id: params[:dive_id])
-    if @dive
-      session[:identification_dive_id] = @dive.id
-    else
-      session.delete(:identification_dive_id)
-    end
+
     upload = identification_params[:upload]
     camera = identification_params[:camera]
     image = upload || camera
@@ -45,10 +47,14 @@ class IdentificationsController < ApplicationController
       dive_context: dive_context,
       additional_info: additional_info
     )
+
+    @identification = current_user.identifications.create!(
+      dive: @dive,
+      user_prompt: user_prompt,
+      status: :pending
+    )
+
     begin
-      Rails.logger.debug "=== BEFORE AI ==="
-      Rails.logger.debug "IMAGE: #{image.inspect}"
-      Rails.logger.debug "USER PROMPT: #{user_prompt.inspect}"
       if image.present?
         image.tempfile.rewind
       end
@@ -58,21 +64,17 @@ class IdentificationsController < ApplicationController
         image: image
       ).call
 
-      Rails.logger.debug "=== AFTER AI ==="
-      Rails.logger.debug "RESULTS: #{@results.inspect}"
-
       if @results.blank?
         flash.now[:alert] = "The identification service didn't return any results. Please try again."
         render :index, status: :unprocessable_entity
         return
       end
-    rescue StandardError => e
-      Rails.logger.error "=== IDENTIFICATION ERROR ==="
-      Rails.logger.error "CLASS: #{e.class}"
-      Rails.logger.error "MESSAGE: #{e.message}"
-      Rails.logger.error e.full_message
-      Rails.logger.error "============================"
 
+      @identification.update!(
+        results: @results
+      )
+
+    rescue StandardError => e
       flash.now[:alert] =
         "We encountered an issue connecting to the AI service. Please try again later."
 
@@ -84,20 +86,12 @@ class IdentificationsController < ApplicationController
       # Rewind the file so ActiveStorage can read it from the beginning
       image.tempfile.rewind
 
-      blob = ActiveStorage::Blob.create_and_upload!(
+      @identification.image.attach(
         io: image.tempfile,
         filename: image.original_filename,
         content_type: image.content_type
       )
-
-      session[:identification_image_blob_id] = blob.id
-    else
-      session.delete(:identification_image_blob_id)
     end
-
-    Rails.logger.debug "=== IDENTIFICATION RESULTS ==="
-    Rails.logger.debug @results.inspect
-    Rails.logger.debug "=============================="
 
     respond_to do |format|
       format.html { render :index, status: :unprocessable_entity }
@@ -106,24 +100,27 @@ class IdentificationsController < ApplicationController
   end
 
   def details
-    @scientific_name = params[:scientific_name]
-    @common_name = params[:common_name]
+    @scientific_name = params[:scientific_name].to_s.strip
+    @common_name = params[:common_name].to_s.strip
     @dive_id = params[:dive_id]
+    @identification = current_user.identifications.find(
+        params[:identification_id]
+      )
 
-    cached_details = session[:species_details] || {}
+    cache_key = "species_details/#{@scientific_name.to_s.strip.downcase}"
 
-    if cached_details[@scientific_name].present?
-      @details = cached_details[@scientific_name]
-    else
-      @details = SpeciesDetailsService.new(
+    @details = Rails.cache.fetch(cache_key, expires_in: 1.hour) do
+      SpeciesDetailsService.new(
         scientific_name: @scientific_name,
         common_name: @common_name
       ).call
+    end
 
-      if @details.present?
-        cached_details[@scientific_name] = @details
-        session[:species_details] = cached_details
-      end
+    if @details.blank?
+      redirect_to identification_path(
+        identification_id: @identification.id
+      ), alert: "Unable to load species details."
+      return
     end
   end
 
@@ -132,28 +129,38 @@ class IdentificationsController < ApplicationController
     @common_name = params[:common_name].to_s.strip
     @default_photo_url = params[:default_photo_url]
 
+    @identification = current_user.identifications.find_by(
+      id: params[:identification_id]
+    )
+
     @species = Species.find_by(
       scientific_name: @scientific_name
     )
 
-    @image_blob = if session[:identification_image_blob_id].present?
-                    ActiveStorage::Blob.find_by(
-                      id: session[:identification_image_blob_id]
-                    )
-                  end
+    @dive = current_user.dives.find_by(
+      id: params[:dive_id]
+    )
 
-    @dive = Dive.find_by(id: params[:dive_id])
-    @trip = current_user.trips.find_by(id: params[:trip_id])
+    @trip = current_user.trips.find_by(
+      id: params[:trip_id]
+    )
+
     if @trip
       @dives = @trip.dives.order(date: :desc)
-      index = @dives.index(@dive)
-      @dive_number = @dives.length - index
+      if @dive.present?
+        index = @dives.index(@dive)
+        @dive_number = @dives.length - index if index
+      end
     else
       @trips = current_user.trips.order(created_at: :desc)
     end
   end
 
   def save
+    @identification = current_user.identifications.find(
+      params[:identification_id]
+    )
+
     dive_id = params[:dive_id]
 
     if dive_id.blank?
@@ -195,13 +202,11 @@ class IdentificationsController < ApplicationController
     # --- STEP 2: Create the Dive's Picture Record ---
     @picture = @dive.pictures.build
 
-    if session[:identification_image_blob_id].present?
-      # User uploaded an image
-      blob = ActiveStorage::Blob.find_by(id: session[:identification_image_blob_id])
+    if @identification.image.attached?
       @picture.source = :user_uploaded
-      @picture.photo.attach(blob)
+      @picture.photo.attach(@identification.image.blob)
+
     elsif @species.default_photo.attached?
-      # User didn't upload, but we successfully saved the web image
       @picture.source = :species_default
       @picture.photo.attach(@species.default_photo.blob)
     end
@@ -212,10 +217,12 @@ class IdentificationsController < ApplicationController
       PictureSpecy.create!(picture: @picture, species: @species)
     end
 
-    session.delete(:identification_image_blob_id)
-    session.delete(:identification_results)
-    session.delete(:species_details)
-    session.delete(:identification_dive_id)
+    @identification.update!(
+      status: :confirmed,
+      species: @species,
+      dive: @dive
+    )
+
     redirect_to dive_path(@dive), notice: "Successfully added #{@species.name} to your dive!"
   end
 

@@ -14,6 +14,7 @@ class Dive < ApplicationRecord
   belongs_to :location
   has_many :pictures, dependent: :destroy
   has_many :species, through: :pictures
+  has_many :identifications, dependent: :nullify
 
   validates :trip, :location, :date, presence: true
   validates :dive_site_name, presence: true, length: { maximum: 150 }

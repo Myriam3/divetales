@@ -46,19 +46,20 @@
       </div>
     <% end %>
 
-
+    <%= debug result %>
     <!-- View More Details -->
     <div class="mt-4 text-end">
       <%= link_to "View more details →",
             identification_details_path(
               scientific_name: result[:scientific_name],
               common_name: result[:common_name],
-              dive_id: @dive&.id
+              dive_id: @dive&.id,
+              identification_id: identification.id
             ),
             class: "btn btn-outline-primary",
             data: {
               turbo_frame: "identification-content",
-              # turbo_action: "advance"
+              turbo_action: "advance"
             } %>
     </div>
 

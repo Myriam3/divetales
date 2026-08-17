@@ -29,6 +29,7 @@
             identification_save_path,
             method: :post,
             params: {
+              identification_id: @identification.id,
               dive_id: @dive.id,
               scientific_name: @scientific_name,
               common_name: @common_name,
@@ -66,6 +67,7 @@
                   identification_save_path,
                   method: :post,
                   params: {
+                    identification_id: @identification.id,
                     dive_id: dive.id,
                     scientific_name: @scientific_name,
                     common_name: @common_name,
@@ -98,10 +100,11 @@
                     scientific_name: @scientific_name,
                     common_name: @common_name,
                     default_photo_url: @default_photo_url,
+                    identification_id: @identification.id,
                     trip_id: trip.id
                   ),
                   class: "list-group-item list-group-item-action",
-                  data: { turbo_frame: "_top" } %>
+                  # data: { turbo_frame: "_top" } %>
 
           <% end %>
 
