@@ -6,8 +6,8 @@ class IdentificationsController < ApplicationController
   end
 
   def create
-    @dive = Dive.find_by(id: params[:dive_id])
     session.delete(:species_details)
+    @dive = Dive.find_by(id: params[:dive_id])
     if @dive
       session[:identification_dive_id] = @dive.id
     else
@@ -108,6 +108,7 @@ class IdentificationsController < ApplicationController
   def details
     @scientific_name = params[:scientific_name]
     @common_name = params[:common_name]
+    @dive_id = params[:dive_id]
 
     cached_details = session[:species_details] || {}
 
@@ -119,8 +120,10 @@ class IdentificationsController < ApplicationController
         common_name: @common_name
       ).call
 
-      cached_details[@scientific_name] = @details
-      session[:species_details] = cached_details
+      if @details.present?
+        cached_details[@scientific_name] = @details
+        session[:species_details] = cached_details
+      end
     end
   end
 
@@ -143,6 +146,8 @@ class IdentificationsController < ApplicationController
     @trip = current_user.trips.find_by(id: params[:trip_id])
     if @trip
       @dives = @trip.dives.order(date: :desc)
+      index = @dives.index(@dive)
+      @dive_number = @dives.length - index
     else
       @trips = current_user.trips.order(created_at: :desc)
     end

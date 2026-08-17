@@ -52,12 +52,13 @@
       <%= link_to "View more details →",
             identification_details_path(
               scientific_name: result[:scientific_name],
-              common_name: result[:common_name]
+              common_name: result[:common_name],
+              dive_id: @dive&.id
             ),
             class: "btn btn-outline-primary",
             data: {
               turbo_frame: "identification-content",
-              turbo_action: "advance"
+              # turbo_action: "advance"
             } %>
     </div>
 

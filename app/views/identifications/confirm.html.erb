@@ -21,7 +21,8 @@
         This species will be added to this dive.
       </div>
 
-      <% dive_title = "##{@dive.number} " %>
+      <% dive_number = "##{@dive_number}" %>
+      <% dive_title = "##{dive_number} " %>
       <% dive_title += @dive.dive_site_name.blank? ? @dive.location.name : @dive.dive_site_name %>
 
       <%= button_to "Add to #{dive_title}",

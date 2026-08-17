@@ -1,6 +1,7 @@
 <%= simple_form_for :identification, url: identification_path do |f| %>
   <%= f.input :upload, as: :file, required: false %>
   <%= f.input :camera, as: :file, input_html: { capture: 'environment', accept: 'image/*' }, required: false %>
+  <%= hidden_field_tag :dive_id, @dive&.id %>
   <div data-controller="identification-form">
 
     <div class="identification-section">
@@ -87,9 +88,9 @@
         <%= f.input :depth,
           as: :text,
           placeholder: "e.g. around 15m",
-          input_html: {
-            value: @dive&.max_depth
-          },
+          # input_html: {
+          #   value: @dive&.max_depth
+          # },
           required: false
         %>
         <%= f.input :habitat,
