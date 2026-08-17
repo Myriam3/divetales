@@ -8,7 +8,7 @@ class IdentificationsController < ApplicationController
         params[:identification_id]
       )
 
-      @results = @identification.results
+      @results = @identification.results.map(&:deep_symbolize_keys)
     end
   end
 
@@ -103,25 +103,36 @@ class IdentificationsController < ApplicationController
     @scientific_name = params[:scientific_name].to_s.strip
     @common_name = params[:common_name].to_s.strip
     @dive_id = params[:dive_id]
+
     @identification = current_user.identifications.find(
-        params[:identification_id]
+      params[:identification_id]
       )
 
-    cache_key = "species_details/#{@scientific_name.to_s.strip.downcase}"
+    @result = @identification.results.find do |result|
+      result["scientific_name"].to_s.strip == @scientific_name
+    end
+
+    if @result.blank?
+      redirect_to identification_path(
+        identification_id: @identification.id
+      ), alert: "Unable to find this species in the identification results."
+      return
+    end
+
+    cache_key = "identification/#{@identification.id}/species_details/#{@scientific_name.downcase}"
 
     @details = Rails.cache.fetch(cache_key, expires_in: 1.hour) do
       SpeciesDetailsService.new(
         scientific_name: @scientific_name,
-        common_name: @common_name
+        common_name: @common_name,
+        inaturalist: @result["inaturalist"]
       ).call
     end
 
-    if @details.blank?
-      redirect_to identification_path(
-        identification_id: @identification.id
-      ), alert: "Unable to load species details."
-      return
-    end
+    @details ||= {
+      "scientific_name" => @scientific_name,
+      "common_name" => @common_name
+    }
   end
 
   def confirm
@@ -129,8 +140,8 @@ class IdentificationsController < ApplicationController
     @common_name = params[:common_name].to_s.strip
     @default_photo_url = params[:default_photo_url]
 
-    @identification = current_user.identifications.find_by(
-      id: params[:identification_id]
+    @identification = current_user.identifications.find(
+      params[:identification_id]
     )
 
     @species = Species.find_by(

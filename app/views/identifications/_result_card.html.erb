@@ -46,7 +46,6 @@
       </div>
     <% end %>
 
-    <%= debug result %>
     <!-- View More Details -->
     <div class="mt-4 text-end">
       <%= link_to "View more details →",
@@ -58,15 +57,15 @@
             ),
             class: "btn btn-outline-primary",
             data: {
-              turbo_frame: "identification-content",
-              turbo_action: "advance"
-            } %>
+            turbo: false
+          } %>
     </div>
 
     <%= link_to "Confirm this species",
       identification_confirm_path(
         scientific_name: result[:scientific_name],
         common_name: result[:common_name],
+        identification_id: identification.id,
         dive_id: @dive&.id
       ),
       class: "btn btn-primary",

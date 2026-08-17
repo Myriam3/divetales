@@ -3,25 +3,19 @@
   <div class="species-details-page">
 
     <div class="mb-4">
-      <%# <button type="button"
-              class="btn btn-outline-secondary"
-              onclick="history.back()">
-        ← Back to possible matches
-      </button> %>
       <%= link_to "← Back to possible matches",
       identification_path(
         identification_id: @identification.id
       ),
       class: "btn btn-outline-secondary",
-      data: {
-        turbo_frame: "identification-content",
-        turbo_action: "advance"
-      } %>
+      data: { turbo: false } %>
     </div>
 
     <%= render "identifications/species_details",
           details: @details,
-          identification_id: @identification_id,
+          scientific_name: @scientific_name,
+          common_name: @common_name,
+          identification_id: @identification.id,
           dive_id: @dive_id %>
 
   </div>

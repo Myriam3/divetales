@@ -1,59 +1,47 @@
-require "open-uri"
+# require "open-uri"
 require "json"
 
 class SpeciesDetailsService
-  def initialize(scientific_name:, common_name:)
+  def initialize(scientific_name:, common_name:, inaturalist:)
     @scientific_name = scientific_name
     @common_name = common_name
+    @inaturalist = inaturalist
   end
 
   def call
-    taxon = fetch_inaturalist_taxon
-    return nil unless taxon
-    generate_details(taxon)
+    generate_details
   end
 
   private
 
-  def user_prompt(taxon)
+  def user_prompt
     <<~PROMPT
       Candidate species:
       Common name: #{@common_name}
       Scientific name: #{@scientific_name}
 
-      Verified iNaturalist information:
-      #{taxon.to_json}
+      iNaturalist information:
+      #{@inaturalist.to_json}
+
+      Use the candidate species above as the subject of this response.
+
+      IMPORTANT:
+      - Do not change the scientific_name.
+      - Do not substitute a different species.
+      - The scientific_name "#{@scientific_name}" is authoritative.
+      - The common_name "#{@common_name}" is the common name associated with this candidate.
+      - If iNaturalist information is available, use it as the taxonomic reference.
+      - If iNaturalist information is empty, provide the best available details based on your marine biology knowledge.
+      - Do not invent iNaturalist information.
     PROMPT
   end
 
-  def fetch_inaturalist_taxon
-    url = "https://api.inaturalist.org/v1/taxa?q=#{URI.encode_www_form_component(@scientific_name)}"
-
-    response = JSON.parse(URI.open(url).read)
-
-    taxon = response["results"]&.first
-
-    return nil unless taxon
-    {
-      id: taxon["id"],
-      name: taxon["name"],
-      common_name: taxon["preferred_common_name"],
-      rank: taxon["rank"],
-      ancestor_ids: taxon["ancestor_ids"],
-      wikipedia_url: taxon["wikipedia_url"],
-      default_photo: taxon.dig("default_photo", "medium_url")
-    }
-    rescue OpenURI::HTTPError, SocketError, Timeout::Error => e
-    Rails.logger.error("iNaturalist error: #{e.message}")
-    nil
-  end
-
-  def generate_details(taxon)
+  def generate_details
     chat = RubyLLM.chat(
       model: "gpt-5.4-mini"
     ).with_instructions(SpeciesDetailsSystemPrompt::SYSTEM_PROMPT)
 
-    response = chat.ask(user_prompt(taxon))
+    response = chat.ask(user_prompt)
 
     JSON.parse(response.content)
   end
