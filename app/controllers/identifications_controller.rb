@@ -7,6 +7,7 @@ class IdentificationsController < ApplicationController
 
   def create
     @dive = Dive.find_by(id: params[:dive_id])
+    session.delete(:species_details)
     upload = identification_params[:upload]
     camera = identification_params[:camera]
     image = upload || camera
@@ -103,10 +104,19 @@ class IdentificationsController < ApplicationController
     @scientific_name = params[:scientific_name]
     @common_name = params[:common_name]
 
-    @details = SpeciesDetailsService.new(
-      scientific_name: @scientific_name,
-      common_name: @common_name
-    ).call
+    cached_details = session[:species_details] || {}
+
+    if cached_details[@scientific_name].present?
+      @details = cached_details[@scientific_name]
+    else
+      @details = SpeciesDetailsService.new(
+        scientific_name: @scientific_name,
+        common_name: @common_name
+      ).call
+
+      cached_details[@scientific_name] = @details
+      session[:species_details] = cached_details
+    end
   end
 
   def confirm
