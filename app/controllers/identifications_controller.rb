@@ -2,12 +2,17 @@ require "open-uri"
 
 class IdentificationsController < ApplicationController
   def index
-    @dive = Dive.find_by(id: params[:dive_id])
+    @dive = Dive.find_by(id: params[:dive_id] || session[:identification_dive_id])
   end
 
   def create
     @dive = Dive.find_by(id: params[:dive_id])
     session.delete(:species_details)
+    if @dive
+      session[:identification_dive_id] = @dive.id
+    else
+      session.delete(:identification_dive_id)
+    end
     upload = identification_params[:upload]
     camera = identification_params[:camera]
     image = upload || camera
@@ -123,6 +128,7 @@ class IdentificationsController < ApplicationController
     @scientific_name = params[:scientific_name].to_s.strip
     @common_name = params[:common_name].to_s.strip
     @default_photo_url = params[:default_photo_url]
+
     @species = Species.find_by(
       scientific_name: @scientific_name
     )
@@ -132,10 +138,27 @@ class IdentificationsController < ApplicationController
                       id: session[:identification_image_blob_id]
                     )
                   end
+
+    @dive = Dive.find_by(id: params[:dive_id])
+    @trips = current_user.trips.includes(:dives).order(created_at: :desc)
+    if @trip
+      @dives = @trip.dives.order(date: :desc)
+    else
+      @trips = current_user.trips.order(created_at: :desc)
+    end
   end
 
   def save
-    @dive = Dive.find(params[:dive_id])
+    dive_id = params[:dive_id]
+
+    if dive_id.blank?
+      redirect_to identification_path,
+                  alert: "Please choose a dive first."
+      return
+    end
+
+    @dive = current_user.dives.find(dive_id)
+
     scientific_name = params[:scientific_name].to_s.strip
     common_name = params[:common_name].to_s.strip
 
@@ -180,11 +203,14 @@ class IdentificationsController < ApplicationController
 
     # --- STEP 3: Save and Associate ---
     # We only save the picture if it actually has a photo attached
-    if @picture.photo.attached? && @picture.save
+    if @picture.photo.attached? && @picture.save!
       PictureSpecy.create!(picture: @picture, species: @species)
     end
 
     session.delete(:identification_image_blob_id)
+    session.delete(:identification_results)
+    session.delete(:species_details)
+    session.delete(:identification_dive_id)
     redirect_to dive_path(@dive), notice: "Successfully added #{@species.name} to your dive!"
   end
 

@@ -61,14 +61,14 @@
             } %>
     </div>
 
-    <%= button_to "Confirm this species",
-      identification_confirm_path,
-      method: :post,
-      params: {
+    <%= link_to "Confirm this species",
+      identification_confirm_path(
         scientific_name: result[:scientific_name],
-        common_name: result[:common_name]
-      },
-      class: "btn btn-primary" %>
+        common_name: result[:common_name],
+        dive_id: @dive&.id
+      ),
+      class: "btn btn-primary",
+      data: { turbo_frame: "_top" } %>
 
   </div>
 
