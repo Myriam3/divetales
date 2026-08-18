@@ -1,6 +1,49 @@
-<%= simple_form_for :identification, url: identification_path do |f| %>
-  <%= f.input :upload, as: :file, required: false %>
-  <%= f.input :camera, as: :file, input_html: { capture: 'environment', accept: 'image/*' }, required: false %>
+<%= simple_form_for :identification, as: :identification, url: identification_path do |f| %>
+  <div data-controller="image-preview">
+    <%= f.input :upload,
+          as: :file,
+          required: false,
+          input_html: {
+            accept: "image/*",
+            data: {
+              image_preview_target: "input",
+              action: "change->image-preview#preview"
+            }
+          } %>
+
+    <div data-image-preview-target="container"
+        class="mt-3 d-none">
+      <img data-image-preview-target="image"
+          class="img-fluid rounded"
+          style="max-height: 300px;"
+          alt="Selected image preview">
+    </div>
+  </div>
+
+  <div data-controller="image-preview">
+    <%= f.input :camera,
+          as: :file,
+          required: false,
+          input_html: {
+            capture: "environment",
+            accept: "image/*",
+            data: {
+              image_preview_target: "input",
+              action: "change->image-preview#preview"
+            }
+          } %>
+
+    <div data-image-preview-target="container"
+        class="mt-3 d-none">
+      <img data-image-preview-target="image"
+          class="img-fluid rounded"
+          style="max-height: 300px;"
+          alt="Selected image preview">
+    </div>
+  </div>
+
+  <%= hidden_field_tag :dive_id, @dive&.id %>
+
   <div data-controller="identification-form">
 
     <div class="identification-section">
@@ -62,22 +105,34 @@
         <%= f.input :location,
           as: :text,
           placeholder: "e.g. Komodo National Park",
+          input_html: {
+            value: @dive&.location&.name
+          },
           required: false
         %>
         <%= f.input :dive_site,
           as: :text,
           label: "Dive site",
           placeholder: "e.g. shotgun",
+          input_html: {
+            value: @dive&.dive_site_name
+          },
           required: false
         %>
         <%= f.input :date,
           as: :text,
           placeholder: "e.g. 2025-10-01",
+          input_html: {
+            value: @dive&.date
+          },
           required: false
         %>
         <%= f.input :depth,
           as: :text,
           placeholder: "e.g. around 15m",
+          # input_html: {
+          #   value: @dive&.max_depth
+          # },
           required: false
         %>
         <%= f.input :habitat,
@@ -104,7 +159,10 @@
         <%= f.input :additional_info,
           as: :text,
           label: "Anything else...",
-          input_html: { rows: 5 },
+          input_html: {
+            rows: 5,
+            value: @dive&.dive_types&.any? ? "Dive type: #{@dive.dive_types.join(", ")}" : nil
+          },
           # hint: sanitize("<li>Describe the Marine Life you saw if you couldn't capture it...</li>\n\n<li>Or give more context of your picture so that the Identification could be more accurate.</li>"),
           placeholder: "Anything else that might help identify it...",
           required: false
@@ -112,5 +170,6 @@
       </div>
     </div>
   </div>
-  <%= f.submit "Identify" %>
+
+  <%= f.submit "Identify", class: "btn btn-secondary mt-5" %>
 <% end %>

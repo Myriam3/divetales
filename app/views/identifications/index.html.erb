@@ -1,14 +1,12 @@
 <div class="identification-page">
-  <h1>Marine Life ID</h1>
+  <h1 class="mt-5 mb-5">Marine Life ID</h1>
   <%= turbo_frame_tag "identification-content" do %>
 
     <% if @results.present? %>
-      <%= render "identifications/results", results: @results %>
+      <%= render "identifications/results", results: @results, identification: @identification %>
     <% else %>
       <%= render "identifications/form" %>
     <% end %>
 
   <% end %>
-
-
 </div>
