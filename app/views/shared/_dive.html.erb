@@ -1,0 +1,254 @@
+<% if dive %>
+  <p>
+    <%= render "shared/icon", icon_name: "calendar", label: "Date: " %>
+    <%= dive.date %>
+  </p>
+
+  <% if dive.dive_types.any? %>
+    <p>
+      <%= render "shared/icon", icon_name: "scuba-diving" %>
+      <span>Dive types:</span>
+      <% dive.dive_types.each do |type| %>
+        <span class="badge text-bg-secondary">
+          <%= type.capitalize %>
+        </span>
+      <% end %>
+    </p>
+  <% end %>
+
+  <% unless dive.dive_site_name.blank? %>
+    <p>
+      <%= render "shared/icon", icon_name: "anchor", label: "Dive site: " %>
+      <%= dive.dive_site_name %>
+    </p>
+  <% end %>
+
+  <% unless dive.latitude.blank? || dive.longitude.blank? %>
+    <p>
+      <%= render "shared/icon", icon_name: "map-pin", label: "Coordinates: " %>
+      <%= dive.latitude %>,<%= dive.longitude %>
+    </p>
+  <% end %>
+
+  <p>
+    <%= render "shared/icon", icon_name: "world-pin", label: "Location: " %>
+    <%= dive.location.name %>
+  </p>
+
+  <p>
+    <%= icon dive.location.country.code.downcase, library: "flags", width: 20, height: 20 %>
+    <%= dive.location.country.name %>
+  </p>
+
+  <hr>
+
+  <p>
+    <%= link_to trip_path(dive.trip), class: "text-decoration-none" do %>
+      <%= render "shared/icon", icon_name: "luggage", label: "Trip:" %>
+      <%= @dive.trip.title %>
+    <% end %>
+  </p>
+
+  <hr>
+
+  <% if @dive.pictures.any? %>
+  <p>
+    <%= render "shared/icon", icon_name: "camera-spark" %>
+    <%= @dive.pictures.size %> pictures
+    <br>
+    <%= link_to "See pictures", "#pictures" %>
+  </p>
+  <% end %>
+
+  <% species = @dive.pictures.flat_map(&:species).uniq %>
+
+  <% if species.any? %>
+  <p>
+    <%= render "shared/icon", icon_name: "fish" %>
+    <%= species.count %> species
+      <br>
+    <% species.each do |species| %>
+      <span class="badge text-bg-secondary">
+        <%= species.name %>
+      </span>
+    <% end %>
+      <br>
+    <%= link_to "See all species", "#species" %>
+  </p>
+    <hr>
+  <% end %>
+
+  <h2>Log</h2>
+
+  <% unless dive.duration.blank? %>
+    <p>
+      <%= render "shared/icon", icon_name: "clock" %>
+      <span>Duration:</span>
+      <%= dive.duration %>min
+    </p>
+  <% end %>
+
+  <!-- TODO -->
+
+  <p>
+    <%= render "shared/icon", icon_name: "ripple-down" %>
+    <span>Start:</span>
+    datetime (in progress)
+  </p>
+
+  <p>
+    <%= render "shared/icon", icon_name: "ripple-up" %>
+    <span>End:</span>
+    datetime (in progress)
+  </p>
+
+  <p>
+    <%= render "shared/icon", icon_name: "scuba-diving-tank", label: "Tank:" %>
+    Air or Nitrox (in progress)
+  </p>
+
+  <p>
+    <%= render "shared/icon", icon_name: "gauge", label: "Gauge:" %>
+    Pressure start / end (in progress)
+  </p>
+
+  <% unless dive.max_depth.blank? %>
+    <p>
+      <%= render "shared/icon", icon_name: "arrow-bar-to-down" %>
+      <span>Max-depth:</span>
+      <%= number_with_precision(dive.max_depth, precision: 1, strip_insignificant_zeros: true) %>m
+    </p>
+  <% end %>
+
+  <% unless dive.avg_depth.blank? %>
+    <p>
+      <%= render "shared/icon", icon_name: "arrows-down-up" %>
+      <span>Average depth:</span>
+      <%= number_with_precision(dive.avg_depth, precision: 1, strip_insignificant_zeros: true) %>m
+    </p>
+  <% end %>
+
+  <% unless dive.avg_temp.blank? %>
+    <p>
+      <%= render "shared/icon", icon_name: "temperature" %>
+      <span>Average temperature:</span>
+      <%= number_with_precision(dive.avg_temp, precision: 1, strip_insignificant_zeros: true) %>°C
+    </p>
+  <% end %>
+
+  <% unless dive.min_temp.blank? %>
+    <p>
+      <%= render "shared/icon", icon_name: "temperature-minus" %>
+      <span>Temperature min:</span>
+      <%= number_with_precision(dive.min_temp, precision: 1, strip_insignificant_zeros: true) %>°C
+    </p>
+  <% end %>
+
+  <% unless dive.max_temp.blank? %>
+    <p>
+      <%= render "shared/icon", icon_name: "temperature-plus" %>
+      <span>Temperature max:</span>
+      <%= number_with_precision(dive.max_temp, precision: 1, strip_insignificant_zeros: true) %>°C
+    </p>
+  <% end %>
+
+  <hr>
+
+  <h2>Memo</h2>
+
+  <% unless dive.note.blank? %>
+    <p>
+      <%= render "shared/icon", icon_name: "notebook" %>
+      <%= dive.note %>
+    </p>
+  <% end %>
+<% end %>
+
+<hr>
+
+<section id="species" class="mt-5">
+  <h2 class="mb-4">
+    <%= render "shared/icon", icon_name: "fish", icon_size: 36 %>
+    Encountered marine life
+  </h2>
+
+  <p class="mb-4">
+    <%= link_to identification_path(dive_id: @dive.id), class: "btn btn-secondary" do %>
+    <%= render "shared/icon", icon_name: "photo-spark" %>
+      Identify a new species
+    <% end %>
+  </p>
+
+  <% if @species.any? %>
+    <ul class="list-unstyled">
+      <% species.each do |species| %>
+        <li class="d-flex align-items-center gap-3 mb-3">
+          <% picture = species.pictures.find { |picture| picture.photo.attached? } %>
+          <% if picture %>
+            <div class="position-relative flex-shrink-0">
+              <%= image_tag picture.photo,
+                  class: "rounded object-fit-cover",
+                  style: "width: 100px; height: 100px;" %>
+
+              <% if picture.species_default? %>
+                <span class="badge bg-secondary position-absolute bottom-0 start-0 m-1">
+                  Reference
+                </span>
+              <% end %>
+            </div>
+          <% end %>
+
+          <p>
+            <strong><%= species.name %></strong>
+            <br>
+            <em><%= species.scientific_name %></em>
+            <br>
+            <%= render "shared/icon", icon_name: "binary-tree" %>
+            <span><%= species.category.classification.humanize %>
+            <br>
+            <%= render "shared/icon", icon_name: "fish" %>
+            <span><%= species.category.name %>
+          </span>
+
+          <% unless species.wiki_link.blank? %>
+            <br>
+            <a href="<%= species.wiki_link %>" class="text-decoration-none" target="_blank">
+              <%= render "shared/icon", icon_name: "brand-wikipedia" %>
+              Wikipedia
+            </a>
+          <% end %>
+
+          </p>
+        </li>
+      <% end %>
+  </ul>
+  <% else %>
+    <p>No species identified for this dive.</p>
+  <% end %>
+</section>
+
+<section id="pictures" class="mt-5">
+  <h2 class="mb-4">
+    <%= render "shared/icon", icon_name: "camera-spark", icon_size: 36 %>
+    Dive pictures
+  </h2>
+
+  <p class="mb-4">
+    <%= link_to new_picture_path(dive_id: @dive.id, trip_id: @dive.trip_id), class: "btn btn-secondary" do %>
+    <%= render "shared/icon", icon_name: "photo-spark" %>
+      Add a new picture
+    <% end %>
+  </p>
+
+  <% if @dive.pictures.any? %>
+    <ul class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 list-unstyled">
+      <% @dive.pictures.each do |picture| %>
+        <li class="col">
+          <%= render "shared/picture_card", picture: picture, show_info: false %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No pictures for this dive.</p>
+  <% end %>
+</section>

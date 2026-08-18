@@ -1,0 +1,192 @@
+<% content_for :title, "New Dive" %>
+
+<div class="container mt-4">
+  <%= simple_form_for [@trip, @dive] do |f| %>
+    <%= f.error_notification %>
+    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+    <h2 class="mb-3">1. Import a dive log</h2>
+    <p class="mb-0">Export your dive log as a FIT format and import it here (optional).</p>
+    <p class="mb-0">If you don't use a compatible dive computer, you can input your data below.</p>
+    <p class="mb-4"><small>Currently supported: FIT format only (Garmin, Suunto, ...)</small></p>
+    <p class="mb-5">
+      <button type="button" class="btn btn-secondary mb-3">
+        <%= render "shared/icon", icon_name: "device-watch-stats" %>
+        Import .fit file
+      </button>
+    </p>
+
+    <h2 class="mb-3">2. Complete/Edit your dive data</h2>
+    <% if @dive.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(@dive.errors.count, "error") %> prevented this dive from being saved:</h4>
+      <ul>
+        <% @dive.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="mb-3">
+              <%= render "shared/icon", icon_name: "calendar" ,icon_size: 32 %>
+              Date
+            </h3>
+            <%= f.input :date,
+                label: "Date of the dive",
+                as: :date,
+                html5: true,
+                required: true %>
+          </div>
+        </div>
+
+        <div class="row">
+          <h3 class="col-md-12 mt-3 mb-3">
+            <%= render "shared/icon", icon_name: "world-pin", icon_size: 32 %>
+              Location
+          </h3>
+          <div class="col-md-6">
+            <%= f.input :location_id,
+                label: "Dive location (Can only select existing one for now)",
+                collection: Location.all.order(:name),
+                label_method: :name,
+                value_method: :id,
+                prompt: "Select a location",
+                required: true,
+                input_html: {
+                  class: "#{'is-invalid' if @dive.errors[:location].any?}"
+                } %>
+                <!-- <% if @dive.errors[:location][1] %>
+                  <div class="invalid-feedback d-block">
+                    Location <%= @dive.errors[:location][1] %>
+                  </div>
+                <% end %> -->
+          </div>
+          <div class="col-md-6">
+            <%= f.input :dive_site_name,
+                label: "Dive site",
+                placeholder: "Name of the dive site",
+                required: true %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <h3 class="mt-3 mb-3">
+              <%= render "shared/icon", icon_name: "scuba-diving", icon_size: 32 %>
+              <span>Dive types</span>
+            </h3>
+            <%= f.input :dive_types,
+                label: "Select type(s)",
+                collection: Dive::DIVE_TYPES,
+                as: :check_boxes,
+                item_wrapper_class: 'form-check-inline',
+                label_method: ->(type) { type.humanize },
+                include_hidden: false %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header">
+        <h3>
+          <%= render "shared/icon", icon_name: "device-watch-stats", icon_size: 32 %>
+          Details
+        </h3>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <h4 class="col-12 mb-3">
+            <%= render "shared/icon", icon_name: "clock", icon_size: 24 %>
+            Time
+          </h4>
+          <div class="col-md-6">
+            <%= f.input :duration,
+                label: "Duration (minutes)",
+                input_html: { min: 1, step: 1 } %>
+          </div>
+        </div>
+
+        <div class="row">
+          <h4 class="col-12 mt-2 mb-3">
+            <%= render "shared/icon", icon_name: "arrow-bar-to-down", icon_size: 24 %>
+            Depth
+          </h4>
+          <div class="col-md-6">
+            <%= f.input :max_depth,
+                label: "Maximum depth (m)",
+                input_html: { min: 0, step: 0.1 } %>
+          </div>
+          <div class="col-md-6">
+            <%= f.input :avg_depth,
+                label: "Average depth (m)",
+                input_html: { min: 0, step: 0.1 } %>
+          </div>
+        </div>
+
+        <div class="row">
+          <h4 class="col-12 mt-2 mb-3">
+            <%= render "shared/icon", icon_name: "temperature", icon_size: 24 %>
+            Temperature
+          </h4>
+          <div class="col-md-6">
+            <%= f.input :max_temp,
+                label: "Maximum temperature (°C)",
+                input_html: { step: 0.1 } %>
+          </div>
+          <div class="col-md-6">
+            <%= f.input :min_temp,
+                label: "Minimum temperature (°C)",
+                input_html: { step: 0.1 } %>
+          </div>
+          <div class="col-md-6">
+            <%= f.input :avg_temp,
+                label: "Average temperature (°C)",
+                input_html: { step: 0.1 } %>
+          </div>
+        </div>
+
+        <div class="row">
+          <h4 class="col-12 mb-3">
+            <%= render "shared/icon", icon_name: "map-pin", icon_size: 24 %>
+            Coordinates
+          </h4>
+          <div class="col-md-6">
+            <%= f.input :latitude,
+                label: "Latitude",
+                input_html: { step: 0.000001 } %>
+          </div>
+          <div class="col-md-6">
+            <%= f.input :longitude,
+                label: "Longitude",
+                input_html: { step: 0.000001 } %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header">
+        <h3>
+          <%= render "shared/icon", icon_name: "notebook" %>
+          Memo
+        </h3>
+      </div>
+      <div class="card-body">
+        <%= f.input :note,
+            label: "What do you want to remember about this dive?",
+            as: :text,
+            input_html: { rows: 5 } %>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <%= link_to "Cancel", @trip, class: "btn btn-outline-secondary" %>
+      <%= f.button :submit, "Add dive", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

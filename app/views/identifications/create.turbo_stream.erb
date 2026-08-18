@@ -1,3 +1,5 @@
-<%= turbo_stream.update "identification-results" do %>
-  <%= render "results" %>
+<%= turbo_stream.replace "identification-content" do %>
+  <%= turbo_frame_tag "identification-content" do %>
+    <%= render "identifications/results", results: @results, identification: @identification %>
+  <% end %>
 <% end %>

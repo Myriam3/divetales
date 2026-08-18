@@ -1,0 +1,12 @@
+<h1 class="mt-5 mb-4">Add a new dive</h1>
+
+<% if @trip %>
+  <p>
+    <strong>Trip:</strong>
+    <%= @trip.title %>
+  </p>
+
+  <%= render "form", dive: @dive %>
+<% else %>
+  Select a dive (in progress)
+<% end %>

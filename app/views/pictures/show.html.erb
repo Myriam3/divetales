@@ -1,0 +1,103 @@
+<div class="mt-5 mb-2">
+  <%= link_to trip_path(@picture.dive.trip), class: "text-decoration-none" do %>
+    <%= render "shared/icon", icon_name: "arrow-left" %>
+    <%= @picture.dive.trip.title %>
+  <% end %>
+</div>
+
+<div class="mb-5">
+  <%= link_to pictures_path, class: "text-decoration-none" do %>
+    <%= render "shared/icon", icon_name: "arrow-left" %>
+    All pictures
+  <% end %>
+</div>
+
+<% if @picture %>
+  <% heading_date = @picture.date_time.blank? ? @picture.updated_at : @picture.date_time %>
+
+  <h1 class="mt-5"><%= heading_date.strftime("%d/%m/%Y %H:%M") %></h1>
+  <p>
+    <%= link_to trip_path(@picture.dive.trip), class: "text-decoration-none" do %>
+      <%= render "shared/icon", icon_name: "luggage", label: "Trip:" %>
+    <%= @picture.dive.trip.title %>
+    <% end %>
+  </p>
+
+  <div class="row g-4">
+    <div class="col-12 col-lg-7">
+      <% if @picture.photo.attached? %>
+        <%= cl_image_tag @picture.photo.key,
+            class: "img-fluid",
+            crop: :fit %>
+      <% else %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="270" height="270" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-fish"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M16.69 7.44a6.973 6.973 0 0 0 -1.69 4.56c0 1.747 .64 3.345 1.699 4.571" /><path d="M2 9.504c7.715 8.647 14.75 10.265 20 2.498c-5.25 -7.761 -12.285 -6.142 -20 2.504" /><path d="M18 11v.01" /><path d="M11.5 10.5c-.667 1 -.667 2 0 3" /></svg>
+      <% end %>
+    </div>
+
+    <div class="col-12 col-lg-5">
+      <%= render "shared/picture_info",
+          picture: @picture,
+          dive: @picture.dive,
+          details: true %>
+
+      <p>
+        <%= link_to dive_path(@picture.dive), class: "text-decoration-none" do %>
+          <%= render "shared/icon", icon_name: "scuba-mask" %>
+          See dive
+        <% end %>
+      </p>
+
+      <% if @picture.species.any? %>
+        <h2 class="mt-5 mb-3"><%= render "shared/icon", icon_name: "photo-check", icon_size: 36 %> Identified species</h2>
+
+        <%= render "shared/species_list", species: @picture.species %>
+      <% else %>
+        <%= render "shared/icon", icon_name: "photo-question", icon_size: 36 %> No species identified
+
+        <p class="mt-3">
+          <%= link_to "#", class: "btn btn-secondary" do %>
+          <%= render "shared/icon", icon_name: "photo-spark" %>
+            Identify this species
+          <% end %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- TODO refactor -->
+  <% @related_species.each do |species, pictures| %>
+    <% if pictures.any? %>
+      <h2 class="mt-5">Other <%= species.name %> pictures</h2>
+
+      <div class="d-flex gap-2 overflow-auto">
+        <% pictures.each do |picture| %>
+          <% if picture.photo.attached? %>
+            <%= link_to picture_path(picture) do %>
+              <%= image_tag picture.photo,
+                  class: "rounded object-fit-cover",
+                  style: "width: 100px; height: 100px;" %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% @related_categories.each do |category, pictures| %>
+        <% if pictures.any? %>
+          <h2>Other <%= category.name %> pictures</h2>
+
+          <div class="d-flex gap-2 overflow-auto">
+            <% pictures.each do |picture| %>
+              <% if picture.photo.attached? %>
+                <%= link_to picture_path(picture) do %>
+                  <%= image_tag picture.photo,
+                      class: "rounded object-fit-cover",
+                      style: "width: 100px; height: 100px;" %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+<% end %>

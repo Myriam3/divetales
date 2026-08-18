@@ -1,0 +1,24 @@
+<div class="mt-5 mb-2">
+  <%= link_to dives_path, class: "text-decoration-none" do %>
+    <%= render "shared/icon", icon_name: "arrow-left" %>
+    All dives
+  <% end %>
+</div>
+
+<div class="mb-5">
+  <%= link_to trip_path(@dive.trip), class: "text-decoration-none" do %>
+    <%= render "shared/icon", icon_name: "arrow-left" %>
+    <%= @dive.trip.title %>
+  <% end %>
+</div>
+
+<% if @dive %>
+  <%
+    dive_title = @dive.dive_site_name.blank? ? @dive.location.name : @dive.dive_site_name
+    dive_title += ", #{@dive.date}"
+  %>
+
+  <h1 class="mb-5"><%= render "shared/icon", icon_name: "scuba-mask", icon_size: 40 %><%= dive_title %></h1>
+
+  <%= render "shared/dive", dive: @dive %>
+<% end %>

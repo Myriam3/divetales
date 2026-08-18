@@ -1,0 +1,24 @@
+<%= turbo_frame_tag "identification-content" do %>
+
+  <div class="species-details-page">
+
+    <div class="mb-4">
+      <%= link_to "← Back to possible matches",
+      identification_path(
+        identification_id: @identification.id
+      ),
+      class: "btn btn-outline-secondary",
+      data: { turbo: false } %>
+    </div>
+
+    <%= render "identifications/species_details",
+          details: @details,
+          scientific_name: @scientific_name,
+          common_name: @common_name,
+          identification_id: @identification.id,
+          dive_id: @dive_id,
+          default_photo_url: @default_photo_url %>
+
+  </div>
+
+<% end %>

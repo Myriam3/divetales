@@ -2,6 +2,69 @@
 
 Rails app generated with [lewagon/rails-templates](https://github.com/lewagon/rails-templates), created by the [Le Wagon coding bootcamp](https://www.lewagon.com) team.
 
+# Icons (can change library later or add custom icons)
+
+## tabler.io
+
+
+https://tabler.io/icons
+
+| Icon             | Use                                |
+| ---------------- | ---------------------------------- |
+| `arrow-left`     | Return link                        |
+| `luggage`        | Trips                              |
+| `scuba-mask`     | Dives                              |
+| `fish`           | Species                            |
+| `binary-tree`    | Class                              |
+| `photo-check`    | Identified species picture         |
+| `photo-question` | Unidentified species picture       |
+| `photo-spark`    | Identify a species                 |
+| `camera-spark`   | Pictures                           |
+| `world-pin`      | Dive location                      |
+| `map-pin`        | Coordinates                        |
+| `anchor`         | Dive site                          |
+| `calendar`       | Date                               |
+| `calendar-week`  | Start/End Dates                    |
+| `clock`          | Dive duration                      |
+| `scuba-diving`   | Dive types                         |
+| `arrow-bar-to-down` | Max depth                       |
+
+
+### Icon partial
+
+```
+<%= render "shared/icon", icon_name: "calendar" %>
+```
+
+With an accessible label
+
+
+```
+<%= render "shared/icon", icon_name: "calendar", label: "Date: " %>
+```
+
+Change the icon size (default: 20)
+
+```
+<%= render "shared/icon", icon_name: "calendar", label: "Date: ", icon_size: 40 %>
+```
+
+## Flags
+
+Ex: Japan
+
+```
+<%= icon "jp", library: "flags", width: 20, height: 20 %>
+
+```
+
+Location `country`
+
+```
+<%= icon @dive.location.country.code.downcase, library: "flags", width: 20, height: 20 %>
+```
+
+
 # Categories & Species
 
 * **Category** — User-oriented group used to organize species (ex: Shark, Sea Turtles, Nudibranches, ...)

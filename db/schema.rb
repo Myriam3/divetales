@@ -10,9 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_10_044421) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_17_142915) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.bigint "record_id", null: false
+    t.string "record_type", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.string "content_type"
+    t.datetime "created_at", null: false
+    t.string "filename", null: false
+    t.string "key", null: false
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
 
   create_table "categories", force: :cascade do |t|
     t.integer "classification", default: 0
@@ -24,9 +52,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_044421) do
   end
 
   create_table "countries", force: :cascade do |t|
+    t.string "code", limit: 2, null: false
     t.datetime "created_at", null: false
     t.string "name", limit: 150, null: false
     t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_countries_on_code", unique: true
   end
 
   create_table "dives", force: :cascade do |t|
@@ -51,6 +81,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_044421) do
     t.index ["trip_id"], name: "index_dives_on_trip_id"
   end
 
+  create_table "identifications", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "dive_id"
+    t.jsonb "results"
+    t.bigint "species_id"
+    t.string "status"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.text "user_prompt"
+    t.index ["dive_id"], name: "index_identifications_on_dive_id"
+    t.index ["species_id"], name: "index_identifications_on_species_id"
+    t.index ["user_id"], name: "index_identifications_on_user_id"
+  end
+
   create_table "locations", force: :cascade do |t|
     t.bigint "country_id", null: false
     t.datetime "created_at", null: false
@@ -73,6 +117,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_044421) do
     t.datetime "created_at", null: false
     t.datetime "date_time"
     t.bigint "dive_id", null: false
+    t.integer "source"
     t.datetime "updated_at", null: false
     t.index ["dive_id"], name: "index_pictures_on_dive_id"
   end
@@ -80,7 +125,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_044421) do
   create_table "species", force: :cascade do |t|
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false
-    t.string "default_img"
     t.text "description"
     t.string "name", limit: 150, null: false
     t.string "scientific_name", limit: 150
@@ -123,8 +167,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_044421) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "dives", "locations"
   add_foreign_key "dives", "trips"
+  add_foreign_key "identifications", "dives"
+  add_foreign_key "identifications", "species"
+  add_foreign_key "identifications", "users"
   add_foreign_key "locations", "countries"
   add_foreign_key "picture_species", "pictures"
   add_foreign_key "picture_species", "species"

@@ -7,7 +7,6 @@
 # The data can then be loaded with the bin/rails db:seed command
 # (or created alongside the database with db:setup).
 
-
 # ==========================================
 # Clean database
 # ==========================================
@@ -18,7 +17,9 @@ Dive.destroy_all
 TripCountry.destroy_all
 Trip.destroy_all
 
-Species.destroy_all
+Picture.destroy_all
+
+#Species.destroy_all
 Category.destroy_all
 
 Location.destroy_all
@@ -214,6 +215,14 @@ species = [
     description: "A large predatory fish found in tropical and subtropical coastal and open waters.",
     wiki_link: "https://en.wikipedia.org/wiki/Great_barracuda"
   },
+  {
+    name: "Scalloped Hammerhead Shark",
+    scientific_name: "Sphyrna lewini",
+    category: "Sharks",
+    tags: ["tropical", "pelagic"],
+    description: "A hammerhead shark commonly encountered in large schools around oceanic islands and offshore reefs.",
+    wiki_link: "https://en.wikipedia.org/wiki/Scalloped_hammerhead"
+  },
 
 
   # ----------------------------------------
@@ -274,7 +283,14 @@ species = [
     description: "A small brightly colored nudibranch known for its yellow body and distinctive dark markings.",
     wiki_link: "https://en.wikipedia.org/wiki/Thecacera_pacifica"
   },
-
+  {
+    name: "Oreo Nudibranch",
+    scientific_name: "Jorunna funebris",
+    category: "Nudibranchs",
+    tags: ["tropical", "reef", "macro"],
+    description: "A black-and-white nudibranch commonly found on tropical reefs, recognizable by its dark spots and white body.",
+    wiki_link: "https://en.wikipedia.org/wiki/Jorunna_funebris"
+  },
 
   # ----------------------------------------
   # Cnidarians
@@ -352,11 +368,13 @@ end
 # ==========================================
 
 japan = Country.find_or_create_by!(
-  name: "Japan"
+  name: "Japan",
+  code: "jp"
 )
 
 indonesia = Country.find_or_create_by!(
-  name: "Indonesia"
+  name: "Indonesia",
+  code: "id"
 )
 
 
@@ -373,7 +391,6 @@ komodo = Location.find_or_create_by!(
   name: "Komodo",
   country: indonesia
 )
-
 
 # ==========================================
 # Trips
@@ -407,11 +424,14 @@ mikomoto_trip.countries << japan unless mikomoto_trip.countries.include?(japan)
 # Dives
 # ==========================================
 
+
 Dive.find_or_create_by!(
   trip: komodo_trip,
   date: Date.new(2026, 7, 11),
   dive_site_name: "Manta Point"
 ) do |dive|
+  dive.latitude = -8.55047
+  dive.longitude = 119.59923
   dive.location = komodo
   dive.dive_types = ["boat", "drift"]
   dive.duration = 52
@@ -429,6 +449,8 @@ Dive.find_or_create_by!(
   date: Date.new(2026, 7, 11),
   dive_site_name: "Batu Bolong"
 ) do |dive|
+  dive.latitude = -8.53608
+  dive.longitude = 119.61399
   dive.location = komodo
   dive.dive_types = ["boat", "wall"]
   dive.duration = 48
@@ -446,6 +468,8 @@ Dive.find_or_create_by!(
   date: Date.new(2026, 7, 12),
   dive_site_name: "Castle Rock"
 ) do |dive|
+  dive.latitude = -8.42890
+  dive.longitude = 119.56284
   dive.location = komodo
   dive.dive_types = ["boat", "drift"]
   dive.duration = 50
@@ -463,6 +487,8 @@ Dive.find_or_create_by!(
   date: Date.new(2026, 7, 13),
   dive_site_name: "Crystal Rock"
 ) do |dive|
+  dive.latitude = -8.43903
+  dive.longitude = 119.56660
   dive.location = komodo
   dive.dive_types = ["boat", "wall"]
   dive.duration = 46
@@ -480,6 +506,8 @@ Dive.find_or_create_by!(
   date: Date.new(2026, 7, 14),
   dive_site_name: "Siaba Besar"
 ) do |dive|
+  dive.latitude = -8.54826
+  dive.longitude = 119.64884
   dive.location = komodo
   dive.dive_types = ["boat", "drift"]
   dive.duration = 55
@@ -497,6 +525,8 @@ Dive.find_or_create_by!(
   date: Date.new(2026, 7, 15),
   dive_site_name: "Manta Point Night Dive"
 ) do |dive|
+  dive.latitude = -8.55047
+  dive.longitude = 119.59923
   dive.location = komodo
   dive.dive_types = ["boat", "night"]
   dive.duration = 47
@@ -514,6 +544,8 @@ Dive.find_or_create_by!(
   date: Date.new(2026, 9, 20),
   dive_site_name: "Mikomoto Main Rock"
 ) do |dive|
+  dive.latitude = 34.57604
+  dive.longitude = 138.94140
   dive.location = mikomoto
   dive.dive_types = ["boat", "drift"]
   dive.duration = 42
@@ -531,6 +563,8 @@ Dive.find_or_create_by!(
   date: Date.new(2026, 9, 20),
   dive_site_name: "Mikomoto South Point"
 ) do |dive|
+  dive.latitude = 34.57604
+  dive.longitude = 138.94140
   dive.location = mikomoto
   dive.dive_types = ["boat", "drift", "deep"]
   dive.duration = 39
@@ -541,3 +575,209 @@ Dive.find_or_create_by!(
   dive.avg_temp = 23.0
   dive.note = "Deep drift dive with excellent visibility and pelagic life."
 end
+
+# ==========================================
+# Pictures
+# ==========================================
+
+puts "Creating pictures (can take few minutes)"
+
+# Dives
+
+manta_point = Dive.find_by!(
+  trip: komodo_trip,
+  dive_site_name: "Manta Point",
+  date: Date.new(2026, 7, 11)
+)
+
+batu_bolong = Dive.find_by!(
+  trip: komodo_trip,
+  dive_site_name: "Batu Bolong"
+)
+
+crystal_rock = Dive.find_by!(
+  trip: komodo_trip,
+  dive_site_name: "Crystal Rock"
+)
+
+siaba_besar = Dive.find_by!(
+  trip: komodo_trip,
+  dive_site_name: "Siaba Besar"
+)
+
+manta_point_night = Dive.find_by!(
+  trip: komodo_trip,
+  dive_site_name: "Manta Point Night Dive"
+)
+
+mikomoto_main = Dive.find_by!(
+  trip: mikomoto_trip,
+  dive_site_name: "Mikomoto Main Rock"
+)
+
+# Species
+
+manta = Species.find_by!(
+  scientific_name: "Mobula birostris"
+)
+
+clownfish = Species.find_by!(
+  scientific_name: "Amphiprion ocellaris"
+)
+
+hammerhead = Species.find_by!(
+  scientific_name: "Sphyrna lewini"
+)
+
+whitetip_reef_shark = Species.find_by!(
+  scientific_name: "Triaenodon obesus"
+)
+
+green_turtle = Species.find_by!(
+  scientific_name: "Chelonia mydas"
+)
+
+mantis_shrimp = Species.find_by!(
+  scientific_name: "Odontodactylus scyllarus"
+)
+
+octopus = Species.find_by!(
+  scientific_name: "Octopus vulgaris"
+)
+
+pikachu_nudi = Species.find_by!(
+  scientific_name: "Thecacera pacifica"
+)
+
+oreo_nudi = Species.find_by!(
+  scientific_name: "Jorunna funebris"
+)
+
+ocean_sunfish = Species.find_by!(
+  scientific_name: "Mola mola"
+)
+
+# JPEG only
+def create_picture(dive:, date_time:, image_path: nil, species: nil)
+  picture = Picture.find_or_create_by!(
+    dive: dive,
+    date_time: date_time
+  )
+
+  if image_path.present? && !picture.photo.attached?
+    file_path = Rails.root.join("db", "seed_images", "#{image_path}.jpg")
+
+    picture.photo.attach(
+      io: File.open(file_path),
+      filename: File.basename(file_path),
+      content_type: "image/jpeg"
+    )
+  end
+
+  Array(species).each do |species|
+    picture.species << species unless picture.species.include?(species)
+  end
+
+  puts "#{image_path} picture created"
+
+  picture
+end
+
+# Komodo pictures
+
+create_picture(
+  dive: manta_point,
+  date_time: "2026-07-11 09:30",
+  species: manta,
+  image_path: "dummy-manta"
+)
+
+create_picture(
+  dive: manta_point,
+  date_time: "2026-07-11 09:42",
+  species: [manta, ocean_sunfish],
+  image_path: "dummy-manta-molamola"
+)
+
+create_picture(
+  dive: manta_point,
+  date_time: "2026-07-11 09:55",
+  image_path: "dummy-reef"
+)
+
+create_picture(
+  dive: batu_bolong,
+  date_time: "2026-07-11 14:15",
+  species: clownfish,
+  image_path: "dummy-nemo"
+)
+
+create_picture(
+  dive: crystal_rock,
+  date_time: "2026-07-13 10:30",
+  species: [clownfish],
+  image_path: "dummy-nemo-02"
+)
+
+create_picture(
+  dive: crystal_rock,
+  date_time: "2026-07-13 10:05",
+  species: whitetip_reef_shark,
+  image_path: "dummy-whitetip-reef-shark"
+)
+
+create_picture(
+  dive: batu_bolong,
+  date_time: "2026-07-11 14:30",
+  image_path: "dummy-reef-02"
+)
+
+create_picture(
+  dive: batu_bolong,
+  date_time: "2026-07-12 09:25",
+  species: green_turtle,
+  image_path: "dummy-green-turtle"
+)
+
+create_picture(
+  dive: mikomoto_main,
+  date_time: "2026-09-20 08:15",
+  species: hammerhead,
+  image_path: "dummy-hammerhead"
+)
+
+create_picture(
+  dive: manta_point_night,
+  date_time: "2026-07-15 20:10",
+  species: octopus,
+  image_path: "dummy-octopus-night"
+)
+
+create_picture(
+  dive: siaba_besar,
+  date_time: "2026-07-14 09:35",
+  species: pikachu_nudi,
+  image_path: "dummy-pikachu-nudi"
+)
+
+create_picture(
+  dive: siaba_besar,
+  date_time: "2026-07-14 09:55",
+  species: oreo_nudi,
+  image_path: "dummy-oreo-nudi"
+)
+
+create_picture(
+  dive: siaba_besar,
+  date_time: "2026-07-14 09:40",
+  image_path: "dummy-boxfish"
+)
+
+create_picture(
+  dive: siaba_besar,
+  date_time: "2026-07-14 10:05",
+  species: mantis_shrimp,
+  image_path: "dummy-mantis"
+)
+
+puts "Done!"

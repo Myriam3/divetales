@@ -87,9 +87,10 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: divetales_production
-    username: divetales
-    password: <%= ENV["DIVETALES_DATABASE_PASSWORD"] %>
+    url: <%= ENV["DATABASE_URL"] %>
+    # database: divetales_production
+    # username: divetales
+    # password: <%= ENV["DIVETALES_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
     database: divetales_production_cache

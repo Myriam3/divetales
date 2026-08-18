@@ -53,6 +53,7 @@ gem "ruby-vips", "~> 2.0"
 
 # authorization
 gem "pundit"
+gem "cloudinary"
 
 group :development, :test do
   gem "dotenv-rails"
@@ -79,3 +80,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "rails_icons", "~> 1.9"

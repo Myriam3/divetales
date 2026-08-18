@@ -14,6 +14,7 @@ class Dive < ApplicationRecord
   belongs_to :location
   has_many :pictures, dependent: :destroy
   has_many :species, through: :pictures
+  has_many :identifications, dependent: :nullify
 
   validates :trip, :location, :date, presence: true
   validates :dive_site_name, presence: true, length: { maximum: 150 }
@@ -21,6 +22,8 @@ class Dive < ApplicationRecord
 
   validates_each :dive_types do |record, attr, value|
     value.each do |type|
+      next if type.blank?
+
       record.errors.add(attr, "Not a valid type") unless DIVE_TYPES.include?(type)
     end
   end

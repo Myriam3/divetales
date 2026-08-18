@@ -1,0 +1,167 @@
+<div class="species-details">
+
+  <div class="mt-4 text-end">
+    <%= link_to "Confirm this species",
+      identification_confirm_path(
+        scientific_name: details["scientific_name"],
+        common_name: details["common_name"],
+        default_photo_url: details["default_photo_url"],
+        identification_id: identification_id,
+        dive_id: dive_id
+      ),
+      class: "btn btn-primary",
+      data: { turbo_frame: "_top" } %>
+  </div>
+
+  <!-- Species -->
+  <div class="mb-4">
+    <% if details["default_photo_url"].present? %>
+      <div class="mb-4">
+        <%= image_tag details["default_photo_url"],
+              class: "img-fluid rounded",
+              style: "max-height: 350px; width: 100%; object-fit: cover;",
+              alt: details["common_name"].presence || details["scientific_name"] %>
+      </div>
+    <% end %>
+    <h2>
+      <%= common_name.presence || "Unknown species" %>
+    </h2>
+
+    <p class="fst-italic text-muted">
+      <%= scientific_name %>
+    </p>
+
+    <% if details["family"].present? %>
+      <small class="text-muted">
+        Family: <%= details["family"] %>
+      </small>
+    <% end %>
+  </div>
+
+
+  <!-- Habitat & Range -->
+  <div class="mb-4">
+    <h5>Habitat & range</h5>
+
+    <% if details["habitat"].present? %>
+      <p>
+        <strong>Habitat:</strong>
+        <%= details["habitat"] %>
+      </p>
+    <% end %>
+
+    <% if details["depth_range"].present? %>
+      <p>
+        <strong>Depth:</strong>
+        <%= details["depth_range"] %>
+      </p>
+    <% end %>
+
+    <% if details["distribution"].present? %>
+      <p>
+        <strong>Distribution:</strong>
+        <%= details["distribution"] %>
+      </p>
+    <% end %>
+  </div>
+
+
+  <!-- Size & Behavior -->
+  <div class="mb-4">
+    <h5>Size & behavior</h5>
+
+    <% if details["size"].present? %>
+      <p>
+        <strong>Size:</strong>
+        <%= details["size"] %>
+      </p>
+    <% end %>
+
+    <% if details["behavior"].present? %>
+      <p>
+        <strong>Behavior:</strong>
+        <%= details["behavior"] %>
+      </p>
+    <% end %>
+  </div>
+
+
+  <!-- How to Identify -->
+  <% if details["identification_features"].present? %>
+    <div class="mb-4">
+      <h5>How to identify</h5>
+
+      <ul>
+        <% details["identification_features"].each do |feature| %>
+          <li><%= feature %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <!-- Similar Species -->
+  <% if details["similar_species"].present? %>
+    <div class="mb-4">
+      <h5>Similar species</h5>
+
+      <% details["similar_species"].each do |species| %>
+        <div class="mb-3">
+          <strong><%= species["name"] %></strong>
+
+          <p class="mb-0">
+            <%= species["difference"] %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+
+  <!-- Tips for Divers -->
+  <% if details["diver_notes"].present? %>
+    <div class="mb-4">
+      <h5>Tips for divers</h5>
+
+      <ul>
+        <% details["diver_notes"].each do |note| %>
+          <li><%= note %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <!-- Safety -->
+  <% if details["safety"].present? %>
+    <div class="mb-4">
+      <strong>Safety:</strong>
+      <%= details["safety"] %>
+    </div>
+  <% end %>
+
+
+  <!-- Conservation -->
+  <% if details["conservation"].present? %>
+    <div class="mb-4">
+      <h5>Conservation</h5>
+
+      <p>
+        <%= details["conservation"] %>
+      </p>
+    </div>
+  <% end %>
+
+
+  <!-- Interesting Fact -->
+  <% if details["interesting_fact"].present? %>
+    <div class="mb-4">
+      <h5>Interesting fact</h5>
+
+      <p>
+        <%= details["interesting_fact"] %>
+      </p>
+    </div>
+  <% end %>
+
+</div>

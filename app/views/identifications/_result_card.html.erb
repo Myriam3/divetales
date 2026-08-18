@@ -3,9 +3,21 @@
     <!-- Header: Names & Confidence -->
     <div class="d-flex justify-content-between align-items-start mb-3">
       <div>
+        <% taxon = result[:inaturalist]&.find { |item| item[:default_photo_url].present? } %>
+        <% photo_url = taxon&.dig(:default_photo_url) %>
+
+        <% if photo_url.present? %>
+          <div class="mb-4">
+            <%= image_tag photo_url,
+                  class: "img-fluid rounded",
+                  style: "width: 100%; max-height: 350px; object-fit: cover;",
+                  alt: result[:common_name] || result[:scientific_name] %>
+          </div>
+        <% end %>
         <h5 class="card-title fw-bold mb-0">
           <%= result[:common_name].presence || "Unknown Common Name" %>
         </h5>
+
         <h6 class="card-subtitle mt-1 text-muted fst-italic">
           <%= result[:scientific_name] %>
         </h6>
@@ -16,18 +28,26 @@
       </span>
     </div>
 
+
     <!-- Reasoning -->
     <div class="mb-3">
-      <h6 class="text-uppercase text-secondary small fw-bold mb-1">Reasoning</h6>
+      <h6 class="text-uppercase text-secondary small fw-bold mb-1">
+        Reasoning
+      </h6>
+
       <p class="card-text text-dark">
         <%= result[:reasoning] %>
       </p>
     </div>
 
+
     <!-- Evidence -->
     <% if result[:evidence].present? && result[:evidence].any? %>
       <div class="mb-0">
-        <h6 class="text-uppercase text-secondary small fw-bold mb-1">Evidence</h6>
+        <h6 class="text-uppercase text-secondary small fw-bold mb-1">
+          Evidence
+        </h6>
+
         <ul class="text-dark small ps-3 mb-0">
           <% result[:evidence].each do |item| %>
             <li><%= item %></li>
@@ -35,20 +55,61 @@
         </ul>
       </div>
     <% end %>
-  </div> <!-- CLOSING THE CARD BODY HERE -->
 
-  <!-- Uncertainty / Limitations in a Card Footer -->
+    <!-- View More Details -->
+    <div class="mt-4 text-end">
+      <%= link_to "View more details →",
+            identification_details_path(
+              scientific_name: result[:scientific_name],
+              common_name: result[:common_name],
+              dive_id: @dive&.id,
+              identification_id: identification.id
+            ),
+            class: "btn btn-outline-primary",
+            data: {
+            turbo: false
+          } %>
+    </div>
+
+    <%= link_to "Confirm this species",
+      identification_confirm_path(
+        scientific_name: result[:scientific_name],
+        common_name: result[:common_name],
+        identification_id: identification.id,
+        dive_id: @dive&.id
+      ),
+      class: "btn btn-primary",
+      data: { turbo_frame: "_top" } %>
+
+  </div>
+
+
+  <!-- Uncertainty / Limitations -->
   <% if result[:uncertainty].present? %>
     <div class="card-footer bg-warning-subtle text-dark-emphasis d-flex align-items-start p-3 border-top-0">
-      <svg width="24" height="24" class="me-3 flex-shrink-0 text-warning" viewBox="0 0 20 20" fill="currentColor">
-        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+
+      <svg width="24"
+          height="24"
+          class="me-3 flex-shrink-0 text-warning"
+          viewBox="0 0 20 20"
+          fill="currentColor">
+
+        <path fill-rule="evenodd"
+              d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1 1z"
+              clip-rule="evenodd" />
       </svg>
+
       <div>
-        <h6 class="fw-bold mb-1">Limitations</h6>
+        <h6 class="fw-bold mb-1">
+          Limitations
+        </h6>
+
         <p class="mb-0 small">
           <%= result[:uncertainty] %>
         </p>
       </div>
+
     </div>
   <% end %>
-</div> <!-- CLOSING THE ENTIRE CARD -->
+
+</div>
