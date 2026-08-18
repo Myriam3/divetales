@@ -11,21 +11,28 @@ https://tabler.io/icons
 | Icon             | Use                                |
 | ---------------- | ---------------------------------- |
 | `arrow-left`     | Return link                        |
-| `luggage`        | Trip                               |
-| `scuba-mask`     | Dive                               |
+| `luggage`        | Trips                              |
+| `scuba-mask`     | Dives                              |
 | `fish`           | Species                            |
+| `binary-tree`    | Class                              |
 | `photo-check`    | Identified species picture         |
 | `photo-question` | Unidentified species picture       |
 | `photo-spark`    | Identify a species                 |
 | `camera-spark`   | Pictures                           |
-| `clock`          | Dive duuration                     |
+| `world-pin`      | Dive location                      |
+| `map-pin`        | Coordinates                        |
+| `anchor`         | Dive site                          |
+| `calendar`       | Date                               |
+| `calendar-week`  | Start/End Dates                    |
+| `clock`          | Dive duration                      |
+| `scuba-diving`   | Dive types                         |
+| `arrow-bar-to-down` | Max depth                       |
 
 
 ### Icon partial
 
 ```
-<%= render "shared/icon", icon_name: "calendar", label: "Date: " %>
-
+<%= render "shared/icon", icon_name: "calendar" %>
 ```
 
 With an accessible label
@@ -33,14 +40,12 @@ With an accessible label
 
 ```
 <%= render "shared/icon", icon_name: "calendar", label: "Date: " %>
-
 ```
 
 Change the icon size (default: 20)
 
 ```
 <%= render "shared/icon", icon_name: "calendar", label: "Date: ", icon_size: 40 %>
-
 ```
 
 ## Flags
