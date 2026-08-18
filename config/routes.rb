@@ -36,4 +36,8 @@ Rails.application.routes.draw do
   post "/dives", to: "dives#create"
   get "/dives/:id", to: "dives#show", as: "dive"
   delete "/dives/:id", to: "dives#destroy"
+
+  authenticate :user, ->(user) { user.admin? } do
+    mount MissionControl::Jobs::Engine, at: "/jobs"
+  end
 end
