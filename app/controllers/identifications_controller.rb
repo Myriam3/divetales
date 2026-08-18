@@ -119,8 +119,6 @@ class IdentificationsController < ApplicationController
       return
     end
 
-    @default_photo_url = @result.dig("inaturalist", 0, "default_photo_url")
-
     cache_key = "identification/#{@identification.id}/species_details/#{@scientific_name.downcase}"
 
     @details = Rails.cache.fetch(cache_key, expires_in: 1.hour) do

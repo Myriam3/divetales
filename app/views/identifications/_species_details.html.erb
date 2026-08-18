@@ -15,14 +15,12 @@
 
   <!-- Species -->
   <div class="mb-4">
-    <% if default_photo_url.present? %>
+    <% if details["default_photo_url"].present? %>
       <div class="mb-4">
-        <p class="text-muted mb-2">iNaturalist reference photo</p>
-
-        <%= image_tag default_photo_url,
+        <%= image_tag details["default_photo_url"],
               class: "img-fluid rounded",
-              style: "max-height: 400px; object-fit: contain;",
-              alt: common_name.presence || scientific_name %>
+              style: "max-height: 350px; width: 100%; object-fit: cover;",
+              alt: details["common_name"].presence || details["scientific_name"] %>
       </div>
     <% end %>
     <h2>

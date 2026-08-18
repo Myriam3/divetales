@@ -9,7 +9,11 @@ class SpeciesDetailsService
   end
 
   def call
-    generate_details
+   details = generate_details
+
+    details["default_photo_url"] ||= find_photo_url
+
+    details
   end
 
   private
@@ -55,5 +59,11 @@ class SpeciesDetailsService
       matching_taxon&.dig("default_photo_url")
 
     details
+  end
+
+  def find_photo_url
+    @inaturalist
+      .find { |taxon| taxon["default_photo_url"].present? }
+      &.dig("default_photo_url")
   end
 end
