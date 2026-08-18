@@ -67,6 +67,8 @@ class DivesController < ApplicationController
       :longitude,
       :note,
       dive_types: []
-    )
+    ).tap do |data|
+      data.delete(:dive_types) if data[:dive_types].blank?
+    end
   end
 end
