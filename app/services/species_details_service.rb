@@ -9,7 +9,7 @@ class SpeciesDetailsService
   end
 
   def call
-   details = generate_details
+    details = generate_details
 
     details["default_photo_url"] ||= find_photo_url
     details["wikipedia_url"] ||= find_wikipedia_url
