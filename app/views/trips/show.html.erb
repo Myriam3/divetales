@@ -10,7 +10,7 @@
 
   <p class="mt-3 text-center">
     <%= link_to new_trip_dive_path(@trip), class: "btn btn-secondary" do %>
-    <%= render "shared/icon", icon_name: "scuba-mask" %>
+      <%= render "shared/icon", icon_name: "scuba-mask" %>
       Add a new dive
     <% end %>
   </p>
@@ -45,11 +45,21 @@
 
   <% if @trip.dives.any? %>
     <ul class="list-unstyled">
-    <% @trip.dives.each_with_index do |dive, index| %>
-      <li><%= render "shared/dive_card", dive: dive, number: index + 1, heading_level: 3 %></li>
-    <% end %>
+      <% @trip.dives.each_with_index do |dive, index| %>
+        <li><%= render "shared/dive_card", dive: dive, number: index + 1, heading_level: 3 %></li>
+      <% end %>
     </ul>
   <% else %>
     <p>No dives have been added yet.</p>
   <% end %>
+
+  <div class="mt-5">
+    <%= link_to "Delete trip",
+      trip_path(@trip),
+      class: "btn btn-danger",
+      data: {
+        turbo_method: :delete,
+        turbo_confirm: "Are you sure? This will also delete the dives and pictures."
+      } %>
+  </div>
 </section>
