@@ -2,11 +2,14 @@ require "open-uri"
 
 class IdentificationsController < ApplicationController
   def index
+    identification = Identification.new
+    authorize identification, :create?
     @dive = Dive.find_by(id: params[:dive_id])
     if params[:identification_id].present?
       @identification = current_user.identifications.find(
         params[:identification_id]
       )
+      authorize @identification, :show?
 
       @results = @identification.results.map(&:deep_symbolize_keys)
     end
@@ -48,11 +51,15 @@ class IdentificationsController < ApplicationController
       additional_info: additional_info
     )
 
-    @identification = current_user.identifications.create!(
+    @identification = current_user.identifications.build(
       dive: @dive,
       user_prompt: user_prompt,
       status: :pending
     )
+
+    authorize @identification
+
+    @identification.save!
 
     begin
       if image.present?
@@ -123,6 +130,8 @@ class IdentificationsController < ApplicationController
       params[:identification_id]
       )
 
+    authorize @identification, :details?
+
     @result = @identification.results.find do |result|
       result["scientific_name"].to_s.strip == @scientific_name
     end
@@ -158,6 +167,7 @@ class IdentificationsController < ApplicationController
     @identification = current_user.identifications.find(
       params[:identification_id]
     )
+    authorize @identification, :confirm?
 
     @species = Species.find_by(
       scientific_name: @scientific_name
@@ -186,6 +196,7 @@ class IdentificationsController < ApplicationController
     @identification = current_user.identifications.find(
       params[:identification_id]
     )
+    authorize @identification, :save?
 
     dive_id = params[:dive_id]
 
