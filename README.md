@@ -6,6 +6,7 @@ Rails app generated with [lewagon/rails-templates](https://github.com/lewagon/ra
 
 ## tabler.io
 
+
 https://tabler.io/icons
 
 | Icon             | Use                                |
