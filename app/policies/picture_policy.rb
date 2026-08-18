@@ -23,4 +23,8 @@ class PicturePolicy < ApplicationPolicy
   def index?
     record.dive.trip.user == user
   end
+
+  def create?
+    record.dive.trip.user == user
+  end
 end

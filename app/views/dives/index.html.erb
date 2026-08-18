@@ -1,4 +1,19 @@
-<h1 class="mt-5 mb-5">All my dives</h1>
+<% if @trip %>
+  <h1 class="mt-5">
+    <%= @trip.title %> dives
+  </h1>
+
+  <p>
+    <%= link_to dives_path, class: "text-decoration-none" do %>
+      <%= render "shared/icon", icon_name: "arrow-left" %>
+      All dives
+    <% end %>
+  </p>
+<% else %>
+  <h1 class="mt-5">
+    All my dives
+  </h1>
+<% end %>
 
 <p>
   <%= render "shared/icon", icon_name: "scuba-mask" %>

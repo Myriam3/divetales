@@ -1,0 +1,28 @@
+<div id="dives-select-container"
+    data-picture-form-target="divesContainer"
+    style="display: <%= @dives.any? ? 'block' : 'none' %>;">
+
+  <label for="picture_dive_id" class="form-label">
+    <%= render "shared/icon", icon_name: "scuba-mask" %>
+    Select a dive*
+  </label>
+
+  <% total = @dives.size %>
+  <% options = @dives.each_with_index.map do |dive, index|
+    title = "##{total - index} "
+    title += dive.dive_site_name.presence || dive.location.name
+    title += ", #{dive.date}"
+    [title, dive.id]
+  end %>
+
+  <%= select_tag "picture[dive_id]",
+    options_for_select(options, @selected_dive_id),
+    selected: @selected_dive_id,
+    prompt: "Select a dive *",
+    class: "form-select",
+    autocomplete: "off",
+    data: {
+      "picture-form-target": "dive",
+      action: "change->picture-form#validate"
+    } %>
+</div>

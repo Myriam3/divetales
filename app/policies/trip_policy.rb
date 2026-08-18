@@ -16,4 +16,8 @@ class TripPolicy < ApplicationPolicy
   def show?
     record.user == user
   end
+
+  def dives_for_trip?
+    record.user == user
+  end
 end

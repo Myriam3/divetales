@@ -1,6 +1,62 @@
-<h1>Upload Photos Here</h1>
-
-<%= simple_form_for(@picture, html: { multipart: true }) do |f| %>
-  <%= f.input :photo, as: :file %>
-  <%= f.button :submit, "Upload" %>
+<% content_for :head do %>
+  <meta name="turbo-cache-control" content="no-cache">
 <% end %>
+
+<h1 class="mt-5 mb-5">Upload Photos Here</h1>
+
+<div data-controller="picture-form"
+    data-picture-form-selected-trip-id-value="<%= @selected_trip_id %>"
+    data-picture-form-selected-dive-id-value="<%= @selected_dive_id %>"
+    data-picture-form-dives-url-value="<%= dives_for_trip_pictures_path %>"
+>
+  <%= simple_form_for(@picture, html: { multipart: true }) do |f| %>
+
+  <div class="mb-4">
+    <label for="picture_photo" class="form-label">
+        <%= render "shared/icon", icon_name: "camera-spark" %>
+        Select a photo *
+    </label>
+
+    <%= f.input :photo,
+      as: :file,
+      input_html: {
+        data: {
+          "picture-form-target": "photo",
+          action: "change->picture-form#validate"
+        }
+      } %>
+  </div>
+
+  <div class="mt-4 mb-4">
+    <label for="trip_id" class="form-label">
+        <%= render "shared/icon", icon_name: "luggage" %>
+        Select a trip*
+    </label>
+
+    <%= select_tag :trip_id,
+      options_from_collection_for_select(@trips, :id, :title, @selected_trip_id),
+      selected: @selected_trip_id,
+      prompt: "Select a trip *",
+      class: "form-select",
+      autocomplete: "off",
+      data: {
+        "picture-form-target": "trip",
+        action: "change->picture-form#validate change->picture-form#selectTrip"
+      } %>
+  </div>
+
+  <%= render "dives_select" %>
+
+  <div class="mt-5">
+    <%= button_tag type: "submit",
+      class: "btn btn-secondary",
+      disabled: true,
+      data: {
+        "picture-form-target": "submit"
+      } do %>
+      <%= render "shared/icon", icon_name: "camera-up" %>
+      Upload
+    <% end %>
+  </div>
+  <% end %>
+</div>
