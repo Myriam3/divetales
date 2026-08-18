@@ -1,19 +1,36 @@
 class PicturesController < ApplicationController
   skip_after_action :verify_authorized, only: %i[new create]
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
   def new
-    @picture = Picture.new
+    @trips = policy_scope(Trip).select(:id, :title)
+
+    if params[:dive_id].present?
+      dive = policy_scope(Dive).includes(:trip).find(params[:dive_id])
+      @picture = Picture.new(dive: dive)
+      @selected_trip_id = dive.trip_id
+      @selected_dive_id = dive.id
+      @dives = dive.trip.dives.select(:id, :dive_site_name, :date).order(date: :desc)
+    else
+      @picture = Picture.new
+      @selected_trip_id = nil
+      @selected_dive_id = nil
+      @dives = []
+    end
   end
 
   def create
-    @picture = Picture.new(picture_params)
-    dive = Dive.first
-    @picture.dive = dive
-    puts @picture.valid?
-    puts @picture.errors
+    @dive = policy_scope(Dive).find(params.require(:picture)[:dive_id])
+    @picture = @dive.pictures.new(picture_params)
+    authorize @picture
+
     if @picture.save
       redirect_to picture_path(@picture), notice: "Uploaded!"
     else
-      render :new
+      @trips = policy_scope(Trip).includes(:dives)
+      @selected_trip_id = @dive&.trip_id
+      @selected_dive_id = @dive&.id
+      @dives = @dive&.trip&.dives || []
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -22,46 +39,54 @@ class PicturesController < ApplicationController
   end
 
   def show
-    @picture = Picture.find(params[:id])
+    @picture = Picture.includes(:dive, :species).find(params[:id])
     authorize @picture
 
     @related_species = related_species
     @related_categories = related_categories
   end
 
+  def dives_for_trip
+    @trip = policy_scope(Trip).find(params[:trip_id])
+    authorize @trip, :dives_for_trip?
+    @dives = @trip.dives.includes(:location).order(date: :desc)
+    @selected_dive_id = params[:selected_dive_id]
+
+    Rails.logger.info "[dives_for_trip] trip_id=#{params[:trip_id]} dives_count=#{@dives.size}"
+
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
+  def not_found
+    render plain: "Not found", status: :not_found
+  end
+
   private
 
   def picture_params
-    params.require(:picture).permit(:photo)
+    params.require(:picture).permit(:photo, :dive_id)
   end
 
   def related_species
-    @picture.species.each_with_object({}) do |species, result|
-      result[species] = Picture
-                        .joins(:species)
-                        .where(species: { id: species.id })
-                        .where.not(id: @picture.id)
-                        .distinct
-                        .limit(10)
+    species = @picture.species.includes(:pictures).limit(10)
+    species.each_with_object({}) do |s, result|
+      result[s] = s.pictures.where.not(id: @picture.id).distinct.limit(10)
     end
   end
 
   def related_categories
-    result = {}
-
-    categories = @picture.species.map(&:category).uniq
-
-    categories.each do |category|
+    categories = @picture.species.includes(:category).map(&:category).uniq
+    categories.each_with_object({}) do |category, result|
       pictures = Picture
                  .joins(:species)
                  .where(species: { category_id: category.id })
                  .where.not(id: @picture.id)
                  .distinct
+                 .includes(:dive, :species)
                  .limit(10)
-
       result[category] = pictures
     end
-
-    result
   end
 end

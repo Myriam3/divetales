@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   resources :trips, only: [:index, :show, :new, :create] do
-    resources :dives, only: [:new, :create]
+    resources :dives, only: [:index, :new, :create]
   end
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
@@ -23,11 +23,16 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   #
-  resources :pictures, only: [:index, :show, :new, :create]
+  resources :pictures, only: [:index, :show, :new, :create] do
+    resources :dives, only: [:create]
 
-  get "test", to: "pages#test"
+    collection do
+      get :dives_for_trip
+    end
+  end
+
   get "/dives", to: "dives#index", as: "dives"
-  get "/dives/new", to: "dives#new"
+  get "/dives/new", to: "dives#new", as: "new_dive"
   post "/dives", to: "dives#create"
   get "/dives/:id", to: "dives#show", as: "dive"
   delete "/dives/:id", to: "dives#destroy"
