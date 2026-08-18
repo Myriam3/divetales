@@ -7,6 +7,7 @@ class Identification < ApplicationRecord
 
   enum :status, {
     pending: "pending",
-    confirmed: "confirmed"
+    confirmed: "confirmed",
+    failed: "failed"
   }
 end

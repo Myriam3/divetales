@@ -24,13 +24,13 @@ class InaturalistService
     data = JSON.parse(response.read)
 
     data["results"].first(3).map do |taxon|
-       wikipedia_url = taxon["wikipedia_url"]
+      wikipedia_url = taxon["wikipedia_url"]
 
-  default_photo_url =
-    taxon.dig("default_photo", "medium_url") ||
-        WikipediaImageService.new(
-          wikipedia_url: wikipedia_url
-        ).call
+    default_photo_url =
+      taxon.dig("default_photo", "medium_url") ||
+          WikipediaImageService.new(
+            wikipedia_url: wikipedia_url
+          ).call
 
       {
         id: taxon["id"],

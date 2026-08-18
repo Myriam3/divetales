@@ -1,18 +1,18 @@
 <div class="card shadow-sm mb-4">
   <div class="card-body">
-
     <!-- Header: Names & Confidence -->
     <div class="d-flex justify-content-between align-items-start mb-3">
       <div>
-        <% inaturalist = result["inaturalist"] || [] %>
-        <% reference_photo_url = inaturalist
-          .find { |taxon| taxon["default_photo_url"].present? }
-          &.dig("default_photo_url") %>
-        <% if reference_photo_url.present? %>
-          <%= image_tag reference_photo_url,
-                class: "img-fluid rounded",
-                style: "height: 200px; width: 100%; object-fit: cover;",
-                alt: result["common_name"].presence || result["scientific_name"] %>
+        <% taxon = result[:inaturalist]&.find { |item| item[:default_photo_url].present? } %>
+        <% photo_url = taxon&.dig(:default_photo_url) %>
+
+        <% if photo_url.present? %>
+          <div class="mb-4">
+            <%= image_tag photo_url,
+                  class: "img-fluid rounded",
+                  style: "width: 100%; max-height: 350px; object-fit: cover;",
+                  alt: result[:common_name] || result[:scientific_name] %>
+          </div>
         <% end %>
         <h5 class="card-title fw-bold mb-0">
           <%= result[:common_name].presence || "Unknown Common Name" %>

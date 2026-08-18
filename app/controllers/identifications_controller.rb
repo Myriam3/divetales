@@ -65,8 +65,13 @@ class IdentificationsController < ApplicationController
       ).call
 
       if @results.blank?
-        flash.now[:alert] = "The identification service didn't return any results. Please try again."
-        render :index, status: :unprocessable_entity
+        @identification.update!(status: :failed)
+
+        flash[:alert] = "The identification service didn't return any results. Please try again."
+
+        redirect_to identification_path(
+          dive_id: @dive&.id
+        )
         return
       end
 
@@ -75,10 +80,14 @@ class IdentificationsController < ApplicationController
       )
 
     rescue StandardError => e
-      flash.now[:alert] =
-        "We encountered an issue connecting to the AI service. Please try again later."
+      @identification.update!(status: :failed)
 
-      render :index, status: :unprocessable_entity
+      Rails.logger.error(e.message)
+
+      redirect_to identification_path(
+        dive_id: @dive&.id
+      ), alert: "We encountered an issue connecting to the AI service. Please try again later."
+
       return
     end
 
@@ -94,7 +103,13 @@ class IdentificationsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { render :index, status: :unprocessable_entity }
+      format.html do
+        redirect_to identification_path(
+          identification_id: @identification.id,
+          dive_id: @dive&.id
+        )
+      end
+
       format.turbo_stream
     end
   end

@@ -17,6 +17,10 @@ class IdentificationService
         query: scientific_name
       ).call
 
+      if inaturalist.blank?
+        inaturalist = []
+      end
+
       {
         scientific_name: scientific_name,
         common_name: identification["common_name"],

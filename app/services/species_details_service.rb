@@ -12,6 +12,7 @@ class SpeciesDetailsService
    details = generate_details
 
     details["default_photo_url"] ||= find_photo_url
+    details["wikipedia_url"] ||= find_wikipedia_url
 
     details
   end
@@ -58,6 +59,9 @@ class SpeciesDetailsService
     details["default_photo_url"] =
       matching_taxon&.dig("default_photo_url")
 
+    details["wikipedia_url"] =
+      matching_taxon&.dig("wikipedia_url")
+
     details
   end
 
@@ -65,5 +69,11 @@ class SpeciesDetailsService
     @inaturalist
       .find { |taxon| taxon["default_photo_url"].present? }
       &.dig("default_photo_url")
+  end
+
+  def find_wikipedia_url
+    @inaturalist
+      .find { |taxon| taxon["wikipedia_url"].present? }
+      &.dig("wikipedia_url")
   end
 end
