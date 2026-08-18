@@ -3,7 +3,7 @@
   <%= turbo_frame_tag "identification-content" do %>
 
     <% if @results.present? %>
-      <%= render "identifications/results", results: @results %>
+      <%= render "identifications/results", results: @results, identification: @identification %>
     <% else %>
       <%= render "identifications/form" %>
     <% end %>

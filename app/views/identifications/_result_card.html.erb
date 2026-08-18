@@ -4,6 +4,14 @@
     <!-- Header: Names & Confidence -->
     <div class="d-flex justify-content-between align-items-start mb-3">
       <div>
+        <% inaturalist = result["inaturalist"] || [] %>
+        <% reference_photo_url = inaturalist.first&.dig("default_photo_url") %>
+        <% if reference_photo_url.present? %>
+          <%= image_tag reference_photo_url,
+                class: "img-fluid rounded",
+                style: "height: 200px; width: 100%; object-fit: cover;",
+                alt: result["common_name"].presence || result["scientific_name"] %>
+        <% end %>
         <h5 class="card-title fw-bold mb-0">
           <%= result[:common_name].presence || "Unknown Common Name" %>
         </h5>
