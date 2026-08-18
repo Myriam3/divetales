@@ -11,6 +11,8 @@ class Species < ApplicationRecord
   belongs_to :category
   has_many :picture_species, dependent: :destroy
   has_many :pictures, through: :picture_species
+  has_many :identifications
+  has_one_attached :default_photo
 
   validates :name, presence: true, length: { maximum: 150 }
   validates :category, presence: true

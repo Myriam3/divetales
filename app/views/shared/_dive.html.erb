@@ -185,9 +185,17 @@
         <li class="d-flex align-items-center gap-3 mb-3">
           <% picture = species.pictures.find { |picture| picture.photo.attached? } %>
           <% if picture %>
-            <%= image_tag picture.photo,
-                class: "rounded object-fit-cover",
-                style: "width: 100px; height: 100px;" %>
+            <div class="position-relative flex-shrink-0">
+              <%= image_tag picture.photo,
+                  class: "rounded object-fit-cover",
+                  style: "width: 100px; height: 100px;" %>
+
+              <% if picture.species_default? %>
+                <span class="badge bg-secondary position-absolute bottom-0 start-0 m-1">
+                  Reference
+                </span>
+              <% end %>
+            </div>
           <% end %>
 
           <p>
