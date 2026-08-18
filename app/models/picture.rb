@@ -5,4 +5,9 @@ class Picture < ApplicationRecord
   has_one_attached :photo
 
   validates :dive, presence: true
+
+  enum :source, {
+    user_uploaded: 0,
+    species_default: 1
+  }
 end

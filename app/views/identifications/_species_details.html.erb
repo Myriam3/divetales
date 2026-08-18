@@ -1,13 +1,34 @@
 <div class="species-details">
 
+  <div class="mt-4 text-end">
+    <%= link_to "Confirm this species",
+      identification_confirm_path(
+        scientific_name: details["scientific_name"],
+        common_name: details["common_name"],
+        default_photo_url: details["default_photo_url"],
+        identification_id: identification_id,
+        dive_id: dive_id
+      ),
+      class: "btn btn-primary",
+      data: { turbo_frame: "_top" } %>
+  </div>
+
   <!-- Species -->
   <div class="mb-4">
-    <h4 class="mb-1">
-      <%= details["common_name"] %>
-    </h4>
+    <% if details["default_photo_url"].present? %>
+      <div class="mb-4">
+        <%= image_tag details["default_photo_url"],
+              class: "img-fluid rounded",
+              style: "max-height: 350px; width: 100%; object-fit: cover;",
+              alt: details["common_name"].presence || details["scientific_name"] %>
+      </div>
+    <% end %>
+    <h2>
+      <%= common_name.presence || "Unknown species" %>
+    </h2>
 
-    <p class="text-muted fst-italic mb-1">
-      <%= details["scientific_name"] %>
+    <p class="fst-italic text-muted">
+      <%= scientific_name %>
     </p>
 
     <% if details["family"].present? %>

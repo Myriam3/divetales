@@ -46,6 +46,7 @@ class SpeciesDetailsSystemPrompt
     {
       "common_name": "string",
       "scientific_name": "string",
+      "default_photo_url": string or null,
       "family": "string or null",
       "identification_features": ["string"],
       "similar_species": [

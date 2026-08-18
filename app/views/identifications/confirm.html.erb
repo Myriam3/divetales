@@ -1,0 +1,123 @@
+<div class="confirm-species-page">
+  <div class="container py-4">
+
+    <h2 class="mb-4">Confirm species</h2>
+
+    <div class="card mb-4">
+      <div class="card-body">
+        <h4 class="mb-1">
+          <%= @common_name.presence || "Unknown species" %>
+        </h4>
+
+        <p class="text-muted fst-italic mb-0">
+          <%= @scientific_name %>
+        </p>
+      </div>
+    </div>
+
+    <% if @dive.present? %>
+
+      <div class="alert alert-info">
+        This species will be added to this dive.
+      </div>
+
+      <% dive_number = "##{@dive_number}" %>
+      <% dive_title = "##{dive_number} " %>
+      <% dive_title += @dive.dive_site_name.blank? ? @dive.location.name : @dive.dive_site_name %>
+
+      <%= button_to "Add to #{dive_title}",
+            identification_save_path,
+            method: :post,
+            params: {
+              identification_id: @identification.id,
+              dive_id: @dive.id,
+              scientific_name: @scientific_name,
+              common_name: @common_name,
+              default_photo_url: @default_photo_url
+            },
+            class: "btn btn-primary" %>
+
+    <% else %>
+
+      <% if @trip.present? %>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0">
+            Choose a dive
+          </h5>
+
+          <%= link_to "← Back to trips",
+                identification_confirm_path(
+                  scientific_name: @scientific_name,
+                  common_name: @common_name,
+                  default_photo_url: @default_photo_url
+                ),
+                class: "btn btn-outline-secondary btn-sm" %>
+        </div>
+
+        <div class="list-group">
+
+          <% @dives.each_with_index do |dive, index| %>
+
+            <% dive_number = @dives.length - index %>
+            <% dive_title = "##{dive_number} " %>
+            <% dive_title += dive.dive_site_name.blank? ? dive.location.name : dive.dive_site_name %>
+
+            <%= button_to "Add to #{dive_title}",
+                  identification_save_path,
+                  method: :post,
+                  params: {
+                    identification_id: @identification.id,
+                    dive_id: dive.id,
+                    scientific_name: @scientific_name,
+                    common_name: @common_name,
+                    default_photo_url: @default_photo_url
+                  },
+                  class: "list-group-item list-group-item-action text-start" %>
+
+          <% end %>
+
+        </div>
+
+        <% if @dives.empty? %>
+          <div class="alert alert-info mt-3">
+            This trip doesn't have any dives yet.
+          </div>
+        <% end %>
+
+      <% else %>
+
+        <h5 class="mb-3">
+          Choose a trip
+        </h5>
+
+        <div class="list-group">
+
+          <% @trips.each do |trip| %>
+
+            <%= link_to trip.title,
+                  identification_confirm_path(
+                    scientific_name: @scientific_name,
+                    common_name: @common_name,
+                    default_photo_url: @default_photo_url,
+                    identification_id: @identification.id,
+                    trip_id: trip.id
+                  ),
+                  class: "list-group-item list-group-item-action" %>
+
+          <% end %>
+
+        </div>
+
+        <% if @trips.empty? %>
+          <div class="alert alert-info mt-3">
+            You don't have any trips yet.
+          </div>
+        <% end %>
+
+      <% end %>
+
+    <% end %>
+
+  </div>
+</div>
