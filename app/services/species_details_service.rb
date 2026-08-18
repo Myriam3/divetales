@@ -33,6 +33,8 @@ class SpeciesDetailsService
       - If iNaturalist information is available, use it as the taxonomic reference.
       - If iNaturalist information is empty, provide the best available details based on your marine biology knowledge.
       - Do not invent iNaturalist information.
+      - If iNaturalist contains a default photo URL, return it unchanged as default_photo_url.
+      - If iNaturalist does not contain a default photo URL, return default_photo_url as null.
     PROMPT
   end
 
@@ -43,6 +45,15 @@ class SpeciesDetailsService
 
     response = chat.ask(user_prompt)
 
-    JSON.parse(response.content)
+    details = JSON.parse(response.content)
+
+    matching_taxon = @inaturalist.find do |taxon|
+      taxon["scientific_name"].to_s.downcase == @scientific_name.downcase
+    end
+
+    details["default_photo_url"] =
+      matching_taxon&.dig("default_photo_url")
+
+    details
   end
 end

@@ -188,27 +188,25 @@ class IdentificationsController < ApplicationController
     # --- STEP 1: Find or Initialize the Species ---
     @species = Species.find_or_initialize_by(scientific_name: scientific_name)
 
-    if @species.new_record?
-      @species.name = common_name.presence || scientific_name
-      @species.category = Category.first
+    @species.name = common_name.presence || scientific_name if @species.new_record?
+    @species.category = Category.first if @species.new_record?
 
-      # Download the Wikipedia/iNaturalist image instead of using AI
-      if !@species.default_photo.attached? && params[:default_photo_url].present?
-        begin
-          downloaded_image = URI.open(params[:default_photo_url])
-          @species.default_photo.attach(
-            io: downloaded_image,
-            filename: "#{scientific_name.parameterize}-default.jpg",
-            # ActiveStorage will infer content type from the file, but we can safely default to jpeg
-            content_type: 'image/jpeg'
-          )
-        rescue StandardError => e
-          Rails.logger.error "Failed to download reference image: #{e.message}"
-        end
+    # Download the Wikipedia/iNaturalist image instead of using AI
+    if !@species.default_photo.attached? && params[:default_photo_url].present?
+      begin
+        downloaded_image = URI.open(params[:default_photo_url])
+        @species.default_photo.attach(
+          io: downloaded_image,
+          filename: "#{scientific_name.parameterize}-default.jpg",
+          # ActiveStorage will infer content type from the file, but we can safely default to jpeg
+          content_type: 'image/jpeg'
+        )
+      rescue StandardError => e
+        Rails.logger.error "Failed to download reference image: #{e.message}"
       end
-
-      @species.save!
     end
+
+    @species.save!
 
     # --- STEP 2: Create the Dive's Picture Record ---
     @picture = @dive.pictures.build

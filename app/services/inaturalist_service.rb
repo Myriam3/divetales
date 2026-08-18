@@ -3,7 +3,7 @@ require "json"
 require "uri"
 
 class InaturalistService
-  BASE_URL = "https://api.inaturalist.org/v2"
+  BASE_URL = "https://api.inaturalist.org/v1/taxa"
 
   def initialize(query:)
     @query = query
@@ -16,7 +16,7 @@ class InaturalistService
   private
 
   def search_taxa
-    uri = URI("#{BASE_URL}/taxa/autocomplete")
+    uri = URI(BASE_URL)
     uri.query = URI.encode_www_form(q: @query)
 
     response = URI.open(uri)
@@ -27,8 +27,12 @@ class InaturalistService
       {
         id: taxon["id"],
         scientific_name: taxon["name"],
-        common_name: taxon["preferred_common_name"]
+        common_name: taxon["preferred_common_name"],
+        default_photo_url: taxon.dig("default_photo", "medium_url")
       }
     end
+    rescue OpenURI::HTTPError, SocketError, Timeout::Error => e
+    Rails.logger.error("iNaturalist error: #{e.message}")
+    []
   end
 end
