@@ -52,8 +52,6 @@ class PicturesController < ApplicationController
     @dives = @trip.dives.includes(:location).order(date: :desc)
     @selected_dive_id = params[:selected_dive_id]
 
-    Rails.logger.info "[dives_for_trip] trip_id=#{params[:trip_id]} dives_count=#{@dives.size}"
-
     respond_to do |format|
       format.turbo_stream
     end

@@ -34,7 +34,7 @@
     </label>
 
     <%= select_tag :trip_id,
-      options_from_collection_for_select(@trips, :id, :title),
+      options_from_collection_for_select(@trips, :id, :title, @selected_trip_id),
       selected: @selected_trip_id,
       prompt: "Select a trip *",
       class: "form-select",
