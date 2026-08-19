@@ -46,10 +46,6 @@ class DivesController < ApplicationController
     authorize @dive
   end
 
-  def display_name
-    dive_site_name.presence || location.name
-  end
-
   private
 
   def dive_params
