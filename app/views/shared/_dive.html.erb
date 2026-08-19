@@ -1,7 +1,7 @@
 <% if dive %>
   <p>
     <%= render "shared/icon", icon_name: "calendar", label: "Date: " %>
-    <%= dive.date %>
+    <%= dive.date.strftime("%d %B %Y") %>
   </p>
 
   <% if dive.dive_types.any? %>

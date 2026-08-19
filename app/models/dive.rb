@@ -20,9 +20,8 @@ class Dive < ApplicationRecord
   validates :dive_site_name, presence: true, length: { maximum: 150 }
   validates :note, length: { maximum: 500 }
   validates :tank_type, presence: true
-  validates :gauge_pressure_start, numericality: { greater_than_or_equal_to: 0 }
-  validates :gauge_pressure_end, comparison: { greater_than: :gauge_pressure_start }
-  validates :end_time, comparison: { greater_than: :start_time }
+  validates :gauge_pressure_start, numericality: { greater_than_or_equal_to: 0 }, allow_blank: true
+  validates :end_time, comparison: { greater_than: :start_time }, allow_blank: true
 
   enum :tank_type, {
     air: 1,
@@ -30,6 +29,16 @@ class Dive < ApplicationRecord
     trimix: 3,
     other: 4
   }
+
+  validates :gauge_pressure_end,
+            comparison: { greater_than: :gauge_pressure_start },
+            if: -> { gauge_pressure_start.present? && gauge_pressure_end.present? },
+            allow_blank: true
+
+  validates :end_time,
+            comparison: { greater_than: :start_time },
+            if: -> { start_time.present? && end_time? },
+            allow_blank: true
 
   validates_each :dive_types do |record, attr, value|
     value.each do |type|

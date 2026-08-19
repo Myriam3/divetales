@@ -1,6 +1,11 @@
 class DivesController < ApplicationController
   def index
-    @dives = policy_scope(Dive).order(date: :desc)
+    if params[:trip_id].present?
+      @trip = Trip.find(params[:trip_id])
+      @dives = policy_scope(@trip.dives).order(date: :desc)
+    else
+      @dives = policy_scope(Dive).order(date: :desc)
+    end
 
     @countries_count = @dives.map { |dive| dive.location.country }.compact.uniq.count
     @pictures_count = @dives.flat_map(&:pictures).uniq.count
@@ -22,11 +27,20 @@ class DivesController < ApplicationController
     @trip = Trip.find(params[:trip_id]) if params[:trip_id]
 
     @dive = @trip ? @trip.dives.new(dive_params) : Dive.new(dive_params)
-
     authorize @dive
-
     if @dive.save
-      redirect_to @dive, notice: "Dive created!"
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            "modal-container",
+            partial: "dives/new_dive_modal",
+            locals: { dive: @dive }
+          )
+        end
+
+        # Fallaback
+        format.html { redirect_to [@trip, @dive], notice: "Dive created!" }
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -44,6 +58,9 @@ class DivesController < ApplicationController
   def destroy
     @dive = Dive.find(params[:id])
     authorize @dive
+    @dive.destroy
+
+    redirect_to params[:trip_id] ? trip_path(@dive.trip) : dives_path, notice: "Dive deleted!"
   end
 
   private
@@ -51,6 +68,8 @@ class DivesController < ApplicationController
   def dive_params
     params.require(:dive).permit(
       :date,
+      :start_time,
+      :end_time,
       :dive_site_name,
       :location_id,
       :duration,
@@ -61,6 +80,9 @@ class DivesController < ApplicationController
       :avg_temp,
       :latitude,
       :longitude,
+      :tank_type,
+      :gauge_pressure_start,
+      :gauge_pressure_end,
       :note,
       dive_types: []
     ).tap do |data|

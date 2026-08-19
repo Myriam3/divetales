@@ -7,6 +7,7 @@ class TripsController < ApplicationController
 
   def show
     @trip = policy_scope(Trip).find(params[:id])
+    @dives = @trip.dives.order(date: :desc)
     authorize @trip
   end
 

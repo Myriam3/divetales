@@ -21,4 +21,17 @@
   <h1 class="mb-5"><%= render "shared/icon", icon_name: "scuba-mask", icon_size: 40 %><%= dive_title %></h1>
 
   <%= render "shared/dive", dive: @dive %>
+
+  <p class="mt-5 mb-5">
+    <%= button_to dive_path(@dive),
+                method: :delete,
+                class: "btn btn-outline-secondary",
+                data: {
+                  turbo_confirm: "Are you sure? This will delete also the dive pictures and identified species."
+                } do %>
+      <%= render "shared/icon", icon_name: "trash", icon_size: 24 %>
+      Delete dive
+    <% end %>
+</p>
+
 <% end %>

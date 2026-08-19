@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   resources :trips, only: [:index, :show, :new, :create] do
-    resources :dives, only: [:index, :new, :create]
+    resources :dives, only: [:index, :show, :new, :create]
   end
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
