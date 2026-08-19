@@ -48,6 +48,40 @@ class Dive < ApplicationRecord
     end
   end
 
-  # TODO
-  # depth_over_time -> JSON
+  validate :depth_over_time_json
+
+  private
+
+  def depth_over_time_json
+    return if depth_over_time.blank?
+
+    data = JSON.parse(depth_over_time)
+    puts "TEST #{data}"
+
+    unless data.is_a?(Array)
+      errors.add(:depth_over_time, "must be a valid JSON")
+      return
+    end
+
+    data.each_with_index do |entry, index|
+      unless entry.is_a?(Hash)
+        errors.add(:depth_over_time, "#{index} must be an object")
+        next
+      end
+
+      if entry["timestamp"].present?
+        begin
+          Time.iso8601(entry["timestamp"].to_s)
+        rescue ArgumentError
+          errors.add(:depth_over_time, "timestamp is invalid (#{index})")
+        end
+      else
+        errors.add(:depth_over_time, "timestamp not found (#{index})")
+      end
+
+      errors.add(:depth_over_time, "depth must be a number (#{index})") unless entry["depth"].is_a?(Numeric)
+    end
+  rescue JSON::ParserError, TypeError
+    errors.add(:depth_over_time, "must be a valid JSON")
+  end
 end

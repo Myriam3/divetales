@@ -3,6 +3,8 @@
     <%= f.error_notification %>
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
+    <%= f.input :depth_over_time, as: :hidden %>
+
     <h2 class="mb-3">2. Complete/Edit your dive data</h2>
     <% if @dive.errors.any? %>
       <div class="alert alert-danger">

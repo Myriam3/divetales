@@ -84,6 +84,7 @@ class DivesController < ApplicationController
       :gauge_pressure_start,
       :gauge_pressure_end,
       :note,
+      :depth_over_time,
       dive_types: []
     ).tap do |data|
       data.delete(:dive_types) if data[:dive_types].blank?

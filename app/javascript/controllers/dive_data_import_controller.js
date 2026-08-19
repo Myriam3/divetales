@@ -7,19 +7,19 @@ export default class extends Controller {
     "submitButton",
     "feedback",
     "diveForm"
-  ]
+  ];
 
   connect() {
-    this.feedbackTarget.textContent = ""
+    this.feedbackTarget.textContent = "";
   }
 
   async importFile(event) {
     event.preventDefault();
-    const file = this.fileInputTarget.files[0]
+    const file = this.fileInputTarget.files[0];
 
     if (!file) {
-      this.showError("Please select a FIT file.")
-      return
+      this.showError("Please select a FIT file.");
+      return;
     }
 
     this.submitButtonTarget.disabled = true
@@ -27,17 +27,18 @@ export default class extends Controller {
     try {
       const arrayBuffer = await file.arrayBuffer();
       const diveData = await this.parseFitFile(arrayBuffer);
+      const depthProfile = null;
 
-      if (diveData) {
-        this.showSuccess("FIT file imported");
-        this.fillDiveForm(diveData);
-      }
+      if (!diveData) return;
+      this.showSuccess("FIT file imported");
+      this.fillDiveForm(diveData);
+      this.setDepthProfile(diveData);
 
     } catch (error) {
       console.log(error);
-      this.showError("Unable to read the FIT file.")
+      this.showError("Unable to read the FIT file.");
     } finally {
-      this.submitButtonTarget.disabled = false
+      this.submitButtonTarget.disabled = false;
     }
   }
 
@@ -186,6 +187,26 @@ export default class extends Controller {
     } else {
       tankTypeInput.value = "air"
     }
+  }
+
+  setDepthProfile(data) {
+    const records = data.recordMesgs;
+    const input = this.diveFormTarget.dive_depth_over_time;
+
+    if (!(records && records.length && input)) return;
+
+    const depthProfile = this.getDepthRecords(records);
+    console.log(JSON.stringify(depthProfile).length);
+    input.value = JSON.stringify(depthProfile);
+  }
+
+  getDepthRecords(records) {
+    return records.map((record) => {
+      return {
+        timestamp: record.timestamp,
+        depth: record.depth
+      }
+    });
   }
 
   showSuccess(message) {
