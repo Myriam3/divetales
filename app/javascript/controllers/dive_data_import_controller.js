@@ -34,7 +34,8 @@ export default class extends Controller {
       }
 
     } catch (error) {
-      this.showError(error.message || "Unable to read the FIT file.")
+      console.log(error);
+      this.showError("Unable to read the FIT file.")
     } finally {
       this.submitButtonTarget.disabled = false
     }
@@ -67,23 +68,41 @@ export default class extends Controller {
     this.setDepth(data);
     this.setTemperature(data);
     this.setCoordinates(data);
+    this.setGas(data);
   }
 
   setDateTime(data) {
     const dateInput = this.diveFormTarget.dive_date;
+    const startTimeInput = this.diveFormTarget.dive_start_time;
+    const endTimeInput = this.diveFormTarget.dive_end_time;
     const durationInput = this.diveFormTarget.dive_duration;
-
-    // Date
-    const date = data.sessionMesgs[0].timestamp;
-    if (date instanceof Date && dateInput.type === 'date') {
-      dateInput.valueAsDate = date;
-    }
 
     // Duration (s -> m)
     const duration = data.sessionMesgs[0].totalElapsedTime;
     const min = Math.floor(data.sessionMesgs[0].totalElapsedTime / 60);
     if (min && durationInput) {
       durationInput.value = min;
+    }
+
+    // Date
+    const startDate = data.sessionMesgs[0].startTime;
+    if (!(startDate instanceof Date)) return;
+
+    if (dateInput && dateInput.type === 'date') {
+      dateInput.valueAsDate = startDate;
+    }
+
+    const startTime = this.convertDatetime(startDate);
+
+    if (startTimeInput && startTimeInput.type === 'datetime-local') {
+      startTimeInput.value = startTime;
+    }
+
+    const endDate = data.sessionMesgs[0].timestamp;
+    const endtime = endDate ?  this.convertDatetime(endDate) : this.calculateEndTime(startDate, duration);
+
+    if (endTimeInput && endTimeInput.type === 'datetime-local') {
+      endTimeInput.value  = endtime;
     }
   }
 
@@ -139,8 +158,6 @@ export default class extends Controller {
     const longInput = this.diveFormTarget.dive_longitude;
     let lat = data.sessionMesgs[0].startPositionLat;
     let long = data.sessionMesgs[0].startPositionLong;
-    console.log(lat, long);
-
 
     lat = this.convertSemicircles(lat);
     long = this.convertSemicircles(long);
@@ -157,6 +174,20 @@ export default class extends Controller {
     }
   }
 
+  setGas(data) {
+    const tankTypeInput = this.diveFormTarget.dive_tank_type;
+    const gasInfo = data.diveGasMesgs ? data.diveGasMesgs[0] : null;
+    if (!gasInfo || !tankTypeInput) return;
+
+    if (Math.floor(gasInfo.heliumContent) > 0) {
+      tankTypeInput.value = "trimix"
+    } else if (Math.floor(gasInfo.oxygenContent) > 21) {
+      tankTypeInput.value = "nitrox"
+    } else {
+      tankTypeInput.value = "air"
+    }
+  }
+
   showSuccess(message) {
     this.feedbackTarget.textContent = message
     this.feedbackTarget.className = "alert alert-success"
@@ -170,5 +201,16 @@ export default class extends Controller {
   // Semicircles to lat/long
   convertSemicircles(num) {
     return isNaN(num) ? null : Number(num * (180 / Math.pow(2, 31))).toFixed(6);
+  }
+
+  // Calculate end time
+  calculateEndTime(startDate, duration) {
+    return this.convertDatetime(new Date(startDate.getTime() + duration * 1000));
+  }
+
+  // Date to YYYY-MM-DDTHH:mm
+  convertDatetime(date) {
+    const offset = date.getTimezoneOffset() * 60000;
+    return new Date(date.getTime() - offset).toISOString().slice(0, 16);
   }
 }
