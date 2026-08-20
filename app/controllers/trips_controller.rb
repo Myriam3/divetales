@@ -26,6 +26,22 @@ class TripsController < ApplicationController
     end
   end
 
+  def edit
+    @trip = policy_scope(Trip).find(params[:id])
+    authorize @trip
+  end
+
+  def update
+    @trip = policy_scope(Trip).find(params[:id])
+    authorize @trip
+
+    if @trip.update(trip_params)
+      redirect_to @trip, notice: "Trip updated!"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     @trip = policy_scope(Trip).find(params[:id])
     authorize @trip
