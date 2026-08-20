@@ -1,8 +1,33 @@
 <% if dive.depth_over_time.present? %>
-  <h2 class="mt-5 mb-5">
+  <h2 class="mt-5">
     <%= render "shared/icon", icon_name: "scuba-diving", icon_size: 40 %>
     Depth profile
   </h2>
+
+  <div class="mt-5">
+    <% unless dive.duration.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "clock" %>
+        <span>Duration:</span>
+        <%= dive.duration %>min
+      </p>
+    <% end %>
+
+    <% unless dive.start_time.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "ripple-down" %>
+        Start: <%= dive.start_time.strftime("%H:%M") %>
+      </p>
+
+      <% unless dive.end_time.blank? %>
+        <p>
+          <%= render "shared/icon", icon_name: "ripple-up" %>
+          End: <%= dive.end_time.strftime("%H:%M") %>
+        </p>
+      <% end %>
+    <% end %>
+  </div>
+
   <div class="mb-5"
       data-controller="depth-chart"
       data-depth-chart-data-value="<%= html_escape(dive.depth_over_time) %>">

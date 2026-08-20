@@ -7,7 +7,8 @@ class Dive < ApplicationRecord
     "cave",
     "wall",
     "deep",
-    "night"
+    "night",
+    "macro"
   ].freeze
 
   belongs_to :trip
@@ -31,7 +32,7 @@ class Dive < ApplicationRecord
   }
 
   validates :gauge_pressure_end,
-            comparison: { greater_than: :gauge_pressure_start },
+            comparison: { less_than: :gauge_pressure_start },
             if: -> { gauge_pressure_start.present? && gauge_pressure_end.present? },
             allow_blank: true
 
@@ -56,7 +57,6 @@ class Dive < ApplicationRecord
     return if depth_over_time.blank?
 
     data = JSON.parse(depth_over_time)
-    puts "TEST #{data}"
 
     unless data.is_a?(Array)
       errors.add(:depth_over_time, "must be a valid JSON")

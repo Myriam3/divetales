@@ -88,29 +88,33 @@
     </p>
   <% end %>
 
-  <!-- TODO -->
+  <% unless dive.start_time.blank? %>
+    <p>
+      <%= render "shared/icon", icon_name: "ripple-down" %>
+      Start: <%= dive.start_time.strftime("%H:%M") %>
+    </p>
 
-  <p>
-    <%= render "shared/icon", icon_name: "ripple-down" %>
-    <span>Start:</span>
-    datetime (in progress)
-  </p>
+    <% unless dive.end_time.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "ripple-up" %>
+        End: <%= dive.end_time.strftime("%H:%M") %>
+      </p>
+    <% end %>
+  <% end %>
 
-  <p>
-    <%= render "shared/icon", icon_name: "ripple-up" %>
-    <span>End:</span>
-    datetime (in progress)
-  </p>
+  <% unless dive.tank_type.blank? %>
+    <p>
+      <%= render "shared/icon", icon_name: "scuba-diving-tank", label: "Tank:" %>
+      <%= dive.tank_type.humanize %>
+    </p>
+  <% end %>
 
-  <p>
-    <%= render "shared/icon", icon_name: "scuba-diving-tank", label: "Tank:" %>
-    Air or Nitrox (in progress)
-  </p>
-
-  <p>
-    <%= render "shared/icon", icon_name: "gauge", label: "Gauge:" %>
-    Pressure start / end (in progress)
-  </p>
+  <% unless dive.gauge_pressure_start.blank? || dive.gauge_pressure_end.blank? %>
+    <p>
+      <%= render "shared/icon", icon_name: "gauge", label: "Gauge:" %>
+      <%= format("Start: %.0f bar / End: %.0f bar", dive.gauge_pressure_start, dive.gauge_pressure_end) %>
+    </p>
+  <% end %>
 
   <% unless dive.max_depth.blank? %>
     <p>

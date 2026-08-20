@@ -9,11 +9,10 @@ export default class extends Controller {
 
   connect() {
     this.createDepthChart();
-
-
   }
 
   createDepthChart() {
+    console.log(JSON.stringify(this.dataValue));
     const points = this.dataValue
       .map(point => ({
         x: new Date(point.timestamp),
@@ -68,8 +67,7 @@ export default class extends Controller {
         plugins: {
           title: {
             display: true,
-            text: 'Depth over time',
-            //align: 'end'
+            text: 'Depth over time'
           },
           legend: {
             display: false
