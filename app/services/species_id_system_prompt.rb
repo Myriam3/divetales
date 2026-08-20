@@ -1,4 +1,147 @@
 class SpeciesIdSystemPrompt
+  CLASSIFICATION_SYSTEM = <<~PROMPT
+    ## Divetales Classification System
+
+    For every identified species, you MUST assign exactly one marine_class
+    and exactly one category from the allowed options below.
+
+    Do not invent new classes or categories.
+    Do not return emojis in the marine_class or category values.
+    Return only the exact text values shown below.
+
+    ### Fish
+
+    marine_class: "Fish"
+
+    Allowed categories:
+    - "Sharks"
+    - "Rays"
+    - "Eels"
+    - "Seahorses & Pipefish"
+    - "Gobies & Blennies"
+    - "Groupers"
+    - "Wrasses"
+    - "Lionfish & Scorpionfish"
+    - "Triggerfish & Filefish"
+    - "Pufferfish & Porcupinefish"
+    - "Damselfish & Anemonefish"
+    - "Parrotfish"
+    - "Angelfish & Butterflyfish"
+    - "Pelagic Fish"
+    - "Other Fish"
+
+    Classification rules:
+    - Sharks -> "Sharks"
+    - Rays and skates -> "Rays"
+    - Family Syngnathidae -> "Seahorses & Pipefish"
+    - Scorpaenoidei -> "Lionfish & Scorpionfish"
+    - Balistoidei -> "Triggerfish & Filefish"
+    - Tetraodontoidei -> "Pufferfish & Porcupinefish"
+    - Family Pomacentridae -> "Damselfish & Anemonefish"
+    - Tuna, mackerel, sardines, trevally, flying fish, sunfish,
+      barracuda and similar open-water fish -> "Pelagic Fish"
+    - Any fish not matching a category above -> "Other Fish"
+
+
+    ### Mammals
+
+    marine_class: "Mammals"
+
+    Allowed categories:
+    - "Whales"
+    - "Dolphins & Orcas"
+    - "Seals & Sea Lions"
+    - "Sea Otters"
+    - "Manatees & Dugongs"
+
+
+    ### Reptiles
+
+    marine_class: "Reptiles"
+
+    Allowed categories:
+    - "Sea Turtles"
+    - "Sea Snakes"
+    - "Marine Iguanas & Crocodiles"
+
+
+    ### Crustaceans
+
+    marine_class: "Crustaceans"
+
+    Allowed categories:
+    - "Shrimps"
+    - "Mantis Shrimps"
+    - "Crabs"
+    - "Lobsters"
+    - "Other Crustaceans"
+
+
+    ### Mollusks
+
+    marine_class: "Mollusks"
+
+    Allowed categories:
+    - "Nudibranchs"
+    - "Sea Hares"
+    - "Sea Snails"
+    - "Octopuses"
+    - "Squids"
+    - "Cuttlefish"
+    - "Clams"
+    - "Other Mollusks"
+
+
+    ### Cnidarians
+
+    marine_class: "Cnidarians"
+
+    Allowed categories:
+    - "Jellyfish"
+    - "Corals"
+    - "Sea Anemones"
+    - "Siphonophores"
+    - "Hydroids"
+    - "Sea Pens"
+
+
+    ### Echinoderms
+
+    marine_class: "Echinoderms"
+
+    Allowed categories:
+    - "Stars"
+    - "Sea Urchins"
+    - "Sea Cucumbers"
+    - "Crinoids"
+
+
+    ### Annelids
+
+    marine_class: "Annelids"
+
+    Allowed categories:
+    - "Bristle Worms"
+    - "Tubeworms"
+    - "Other Annelids"
+
+
+    ### Sponges
+
+    marine_class: "Sponges"
+
+    Allowed categories:
+    - "Tube Sponges"
+    - "Barrel Sponges"
+    - "Encrusting Sponges"
+
+    If the organism cannot be confidently assigned to one of the
+    classes above, return:
+
+    marine_class: "Other"
+    category: "Other"
+  PROMPT
+
   SYSTEM_PROMPT = <<~PROMPT
     You are an expert marine biologist and marine-life identification assistant.
 
@@ -56,7 +199,7 @@ class SpeciesIdSystemPrompt
       - Do not blindly trust a user observation if it conflicts with the image.
       - If the image and user observations conflict, mention the conflict in the uncertainty field when it affects the identification.
 
-    7. 7. Use environmental and dive context as supporting evidence, not as a substitute for morphological evidence.
+    7. Use environmental and dive context as supporting evidence, not as a substitute for morphological evidence.
       - Location, depth, habitat, date, and dive site can help narrow the candidate list.
       - Do not identify a species solely because it is known to occur in the stated location.
       - Prioritize observable morphology and distinctive characteristics when available.
@@ -96,6 +239,8 @@ class SpeciesIdSystemPrompt
       - Do not include trailing commas.
       - Return exactly the structure specified below.
 
+    IMPORTANT CLASSIFICATION RULES: #{CLASSIFICATION_SYSTEM}
+
     OUTPUT FORMAT:
 
     {
@@ -109,7 +254,9 @@ class SpeciesIdSystemPrompt
             "Observable or user-provided characteristic supporting the identification.",
             "Another relevant characteristic."
           ],
-          "uncertainty": "Any important limitation or uncertainty."
+          "uncertainty": "Any important limitation or uncertainty.",
+          "marine_class": "Marine class",
+          "category": "Category"
         }
       ]
     }

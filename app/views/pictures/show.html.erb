@@ -1,7 +1,7 @@
 <div class="mt-5 mb-2">
-  <%= link_to trip_path(@picture.dive.trip), class: "text-decoration-none" do %>
+  <%= link_to dive_path(@picture.dive, anchor: "pictures"), class: "text-decoration-none" do %>
     <%= render "shared/icon", icon_name: "arrow-left" %>
-    <%= @picture.dive.trip.title %>
+    Dive pictures
   <% end %>
 </div>
 

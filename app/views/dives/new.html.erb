@@ -6,7 +6,9 @@
     <%= @trip.title %>
   </p>
 
-  <%= render "form", dive: @dive %>
+  <%= render "form" %>
+
+  <div id="modal-container"></div>
 <% else %>
   Select a dive (in progress)
 <% end %>

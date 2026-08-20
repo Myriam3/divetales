@@ -6,7 +6,6 @@ Rails app generated with [lewagon/rails-templates](https://github.com/lewagon/ra
 
 ## tabler.io
 
-
 https://tabler.io/icons
 
 | Icon             | Use                                |
@@ -207,3 +206,7 @@ Not already registered fish category -> `Other Fish`
 * **🪸Tube Sponges**
 * **🪨Barrel Sponges**
 * **🧽Encrusting Sponges**
+
+# FIT File parser
+
+https://github.com/garmin/fit-javascript-sdk
