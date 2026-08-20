@@ -252,11 +252,7 @@ class IdentificationsController < ApplicationController
       PictureSpecy.create!(picture: @picture, species: @species)
     end
 
-    @identification.update!(
-      status: :confirmed,
-      species: @species,
-      dive: @dive
-    )
+    @identification.destroy!
 
     redirect_to dive_path(@dive), notice: "Successfully added #{@species.name} to your dive!"
   end
