@@ -1,10 +1,10 @@
 <% if dive.depth_over_time.present? %>
-  <h2 class="mt-5">
+  <h2 class="mt-5 mb-2">
     <%= render "shared/icon", icon_name: "scuba-diving", icon_size: 40 %>
     Depth profile
   </h2>
 
-  <div class="mt-5">
+  <div class="mb-2">
     <% unless dive.duration.blank? %>
       <p>
         <%= render "shared/icon", icon_name: "clock" %>
@@ -25,6 +25,22 @@
           End: <%= dive.end_time.strftime("%H:%M") %>
         </p>
       <% end %>
+    <% end %>
+
+    <% unless dive.max_depth.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "arrow-bar-to-down" %>
+        <span>Max-depth:</span>
+        <%= number_with_precision(dive.max_depth, precision: 1, strip_insignificant_zeros: true) %>m
+      </p>
+    <% end %>
+
+    <% unless dive.avg_depth.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "arrows-down-up" %>
+        <span>Average depth:</span>
+        <%= number_with_precision(dive.avg_depth, precision: 1, strip_insignificant_zeros: true) %>m
+      </p>
     <% end %>
   </div>
 
