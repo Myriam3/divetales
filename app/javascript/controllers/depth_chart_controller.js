@@ -8,23 +8,28 @@ export default class extends Controller {
   }
 
   connect() {
+    this.createDepthChart();
+
+
+  }
+
+  createDepthChart() {
     const points = this.dataValue
       .map(point => ({
         x: new Date(point.timestamp),
         y: Number(point.depth)
       }))
-      .filter(point => !isNaN(point.x.getTime()) && !isNaN(point.y))
+      .filter(point => !isNaN(point.x.getTime()) && !isNaN(point.y));
 
     this.chart = new window.Chart(this.canvasTarget, {
       type: "line",
-
       data: {
         datasets: [
           {
-            label: "Depth over time",
+            label: "Depth",
             data: points,
             borderColor: "#0d6efd",
-            backgroundColor: "rgba(13, 110, 253, 0.15)",
+            backgroundColor: "#92bbfa",
             borderWidth: 2,
             pointRadius: 0,
             tension: 0.3,
@@ -32,17 +37,19 @@ export default class extends Controller {
           }
         ]
       },
-
       options: {
         responsive: true,
         maintainAspectRatio: false,
-
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         scales: {
           x: {
             type: "time",
             time: {
               unit: "minute",
-              tooltipFormat: "dd/MM/yyyy HH:mm"
+              tooltipFormat: "HH:mm"
             },
             title: {
               display: true,
@@ -57,9 +64,44 @@ export default class extends Controller {
               text: "Depth (m)"
             }
           }
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: 'Depth over time',
+            //align: 'end'
+          },
+          legend: {
+            display: false
+          },
+          tooltip: {
+            displayColors: false,
+          }
+        },
+        transitions: {
+          show: {
+            animations: {
+              x: {
+                from: 0
+              },
+              y: {
+                from: 0
+              }
+            }
+          },
+          hide: {
+            animations: {
+              x: {
+                to: 0
+              },
+              y: {
+                to: 0
+              }
+            }
+          }
         }
       }
-    })
+    });
   }
 
   disconnect() {

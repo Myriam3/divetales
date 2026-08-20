@@ -63,8 +63,6 @@ export default class extends Controller {
   fillDiveForm(data) {
     if (!this.diveFormTarget) return;
 
-    console.log(data);
-
     this.setDateTime(data);
     this.setDepth(data);
     this.setTemperature(data);
@@ -196,7 +194,7 @@ export default class extends Controller {
     if (!(records && records.length && input)) return;
 
     const depthProfile = this.getDepthRecords(records);
-    console.log(JSON.stringify(depthProfile).length);
+    console.log(JSON.stringify(depthProfile));
     input.value = JSON.stringify(depthProfile);
   }
 

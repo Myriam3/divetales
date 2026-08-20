@@ -152,11 +152,9 @@
     </p>
   <% end %>
 
-  <hr>
-
-  <h2>Memo</h2>
-
   <% unless dive.note.blank? %>
+    <hr>
+    <h2>Memo</h2>
     <p>
       <%= render "shared/icon", icon_name: "notebook" %>
       <%= dive.note %>
