@@ -13,6 +13,7 @@
 
 # comment/uncomment if needed
 # User.destroy_all
+Identification.destroy_all
 Dive.destroy_all
 TripCountry.destroy_all
 Trip.destroy_all
@@ -34,6 +35,7 @@ user = User.find_or_create_by!(
 ) do |user|
   user.name = "Demo Diver"
   user.password = "test123"
+  user.admin = true
 end
 
 # ==========================================
