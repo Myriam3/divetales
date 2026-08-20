@@ -211,11 +211,37 @@ class IdentificationsController < ApplicationController
     scientific_name = params[:scientific_name].to_s.strip
     common_name = params[:common_name].to_s.strip
 
+    result = @identification.results.find do |result|
+      result["scientific_name"].to_s.strip == scientific_name
+    end
+
+    unless result
+      redirect_to identification_path(
+        identification_id: @identification.id
+      ), alert: "Unable to find the selected species."
+      return
+    end
+
+    marine_class = result["marine_class"].to_s.strip
+    category_name = result["category"].to_s.strip
+    wikipedia_url = result.dig("inaturalist", 0, "wikipedia_url")
+
+    # Convert AI's "Fish" -> Category enum value "fish"
+    classification =  marine_class.downcase.singularize
+
+    category = Category.find_by!(
+      name: category_name,
+      classification: classification
+    )
+
     # --- STEP 1: Find or Initialize the Species ---
     @species = Species.find_or_initialize_by(scientific_name: scientific_name)
 
-    @species.name = common_name.presence || scientific_name if @species.new_record?
-    @species.category = Category.first if @species.new_record?
+    if @species.new_record?
+      @species.name = common_name.presence || scientific_name
+      @species.category = category
+      @species.wiki_link = wikipedia_url if wikipedia_url.present?
+    end
 
     # Download the Wikipedia/iNaturalist image instead of using AI
     if !@species.default_photo.attached? && params[:default_photo_url].present?
@@ -252,11 +278,7 @@ class IdentificationsController < ApplicationController
       PictureSpecy.create!(picture: @picture, species: @species)
     end
 
-    @identification.update!(
-      status: :confirmed,
-      species: @species,
-      dive: @dive
-    )
+    @identification.destroy!
 
     redirect_to dive_path(@dive), notice: "Successfully added #{@species.name} to your dive!"
   end
