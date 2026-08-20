@@ -23,11 +23,12 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   #
-  resources :pictures, only: [:index, :show, :new, :create] do
+  resources :pictures do
     resources :dives, only: [:create]
 
     collection do
       get :dives_for_trip
+      post :bulk_create
     end
   end
 

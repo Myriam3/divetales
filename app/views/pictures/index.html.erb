@@ -42,11 +42,11 @@
 
 <% @pictures.each do |picture| %>
   <div class="picture-group">
-    <% picture.photos.each do |photo| %>
-      <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
+    <% if picture.photo.attached? %>
+      <%= cl_image_tag picture.photo.key, height: 300, width: 400, crop: :fill %>
       <p>
-        <% if photo.metadata["date_taken"].present? %>
-          Taken: <%= photo.metadata["date_taken"] %>
+        <% if picture.photo.metadata["date_taken"].present? %>
+          Taken: <%= picture.photo.metadata["date_taken"] %>
         <% else %>
           Taken: Unknown
         <% end %>

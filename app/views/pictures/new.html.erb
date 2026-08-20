@@ -1,65 +1,80 @@
-<h1>Upload Photos Here</h1>
-
-<%= simple_form_for(@picture, html: { multipart: true }) do |f| %>
-  <%= f.input :photo, as: :file %>
-  <%= f.button :submit, "Upload" %>
-<% end %>
-
 <h1 class="mt-5 mb-5">Upload Photos Here</h1>
 
 <div data-controller="picture-form"
-    data-picture-form-selected-trip-id-value="<%= @selected_trip_id %>"
-    data-picture-form-selected-dive-id-value="<%= @selected_dive_id %>"
-    data-picture-form-dives-url-value="<%= dives_for_trip_pictures_path %>"
+     data-picture-form-selected-trip-id-value="<%= @selected_trip_id %>"
+     data-picture-form-selected-dive-id-value="<%= @selected_dive_id %>"
+     data-picture-form-dives-url-value="<%= dives_for_trip_pictures_path %>"
 >
   <%= simple_form_for(@picture, html: { multipart: true }) do |f| %>
 
-  <div class="mb-4">
-    <label for="picture_photo" class="form-label">
+    <div class="mb-4">
+      <label for="picture_photo" class="form-label">
         <%= render "shared/icon", icon_name: "camera-spark" %>
         Select a photo *
-    </label>
+      </label>
 
-    <%= f.input :photo,
-      as: :file,
-      input_html: {
-        data: {
-          "picture-form-target": "photo",
-          action: "change->picture-form#validate"
-        }
-      } %>
-  </div>
+      <%= f.input :photo,
+        as: :file,
+        input_html: {
+          data: {
+            "picture-form-target": "photo",
+            action: "change->picture-form#validate"
+          }
+        } %>
+    </div>
 
-  <div class="mt-4 mb-4">
-    <label for="trip_id" class="form-label">
+    <div class="mt-4 mb-4">
+      <label for="trip_id" class="form-label">
         <%= render "shared/icon", icon_name: "luggage" %>
         Select a trip*
-    </label>
+      </label>
 
-    <%= select_tag :trip_id,
-      options_from_collection_for_select(@trips, :id, :title, @selected_trip_id),
-      selected: @selected_trip_id,
-      prompt: "Select a trip *",
-      class: "form-select",
-      autocomplete: "off",
-      data: {
-        "picture-form-target": "trip",
-        action: "change->picture-form#validate change->picture-form#selectTrip"
-      } %>
-  </div>
+      <%= select_tag :trip_id,
+        options_from_collection_for_select(@trips, :id, :title, @selected_trip_id),
+        selected: @selected_trip_id,
+        prompt: "Select a trip *",
+        class: "form-select",
+        autocomplete: "off",
+        data: {
+          "picture-form-target": "trip",
+          action: "change->picture-form#validate change->picture-form#selectTrip"
+        } %>
+    </div>
 
-  <%= render "dives_select" %>
+    <%= render "dives_select" %>
 
-  <div class="mt-5">
-    <%= button_tag type: "submit",
-      class: "btn btn-secondary",
-      disabled: true,
-      data: {
-        "picture-form-target": "submit"
-      } do %>
-      <%= render "shared/icon", icon_name: "camera-up" %>
-      Upload
-    <% end %>
-  </div>
+    <div class="mt-5">
+      <%= button_tag type: "submit",
+        class: "btn btn-secondary",
+        disabled: true,
+        data: {
+          "picture-form-target": "submit"
+        } do %>
+        <%= render "shared/icon", icon_name: "camera-up" %>
+        Upload
+      <% end %>
+    </div>
+  <% end %>
+
+  <hr class="my-5">
+
+  <h2 class="mb-4">Or upload multiple photos at once</h2>
+
+  <%= form_with url: bulk_create_pictures_path, method: :post, local: true, html: { multipart: true } do %>
+    <div class="mb-4">
+      <label for="pictures_bulk_photos" class="form-label">
+        <%= render "shared/icon", icon_name: "camera-spark" %>
+        Select up to 5 photos *
+      </label>
+      <%= file_field_tag "pictures_bulk[photos][]", multiple: true, class: "form-control", id: "pictures_bulk_photos" %>
+    </div>
+
+    <%= hidden_field_tag "pictures_bulk[dive_id]", @selected_dive_id, data: { "picture-form-target": "bulkDiveId" } %>
+
+    <div class="mt-5">
+      <%= submit_tag "Upload Photos", class: "btn btn-secondary" %>
+    </div>
   <% end %>
 </div>
+
+<%= hidden_field_tag "pictures_bulk[dive_id]", @selected_dive_id, data: { "picture-form-target": "bulkDiveId" } %>

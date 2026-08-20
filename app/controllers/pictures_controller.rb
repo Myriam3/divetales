@@ -87,4 +87,28 @@ class PicturesController < ApplicationController
       result[category] = pictures
     end
   end
+
+  def bulk_create
+    @dive = policy_scope(Dive).find(params.require(:pictures_bulk)[:dive_id])
+    authorize Picture.new(dive: @dive), :create?
+
+    photos = params[:pictures_bulk][:photos] || []
+    created = []
+    errors = []
+
+    photos.each do |photo|
+      picture = @dive.pictures.new(photo: photo)
+      if picture.save
+        created << picture
+      else
+        errors << picture.errors.full_messages
+      end
+    end
+
+    if errors.empty?
+      redirect_to dive_path(@dive), notice: "#{created.size} photos uploaded!"
+    else
+      redirect_to new_picture_path(dive_id: @dive.id), alert: "Some photos failed: #{errors.flatten.join(', ')}"
+    end
+  end
 end
