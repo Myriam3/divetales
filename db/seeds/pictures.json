@@ -1,0 +1,152 @@
+[
+  {
+    "dive_key": ["manta_point"],
+    "species": ["Mobula birostris"],
+    "image_path": "dummy-manta",
+    "date_time": "2026-07-11 09:30"
+  },
+  {
+    "dive_key": ["manta_point"],
+    "species": ["Mobula birostris", "Mola mola"],
+    "image_path": "dummy-manta-molamola",
+    "date_time": "2026-07-11 09:42"
+  },
+  {
+    "dive_key": ["manta_point"],
+    "species": [],
+    "image_path": "dummy-reef",
+    "date_time": "2026-07-11 09:55"
+  },
+  {
+    "dive_key": ["batu_bolong"],
+    "species": ["Amphiprion ocellaris"],
+    "image_path": "dummy-nemo",
+    "date_time": "2026-07-11 14:15"
+  },
+  {
+    "dive_key": ["crystal_rock"],
+    "species": ["Amphiprion ocellaris"],
+    "image_path": "dummy-nemo-02",
+    "date_time": "2026-07-13 10:30"
+  },
+  {
+    "dive_key": ["crystal_rock"],
+    "species": ["Triaenodon obesus"],
+    "image_path": "dummy-whitetip-reef-shark",
+    "date_time": "2026-07-13 10:05"
+  },
+  {
+    "dive_key": ["batu_bolong"],
+    "species": [],
+    "image_path": "dummy-reef-02",
+    "date_time": "2026-07-11 14:30"
+  },
+  {
+    "dive_key": ["batu_bolong"],
+    "species": ["Chelonia mydas"],
+    "image_path": "dummy-green-turtle",
+    "date_time": "2026-07-12 09:25"
+  },
+  {
+    "dive_key": ["manta_point_night"],
+    "species": ["Octopus vulgaris"],
+    "image_path": "dummy-octopus-night",
+    "date_time": "2026-07-15 20:10"
+  },
+  {
+    "dive_key": ["siaba_besar"],
+    "species": ["Thecacera pacifica"],
+    "image_path": "dummy-pikachu-nudi",
+    "date_time": "2026-07-14 09:35"
+  },
+  {
+    "dive_key": ["siaba_besar"],
+    "species": ["Jorunna funebris"],
+    "image_path": "dummy-oreo-nudi",
+    "date_time": "2026-07-14 09:40"
+  },
+  {
+    "dive_key": ["siaba_besar"],
+    "species": [],
+    "image_path": "dummy-boxfish",
+    "date_time": "2026-07-14 10:05"
+  },
+  {
+    "dive_key": ["siaba_besar"],
+    "species": ["Odontodactylus scyllarus"],
+    "image_path": "dummy-mantis",
+    "date_time": "2026-07-14 10:05"
+  },
+  {
+    "dive_key": ["mikomoto_main_rock"],
+    "species": ["Sphyrna lewini"],
+    "image_path": "dummy-hammerhead",
+    "date_time": "2026-08-11 07:45"
+  },
+  {
+    "dive_key": ["mikomoto_main_rock"],
+    "species": ["Sphyrna lewini"],
+    "image_path": "dummy-hammerhead",
+    "date_time": "2026-08-11 07:45"
+  },
+  {
+    "dive_key": ["buleleng_182"],
+    "species": ["Thaumoctopus mimicus"],
+    "image_path": "182-mimic-octopus",
+    "date_time": "2025-10-09 18:44"
+  },
+  {
+    "dive_key": ["buleleng_182"],
+    "species": [],
+    "image_path": "182-nudi",
+    "date_time": "2025-10-09 19:07"
+  },
+  {
+    "dive_key": ["buleleng_182"],
+    "species": [],
+    "image_path": "182-octopus",
+    "date_time": "2025-10-09 19:22"
+  },
+  {
+    "dive_key": ["buleleng_182"],
+    "species": ["Solenostomus paradoxus"],
+    "image_path": "182-ornament-ghost-pipefish",
+    "date_time": "2025-10-09 19:48"
+  },
+  {
+    "dive_key": ["buleleng_182"],
+    "species": [],
+    "image_path": "182-pipefish",
+    "date_time": "2025-10-09 19:53"
+  },
+  {
+    "dive_key": ["buleleng_184"],
+    "species": [],
+    "image_path": "184-cuttlefish",
+    "date_time": "2025-10-10 14:08"
+  },
+  {
+    "dive_key": ["buleleng_184"],
+    "species": [],
+    "image_path": "184-frog-fish",
+    "date_time": "2025-10-10 14:26"
+  },
+  {
+    "dive_key": ["buleleng_184"],
+    "species": [],
+    "image_path": "184-pipefish",
+    "date_time": "2025-10-10 13:45"
+  },
+  {
+    "dive_key": ["buleleng_184"],
+    "species": [],
+    "image_path": "184-pipefish",
+    "date_time": "2025-10-10 13:46"
+  },
+  {
+    "dive_key": ["buleleng_184"],
+    "species": [],
+    "image_path": "184-seahorse",
+    "date_time": "2025-10-10 13:39"
+  }
+]

@@ -18,6 +18,7 @@ class Dive < ApplicationRecord
   has_many :identifications, dependent: :nullify
 
   validates :trip, :location, :date, presence: true
+  validates :dive_number, uniqueness: true, numericality: { greater_than: 0 }, allow_nil: true
   validates :dive_site_name, presence: true, length: { maximum: 150 }
   validates :note, length: { maximum: 500 }
   validates :tank_type, presence: true
@@ -50,6 +51,24 @@ class Dive < ApplicationRecord
   end
 
   validate :depth_over_time_json
+
+  def display_name_html(include_date: true, include_time: false)
+    text = []
+    text << "##{dive_number}" if dive_number.present?
+    text << (dive_site_name || location&.name)
+    if include_date && date.present?
+      text << <<~HTML.html_safe
+        <span>#{I18n.l(date, format: '%Y-%m-%d')}</span>
+      HTML
+    end
+    if include_time && start_time.present?
+      text << <<~HTML.html_safe
+        <small>#{I18n.l(start_time, format: '%H:%M')}</small>
+      HTML
+    end
+
+    text.join(" ").html_safe
+  end
 
   private
 

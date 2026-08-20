@@ -1,5 +1,12 @@
+require "json"
+
 def create_pictures_species(dives)
   puts "Creating pictures (can take few minutes)"
+
+  pictures = []
+  pictures_json = JSON.parse(
+    File.read(Rails.root.join("db/seeds/pictures.json"))
+  )
 
   def getSpecies(sci_name)
       Species.find_by!(
@@ -33,103 +40,17 @@ def create_pictures_species(dives)
     picture
   end
 
-  # Komodo pictures
-  create_picture(
-    dive: dives["manta_point"],
-    date_time: "2026-07-11 09:30",
-    species: getSpecies("Mobula birostris"),
-    image_path: "dummy-manta"
-  )
+  pictures_json.each do |data|
+    picture = create_picture(
+      dive: dives[data["dive_key"].first],
+      date_time: data["date_time"],
+      species: data["species"].map { |species| getSpecies(species) },
+      image_path: data["image_path"]
+    )
 
-  create_picture(
-    dive: dives["manta_point"],
-    date_time: "2026-07-11 09:42",
-    species: [getSpecies("Mobula birostris"), getSpecies("Mola mola")],
-    image_path: "dummy-manta-molamola"
-  )
+    pictures << picture
+  end
 
-  create_picture(
-    dive: dives["manta_point"],
-    date_time: "2026-07-11 09:55",
-    image_path: "dummy-reef"
-  )
 
-  create_picture(
-    dive: dives["batu_bolong"],
-    date_time: "2026-07-11 14:15",
-    species: getSpecies("Amphiprion ocellaris"),
-    image_path: "dummy-nemo"
-  )
-
-  create_picture(
-    dive: dives["crystal_rock"],
-    date_time: "2026-07-13 10:30",
-    species: getSpecies("Amphiprion ocellaris"),
-    image_path: "dummy-nemo-02"
-  )
-
-  create_picture(
-    dive: dives["crystal_rock"],
-    date_time: "2026-07-13 10:05",
-    species: getSpecies("Triaenodon obesus"),
-    image_path: "dummy-whitetip-reef-shark"
-  )
-
-  create_picture(
-    dive: dives["batu_bolong"],
-    date_time: "2026-07-11 14:30",
-    image_path: "dummy-reef-02"
-  )
-
-  create_picture(
-    dive: dives["batu_bolong"],
-    date_time: "2026-07-12 09:25",
-    species: getSpecies("Chelonia mydas"),
-    image_path: "dummy-green-turtle"
-  )
-
-  create_picture(
-    dive: dives["manta_point_night"],
-    date_time: "2026-07-15 20:10",
-    species: getSpecies("Octopus vulgaris"),
-    image_path: "dummy-octopus-night"
-  )
-
-  create_picture(
-    dive: dives["siaba_besar"],
-    date_time: "2026-07-14 09:35",
-    species: getSpecies("Thecacera pacifica"),
-    image_path: "dummy-pikachu-nudi"
-  )
-
-  create_picture(
-    dive: dives["siaba_besar"],
-    date_time: "2026-07-14 09:55",
-    species: getSpecies("Jorunna funebris"),
-    image_path: "dummy-oreo-nudi"
-  )
-
-  create_picture(
-    dive: dives["siaba_besar"],
-    date_time: "2026-07-14 09:40",
-    image_path: "dummy-boxfish"
-  )
-
-  create_picture(
-    dive: dives["siaba_besar"],
-    date_time: "2026-07-14 10:05",
-    species: getSpecies("Odontodactylus scyllarus"),
-    image_path: "dummy-mantis"
-  )
-
-  # Mikomoto pictures
-
-  create_picture(
-    dive: dives["mikomoto_main_rock"],
-    date_time: "2026-08-11 07:45",
-    species: getSpecies("Sphyrna lewini"),
-    image_path: "dummy-hammerhead"
-  )
-
-  puts "Done!"
+  puts "#{pictures.length} pictures created!"
 end

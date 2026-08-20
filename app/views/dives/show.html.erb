@@ -1,24 +1,33 @@
-<div class="mt-5 mb-2">
+<% if @dive %>
+  <p class="mt-5 mb-2 text-end">
+      <%= link_to "#", class: "btn btn-secondary" do %>
+        <%= render "shared/icon", icon_name: "scuba-mask" %>
+        Add a new dive
+      <% end %>
+  </p>
+
+  <div class="mb-2">
+    <%= link_to trip_path(@dive.trip), class: "text-decoration-none" do %>
+      <%= render "shared/icon", icon_name: "arrow-left" %>
+      <%= @dive.trip.title %>
+    <% end %>
+  </div>
+
+  <div class="mb-5">
   <%= link_to dives_path, class: "text-decoration-none" do %>
     <%= render "shared/icon", icon_name: "arrow-left" %>
     All dives
   <% end %>
 </div>
 
-<div class="mb-5">
-  <%= link_to trip_path(@dive.trip), class: "text-decoration-none" do %>
-    <%= render "shared/icon", icon_name: "arrow-left" %>
-    <%= @dive.trip.title %>
+  <h1 class="mb-4"><%= render "shared/icon", icon_name: "scuba-mask", icon_size: 40 %><%= @dive.display_name_html %></h1>
+
+  <p class="text-end mb-4">
+    <%= link_to "#", class: "btn btn-outline-secondary" do %>
+      <%= render "shared/icon", icon_name: "edit" %>
+      Edit dive
   <% end %>
-</div>
 
-<% if @dive %>
-  <%
-    dive_title = @dive.dive_site_name.blank? ? @dive.location.name : @dive.dive_site_name
-    dive_title += ", #{@dive.date}"
-  %>
-
-  <h1 class="mb-5"><%= render "shared/icon", icon_name: "scuba-mask", icon_size: 40 %><%= dive_title %></h1>
 
   <%= render "shared/dive", dive: @dive %>
 

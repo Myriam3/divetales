@@ -30,6 +30,7 @@ export default class extends Controller {
       const depthProfile = null;
 
       if (!diveData) return;
+      console.log(diveData);
       this.showSuccess("FIT file imported");
       this.fillDiveForm(diveData);
       this.setDepthProfile(diveData);
@@ -63,11 +64,23 @@ export default class extends Controller {
   fillDiveForm(data) {
     if (!this.diveFormTarget) return;
 
+    this.setDiveNumber(data);
     this.setDateTime(data);
     this.setDepth(data);
     this.setTemperature(data);
     this.setCoordinates(data);
     this.setGas(data);
+  }
+
+  setDiveNumber(data) {
+    const diveNumberInput = this.diveFormTarget.dive_dive_number;
+    const number = data.diveSummaryMesgs[1]?.diveNumber;
+
+    console.log(diveNumberInput, data.diveSummaryMesgs[0]);
+
+    if (diveNumberInput && number) {
+      diveNumberInput.value = number
+    }
   }
 
   setDateTime(data) {
@@ -77,14 +90,14 @@ export default class extends Controller {
     const durationInput = this.diveFormTarget.dive_duration;
 
     // Duration (s -> m)
-    const duration = data.sessionMesgs[0].totalElapsedTime;
-    const min = Math.floor(data.sessionMesgs[0].totalElapsedTime / 60);
+    const duration = data.sessionMesgs[0]?.totalElapsedTime;
+    const min = Math.floor(data.sessionMesgs[0]?.totalElapsedTime / 60);
     if (min && durationInput) {
       durationInput.value = min;
     }
 
     // Date
-    const startDate = data.sessionMesgs[0].startTime;
+    const startDate = data.sessionMesgs[0]?.startTime;
     if (!(startDate instanceof Date)) return;
 
     if (dateInput && dateInput.type === 'date') {
@@ -97,7 +110,7 @@ export default class extends Controller {
       startTimeInput.value = startTime;
     }
 
-    const endDate = data.sessionMesgs[0].timestamp;
+    const endDate = data.sessionMesgs[0]?.timestamp;
     const endtime = endDate ?  this.convertDatetime(endDate) : this.calculateEndTime(startDate, duration);
 
     if (endTimeInput && endTimeInput.type === 'datetime-local') {
@@ -109,8 +122,8 @@ export default class extends Controller {
     const maxDepthInput = this.diveFormTarget.dive_max_depth;
     const avgDepthInput = this.diveFormTarget.dive_avg_depth;
 
-    let maxDepth = data.diveSummaryMesgs[0].maxDepth
-    let avgDepth = data.diveSummaryMesgs[0].avgDepth
+    let maxDepth = data.diveSummaryMesgs[0]?.maxDepth
+    let avgDepth = data.diveSummaryMesgs[0]?.avgDepth
     // TODO if empty, calculate with records
 
     maxDepth = isNaN(maxDepth) ? null : Number(maxDepth.toFixed(2));
@@ -130,8 +143,8 @@ export default class extends Controller {
     const minTempInput = this.diveFormTarget.dive_min_temp;
     const avgTempInput = this.diveFormTarget.dive_avg_temp;
 
-    let maxTemp = data.sessionMesgs[0].maxTemperature
-    let minTemp = data.sessionMesgs[0].minTemperature
+    let maxTemp = data.sessionMesgs[0]?.maxTemperature
+    let minTemp = data.sessionMesgs[0]?.minTemperature
     let avgTemp = data.diveSummaryMesgs[0].avgTemperature
     // TODO if empty, calculate with records
 
@@ -155,8 +168,8 @@ export default class extends Controller {
   setCoordinates(data) {
     const latInput = this.diveFormTarget.dive_latitude;
     const longInput = this.diveFormTarget.dive_longitude;
-    let lat = data.sessionMesgs[0].startPositionLat;
-    let long = data.sessionMesgs[0].startPositionLong;
+    let lat = data.sessionMesgs[0]?.startPositionLat;
+    let long = data.sessionMesgs[0]?.startPositionLong;
 
     lat = this.convertSemicircles(lat);
     long = this.convertSemicircles(long);
