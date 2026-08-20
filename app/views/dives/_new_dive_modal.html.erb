@@ -1,0 +1,42 @@
+<div class="modal fade"
+    id="newDiveModal"
+    tabindex="-1"
+    aria-hidden="true"
+    data-controller="new-dive-modal"
+    data-new-dive-modal-dive-path="<%= trip_dive_path(dive.trip, dive) %>">
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <%
+          dive_title = dive.dive_site_name.blank? ? dive.location.name : dive.dive_site_name
+          dive_title += ", #{dive.date}"
+        %>
+        <h2 class="modal-title"><%= dive_title %></h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+          <p class="text-center mb-4">New dive added!</p>
+          <p class="mb-4 text-center">
+            <%= link_to new_picture_path(dive_id: dive.id, trip_id: dive.trip_id), class: "btn btn-secondary", data: { turbo: false } do %>
+              <%= render "shared/icon", icon_name: "camera-spark" %>
+              Add a picture
+            <% end %>
+          </p>
+          <p class="mb-4 text-center">
+            <%= link_to identification_path(dive_id: dive.id), class: "btn btn-secondary", data: { turbo: false } do %>
+              <%= render "shared/icon", icon_name: "photo-spark" %>
+              Identify a species
+            <% end %>
+          </p>
+          <p class="mb-4 text-center">
+            <%= link_to trip_dive_path(dive.trip, dive), class: "btn btn-outline-secondary", data: { turbo: false } do %>
+              <%= render "shared/icon", icon_name: "scuba-mask" %>
+              See dive
+            <% end %>
+          </p>
+      </div>
+    </div>
+  </div>
+</div>

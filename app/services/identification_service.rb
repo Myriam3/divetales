@@ -28,6 +28,8 @@ class IdentificationService
         reasoning: identification["reasoning"],
         evidence: identification["evidence"],
         uncertainty: identification["uncertainty"],
+        marine_class: identification["marine_class"],
+        category: identification["category"],
         inaturalist: inaturalist
       }
     end

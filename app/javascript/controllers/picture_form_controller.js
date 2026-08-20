@@ -10,8 +10,8 @@ export default class extends Controller {
   ];
 
   static values = {
-    selectedTripId: String,
-    selectedDiveId: String,
+    // selectedTripId: String,
+    // selectedDiveId: String,
     divesUrl: String
   };
 
@@ -40,7 +40,6 @@ export default class extends Controller {
 
     this.validate();
   }
-
 
   validate() {
     const photo = this.photoTarget.files.length > 0;

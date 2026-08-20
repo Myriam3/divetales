@@ -3,21 +3,36 @@
     dive_title = "##{number} "
     dive_title += dive.dive_site_name.blank? ? dive.location.name : dive.dive_site_name
 
-    if local_assigns[:all] == true
+    all_page = current_page?(dives_path) || current_page?(root_path)
+
+    if all_page
       dive_title += ", #{dive.date}"
     end
   %>
 
-  <%= link_to dive_path(dive), class: 'card text-decoration-none text-reset' do %>
+  <%= link_to(
+      all_page ? dive_path(dive) : trip_dive_path(dive.trip, dive),
+      class: 'card text-decoration-none text-reset'
+    ) do %>
     <div class="card-body">
       <% if local_assigns[:heading_level] == 3 %>
         <h3 class="card-title"><%= dive_title %></h3>
       <% else %>
         <h2 class="card-title"><%= dive_title %></h2>
       <% end %>
+
+      <% if all_page %>
+        <p>
+        <%= render "shared/icon", icon_name: "luggage", label: "Trip: " %>
+        <%= dive.trip.title %>
+      </p>
+      <% end %>
       <p>
         <%= render "shared/icon", icon_name: "calendar", label: "Date: " %>
-        <%= dive.date.strftime("%d %B %Y") %>
+        <%= dive.date.strftime("%Y-%m-%d") %>
+        <% unless dive.start_time.blank? %>
+          <%= dive.start_time.strftime("%H:%M") %>
+        <% end %>
       </p>
 
       <% unless dive.dive_site_name.blank? %>
