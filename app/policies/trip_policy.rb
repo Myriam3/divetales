@@ -24,4 +24,8 @@ class TripPolicy < ApplicationPolicy
   def dives_for_trip?
     record.user == user
   end
+
+  def destroy?
+    record.user == user
+  end
 end
