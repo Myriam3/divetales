@@ -27,4 +27,8 @@ class DivePolicy < ApplicationPolicy
   def create?
     record.trip.user == user
   end
+
+  def destroy?
+    record.trip.user == user
+  end
 end

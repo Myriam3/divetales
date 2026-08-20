@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_18_135432) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_19_042447) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -68,6 +68,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_18_135432) do
     t.string "dive_site_name", default: "", null: false
     t.string "dive_types", default: [], array: true
     t.integer "duration"
+    t.datetime "end_time"
+    t.float "gauge_pressure_end"
+    t.float "gauge_pressure_start"
     t.decimal "latitude"
     t.bigint "location_id", null: false
     t.decimal "longitude"
@@ -75,6 +78,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_18_135432) do
     t.float "max_temp"
     t.float "min_temp"
     t.text "note"
+    t.datetime "start_time"
+    t.integer "tank_type", default: 1, null: false
     t.bigint "trip_id", null: false
     t.datetime "updated_at", null: false
     t.index ["location_id"], name: "index_dives_on_location_id"

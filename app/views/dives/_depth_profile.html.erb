@@ -1,0 +1,54 @@
+<% if dive.depth_over_time.present? %>
+  <h2 class="mt-5 mb-2">
+    <%= render "shared/icon", icon_name: "scuba-diving", icon_size: 40 %>
+    Depth profile
+  </h2>
+
+  <div class="mb-2">
+    <% unless dive.duration.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "clock" %>
+        <span>Duration:</span>
+        <%= dive.duration %>min
+      </p>
+    <% end %>
+
+    <% unless dive.start_time.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "ripple-down" %>
+        Start: <%= dive.start_time.strftime("%H:%M") %>
+      </p>
+
+      <% unless dive.end_time.blank? %>
+        <p>
+          <%= render "shared/icon", icon_name: "ripple-up" %>
+          End: <%= dive.end_time.strftime("%H:%M") %>
+        </p>
+      <% end %>
+    <% end %>
+
+    <% unless dive.max_depth.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "arrow-bar-to-down" %>
+        <span>Max-depth:</span>
+        <%= number_with_precision(dive.max_depth, precision: 1, strip_insignificant_zeros: true) %>m
+      </p>
+    <% end %>
+
+    <% unless dive.avg_depth.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "arrows-down-up" %>
+        <span>Average depth:</span>
+        <%= number_with_precision(dive.avg_depth, precision: 1, strip_insignificant_zeros: true) %>m
+      </p>
+    <% end %>
+  </div>
+
+  <div class="mb-5"
+      data-controller="depth-chart"
+      data-depth-chart-data-value="<%= html_escape(dive.depth_over_time) %>">
+      <canvas data-depth-chart-target="canvas"
+              height="400"
+      ></canvas>
+  </div>
+<% end %>
