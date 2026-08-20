@@ -1,4 +1,5 @@
-<%= simple_form_for :identification, as: :identification, url: identification_path do |f| %>
+<%= simple_form_for :identification, as: :identification, url: identification_path,
+      data: { turbo: false } do |f| %>
   <div data-controller="image-preview">
     <%= f.input :upload,
           as: :file,

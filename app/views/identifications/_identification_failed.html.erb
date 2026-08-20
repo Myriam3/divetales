@@ -1,0 +1,15 @@
+<div class="text-center py-5">
+  <div class="alert alert-danger">
+    <h5>We couldn't identify the species.</h5>
+
+    <p class="mb-3">
+      Something went wrong while processing your identification.
+    </p>
+
+    <%= button_to "Try again",
+        identification_retry_path,
+        method: :post,
+        params: { identification_id: identification.id },
+        class: "btn btn-primary" %>
+  </div>
+</div>

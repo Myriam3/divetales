@@ -11,7 +11,10 @@ class IdentificationsController < ApplicationController
       )
       authorize @identification, :show?
 
-      @results = @identification.results.map(&:deep_symbolize_keys)
+      @results = Array(@identification.results).map(&:deep_symbolize_keys)
+    else
+      @identification = nil
+      @results = []
     end
   end
 
@@ -61,45 +64,7 @@ class IdentificationsController < ApplicationController
 
     @identification.save!
 
-    begin
-      if image.present?
-        image.tempfile.rewind
-      end
-
-      @results = IdentificationService.new(
-        user_prompt: user_prompt,
-        image: image
-      ).call
-
-      if @results.blank?
-        @identification.update!(status: :failed)
-
-        flash[:alert] = "The identification service didn't return any results. Please try again."
-
-        redirect_to identification_path(
-          dive_id: @dive&.id
-        )
-        return
-      end
-
-      @identification.update!(
-        results: @results
-      )
-
-    rescue StandardError => e
-      @identification.update!(status: :failed)
-
-      Rails.logger.error(e.message)
-
-      redirect_to identification_path(
-        dive_id: @dive&.id
-      ), alert: "We encountered an issue connecting to the AI service. Please try again later."
-
-      return
-    end
-
     if image.present?
-      # Rewind the file so ActiveStorage can read it from the beginning
       image.tempfile.rewind
 
       @identification.image.attach(
@@ -109,16 +74,23 @@ class IdentificationsController < ApplicationController
       )
     end
 
-    respond_to do |format|
-      format.html do
-        redirect_to identification_path(
-          identification_id: @identification.id,
-          dive_id: @dive&.id
-        )
-      end
+    IdentificationJob.perform_later(@identification.id)
 
-      format.turbo_stream
-    end
+    redirect_to identification_path(
+      identification_id: @identification.id,
+      dive_id: @dive&.id
+    )
+
+    # respond_to do |format|
+    #   format.html do
+    #     redirect_to identification_path(
+    #       identification_id: @identification.id,
+    #       dive_id: @dive&.id
+    #     )
+    #   end
+
+    #   format.turbo_stream
+    # end
   end
 
   def details
@@ -128,7 +100,7 @@ class IdentificationsController < ApplicationController
 
     @identification = current_user.identifications.find(
       params[:identification_id]
-      )
+    )
 
     authorize @identification, :details?
 
@@ -227,7 +199,7 @@ class IdentificationsController < ApplicationController
     wikipedia_url = result.dig("inaturalist", 0, "wikipedia_url")
 
     # Convert AI's "Fish" -> Category enum value "fish"
-    classification =  marine_class.downcase.singularize
+    classification = marine_class.downcase.singularize
 
     category = Category.find_by!(
       name: category_name,
@@ -274,13 +246,25 @@ class IdentificationsController < ApplicationController
 
     # --- STEP 3: Save and Associate ---
     # We only save the picture if it actually has a photo attached
-    if @picture.photo.attached? && @picture.save!
-      PictureSpecy.create!(picture: @picture, species: @species)
-    end
+    PictureSpecy.create!(picture: @picture, species: @species) if @picture.photo.attached? && @picture.save!
 
     @identification.destroy!
 
     redirect_to dive_path(@dive), notice: "Successfully added #{@species.name} to your dive!"
+  end
+
+  def retry
+    @identification = current_user.identifications.find(params[:identification_id])
+    authorize @identification, :retry?
+
+    @identification.update!(status: :pending)
+
+    IdentificationJob.perform_later(@identification.id)
+
+    redirect_to identification_path(
+      identification_id: @identification.id,
+      dive_id: @identification.dive_id
+    )
   end
 
   private
