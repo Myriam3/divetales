@@ -54,6 +54,8 @@ gem "ruby-vips", "~> 2.0"
 
 # authorization
 gem "pundit"
+
+# cloudinary
 gem "cloudinary"
 
 group :development, :test do

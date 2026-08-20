@@ -41,7 +41,7 @@
 <% if @dives.any? %>
   <ul class="list-unstyled mt-5">
     <% @dives.each_with_index do |dive, index| %>
-    <li class="mt-3"><%= render "shared/dive_card", dive: dive, number: @dives.length - index, all: true %></li>
+    <li class="mt-3"><%= render "shared/dive_card", dive: dive, number: @dives.length - index %></li>
   <% end %>
   </ul>
 <% end %>

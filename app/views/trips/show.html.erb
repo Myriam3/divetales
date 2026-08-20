@@ -47,11 +47,11 @@
     Dives
   </h2>
 
-  <% if @trip.dives.any? %>
+  <% if @dives.any? %>
     <ul class="list-unstyled">
-      <% @trip.dives.each_with_index do |dive, index| %>
-        <li><%= render "shared/dive_card", dive: dive, number: index + 1, heading_level: 3 %></li>
-      <% end %>
+    <% @dives.each_with_index do |dive, index| %>
+      <li><%= render "shared/dive_card", dive: dive, number: @dives.length - index, heading_level: 3 %></li>
+    <% end %>
     </ul>
   <% else %>
     <p>No dives have been added yet.</p>
