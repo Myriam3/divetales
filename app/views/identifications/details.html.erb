@@ -1,4 +1,6 @@
-<%= turbo_frame_tag "identification-content" do %>
+<%= turbo_stream_from "identification-details-#{@identification.id}-#{@scientific_name.parameterize}" %>
+
+<div class="species-details-page">
 
   <div class="species-details-page">
 
@@ -11,14 +13,17 @@
       data: { turbo: false } %>
     </div>
 
-    <%= render "identifications/species_details",
-          details: @details,
-          scientific_name: @scientific_name,
-          common_name: @common_name,
-          identification_id: @identification.id,
-          dive_id: @dive_id,
-          default_photo_url: @default_photo_url %>
+
+      <%= render "identifications/species_details",
+            details: @details,
+            scientific_name: @scientific_name,
+            common_name: @common_name,
+            identification_id: @identification.id,
+            dive_id: @dive_id,
+            default_photo_url: @default_photo_url %>
+
+
 
   </div>
 
-<% end %>
+</div>

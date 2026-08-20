@@ -115,20 +115,30 @@ class IdentificationsController < ApplicationController
       return
     end
 
-    cache_key = "identification/#{@identification.id}/species_details/#{@scientific_name.downcase}"
+    @species = Species.find_by(scientific_name: @scientific_name)
 
-    @details = Rails.cache.fetch(cache_key, expires_in: 1.hour) do
-      SpeciesDetailsService.new(
-        scientific_name: @scientific_name,
-        common_name: @common_name,
-        inaturalist: @result["inaturalist"]
-      ).call
+    if @species&.details.present?
+      @details = @species.details
+    else
+      details = @identification.details || {}
+
+      @details = details[@scientific_name]
+
+      unless @details.present?
+        details[@scientific_name] = {
+          "status" => "pending"
+        }
+
+        @identification.update!(details: details)
+
+        SpeciesDetailsJob.perform_later(
+          @identification.id,
+          @scientific_name
+        )
+
+        @details = details[@scientific_name]
+      end
     end
-
-    @details ||= {
-      "scientific_name" => @scientific_name,
-      "common_name" => @common_name
-    }
   end
 
   def confirm
