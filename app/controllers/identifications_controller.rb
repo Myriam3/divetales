@@ -35,6 +35,10 @@ class IdentificationsController < ApplicationController
       status: :pending
     )
 
+    @identification.assign_attributes(
+      identification_params.except(:upload, :camera)
+    )
+
     authorize @identification
 
     attach_image_if_present

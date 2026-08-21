@@ -1,6 +1,7 @@
 class Identification < ApplicationRecord
-  attr_accessor :upload, :camera, :color, :size, :shape, :behavior,
-                :location, :dive_site, :date, :depth, :habitat, :additional_info
+  store :form_inputs,
+        accessors: %i[color size shape behavior location dive_site date depth habitat additional_info],
+        coder: JSON
 
   belongs_to :user
   belongs_to :dive, optional: true
