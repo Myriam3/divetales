@@ -196,14 +196,16 @@ class IdentificationsController < ApplicationController
   end
 
   def attach_image_if_present
-    return if uploaded_image.blank?
-
-    uploaded_image.tempfile.rewind
-    @identification.image.attach(
-      io: uploaded_image.tempfile,
-      filename: uploaded_image.original_filename,
-      content_type: uploaded_image.content_type
-    )
+    if uploaded_image.present?
+      uploaded_image.tempfile.rewind
+      @identification.image.attach(
+        io: uploaded_image.tempfile,
+        filename: uploaded_image.original_filename,
+        content_type: uploaded_image.content_type
+      )
+    elsif params[:existing_image_signed_id].present?
+      @identification.image.attach(params[:existing_image_signed_id])
+    end
   end
 
   def find_result_by_scientific_name

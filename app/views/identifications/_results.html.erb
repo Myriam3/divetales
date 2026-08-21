@@ -45,4 +45,21 @@
 
   <% end %>
 
+  <div class="mt-5 pt-4 border-top text-center">
+    <h5 class="text-muted">Not seeing the right match?</h5>
+    <p class="small text-muted mb-3">
+      The Identification sometimes needs a little help. Provide a bit more context to narrow it down!
+    </p>
+
+    <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#refine-search-form">
+      Add more context & try again
+    </button>
+
+    <div class="collapse mt-4 text-start" id="refine-search-form">
+      <div class="card card-body bg-light">
+        <%= render "identifications/form" %>
+      </div>
+    </div>
+  </div>
+
 </div>
