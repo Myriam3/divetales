@@ -1,10 +1,14 @@
 require "open-uri"
 
 class IdentificationsController < ApplicationController
+  before_action :set_dive, only: %i[index create confirm]
+  before_action :set_identification, only: %i[details confirm save retry]
+  before_action :set_species_params, only: %i[details confirm save]
+
   def index
     identification = Identification.new
     authorize identification, :create?
-    @dive = Dive.find_by(id: params[:dive_id])
+
     if params[:identification_id].present?
       @identification = current_user.identifications.find(
         params[:identification_id]
@@ -19,60 +23,23 @@ class IdentificationsController < ApplicationController
   end
 
   def create
-    @dive = Dive.find_by(id: params[:dive_id])
-
-    upload = identification_params[:upload]
-    camera = identification_params[:camera]
-    image = upload || camera
-
-    observation = identification_params.slice(
-      :color,
-      :size,
-      :shape,
-      :behavior
-    ).compact_blank
-
-    dive_context = identification_params.slice(
-      :location,
-      :dive_site,
-      :date,
-      :depth,
-      :habitat
-    ).compact_blank
-
-    additional_info = identification_params[:additional_info]
-
-    if image.blank? && observation.blank? && dive_context.blank? && additional_info.blank?
+    if no_input_provided?
       flash.now[:alert] = "Please provide a description or upload an image."
       render :index, status: :unprocessable_entity
       return
     end
 
-    user_prompt = SpeciesIdUserPrompt.call(
-      observation: observation,
-      dive_context: dive_context,
-      additional_info: additional_info
-    )
-
     @identification = current_user.identifications.build(
       dive: @dive,
-      user_prompt: user_prompt,
+      user_prompt: build_user_prompt,
       status: :pending
     )
 
     authorize @identification
 
+    attach_image_if_present
+
     @identification.save!
-
-    if image.present?
-      image.tempfile.rewind
-
-      @identification.image.attach(
-        io: image.tempfile,
-        filename: image.original_filename,
-        content_type: image.content_type
-      )
-    end
 
     IdentificationJob.perform_later(@identification.id)
 
@@ -80,33 +47,10 @@ class IdentificationsController < ApplicationController
       identification_id: @identification.id,
       dive_id: @dive&.id
     )
-
-    # respond_to do |format|
-    #   format.html do
-    #     redirect_to identification_path(
-    #       identification_id: @identification.id,
-    #       dive_id: @dive&.id
-    #     )
-    #   end
-
-    #   format.turbo_stream
-    # end
   end
 
   def details
-    @scientific_name = params[:scientific_name].to_s.strip
-    @common_name = params[:common_name].to_s.strip
-    @dive_id = params[:dive_id]
-
-    @identification = current_user.identifications.find(
-      params[:identification_id]
-    )
-
-    authorize @identification, :details?
-
-    @result = @identification.results.find do |result|
-      result["scientific_name"].to_s.strip == @scientific_name
-    end
+    @result = find_result_by_scientific_name
 
     if @result.blank?
       redirect_to identification_path(
@@ -117,51 +61,17 @@ class IdentificationsController < ApplicationController
 
     @species = Species.find_by(scientific_name: @scientific_name)
 
-    if @species&.details.present?
-      @details = @species.details
-    else
-      details = @identification.details || {}
-
-      @details = details[@scientific_name]
-
-      unless @details.present?
-        details[@scientific_name] = {
-          "status" => "pending"
-        }
-
-        @identification.update!(details: details)
-
-        SpeciesDetailsJob.perform_later(
-          @identification.id,
-          @scientific_name
-        )
-
-        @details = details[@scientific_name]
-      end
-    end
+    @details = @species&.details || fetch_or_generate_identification_details
   end
 
   def confirm
-    @scientific_name = params[:scientific_name].to_s.strip
-    @common_name = params[:common_name].to_s.strip
     @default_photo_url = params[:default_photo_url]
 
-    @identification = current_user.identifications.find(
-      params[:identification_id]
-    )
-    authorize @identification, :confirm?
+    # @species = Species.find_by(
+    #   scientific_name: @scientific_name
+    # )
 
-    @species = Species.find_by(
-      scientific_name: @scientific_name
-    )
-
-    @dive = current_user.dives.find_by(
-      id: params[:dive_id]
-    )
-
-    @trip = current_user.trips.find_by(
-      id: params[:trip_id]
-    )
+    @trip = current_user.trips.find_by(id: params[:trip_id])
 
     if @trip
       @dives = @trip.dives.order(date: :desc)
@@ -175,11 +85,6 @@ class IdentificationsController < ApplicationController
   end
 
   def save
-    @identification = current_user.identifications.find(
-      params[:identification_id]
-    )
-    authorize @identification, :save?
-
     dive_id = params[:dive_id]
 
     if dive_id.blank?
@@ -190,12 +95,7 @@ class IdentificationsController < ApplicationController
 
     @dive = current_user.dives.find(dive_id)
 
-    scientific_name = params[:scientific_name].to_s.strip
-    common_name = params[:common_name].to_s.strip
-
-    result = @identification.results.find do |result|
-      result["scientific_name"].to_s.strip == scientific_name
-    end
+    result = find_result_by_scientific_name
 
     unless result
       redirect_to identification_path(
@@ -204,69 +104,19 @@ class IdentificationsController < ApplicationController
       return
     end
 
-    marine_class = result["marine_class"].to_s.strip
-    category_name = result["category"].to_s.strip
-    wikipedia_url = result.dig("inaturalist", 0, "wikipedia_url")
-
-    # Convert AI's "Fish" -> Category enum value "fish"
-    classification = marine_class.downcase.singularize
-
-    category = Category.find_by!(
-      name: category_name,
-      classification: classification
+    @species = ConfirmIdentificationService.call(
+      user: current_user,
+      identification: @identification,
+      dive: @dive,
+      result: result,
+      common_name: @common_name,
+      default_photo_url: params[:default_photo_url]
     )
-
-    # --- STEP 1: Find or Initialize the Species ---
-    @species = Species.find_or_initialize_by(scientific_name: scientific_name)
-
-    if @species.new_record?
-      @species.name = common_name.presence || scientific_name
-      @species.category = category
-      @species.wiki_link = wikipedia_url if wikipedia_url.present?
-    end
-
-    # Download the Wikipedia/iNaturalist image instead of using AI
-    if !@species.default_photo.attached? && params[:default_photo_url].present?
-      begin
-        downloaded_image = URI.open(params[:default_photo_url])
-        @species.default_photo.attach(
-          io: downloaded_image,
-          filename: "#{scientific_name.parameterize}-default.jpg",
-          # ActiveStorage will infer content type from the file, but we can safely default to jpeg
-          content_type: 'image/jpeg'
-        )
-      rescue StandardError => e
-        Rails.logger.error "Failed to download reference image: #{e.message}"
-      end
-    end
-
-    @species.save!
-
-    # --- STEP 2: Create the Dive's Picture Record ---
-    @picture = @dive.pictures.build
-
-    if @identification.image.attached?
-      @picture.source = :user_uploaded
-      @picture.photo.attach(@identification.image.blob)
-
-    elsif @species.default_photo.attached?
-      @picture.source = :species_default
-      @picture.photo.attach(@species.default_photo.blob)
-    end
-
-    # --- STEP 3: Save and Associate ---
-    # We only save the picture if it actually has a photo attached
-    PictureSpecy.create!(picture: @picture, species: @species) if @picture.photo.attached? && @picture.save!
-
-    @identification.destroy!
 
     redirect_to dive_path(@dive), notice: "Successfully added #{@species.name} to your dive!"
   end
 
   def retry
-    @identification = current_user.identifications.find(params[:identification_id])
-    authorize @identification, :retry?
-
     @identification.update!(status: :pending)
 
     IdentificationJob.perform_later(@identification.id)
@@ -278,6 +128,20 @@ class IdentificationsController < ApplicationController
   end
 
   private
+
+  def set_dive
+    @dive = current_user.dives.find_by(id: params[:dive_id]) if params[:dive_id].present?
+  end
+
+  def set_identification
+    @identification = current_user.identifications.find(params[:identification_id])
+    authorize @identification, :"#{action_name}?"
+  end
+
+  def set_species_params
+    @scientific_name = params[:scientific_name].to_s.strip
+    @common_name = params[:common_name].to_s.strip
+  end
 
   def identification_params
     params.require(:identification).permit(
@@ -294,5 +158,70 @@ class IdentificationsController < ApplicationController
       :habitat,
       :additional_info
     )
+  end
+
+  def uploaded_image
+    identification_params[:upload] || identification_params[:camera]
+  end
+
+  def observation_params
+    identification_params.slice(
+      :color,
+      :size,
+      :shape,
+      :behavior
+    ).compact_blank
+  end
+
+  def dive_context_params
+    identification_params.slice(
+      :location,
+      :dive_site,
+      :date,
+      :depth,
+      :habitat
+    ).compact_blank
+  end
+
+  def no_input_provided?
+    uploaded_image.blank? && observation_params.blank? && dive_context_params.blank? && identification_params[:additional_info].blank?
+  end
+
+  def build_user_prompt
+    SpeciesIdUserPrompt.call(
+      observation: observation_params,
+      dive_context: dive_context_params,
+      additional_info: identification_params[:additional_info]
+    )
+  end
+
+  def attach_image_if_present
+    return if uploaded_image.blank?
+
+    uploaded_image.tempfile.rewind
+    @identification.image.attach(
+      io: uploaded_image.tempfile,
+      filename: uploaded_image.original_filename,
+      content_type: uploaded_image.content_type
+    )
+  end
+
+  def find_result_by_scientific_name
+    @identification.results.find do |result|
+      result["scientific_name"].to_s.strip == @scientific_name
+    end
+  end
+
+  def fetch_or_generate_identification_details
+    details = @identification.details || {}
+
+    unless details[@scientific_name].present?
+      # preventing the app from accidentally queuing up multiple identical AI jobs
+      details[@scientific_name] = { "status" => "pending" }
+      @identification.update!(details: details)
+      SpeciesDetailsJob.perform_later(@identification.id, @scientific_name)
+    end
+
+    details[@scientific_name]
   end
 end
