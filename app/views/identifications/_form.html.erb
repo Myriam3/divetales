@@ -13,47 +13,64 @@
 
     <div data-upload-ui-target="formContent" class="<%= 'd-none' if is_pending %>">
 
-      <div data-controller="image-preview">
-        <%= f.input :upload,
-              as: :file,
-              required: false,
-              input_html: {
-                accept: "image/*",
-                data: {
-                  image_preview_target: "input",
-                  action: "change->image-preview#preview"
-                }
-              } %>
+      <div data-controller="image-preview" class="mb-4">
 
-        <div data-image-preview-target="container" class="mt-3 d-none">
+        <div class="row g-2">
+          <!-- 1. Upload from Gallery -->
+          <div class="col-6">
+            <label for="identification_upload" class="btn btn-light border shadow-sm w-100 p-2 d-flex flex-column align-items-center justify-content-center gap-1 rounded-4" style="height: 85px; cursor: pointer;">
+              <div class="text-primary">
+                <%= render "shared/icon", icon_name: "photo-spark", icon_size: 28 %>
+              </div>
+              <span class="fw-bold text-dark small">Upload</span>
+            </label>
+
+            <!-- The Hidden Input -->
+            <div class="d-none">
+              <%= f.input :upload,
+                    as: :file,
+                    label: false,
+                    input_html: {
+                      id: "identification_upload",
+                      accept: "image/*",
+                      data: { action: "change->image-preview#preview" }
+                    } %>
+            </div>
+          </div>
+
+          <!-- 2. Take a Photo -->
+          <div class="col-6">
+            <label for="identification_camera" class="btn btn-light border shadow-sm w-100 p-2 d-flex flex-column align-items-center justify-content-center gap-1 rounded-4" style="height: 85px; cursor: pointer;">
+              <div class="text-primary">
+                <%= render "shared/icon", icon_name: "camera-spark", icon_size: 28 %>
+              </div>
+              <span class="fw-bold text-dark small">Camera</span>
+            </label>
+
+            <!-- The Hidden Input -->
+            <div class="d-none">
+              <%= f.input :camera,
+                    as: :file,
+                    label: false,
+                    input_html: {
+                      id: "identification_camera",
+                      capture: "environment",
+                      accept: "image/*",
+                      data: { action: "change->image-preview#preview" }
+                    } %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Single, Centered Full-Width Image Preview -->
+        <div data-image-preview-target="container" class="mt-4 d-none text-center w-100">
           <img data-image-preview-target="image"
               data-upload-ui-target="sourceImage"
-              class="img-fluid rounded"
-              style="max-height: 300px;"
+              class="img-fluid rounded-4 shadow-sm border"
+              style="max-height: 400px; width: 100%; object-fit: contain; background-color: #f8f9fa;"
               alt="Selected image preview">
         </div>
-      </div>
 
-      <div data-controller="image-preview">
-        <%= f.input :camera,
-              as: :file,
-              required: false,
-              input_html: {
-                capture: "environment",
-                accept: "image/*",
-                data: {
-                  image_preview_target: "input",
-                  action: "change->image-preview#preview"
-                }
-              } %>
-
-        <div data-image-preview-target="container" class="mt-3 d-none">
-          <img data-image-preview-target="image"
-              data-upload-ui-target="sourceImage"
-              class="img-fluid rounded"
-              style="max-height: 300px;"
-              alt="Selected image preview">
-        </div>
       </div>
 
       <%= hidden_field_tag :dive_id, @dive&.id %>
@@ -61,53 +78,131 @@
       <% if @identification&.image&.attached? %>
         <%= hidden_field_tag :existing_image_signed_id, @identification.image.signed_id %>
 
-        <div class="alert alert-info py-2 small mb-4">
-          <i class="bi bi-image"></i> We'll reuse your uploaded photo. Just add your extra details below!
+        <div class="alert alert-info py-2 small mb-4 d-flex align-items-center gap-2">
+          <%= render "shared/icon", icon_name: "photo-check" %>
+          <span>We'll reuse your uploaded photo. Just add your extra details below!</span>
         </div>
       <% end %>
 
       <div data-controller="identification-form">
         <div class="identification-section">
-          <button type="button" class="identification-question" data-action="click->identification-form#toggle" data-identification-form-target="question">
-            <span>What did you see?</span>
+          <button type="button" class="btn btn-light w-100 text-start d-flex justify-content-between align-items-center p-3 border shadow-sm" data-action="click->identification-form#toggle" data-identification-form-target="question">
+            <div class="d-flex align-items-center gap-3">
+              <div class="text-primary d-flex">
+                <%= render "shared/icon", icon_name: "fish", icon_size: 24 %>
+              </div>
+              <div>
+                <div class="fw-bold text-dark">What did you see?</div>
+                <div class="small text-muted fw-normal mt-1">color, size, shape, behavior, etc.</div>
+              </div>
+            </div>
+            <div class="text-muted fs-4 lh-1">+</div>
           </button>
-          <p class="identification-description">color, size, shape, behavior, etc.</p>
 
           <div class="identification-content d-none" data-identification-form-target="content">
-            <%= f.input :color, as: :text, label: "Color & Pattern", placeholder: "e.g. blue body with yellow stripes", required: false %>
-            <%= f.input :size, as: :text, label: "Approximate size", placeholder: "e.g. about 10 cm", required: false %>
-            <%= f.input :shape, as: :text, label: "Shape & Features", placeholder: "e.g. long body, pointed nose, large eyes", required: false %>
-            <%= f.input :behavior, as: :text, label: "Behavior", placeholder: "e.g. hiding under rocks, swimming in a group", required: false %>
+            <%= f.input :color,
+                  as: :text,
+                  label: "<span class='d-flex align-items-center gap-2'>#{render 'shared/icon', icon_name: 'palette'} Color & Pattern</span>".html_safe,
+                  placeholder: "e.g. blue body with yellow stripes",
+                  required: false %>
+
+            <%= f.input :size,
+                  as: :text,
+                  label: "<span class='d-flex align-items-center gap-2'>#{render 'shared/icon', icon_name: 'ruler'} Approximate size</span>".html_safe,
+                  placeholder: "e.g. about 10 cm",
+                  required: false %>
+
+            <%= f.input :shape,
+                  as: :text,
+                  label: "<span class='d-flex align-items-center gap-2'>#{render 'shared/icon', icon_name: 'category'} Shape & Features</span>".html_safe,
+                  placeholder: "e.g. long body, pointed nose, large eyes",
+                  required: false %>
+
+            <%= f.input :behavior,
+                  as: :text,
+                  label: "<span class='d-flex align-items-center gap-2'>#{render 'shared/icon', icon_name: 'activity'} Behavior</span>".html_safe,
+                  placeholder: "e.g. hiding under rocks, swimming in a group",
+                  required: false %>
           </div>
         </div>
 
         <div class="identification-section">
-          <button type="button" class="identification-question" data-action="click->identification-form#toggle" data-identification-form-target="question">
-            <span>Where and when did you see it?</span>
+          <button type="button" class="btn btn-light w-100 text-start d-flex justify-content-between align-items-center p-3 border shadow-sm" data-action="click->identification-form#toggle" data-identification-form-target="question">
+            <div class="d-flex align-items-center gap-3">
+              <div class="text-primary d-flex">
+                <%= render "shared/icon", icon_name: "world-pin", icon_size: 24 %>
+              </div>
+              <div>
+                <div class="fw-bold text-dark">Where and when did you see it?</div>
+                <div class="small text-muted fw-normal mt-1">location, dive site, date, depth, etc.</div>
+              </div>
+            </div>
+            <div class="text-muted fs-4 lh-1">+</div>
           </button>
-          <p class="identification-description">location, dive site, date, depth, etc.</p>
 
           <div class="identification-content d-none" data-identification-form-target="content">
-            <%= f.input :location, as: :text, placeholder: "e.g. Komodo National Park", input_html: { value: @dive&.location&.name }, required: false %>
-            <%= f.input :dive_site, as: :text, label: "Dive site", placeholder: "e.g. shotgun", input_html: { value: @dive&.dive_site_name }, required: false %>
-            <%= f.input :date, as: :text, placeholder: "e.g. 2025-10-01", input_html: { value: @dive&.date }, required: false %>
-            <%= f.input :depth, as: :text, placeholder: "e.g. around 15m", required: false %>
-            <%= f.input :habitat, as: :text, placeholder: "e.g. fan coral", required: false %>
+            <%= f.input :location,
+                  as: :text,
+                  label: "<span class='d-flex align-items-center gap-2'>#{render 'shared/icon', icon_name: 'world-pin'} Location</span>".html_safe,
+                  placeholder: "e.g. Komodo National Park",
+                  input_html: { value: @dive&.location&.name },
+                  required: false %>
+            <%= f.input :dive_site,
+              as: :text,
+              label: "#{render 'shared/icon', icon_name: 'anchor'} Dive site".html_safe,
+              placeholder: "e.g. shotgun",
+              input_html: { value: @dive&.dive_site_name },
+              required: false %>
+            <%= f.input :date,
+              as: :text,
+              label: "#{render 'shared/icon', icon_name: 'calendar'} Date".html_safe,
+              placeholder: "e.g. 2025-10-01",
+              input_html: { value: @dive&.date },
+              required: false %>
+            <%= f.input :depth,
+              as: :text,
+              label: "#{render 'shared/icon', icon_name: 'arrow-bar-to-down'} Depth".html_safe,
+              placeholder: "e.g. around 15m",
+              required: false %>
+            <%= f.input :habitat,
+                  as: :text,
+                  label: "<span class='d-flex align-items-center gap-2'>#{render 'shared/icon', icon_name: 'leaf'} Habitat</span>".html_safe,
+                  placeholder: "e.g. fan coral",
+                  required: false %>
           </div>
         </div>
 
         <div class="identification-section">
-          <button type="button" class="identification-question" data-action="click->identification-form#toggle" data-identification-form-target="question">
-            <span>What else would you like to add?</span>
+          <button type="button" class="btn btn-light w-100 text-start d-flex justify-content-between align-items-center p-3 border shadow-sm" data-action="click->identification-form#toggle" data-identification-form-target="question">
+            <div class="d-flex align-items-center gap-3">
+              <div class="text-primary d-flex">
+                <%= render "shared/icon", icon_name: "scuba-diving", icon_size: 24 %>
+              </div>
+              <div>
+                <div class="fw-bold text-dark">What else would you like to add?</div>
+                <div class="small text-muted fw-normal mt-1">Anything else that might help identify it...</div>
+              </div>
+            </div>
+            <div class="text-muted fs-4 lh-1">+</div>
           </button>
 
           <div class="identification-content d-none" data-identification-form-target="content">
-            <%= f.input :additional_info, as: :text, label: "Anything else...", input_html: { rows: 5, value: @dive&.dive_types&.any? ? "Dive type: #{@dive.dive_types.join(", ")}" : nil }, placeholder: "Anything else that might help identify it...", required: false %>
+            <%= f.input :additional_info,
+                  as: :text,
+                  label: "<span class='d-flex align-items-center gap-2'>#{render 'shared/icon', icon_name: 'pencil'} Anything else...</span>".html_safe,
+                  input_html: {
+                    rows: 5,
+                    value: @dive&.dive_types&.any? ? "Dive type: #{@dive.dive_types.join(", ")}" : nil
+                  },
+                  placeholder: "Anything else that might help identify it...",
+                  required: false %>
           </div>
         </div>
       </div>
 
-      <%= f.submit "Identify", class: "btn btn-secondary mt-5" %>
+      <%= f.button :button, class: "btn btn-secondary mt-5 d-flex align-items-center justify-content-center gap-2 w-100" do %>
+        <%= render "shared/icon", icon_name: "photo-spark" %> Identify
+      <% end %>
     </div>
 
     <!-- 2. The Loading UI with the Server-Side Image Check -->
