@@ -14,7 +14,7 @@
                   alt: result[:common_name] || result[:scientific_name] %>
           </div>
         <% end %>
-        <p lass="card-title fw-bold mb-0 d-flex align-items-center gap-2">
+        <p class="card-title fw-bold fs-3 mb-0 d-flex align-items-center gap-2">
           <%= render "shared/icon", icon_name: "fish" %>
           <%= result[:common_name].presence || "Unknown Common Name" %>
         </p>
