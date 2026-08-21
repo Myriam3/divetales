@@ -38,6 +38,8 @@ Rails.application.routes.draw do
   get "/dives/:id", to: "dives#show", as: "dive"
   delete "/dives/:id", to: "dives#destroy"
 
+  resources :dive_sites, only: [:index]
+
   authenticate :user, ->(user) { user.admin? } do
     mount MissionControl::Jobs::Engine, at: "/jobs"
   end
