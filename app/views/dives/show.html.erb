@@ -31,12 +31,10 @@
 
   <%= render "shared/dive", dive: @dive %>
 
-  <hr>
 
   <%= render "depth_profile", dive: @dive %>
 <% end %>
 
-<hr>
   <p class="mt-5 mb-5">
     <%= button_to dive_path(@dive),
                 method: :delete,
