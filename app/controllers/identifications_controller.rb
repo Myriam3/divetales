@@ -45,6 +45,8 @@ class IdentificationsController < ApplicationController
 
     @identification.save!
 
+    @identification.image.variant(resize_to_limit: [800, 800]).processed if @identification.image.attached?
+
     IdentificationJob.perform_later(@identification.id)
 
     redirect_to identification_path(

@@ -1,184 +1,140 @@
-<%= simple_form_for (@identification || :identification), as: :identification, url: identification_path, method: :post,
-      data: { turbo: false } do |f| %>
-  <div data-controller="image-preview">
-    <%= f.input :upload,
-          as: :file,
-          required: false,
-          input_html: {
-            accept: "image/*",
-            data: {
-              image_preview_target: "input",
-              action: "change->image-preview#preview"
-            }
-          } %>
+<% is_pending = @identification&.status == "pending" %>
 
-    <div data-image-preview-target="container"
-        class="mt-3 d-none">
-      <img data-image-preview-target="image"
-          class="img-fluid rounded"
-          style="max-height: 300px;"
-          alt="Selected image preview">
+<!-- 1. Attach the polling controller WITH the explicit URL -->
+<div
+  <% if is_pending %>
+    data-controller="identification-polling"
+    data-identification-polling-interval-value="2000"
+    data-identification-polling-url-value="<%= identification_path(identification_id: @identification.id, dive_id: @dive&.id) %>"
+  <% end %>
+>
+  <%= simple_form_for (@identification || :identification), as: :identification, url: identification_path, method: :post,
+      data: { controller: "upload-ui", action: "submit->upload-ui#showLoading" } do |f| %>
+
+    <div data-upload-ui-target="formContent" class="<%= 'd-none' if is_pending %>">
+
+      <div data-controller="image-preview">
+        <%= f.input :upload,
+              as: :file,
+              required: false,
+              input_html: {
+                accept: "image/*",
+                data: {
+                  image_preview_target: "input",
+                  action: "change->image-preview#preview"
+                }
+              } %>
+
+        <div data-image-preview-target="container" class="mt-3 d-none">
+          <img data-image-preview-target="image"
+              data-upload-ui-target="sourceImage"
+              class="img-fluid rounded"
+              style="max-height: 300px;"
+              alt="Selected image preview">
+        </div>
+      </div>
+
+      <div data-controller="image-preview">
+        <%= f.input :camera,
+              as: :file,
+              required: false,
+              input_html: {
+                capture: "environment",
+                accept: "image/*",
+                data: {
+                  image_preview_target: "input",
+                  action: "change->image-preview#preview"
+                }
+              } %>
+
+        <div data-image-preview-target="container" class="mt-3 d-none">
+          <img data-image-preview-target="image"
+              data-upload-ui-target="sourceImage"
+              class="img-fluid rounded"
+              style="max-height: 300px;"
+              alt="Selected image preview">
+        </div>
+      </div>
+
+      <%= hidden_field_tag :dive_id, @dive&.id %>
+
+      <% if @identification&.image&.attached? %>
+        <%= hidden_field_tag :existing_image_signed_id, @identification.image.signed_id %>
+
+        <div class="alert alert-info py-2 small mb-4">
+          <i class="bi bi-image"></i> We'll reuse your uploaded photo. Just add your extra details below!
+        </div>
+      <% end %>
+
+      <div data-controller="identification-form">
+        <div class="identification-section">
+          <button type="button" class="identification-question" data-action="click->identification-form#toggle" data-identification-form-target="question">
+            <span>What did you see?</span>
+          </button>
+          <p class="identification-description">color, size, shape, behavior, etc.</p>
+
+          <div class="identification-content d-none" data-identification-form-target="content">
+            <%= f.input :color, as: :text, label: "Color & Pattern", placeholder: "e.g. blue body with yellow stripes", required: false %>
+            <%= f.input :size, as: :text, label: "Approximate size", placeholder: "e.g. about 10 cm", required: false %>
+            <%= f.input :shape, as: :text, label: "Shape & Features", placeholder: "e.g. long body, pointed nose, large eyes", required: false %>
+            <%= f.input :behavior, as: :text, label: "Behavior", placeholder: "e.g. hiding under rocks, swimming in a group", required: false %>
+          </div>
+        </div>
+
+        <div class="identification-section">
+          <button type="button" class="identification-question" data-action="click->identification-form#toggle" data-identification-form-target="question">
+            <span>Where and when did you see it?</span>
+          </button>
+          <p class="identification-description">location, dive site, date, depth, etc.</p>
+
+          <div class="identification-content d-none" data-identification-form-target="content">
+            <%= f.input :location, as: :text, placeholder: "e.g. Komodo National Park", input_html: { value: @dive&.location&.name }, required: false %>
+            <%= f.input :dive_site, as: :text, label: "Dive site", placeholder: "e.g. shotgun", input_html: { value: @dive&.dive_site_name }, required: false %>
+            <%= f.input :date, as: :text, placeholder: "e.g. 2025-10-01", input_html: { value: @dive&.date }, required: false %>
+            <%= f.input :depth, as: :text, placeholder: "e.g. around 15m", required: false %>
+            <%= f.input :habitat, as: :text, placeholder: "e.g. fan coral", required: false %>
+          </div>
+        </div>
+
+        <div class="identification-section">
+          <button type="button" class="identification-question" data-action="click->identification-form#toggle" data-identification-form-target="question">
+            <span>What else would you like to add?</span>
+          </button>
+
+          <div class="identification-content d-none" data-identification-form-target="content">
+            <%= f.input :additional_info, as: :text, label: "Anything else...", input_html: { rows: 5, value: @dive&.dive_types&.any? ? "Dive type: #{@dive.dive_types.join(", ")}" : nil }, placeholder: "Anything else that might help identify it...", required: false %>
+          </div>
+        </div>
+      </div>
+
+      <%= f.submit "Identify", class: "btn btn-secondary mt-5" %>
     </div>
-  </div>
 
-  <div data-controller="image-preview">
-    <%= f.input :camera,
-          as: :file,
-          required: false,
-          input_html: {
-            capture: "environment",
-            accept: "image/*",
-            data: {
-              image_preview_target: "input",
-              action: "change->image-preview#preview"
-            }
-          } %>
+    <!-- 2. The Loading UI with the Server-Side Image Check -->
+   <div id="jellyfish-loading-ui"
+         data-turbo-permanent="true"
+         data-upload-ui-target="jellyfishUI"
+         class="<%= is_pending ? '' : 'd-none' %>">
 
-    <div data-image-preview-target="container"
-        class="mt-3 d-none">
-      <img data-image-preview-target="image"
-          class="img-fluid rounded"
-          style="max-height: 300px;"
-          alt="Selected image preview">
-    </div>
-  </div>
+      <div class="mb-4 text-center">
+        <% if is_pending && @identification&.image&.attached? %>
+          <!-- Server-side loaded image (for the redirect) -->
+          <%= image_tag @identification.image.variant(resize_to_limit: [800, 800]),
+                class: "img-fluid rounded shadow-sm",
+                style: "max-height: 400px; object-fit: contain;" %>
+        <% else %>
+          <!-- Client-side instant preview image (for the local JS click) -->
+          <img data-upload-ui-target="destinationImage"
+               class="img-fluid rounded shadow-sm"
+               style="max-height: 400px; object-fit: contain;">
+        <% end %>
+      </div>
 
-  <%= hidden_field_tag :dive_id, @dive&.id %>
+      <%= render "shared/loading_screen",
+            animation: "jellyfish",
+            title: is_pending ? "Identifying your species..." : "Uploading & Identifying...",
+            message: "Fetching deep-sea facts. This can take a little while." %>
 
-  <% if @identification&.image&.attached? %>
-    <%= hidden_field_tag :existing_image_signed_id, @identification.image.signed_id %>
-
-    <div class="alert alert-info py-2 small mb-4">
-      <i class="bi bi-image"></i> We'll reuse your uploaded photo. Just add your extra details below!
     </div>
   <% end %>
-
-  <div data-controller="identification-form">
-
-    <div class="identification-section">
-      <button
-        type="button"
-        class="identification-question"
-        data-action="click->identification-form#toggle"
-        data-identification-form-target="question"
-      >
-        <span>What did you see?</span>
-      </button>
-      <p class="identification-description">color, size, shape, behavior, etc.</p>
-
-      <div
-        class="identification-content d-none"
-        data-identification-form-target="content"
-      >
-        <%= f.input :color,
-          as: :text,
-          label: "Color & Pattern",
-          placeholder: "e.g. blue body with yellow stripes",
-          required: false
-        %>
-        <%= f.input :size,
-          as: :text,
-          label: "Approximate size",
-          placeholder: "e.g. about 10 cm",
-          required: false
-        %>
-        <%= f.input :shape,
-          as: :text,
-          label: "Shape & Features",
-          placeholder: "e.g. long body, pointed nose, large eyes",
-          required: false
-        %>
-        <%= f.input :behavior,
-          as: :text,
-          label: "Behavior",
-          placeholder: "e.g. hiding under rocks, swimming in a group",
-          required: false
-        %>
-      </div>
-    </div>
-    <div class="identification-section">
-      <button
-        type="button"
-        class="identification-question"
-        data-action="click->identification-form#toggle"
-        data-identification-form-target="question"
-      >
-        <span>Where and when did you see it?</span>
-      </button>
-      <p class="identification-description">location, dive site, date, depth, etc.</p>
-
-      <div
-        class="identification-content d-none"
-        data-identification-form-target="content"
-      >
-        <%= f.input :location,
-          as: :text,
-          placeholder: "e.g. Komodo National Park",
-          input_html: {
-            value: @dive&.location&.name
-          },
-          required: false
-        %>
-        <%= f.input :dive_site,
-          as: :text,
-          label: "Dive site",
-          placeholder: "e.g. shotgun",
-          input_html: {
-            value: @dive&.dive_site_name
-          },
-          required: false
-        %>
-        <%= f.input :date,
-          as: :text,
-          placeholder: "e.g. 2025-10-01",
-          input_html: {
-            value: @dive&.date
-          },
-          required: false
-        %>
-        <%= f.input :depth,
-          as: :text,
-          placeholder: "e.g. around 15m",
-          # input_html: {
-          #   value: @dive&.max_depth
-          # },
-          required: false
-        %>
-        <%= f.input :habitat,
-          as: :text,
-          placeholder: "e.g. fan coral",
-          required: false
-        %>
-      </div>
-    </div>
-    <div class="identification-section">
-      <button
-        type="button"
-        class="identification-question"
-        data-action="click->identification-form#toggle"
-        data-identification-form-target="question"
-      >
-        <span>What else would you like to add?</span>
-      </button>
-
-      <div
-        class="identification-content d-none"
-        data-identification-form-target="content"
-      >
-        <%= f.input :additional_info,
-          as: :text,
-          label: "Anything else...",
-          input_html: {
-            rows: 5,
-            value: @dive&.dive_types&.any? ? "Dive type: #{@dive.dive_types.join(", ")}" : nil
-          },
-          # hint: sanitize("<li>Describe the Marine Life you saw if you couldn't capture it...</li>\n\n<li>Or give more context of your picture so that the Identification could be more accurate.</li>"),
-          placeholder: "Anything else that might help identify it...",
-          required: false
-        %>
-      </div>
-    </div>
-  </div>
-
-  <%= f.submit "Identify", class: "btn btn-secondary mt-5" %>
-<% end %>
+</div>

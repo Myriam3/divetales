@@ -3,13 +3,7 @@
 
   <%= turbo_frame_tag "identification-content" do %>
 
-    <% if @identification&.pending? %>
-
-      <%= render "identifications/identification_status",
-          identification: @identification,
-          dive: @dive %>
-
-    <% elsif @identification&.failed? %>
+    <% if @identification&.failed? %>
 
       <%= render "identifications/identification_failed",
           identification: @identification,

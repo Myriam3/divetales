@@ -2,7 +2,8 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static values = {
-    interval: { type: Number, default: 2000 }
+    interval: { type: Number, default: 2000 },
+    url: String
   }
 
   connect() {
@@ -20,31 +21,38 @@ export default class extends Controller {
       if (!frame) return
 
       try {
-        const response = await fetch(window.location.href, {
+        // Use urlValue if provided, otherwise fallback to current page
+        const targetUrl = this.hasUrlValue ? this.urlValue : window.location.href
+
+        const response = await fetch(this.urlValue, {
+
           headers: {
             Accept: "text/html"
           }
         })
 
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
+
         const html = await response.text()
-
         const parser = new DOMParser()
-        const document = parser.parseFromString(html, "text/html")
+        const doc = parser.parseFromString(html, "text/html")
 
-        const newFrame = document.querySelector(
-          "#identification-content"
-        )
+        const newFrame = doc.getElementById("identification-content")
+        const currentFrame = document.getElementById("identification-content")
 
-        if (!newFrame) return
+        if (newFrame && currentFrame) {
+          currentFrame.innerHTML = newFrame.innerHTML
 
-        frame.innerHTML = newFrame.innerHTML
+          // Continue polling if the target element still has the polling controller
+          const stillPending = newFrame.querySelector(
+            '[data-controller~="identification-polling"]'
+          )
 
-        const stillPending = newFrame.querySelector(
-          '[data-controller~="identification-polling"]'
-        )
-
-        if (stillPending) {
-          this.poll()
+          if (stillPending) {
+            this.poll()
+          } else {
+            currentFrame.innerHTML = newFrame.innerHTML
+          }
         }
 
       } catch (error) {
