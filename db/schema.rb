@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_21_051716) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_21_092015) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -57,6 +57,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_21_051716) do
     t.string "name", limit: 150, null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_countries_on_code", unique: true
+  end
+
+  create_table "dive_sites", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.decimal "latitude"
+    t.bigint "location_id"
+    t.decimal "longitude"
+    t.string "name"
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_dive_sites_on_location_id"
   end
 
   create_table "dives", force: :cascade do |t|
@@ -320,6 +330,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_21_051716) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "dive_sites", "locations"
   add_foreign_key "dives", "locations"
   add_foreign_key "dives", "trips"
   add_foreign_key "identifications", "dives"
