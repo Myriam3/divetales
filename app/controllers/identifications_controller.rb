@@ -136,7 +136,8 @@ class IdentificationsController < ApplicationController
 
     redirect_to identification_path(
       identification_id: @identification.id,
-      dive_id: @identification.dive_id
+      dive_id: @identification.dive_id,
+      picture_id: params[:picture_id]
     )
   end
 
@@ -246,7 +247,7 @@ class IdentificationsController < ApplicationController
       # preventing the app from accidentally queuing up multiple identical AI jobs
       details[@scientific_name] = { "status" => "pending" }
       @identification.update!(details: details)
-      SpeciesDetailsJob.perform_later(@identification.id, @scientific_name)
+      SpeciesDetailsJob.perform_later(@identification.id, @scientific_name, @picture&.id)
     end
 
     details[@scientific_name]

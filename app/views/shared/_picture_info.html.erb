@@ -1,31 +1,5 @@
 <div>
-  <strong>Species</strong>
-
-  <% if picture.species.any? %>
-    <% picture.species.each do |s| %>
-      <p>
-        <%= render "shared/icon", icon_name: "photo-check" %>
-        <%= s.name %>
-      </p>
-    <% end %>
-    <p>
-      <%= render "shared/icon", icon_name: "pencil" %>
-      <%= link_to "Edit identification", "#" %>
-    </p>
-  <% else %>
-    <p>
-      <%= render "shared/icon", icon_name: "photo-question" %>
-      Unidentified
-    </p>
-    <p>
-      <%= render "shared/icon", icon_name: "photo-spark" %>
-      <%= link_to "Identify this picture", identification_path(picture_id: picture.id, dive_id: dive.id) %>
-    </p>
-  <% end %>
-</div>
-
-<div>
-  <strong>Location</strong>
+  <%# <strong>Location</strong> %>
 
   <p>
     <%= icon dive.location.country.code.downcase, library: "flags", width: 20, height: 20 %>
@@ -48,7 +22,7 @@
 </div>
 
 <div>
-  <strong>Capture Details</strong>
+  <%# <strong>Capture Details</strong> %>
 
   <% date_to_show = (picture.photo.attached? && picture.photo.metadata.present? && picture.photo.metadata["date_taken"].present?) ? picture.photo.metadata["date_taken"] : picture.date_time %>
 
@@ -69,18 +43,4 @@
       <%= picture.photo.metadata["camera_model"] %>
     </p>
   <% end %>
-</div>
-
-<div>
-  <strong>Related Logs</strong>
-
-  <p>
-    <%= render "shared/icon", icon_name: "scuba-mask" %>
-    <%= link_to "View Dive Log", dive_path(dive) %>
-  </p>
-
-  <p>
-    <%= render "shared/icon", icon_name: "luggage" %>
-    <%= link_to "Trip: #{dive.trip.title}", trip_path(dive.trip) %>
-  </p>
 </div>

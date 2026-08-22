@@ -12,76 +12,77 @@
       data: { controller: "upload-ui", action: "submit->upload-ui#showLoading" } do |f| %>
 
     <div data-upload-ui-target="formContent" class="<%= 'd-none' if is_pending %>">
+      <div class="<%= 'd-none' if @identification&.persisted? %>">
+        <% if @picture.present? && @picture.photo.attached? %>
+          <div class="mb-4 text-center">
+            <%= cl_image_tag @picture.photo.key,
+                  class: "img-fluid rounded-4 shadow-sm border",
+                  style: "max-height: 400px; width: 100%; object-fit: contain; background-color: #f8f9fa;",
+                  data: { upload_ui_target: "sourceImage" } %>
+          </div>
 
-      <% if @picture.present? && @picture.photo.attached? %>
-        <div class="mb-4 text-center">
-          <%= cl_image_tag @picture.photo.key,
-                class: "img-fluid rounded-4 shadow-sm border",
-                style: "max-height: 400px; width: 100%; object-fit: contain; background-color: #f8f9fa;",
-                data: { upload_ui_target: "sourceImage" } %>
-        </div>
+        <% else %>
 
-      <% else %>
+          <div data-controller="image-preview" class="mb-4">
+            <div class="row g-2">
+              <!-- 1. Upload from Gallery -->
+              <div class="col-6">
+                <label for="identification_upload" class="btn btn-light border shadow-sm w-100 p-2 d-flex flex-column align-items-center justify-content-center gap-1 rounded-4" style="height: 85px; cursor: pointer;">
+                  <div class="text-primary">
+                    <%= render "shared/icon", icon_name: "photo-spark", icon_size: 28 %>
+                  </div>
+                  <span class="fw-bold text-dark small">Upload</span>
+                </label>
 
-        <div data-controller="image-preview" class="mb-4">
-          <div class="row g-2">
-            <!-- 1. Upload from Gallery -->
-            <div class="col-6">
-              <label for="identification_upload" class="btn btn-light border shadow-sm w-100 p-2 d-flex flex-column align-items-center justify-content-center gap-1 rounded-4" style="height: 85px; cursor: pointer;">
-                <div class="text-primary">
-                  <%= render "shared/icon", icon_name: "photo-spark", icon_size: 28 %>
+                <!-- The Hidden Input -->
+                <div class="d-none">
+                  <%= f.input :upload,
+                        as: :file,
+                        label: false,
+                        input_html: {
+                          id: "identification_upload",
+                          accept: "image/*",
+                          data: { action: "change->image-preview#preview" }
+                        } %>
                 </div>
-                <span class="fw-bold text-dark small">Upload</span>
-              </label>
+              </div>
 
-              <!-- The Hidden Input -->
-              <div class="d-none">
-                <%= f.input :upload,
-                      as: :file,
-                      label: false,
-                      input_html: {
-                        id: "identification_upload",
-                        accept: "image/*",
-                        data: { action: "change->image-preview#preview" }
-                      } %>
+              <!-- 2. Take a Photo -->
+              <div class="col-6">
+                <label for="identification_camera" class="btn btn-light border shadow-sm w-100 p-2 d-flex flex-column align-items-center justify-content-center gap-1 rounded-4" style="height: 85px; cursor: pointer;">
+                  <div class="text-primary">
+                    <%= render "shared/icon", icon_name: "camera-spark", icon_size: 28 %>
+                  </div>
+                  <span class="fw-bold text-dark small">Camera</span>
+                </label>
+
+                <!-- The Hidden Input -->
+                <div class="d-none">
+                  <%= f.input :camera,
+                        as: :file,
+                        label: false,
+                        input_html: {
+                          id: "identification_camera",
+                          capture: "environment",
+                          accept: "image/*",
+                          data: { action: "change->image-preview#preview" }
+                        } %>
+                </div>
               </div>
             </div>
 
-            <!-- 2. Take a Photo -->
-            <div class="col-6">
-              <label for="identification_camera" class="btn btn-light border shadow-sm w-100 p-2 d-flex flex-column align-items-center justify-content-center gap-1 rounded-4" style="height: 85px; cursor: pointer;">
-                <div class="text-primary">
-                  <%= render "shared/icon", icon_name: "camera-spark", icon_size: 28 %>
-                </div>
-                <span class="fw-bold text-dark small">Camera</span>
-              </label>
-
-              <!-- The Hidden Input -->
-              <div class="d-none">
-                <%= f.input :camera,
-                      as: :file,
-                      label: false,
-                      input_html: {
-                        id: "identification_camera",
-                        capture: "environment",
-                        accept: "image/*",
-                        data: { action: "change->image-preview#preview" }
-                      } %>
-              </div>
+            <!-- Single, Centered Full-Width Image Preview -->
+            <div data-image-preview-target="container" class="mt-4 d-none text-center w-100">
+              <img data-image-preview-target="image"
+                  data-upload-ui-target="sourceImage"
+                  class="img-fluid rounded-4 shadow-sm border"
+                  style="max-height: 400px; width: 100%; object-fit: contain; background-color: #f8f9fa;"
+                  alt="Selected image preview">
             </div>
-          </div>
 
-          <!-- Single, Centered Full-Width Image Preview -->
-          <div data-image-preview-target="container" class="mt-4 d-none text-center w-100">
-            <img data-image-preview-target="image"
-                data-upload-ui-target="sourceImage"
-                class="img-fluid rounded-4 shadow-sm border"
-                style="max-height: 400px; width: 100%; object-fit: contain; background-color: #f8f9fa;"
-                alt="Selected image preview">
           </div>
-
-        </div>
-      <% end %>
+        <% end %>
+      </div>
 
       <%= hidden_field_tag :dive_id, @dive&.id %>
 
