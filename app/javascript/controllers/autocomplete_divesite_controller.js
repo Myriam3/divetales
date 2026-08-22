@@ -5,22 +5,18 @@ export default class extends Controller {
   static values = { url: String }
 
   connect() {
-    // Hide the dropdown menu when the page first loads
     this.resultsTarget.classList.add("d-none")
   }
 
-  // Called every time the user types a letter
   async search(event) {
     const query = this.inputTarget.value
     const locationId = this.locationTarget.value
 
-    // Wait until they type at least 2 characters to avoid huge database queries
     if (query.length === 0 && !locationId) {
       this.resultsTarget.classList.add("d-none")
       return
     }
 
-    // Fetch from your DiveSitesController
     const response = await fetch(`${this.urlValue}?query=${encodeURIComponent(query)}&location_id=${locationId}`, {
       headers: { "Accept": "application/json" }
     })
@@ -29,24 +25,35 @@ export default class extends Controller {
     this.renderResults(data)
   }
 
-  // Builds the dropdown HTML dynamically
   renderResults(data) {
     if (data.length === 0) {
       this.resultsTarget.classList.add("d-none")
       return
     }
 
-    // Clear old results
     this.resultsTarget.innerHTML = ""
 
     data.forEach((site) => {
       const button = document.createElement("button")
       button.type = "button"
-      button.classList.add("list-group-item", "list-group-item-action")
-      button.textContent = site.name
+      // Added styling classes for the two-line layout
+      button.classList.add("list-group-item", "list-group-item-action", "text-start", "py-2")
+
+      // 1. Create the main dive site name
+      const nameDiv = document.createElement("div")
+      nameDiv.textContent = site.name
+      nameDiv.classList.add("fw-bold")
+
+      // 2. Create the subtitle (Location Name or GPS)
+      const detailsDiv = document.createElement("small")
+      detailsDiv.textContent = site.details // Uses the detail string from your Rails controller
+      detailsDiv.classList.add("text-muted", "d-block")
+
+      button.appendChild(nameDiv)
+      button.appendChild(detailsDiv)
 
       // Store data on the button so we can read it when clicked
-      button.dataset.action = "click->autocomplete#select"
+      button.dataset.action = "click->autocomplete-divesite#select"
       button.dataset.name = site.name
       button.dataset.lat = site.latitude || ""
       button.dataset.lng = site.longitude || ""
@@ -54,16 +61,12 @@ export default class extends Controller {
       this.resultsTarget.appendChild(button)
     })
 
-    // Show the menu
     this.resultsTarget.classList.remove("d-none")
   }
 
-  // Called when a user clicks a dive site from the dropdown
   select(event) {
-    // Fill the visible input
     this.inputTarget.value = event.currentTarget.dataset.name
 
-    // Fill the hidden coordinates (if your form has them)
     if (this.hasLatitudeTarget && event.currentTarget.dataset.lat) {
       this.latitudeTarget.value = event.currentTarget.dataset.lat
     }
@@ -71,11 +74,9 @@ export default class extends Controller {
       this.longitudeTarget.value = event.currentTarget.dataset.lng
     }
 
-    // Hide the dropdown
     this.resultsTarget.classList.add("d-none")
   }
 
-  // A neat UX trick: close the dropdown if the user clicks anywhere else on the page
   hide(event) {
     if (!this.element.contains(event.target)) {
       this.resultsTarget.classList.add("d-none")
