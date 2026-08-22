@@ -35,7 +35,7 @@ class PicturesController < ApplicationController
   end
 
   def index
-    @pictures = policy_scope(Picture).includes(dive: { location: :country }, species: [])
+    @pictures = policy_scope(Picture).includes(dive: { location: :country }, species: []).order(date_time: :desc)
   end
 
   def show

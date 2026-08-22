@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   delete "/dives/:id", to: "dives#destroy"
 
   resources :dive_sites, only: [:index]
+  get "api/mapbox", to: "api#mapbox"
 
   authenticate :user, ->(user) { user.admin? } do
     mount MissionControl::Jobs::Engine, at: "/jobs"

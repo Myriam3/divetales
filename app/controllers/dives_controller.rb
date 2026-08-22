@@ -67,6 +67,7 @@ class DivesController < ApplicationController
 
   def dive_params
     params.require(:dive).permit(
+      :dive_number,
       :date,
       :start_time,
       :end_time,

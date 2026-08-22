@@ -75,6 +75,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_21_092015) do
     t.datetime "created_at", null: false
     t.date "date", null: false
     t.text "depth_over_time", default: ""
+    t.integer "dive_number"
     t.string "dive_site_name", default: "", null: false
     t.string "dive_types", default: [], array: true
     t.integer "duration"
@@ -92,6 +93,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_21_092015) do
     t.integer "tank_type", default: 1, null: false
     t.bigint "trip_id", null: false
     t.datetime "updated_at", null: false
+    t.index ["dive_number"], name: "index_dives_on_dive_number", unique: true
     t.index ["location_id"], name: "index_dives_on_location_id"
     t.index ["trip_id"], name: "index_dives_on_trip_id"
   end
