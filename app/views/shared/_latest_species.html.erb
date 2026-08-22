@@ -1,0 +1,49 @@
+<div class="card shadow-sm mb-4">
+  <div class="card-header bg-white pt-3 pb-0 border-bottom-0">
+    <p class="mb-0">
+      <%= render "shared/icon", icon_name: "fish", icon_size: 24 %>
+      Latest Discoveries
+    </p>
+  </div>
+  <div class="list-group list-group-flush">
+    <% if species.any? %>
+        <% species.each do |s| %>
+          <div class="list-group-item p-3 d-flex justify-content-start align-items-center">
+            <div class="flex-shrink-0 me-3">
+              <% pic = s.pictures.last %>
+              <% if pic && pic.photo.attached? %>
+                <%= image_tag pic.photo.variant(resize_to_fill: [128, 128]),
+                    class: "rounded object-fit-cover shadow-sm",
+                    style: "width: 72px; height: 72px;",
+                    alt: "Your photo of #{s.name}" %>
+              <% elsif s.default_photo.attached? %>
+                <%= image_tag s.default_photo.variant(resize_to_fill: [128, 128]),
+                    class: "rounded object-fit-cover shadow-sm",
+                    style: "width: 72px; height: 72px;",
+                    alt: "Default photo of #{s.name}" %>
+              <% else %>
+                <div class="bg-light rounded d-flex align-items-center justify-content-center text-secondary" style="width: 72px; height: 72px;">
+                  <%= render "shared/icon", icon_name: "camera", icon_size: 24 %>
+                </div>
+              <% end %>
+            </div>
+            <div class="flex-grow-1 text-start">
+              <p class="mb-0 fw-bold text-dark"><%= s.name %></p>
+              <% dive = s.dives.last %>
+              <% if dive %>
+                <small class="text-muted">
+                  <%= dive.date.strftime("%b %d") %> • <%= dive.location.name %>
+                </small>
+              <% else %>
+                <small class="text-muted">No dive location recorded yet</small>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="p-4 text-center">
+          <p class="text-muted mb-0">No species logged yet. Time to get back in the water!</p>
+        </div>
+      <% end %>
+  </div>
+</div>
