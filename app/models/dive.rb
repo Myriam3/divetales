@@ -52,7 +52,7 @@ class Dive < ApplicationRecord
 
   validate :depth_over_time_json
 
-  def display_name_html(include_date: true, include_time: false)
+  def display_name_html(include_date: false, include_time: false)
     text = []
     text << "##{dive_number}" if dive_number.present?
     text << (dive_site_name || location&.name)

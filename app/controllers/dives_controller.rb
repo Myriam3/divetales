@@ -1,10 +1,14 @@
 class DivesController < ApplicationController
   def index
+    @trips = current_user.trips.order(start_date: :desc)
+
     if params[:trip_id].present?
-      @trip = Trip.find(params[:trip_id])
+      @trip = @trips.find(params[:trip_id])
       @dives = policy_scope(@trip.dives).order(date: :desc)
+      @other_trips = @trips.excluding(@trip).limit(5)
     else
       @dives = policy_scope(Dive).order(date: :desc)
+      @last_trips = @trips.limit(8)
     end
 
     @countries_count = @dives.map { |dive| dive.location.country }.compact.uniq.count
@@ -13,9 +17,12 @@ class DivesController < ApplicationController
   end
 
   def new
+    @trips = current_user.trips.order(start_date: :desc)
+
     if params[:trip_id]
-      @trip = Trip.find(params[:trip_id])
+      @trip = @trips.find(params[:trip_id])
       @dive = @trip.dives.new
+      @other_trips = @trips.excluding(@trip).limit(5)
     else
       @dive = Dive.new
     end
@@ -48,6 +55,8 @@ class DivesController < ApplicationController
 
   def show
     @dive = Dive.find(params[:id])
+    @other_trips = current_user.trips.excluding(@dive.trip).limit(5).order(start_date: :desc)
+
     @species = @dive.pictures
                     .includes(:species)
                     .flat_map(&:species)
