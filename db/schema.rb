@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_20_135327) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_21_051716) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -90,7 +90,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_20_135327) do
 
   create_table "identifications", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.jsonb "details"
     t.bigint "dive_id"
+    t.jsonb "form_inputs"
     t.jsonb "results"
     t.bigint "species_id"
     t.string "status"
@@ -127,6 +129,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_20_135327) do
     t.integer "source"
     t.datetime "updated_at", null: false
     t.index ["dive_id"], name: "index_pictures_on_dive_id"
+  end
+
+  create_table "solid_cable_messages", force: :cascade do |t|
+    t.binary "channel", null: false
+    t.bigint "channel_hash", null: false
+    t.datetime "created_at", null: false
+    t.binary "payload", null: false
+    t.index ["channel"], name: "index_solid_cable_messages_on_channel"
+    t.index ["channel_hash"], name: "index_solid_cable_messages_on_channel_hash"
+    t.index ["created_at"], name: "index_solid_cable_messages_on_created_at"
   end
 
   create_table "solid_cache_entries", force: :cascade do |t|
@@ -265,6 +277,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_20_135327) do
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false
     t.text "description"
+    t.jsonb "details"
     t.string "name", limit: 150, null: false
     t.string "scientific_name", limit: 150
     t.string "tags", default: [], array: true

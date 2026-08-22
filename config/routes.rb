@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get "/identification/details", to: "identifications#details", as: :identification_details
   get "/identification/confirm", to: "identifications#confirm"
   post "/identification/save", to: "identifications#save"
+  post "/identification/retry", to: "identifications#retry", as: :identification_retry
   # Defines the root path route ("/")
   # root "posts#index"
   #
