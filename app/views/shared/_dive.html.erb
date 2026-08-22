@@ -78,6 +78,15 @@
     <hr>
   <% end %>
 
+<% unless dive.latitude.blank? || dive.longitude.blank? %>
+  <div data-controller="map"
+      data-map-api-url-value="<%= api_mapbox_path %>"
+      data-map-latitude-value="<%= dive.latitude %>"
+      data-map-longitude-value="<%= dive.longitude %>">
+    <%= render "/shared/map" %>
+  </div>
+<% end %>
+
   <h2>Log</h2>
 
   <% unless dive.duration.blank? %>
@@ -231,13 +240,13 @@
 
 <section id="pictures" class="mt-5">
   <h2 class="mb-4">
-    <%= render "shared/icon", icon_name: "camera-spark", icon_size: 36 %>
+    <%= render "shared/icon", icon_name: "library-photo", icon_size: 36 %>
     Dive pictures
   </h2>
 
   <p class="mb-4">
     <%= link_to new_picture_path(dive_id: @dive.id, trip_id: @dive.trip_id), class: "btn btn-secondary" do %>
-    <%= render "shared/icon", icon_name: "photo-spark" %>
+    <%= render "shared/icon", icon_name: "camera-spark" %>
       Add a new picture
     <% end %>
   </p>

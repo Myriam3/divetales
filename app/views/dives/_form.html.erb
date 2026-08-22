@@ -1,7 +1,20 @@
 <% content_for :title, "New Dive" %>
 
-<div data-controller="dive-data-import">
-  <%= render "form_import" %>
 
-  <%= render "form_dive" %>
+<div data-controller="dive-data-import map"
+    data-action="
+      dive-data-import:import-coordinates->map#initNew
+      map:geoinfo->dive-data-import#selectLocation
+    "
+    data-map-api-url-value="<%= api_mapbox_path %>"
+    data-action="dive-data-import:import-coordinates->map#init"
+    data-action="map:geoinfo->dive-data-import#selectLocation"
+    >
+    <%= render "form_import" %>
+
+    <div class="mb-5">
+      <%= render "/shared/map" %>
+    </div>
+
+    <%= render "form_dive" %>
 </div>

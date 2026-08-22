@@ -10,7 +10,27 @@
 
     <%= f.input :end_date, as: :date, html5: true %>
 
-    <%= f.association :countries, as: :check_boxes %>
+    <div class="country-picker" data-controller="country-search">
+      <label for="country-search" class="form-label">Countries</label>
+      <input type="search"
+             id="country-search"
+             class="form-control mb-2"
+             placeholder="Type a country name..."
+             autocomplete="off"
+             data-country-search-target="input"
+             data-action="input->country-search#filter">
+
+      <div class="country-list">
+        <%= f.collection_check_boxes :country_ids, Country.order(:name), :id, :name do |country| %>
+          <div class="form-check country-option"
+               data-country-search-target="country"
+               data-country-name="<%= country.text %>">
+            <%= country.check_box(class: "form-check-input") %>
+            <%= country.label(class: "form-check-label") %>
+          </div>
+        <% end %>
+      </div>
+    </div>
 
     <%= f.input :info, label: "More information" %>
 

@@ -1,167 +1,185 @@
-<div class="species-details">
+<div id="species-details-<%= identification_id %>-<%= scientific_name.parameterize %>">
+  <% if details.blank? || details["status"] == "pending" %>
 
-  <div class="mt-4 text-end">
-    <%= link_to "Confirm this species",
-      identification_confirm_path(
-        scientific_name: details["scientific_name"],
-        common_name: details["common_name"],
-        default_photo_url: details["default_photo_url"],
-        identification_id: identification_id,
-        dive_id: dive_id
-      ),
-      class: "btn btn-primary",
-      data: { turbo_frame: "_top" } %>
+  <div class="text-center py-5">
+    <%= render "shared/loading_screen",
+      animation: "fish",
+      title: "Fetching #{common_name} Guide...",
+      message: "Check out more about the habitat, diet, and fun facts." %>
   </div>
 
-  <!-- Species -->
-  <div class="mb-4">
-    <% if details["default_photo_url"].present? %>
-      <div class="mb-4">
-        <%= image_tag details["default_photo_url"],
-              class: "img-fluid rounded",
-              style: "max-height: 350px; width: 100%; object-fit: cover;",
-              alt: details["common_name"].presence || details["scientific_name"] %>
-      </div>
-    <% end %>
-    <h2>
-      <%= common_name.presence || "Unknown species" %>
-    </h2>
+<% elsif details["status"] == "failed" %>
 
-    <p class="fst-italic text-muted">
-      <%= scientific_name %>
-    </p>
-
-    <% if details["family"].present? %>
-      <small class="text-muted">
-        Family: <%= details["family"] %>
-      </small>
-    <% end %>
-  </div>
-
-
-  <!-- Habitat & Range -->
-  <div class="mb-4">
-    <h5>Habitat & range</h5>
-
-    <% if details["habitat"].present? %>
-      <p>
-        <strong>Habitat:</strong>
-        <%= details["habitat"] %>
-      </p>
-    <% end %>
-
-    <% if details["depth_range"].present? %>
-      <p>
-        <strong>Depth:</strong>
-        <%= details["depth_range"] %>
-      </p>
-    <% end %>
-
-    <% if details["distribution"].present? %>
-      <p>
-        <strong>Distribution:</strong>
-        <%= details["distribution"] %>
-      </p>
-    <% end %>
-  </div>
-
-
-  <!-- Size & Behavior -->
-  <div class="mb-4">
-    <h5>Size & behavior</h5>
-
-    <% if details["size"].present? %>
-      <p>
-        <strong>Size:</strong>
-        <%= details["size"] %>
-      </p>
-    <% end %>
-
-    <% if details["behavior"].present? %>
-      <p>
-        <strong>Behavior:</strong>
-        <%= details["behavior"] %>
-      </p>
-    <% end %>
-  </div>
-
-
-  <!-- How to Identify -->
-  <% if details["identification_features"].present? %>
-    <div class="mb-4">
-      <h5>How to identify</h5>
-
-      <ul>
-        <% details["identification_features"].each do |feature| %>
-          <li><%= feature %></li>
-        <% end %>
-      </ul>
+  <div class="alert alert-danger d-flex align-items-center gap-2 rounded-4">
+      <%= render "shared/icon", icon_name: "alert-triangle" %>
+      We couldn't generate the species details. Please try again.
     </div>
-  <% end %>
 
+<% else %>
+  <div class="card shadow-sm border-0 rounded-4 overflow-hidden mb-5">
+      <div class="card-body p-4 p-md-5">
 
-  <!-- Similar Species -->
-  <% if details["similar_species"].present? %>
-    <div class="mb-4">
-      <h5>Similar species</h5>
+        <!-- Species Header -->
+        <div class="text-center mb-5 border-bottom pb-4">
+          <% if details["default_photo_url"].present? %>
+            <div class="mb-4">
+              <%= image_tag details["default_photo_url"],
+                    class: "img-fluid rounded-4 shadow-sm",
+                    style: "max-height: 400px; width: 100%; object-fit: cover;",
+                    alt: details["common_name"].presence || details["scientific_name"] %>
+            </div>
+          <% end %>
 
-      <% details["similar_species"].each do |species| %>
-        <div class="mb-3">
-          <strong><%= species["name"] %></strong>
+          <h2 class="fw-bold text-dark mb-1 d-flex align-items-center justify-content-center gap-2">
+            <%= render "shared/icon", icon_name: "fish", icon_size: 32 %>
+            <%= common_name.presence || "Unknown species" %>
+          </h2>
 
-          <p class="mb-0">
-            <%= species["difference"] %>
+          <p class="fst-italic text-muted fs-5 mb-2">
+            <%= scientific_name %>
           </p>
+
+          <% if details["family"].present? %>
+            <span class="badge bg-light text-secondary border px-3 py-2 rounded-pill">
+              <%= render "shared/icon", icon_name: "binary-tree", icon_size: 14 %> Family: <%= details["family"] %>
+            </span>
+          <% end %>
+
+          <!-- Confirm Button -->
+          <div class="mt-4">
+            <%= link_to identification_confirm_path(
+                  scientific_name: details["scientific_name"],
+                  common_name: details["common_name"],
+                  default_photo_url: details["default_photo_url"],
+                  identification_id: identification_id,
+                  dive_id: dive_id
+                ),
+                class: "btn btn-primary btn-lg d-inline-flex align-items-center justify-content-center gap-2 rounded-pill px-4 shadow-sm",
+                data: { turbo_frame: "_top" } do %>
+              <%= render "shared/icon", icon_name: "photo-check", icon_size: 20 %> Confirm this species
+            <% end %>
+          </div>
         </div>
-      <% end %>
-    </div>
-  <% end %>
 
+        <!-- Habitat & Range -->
+        <div class="mb-5">
+          <h6 class="text-uppercase text-secondary small fw-bold mb-3 d-flex align-items-center gap-2">
+            <%= render "shared/icon", icon_name: "map-pin", icon_size: 18 %> Habitat & range
+          </h6>
 
-  <!-- Tips for Divers -->
-  <% if details["diver_notes"].present? %>
-    <div class="mb-4">
-      <h5>Tips for divers</h5>
+          <% if details["habitat"].present? %>
+            <p class="mb-2"><strong class="text-dark">Habitat:</strong> <%= details["habitat"] %></p>
+          <% end %>
 
-      <ul>
-        <% details["diver_notes"].each do |note| %>
-          <li><%= note %></li>
+          <% if details["depth_range"].present? %>
+            <p class="mb-2"><strong class="text-dark">Depth:</strong> <%= details["depth_range"] %></p>
+          <% end %>
+
+          <% if details["distribution"].present? %>
+            <p class="mb-0"><strong class="text-dark">Distribution:</strong> <%= details["distribution"] %></p>
+          <% end %>
+        </div>
+
+        <!-- Size & Behavior -->
+        <div class="mb-5 border-top pt-4">
+          <h6 class="text-uppercase text-secondary small fw-bold mb-3 d-flex align-items-center gap-2">
+            <%= render "shared/icon", icon_name: "activity", icon_size: 18 %> Size & behavior
+          </h6>
+
+          <% if details["size"].present? %>
+            <p class="mb-2"><strong class="text-dark">Size:</strong> <%= details["size"] %></p>
+          <% end %>
+
+          <% if details["behavior"].present? %>
+            <p class="mb-0"><strong class="text-dark">Behavior:</strong> <%= details["behavior"] %></p>
+          <% end %>
+        </div>
+
+        <!-- How to Identify -->
+        <% if details["identification_features"].present? %>
+          <div class="mb-5 border-top pt-4">
+            <h6 class="text-uppercase text-secondary small fw-bold mb-3 d-flex align-items-center gap-2">
+              <%= render "shared/icon", icon_name: "list-search", icon_size: 18 %> How to identify
+            </h6>
+            <ul class="text-dark ps-4 mb-0">
+              <% details["identification_features"].each do |feature| %>
+                <li class="mb-2"><%= feature %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
-      </ul>
+
+        <!-- Similar Species -->
+        <% if details["similar_species"].present? %>
+          <div class="mb-5 border-top pt-4">
+            <h6 class="text-uppercase text-secondary small fw-bold mb-3 d-flex align-items-center gap-2">
+              <%= render "shared/icon", icon_name: "binary-tree", icon_size: 18 %> Similar species
+            </h6>
+
+            <div class="row g-3">
+              <% details["similar_species"].each do |species| %>
+                <div class="col-12 col-md-6">
+                  <div class="card bg-light border-0 h-100 p-3 rounded-4">
+                    <strong class="text-dark mb-1"><%= species["name"] %></strong>
+                    <p class="mb-0 small text-muted"><%= species["difference"] %></p>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Tips for Divers -->
+        <% if details["diver_notes"].present? %>
+          <div class="mb-5 border-top pt-4">
+            <h6 class="text-uppercase text-secondary small fw-bold mb-3 d-flex align-items-center gap-2">
+              <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 18 %> Tips for divers
+            </h6>
+            <ul class="text-dark ps-4 mb-0">
+              <% details["diver_notes"].each do |note| %>
+                <li class="mb-2"><%= note %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <!-- Safety -->
+        <% if details["safety"].present? %>
+          <div class="mb-5 border-top pt-4">
+            <h6 class="text-uppercase text-danger small fw-bold mb-3 d-flex align-items-center gap-2">
+              <%= render "shared/icon", icon_name: "alert-triangle", icon_size: 18 %> Safety Warning
+            </h6>
+            <div class="alert alert-danger mb-0 border-0 rounded-4">
+              <%= details["safety"] %>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Conservation -->
+        <% if details["conservation"].present? %>
+          <div class="mb-5 border-top pt-4">
+            <h6 class="text-uppercase text-success small fw-bold mb-3 d-flex align-items-center gap-2">
+              <%= render "shared/icon", icon_name: "leaf", icon_size: 18 %> Conservation
+            </h6>
+            <p class="mb-0 text-dark">
+              <%= details["conservation"] %>
+            </p>
+          </div>
+        <% end %>
+
+        <!-- Interesting Fact -->
+        <% if details["interesting_fact"].present? %>
+          <div class="mt-4 pt-4 border-top bg-primary-subtle p-4 rounded-4">
+            <h6 class="text-uppercase text-primary small fw-bold mb-2 d-flex align-items-center gap-2">
+              <%= render "shared/icon", icon_name: "bulb", icon_size: 18 %> Interesting fact
+            </h6>
+            <p class="mb-0 text-dark-emphasis fst-italic">
+              "<%= details["interesting_fact"] %>"
+            </p>
+          </div>
+        <% end %>
+
+      </div>
     </div>
   <% end %>
-
-
-  <!-- Safety -->
-  <% if details["safety"].present? %>
-    <div class="mb-4">
-      <strong>Safety:</strong>
-      <%= details["safety"] %>
-    </div>
-  <% end %>
-
-
-  <!-- Conservation -->
-  <% if details["conservation"].present? %>
-    <div class="mb-4">
-      <h5>Conservation</h5>
-
-      <p>
-        <%= details["conservation"] %>
-      </p>
-    </div>
-  <% end %>
-
-
-  <!-- Interesting Fact -->
-  <% if details["interesting_fact"].present? %>
-    <div class="mb-4">
-      <h5>Interesting fact</h5>
-
-      <p>
-        <%= details["interesting_fact"] %>
-      </p>
-    </div>
-  <% end %>
-
 </div>

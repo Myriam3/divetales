@@ -14,16 +14,18 @@
                   alt: result[:common_name] || result[:scientific_name] %>
           </div>
         <% end %>
-        <h5 class="card-title fw-bold mb-0">
+        <p class="card-title fw-bold fs-3 mb-0 d-flex align-items-center gap-2">
+          <%= render "shared/icon", icon_name: "fish" %>
           <%= result[:common_name].presence || "Unknown Common Name" %>
-        </h5>
+        </p>
 
-        <h6 class="card-subtitle mt-1 text-muted fst-italic">
+        <p class="card-subtitle mt-1 text-muted fst-italic">
           <%= result[:scientific_name] %>
-        </h6>
+        </p>
       </div>
 
-      <span class="badge bg-primary text-white rounded-pill px-3 py-2">
+      <span class="badge bg-primary text-white rounded-pill px-3 py-2 d-flex align-items-center gap-1">
+        <%= render "shared/icon", icon_name: "photo-check", icon_size: 16 %>
         <%= result[:confidence] %>% Match
       </span>
     </div>
@@ -31,9 +33,9 @@
 
     <!-- Reasoning -->
     <div class="mb-3">
-      <h6 class="text-uppercase text-secondary small fw-bold mb-1">
-        Reasoning
-      </h6>
+      <p class="text-uppercase text-secondary small fw-bold mb-2 d-flex align-items-center gap-2">
+        <%= render "shared/icon", icon_name: "bulb", icon_size: 16 %> Reasoning
+      </p>
 
       <p class="card-text text-dark">
         <%= result[:reasoning] %>
@@ -44,9 +46,9 @@
     <!-- Evidence -->
     <% if result[:evidence].present? && result[:evidence].any? %>
       <div class="mb-0">
-        <h6 class="text-uppercase text-secondary small fw-bold mb-1">
-          Evidence
-        </h6>
+        <p class="text-uppercase text-secondary small fw-bold mb-2 d-flex align-items-center gap-2">
+          <%= render "shared/icon", icon_name: "list-search", icon_size: 16 %> Evidence
+        </p>
 
         <ul class="text-dark small ps-3 mb-0">
           <% result[:evidence].each do |item| %>
@@ -57,30 +59,29 @@
     <% end %>
 
     <!-- View More Details -->
-    <div class="mt-4 text-end">
-      <%= link_to "View more details →",
-            identification_details_path(
-              scientific_name: result[:scientific_name],
-              common_name: result[:common_name],
-              dive_id: @dive&.id,
-              identification_id: identification.id
-            ),
-            class: "btn btn-outline-primary",
-            data: {
-            turbo: false
-          } %>
+    <div class="mt-4 pt-3 border-top d-flex flex-column flex-sm-row justify-content-end gap-2">
+      <%= link_to identification_details_path(
+            scientific_name: result[:scientific_name],
+            common_name: result[:common_name],
+            dive_id: @dive&.id,
+            identification_id: identification.id
+          ),
+          class: "btn btn-outline-primary d-flex align-items-center justify-content-center gap-2",
+          data: { turbo: false } do %>
+        <%= render "shared/icon", icon_name: "zoom-in", icon_size: 18 %> View more details
+      <% end %>
+
+      <%= link_to identification_confirm_path(
+            scientific_name: result[:scientific_name],
+            common_name: result[:common_name],
+            identification_id: identification.id,
+            dive_id: @dive&.id
+          ),
+          class: "btn btn-primary d-flex align-items-center justify-content-center gap-2",
+          data: { turbo_frame: "_top" } do %>
+        <%= render "shared/icon", icon_name: "photo-check", icon_size: 18 %> Confirm this species
+      <% end %>
     </div>
-
-    <%= link_to "Confirm this species",
-      identification_confirm_path(
-        scientific_name: result[:scientific_name],
-        common_name: result[:common_name],
-        identification_id: identification.id,
-        dive_id: @dive&.id
-      ),
-      class: "btn btn-primary",
-      data: { turbo_frame: "_top" } %>
-
   </div>
 
 
@@ -88,21 +89,14 @@
   <% if result[:uncertainty].present? %>
     <div class="card-footer bg-warning-subtle text-dark-emphasis d-flex align-items-start p-3 border-top-0">
 
-      <svg width="24"
-          height="24"
-          class="me-3 flex-shrink-0 text-warning"
-          viewBox="0 0 20 20"
-          fill="currentColor">
-
-        <path fill-rule="evenodd"
-              d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1 1z"
-              clip-rule="evenodd" />
-      </svg>
+      <div class="text-warning me-3 mt-1">
+        <%= render "shared/icon", icon_name: "alert-triangle", icon_size: 24 %>
+      </div>
 
       <div>
-        <h6 class="fw-bold mb-1">
+        <p class="fw-bold mb-1">
           Limitations
-        </h6>
+        </p>
 
         <p class="mb-0 small">
           <%= result[:uncertainty] %>

@@ -151,6 +151,22 @@ def species_list
       description: "A black-and-white nudibranch commonly found on tropical reefs, recognizable by its dark spots and white body.",
       wiki_link: "https://en.wikipedia.org/wiki/Jorunna_funebris"
     },
+    {
+      name: "Mimic octopus",
+      scientific_name: "Thaumoctopus mimicus",
+      category: "Octopuses",
+      tags: ["tropical", "reef", "macro"],
+      description: "Famous for being able to mimic a wide variety of other marine animals",
+      wiki_link: "https://en.wikipedia.org/wiki/Mimic_octopus"
+    },
+    {
+      name: "Ornate ghost pipefish",
+      scientific_name: "Solenostomus paradoxus",
+      category: "Seahorses & Pipefish",
+      tags: ["tropical"],
+      description: "Very well-camouflaged and difficult to find",
+      wiki_link: "https://en.wikipedia.org/wiki/Solenostomus_paradoxus"
+    },
 
     # ----------------------------------------
     # Cnidarians

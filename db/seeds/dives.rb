@@ -28,6 +28,7 @@ def create_dives(trips, locations)
       new_dive.tank_type = data["tank_type"] || 1
       new_dive.gauge_pressure_start = data["gauge_pressure_start"]
       new_dive.gauge_pressure_end = data["gauge_pressure_end"]
+      new_dive.dive_number = data["dive_number"]
     end
 
     dives[data["key"]] = dive

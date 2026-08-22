@@ -6,7 +6,7 @@ class InaturalistService
   BASE_URL = "https://api.inaturalist.org/v1/taxa"
 
   def initialize(query:)
-    @query = query
+    @query = query.gsub(/\s+spp?\.?$/i, "")
   end
 
   def call
@@ -26,11 +26,11 @@ class InaturalistService
     data["results"].first(3).map do |taxon|
       wikipedia_url = taxon["wikipedia_url"]
 
-    default_photo_url =
-      taxon.dig("default_photo", "medium_url") ||
-          WikipediaImageService.new(
-            wikipedia_url: wikipedia_url
-          ).call
+      default_photo_url =
+        taxon.dig("default_photo", "medium_url") ||
+        WikipediaImageService.new(
+          wikipedia_url: wikipedia_url
+        ).call
 
       {
         id: taxon["id"],
@@ -40,7 +40,7 @@ class InaturalistService
         wikipedia_url: wikipedia_url
       }
     end
-    rescue OpenURI::HTTPError, SocketError, Timeout::Error => e
+  rescue OpenURI::HTTPError, SocketError, Timeout::Error => e
     Rails.logger.error("iNaturalist error: #{e.message}")
     []
   end
