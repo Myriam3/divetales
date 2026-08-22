@@ -5,7 +5,7 @@
   <div class="species-details-page">
 
     <div class="mb-4">
-      <%= link_to identification_path(identification_id: @identification.id),
+      <%= link_to identification_path(identification_id: @identification.id, dive_id: params[:dive_id], picture_id: @picture&.id),
                   class: "btn btn-outline-secondary d-inline-flex align-items-center gap-2 rounded-pill px-3",
                   data: { turbo: false } do %>
         <%= render "shared/icon", icon_name: "arrow-left", icon_size: 18 %> Back to possible matches
@@ -19,7 +19,8 @@
             common_name: @common_name,
             identification_id: @identification.id,
             dive_id: @dive_id,
-            default_photo_url: @default_photo_url %>
+            default_photo_url: @default_photo_url,
+            picture_id: @picture&.id %>
 
 
 

@@ -1,23 +1,86 @@
-<p>
-  <% unless picture.date_time.blank? %>
-    <%= render "shared/icon", icon_name: "calendar", label: "Date: " %>
-    <%= picture.date_time.strftime("%d/%m/%Y %H:%M") %>
+<div>
+  <strong>Species</strong>
+
+  <% if picture.species.any? %>
+    <% picture.species.each do |s| %>
+      <p>
+        <%= render "shared/icon", icon_name: "photo-check" %>
+        <%= s.name %>
+      </p>
+    <% end %>
+    <p>
+      <%= render "shared/icon", icon_name: "pencil" %>
+      <%= link_to "Edit identification", "#" %>
+    </p>
+  <% else %>
+    <p>
+      <%= render "shared/icon", icon_name: "photo-question" %>
+      Unidentified
+    </p>
+    <p>
+      <%= render "shared/icon", icon_name: "photo-spark" %>
+      <%= link_to "Identify this picture", identification_path(picture_id: picture.id, dive_id: dive.id) %>
+    </p>
   <% end %>
-</p>
+</div>
 
-<% unless dive.dive_site_name.blank? %>
+<div>
+  <strong>Location</strong>
+
   <p>
-    <%= render "shared/icon", icon_name: "anchor", label: "Dive site: " %>
-    <%= dive.dive_site_name %>
+    <%= icon dive.location.country.code.downcase, library: "flags", width: 20, height: 20 %>
+    <%= dive.location.country.name %>, <%= dive.location.name %>
   </p>
-<% end %>
 
-<p>
-  <%= render "shared/icon", icon_name: "world-pin", label: "Location: " %>
-  <%= dive.location.name %>
-</p>
+  <% unless dive.dive_site_name.blank? %>
+    <p>
+      <%= render "shared/icon", icon_name: "anchor" %>
+      <%= dive.dive_site_name %>
+    </p>
+  <% end %>
 
-<p>
-  <%= icon dive.location.country.code.downcase, library: "flags", width: 20, height: 20 %>
-  <%= dive.location.country.name %>
-</p>
+  <% if picture.photo.attached? && picture.photo.metadata.present? && picture.photo.metadata["gps_latitude"].present? %>
+    <p>
+      <%= render "shared/icon", icon_name: "map-pin" %>
+      <%= picture.photo.metadata["gps_latitude"].round(4) %>, <%= picture.photo.metadata["gps_longitude"].round(4) %>
+    </p>
+  <% end %>
+</div>
+
+<div>
+  <strong>Capture Details</strong>
+
+  <% date_to_show = (picture.photo.attached? && picture.photo.metadata.present? && picture.photo.metadata["date_taken"].present?) ? picture.photo.metadata["date_taken"] : picture.date_time %>
+
+  <% if date_to_show.present? %>
+    <p>
+      <%= render "shared/icon", icon_name: "calendar" %>
+      <% if date_to_show.is_a?(String) %>
+        <%= date_to_show %>
+      <% else %>
+        <%= date_to_show.strftime("%B %d, %Y at %H:%M") %>
+      <% end %>
+    </p>
+  <% end %>
+
+  <% if picture.photo.attached? && picture.photo.metadata.present? && picture.photo.metadata["camera_model"].present? %>
+    <p>
+      <%= render "shared/icon", icon_name: "camera" %>
+      <%= picture.photo.metadata["camera_model"] %>
+    </p>
+  <% end %>
+</div>
+
+<div>
+  <strong>Related Logs</strong>
+
+  <p>
+    <%= render "shared/icon", icon_name: "scuba-mask" %>
+    <%= link_to "View Dive Log", dive_path(dive) %>
+  </p>
+
+  <p>
+    <%= render "shared/icon", icon_name: "luggage" %>
+    <%= link_to "Trip: #{dive.trip.title}", trip_path(dive.trip) %>
+  </p>
+</div>

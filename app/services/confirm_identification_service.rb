@@ -6,7 +6,7 @@ class ConfirmIdentificationService
     new(**args).call
   end
 
-  def initialize(user:, identification:, dive:, result:, common_name:, default_photo_url:)
+  def initialize(user:, identification:, dive:, result:, common_name:, default_photo_url:, picture_id:)
     @user = user
     @identification = identification
     @dive = dive
@@ -14,6 +14,7 @@ class ConfirmIdentificationService
     @scientific_name = result["scientific_name"].to_s.strip
     @common_name = common_name.presence || @scientific_name
     @default_photo_url = default_photo_url
+    @picture_id = picture_id
   end
 
   def call
@@ -64,20 +65,25 @@ class ConfirmIdentificationService
   end
 
   def create_dive_picture(species)
-    picture = @dive.pictures.build
-
-    if @identification.image.attached?
-      picture.source = :user_uploaded
-      picture.photo.attach(@identification.image.blob)
-    elsif species.default_photo.attached?
-      picture.source = :species_default
-      picture.photo.attach(species.default_photo.blob)
+    if @picture_id.present?
+      picture = Picture.find(@picture_id)
+      PictureSpecy.find_or_create_by!(picture: picture, species: species)
     else
-      # If there is no image at all, we skip creating the picture association
-      return
-    end
+      picture = @dive.pictures.build
 
-    picture.save!
-    PictureSpecy.create!(picture: picture, species: species)
+      if @identification.image.attached?
+        picture.source = :user_uploaded
+        picture.photo.attach(@identification.image.blob)
+      elsif species.default_photo.attached?
+        picture.source = :species_default
+        picture.photo.attach(species.default_photo.blob)
+      else
+        # If there is no image at all, we skip creating the picture association
+        return
+      end
+
+      picture.save!
+      PictureSpecy.create!(picture: picture, species: species)
+    end
   end
 end
