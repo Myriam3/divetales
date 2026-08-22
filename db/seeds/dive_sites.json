@@ -1,0 +1,1461 @@
+[
+  {
+    "name": "Kame-ne (Turtle Root)",
+    "latitude": 34.5744,
+    "longitude": 138.9372,
+    "location_name": "Izu Peninsula - Mikomoto Island"
+  },
+  {
+    "name": "Ushitsuki-iwa (Cow Rock)",
+    "latitude": 34.7431,
+    "longitude": 138.7497,
+    "location_name": "Izu Peninsula - Kumomi"
+  },
+  {
+    "name": "Cape Maeda (Blue Cave)",
+    "latitude": 26.4421,
+    "longitude": 127.7711,
+    "location_name": "Okinawa - Main Island"
+  },
+  {
+    "name": "Batu Bolong",
+    "latitude": -8.5283,
+    "longitude": 119.4542,
+    "location_name": "Komodo National Park"
+  },
+  {
+    "name": "Shotgun (The Cauldron)",
+    "latitude": -8.4947,
+    "longitude": 119.5133,
+    "location_name": "Komodo National Park"
+  },
+  {
+    "name": "Castle Rock",
+    "latitude": -8.4361,
+    "longitude": 119.6108,
+    "location_name": "Komodo National Park"
+  },
+  {
+    "name": "Crystal Rock",
+    "latitude": -8.4411,
+    "longitude": 119.6083,
+    "location_name": "Komodo National Park"
+  },
+  {
+    "name": "Manta Alley",
+    "latitude": -8.7847,
+    "longitude": 119.5841,
+    "location_name": "Komodo National Park"
+  },
+  {
+    "name": "Tatawa Besar",
+    "latitude": -8.5147,
+    "longitude": 119.6083,
+    "location_name": "Komodo National Park"
+  },
+  {
+    "name": "Golden Passage",
+    "latitude": -8.4551,
+    "longitude": 119.5211,
+    "location_name": "Komodo National Park"
+  },
+  {
+    "name": "Manta Point",
+    "latitude": -8.7833,
+    "longitude": 115.5333,
+    "location_name": "Bali - Nusa Penida"
+  },
+  {
+    "name": "Crystal Bay",
+    "latitude": -8.7122,
+    "longitude": 115.4578,
+    "location_name": "Bali - Nusa Penida"
+  },
+  {
+    "name": "Toyapakeh",
+    "latitude": -8.6811,
+    "longitude": 115.4955,
+    "location_name": "Bali - Nusa Penida"
+  },
+  {
+    "name": "SD Point (Sekolah Dasar)",
+    "latitude": -8.6722,
+    "longitude": 115.5088,
+    "location_name": "Bali - Nusa Penida"
+  },
+  {
+    "name": "PED Point",
+    "latitude": -8.6744,
+    "longitude": 115.5188,
+    "location_name": "Bali - Nusa Penida"
+  },
+  {
+    "name": "Sental",
+    "latitude": -8.6775,
+    "longitude": 115.5311,
+    "location_name": "Bali - Nusa Penida"
+  },
+  {
+    "name": "USAT Liberty Shipwreck",
+    "latitude": -8.2753,
+    "longitude": 115.5991,
+    "location_name": "Bali - Tulamben (USAT Liberty)"
+  },
+  {
+    "name": "Tulamben Drop Off (The Wall)",
+    "latitude": -8.2741,
+    "longitude": 115.6011,
+    "location_name": "Bali - Tulamben (USAT Liberty)"
+  },
+  {
+    "name": "Coral Garden (Tulamben)",
+    "latitude": -8.2750,
+    "longitude": 115.5975,
+    "location_name": "Bali - Tulamben (USAT Liberty)"
+  },
+  {
+    "name": "Seraya Secrets (Muck Diving)",
+    "latitude": -8.2911,
+    "longitude": 115.6122,
+    "location_name": "Bali - Tulamben (USAT Liberty)"
+  },
+  {
+    "name": "Boga Wreck (Kubu)",
+    "latitude": -8.2435,
+    "longitude": 115.5681,
+    "location_name": "Bali - Tulamben (USAT Liberty)"
+  },
+  {
+    "name": "Lekuan 1",
+    "latitude": 1.6145,
+    "longitude": 124.7571,
+    "location_name": "Bunaken National Park"
+  },
+  {
+    "name": "Lekuan 2",
+    "latitude": 1.6111,
+    "longitude": 124.7555,
+    "location_name": "Bunaken National Park"
+  },
+  {
+    "name": "Lekuan 3",
+    "latitude": 1.6088,
+    "longitude": 124.7522,
+    "location_name": "Bunaken National Park"
+  },
+  {
+    "name": "Sachiko's Point",
+    "latitude": 1.6366,
+    "longitude": 124.7811,
+    "location_name": "Bunaken National Park"
+  },
+  {
+    "name": "Fukui Point",
+    "latitude": 1.5977,
+    "longitude": 124.7433,
+    "location_name": "Bunaken National Park"
+  },
+  {
+    "name": "Mandolin",
+    "latitude": 1.6315,
+    "longitude": 124.7551,
+    "location_name": "Bunaken National Park"
+  },
+  {
+    "name": "Hairball",
+    "latitude": 1.4551,
+    "longitude": 125.2155,
+    "location_name": "Lembeh Strait"
+  },
+  {
+    "name": "Nudi Falls",
+    "latitude": 1.4644,
+    "longitude": 125.2266,
+    "location_name": "Lembeh Strait"
+  },
+  {
+    "name": "TK 1 (Teluk Kembahu)",
+    "latitude": 1.4722,
+    "longitude": 125.2255,
+    "location_name": "Lembeh Strait"
+  },
+  {
+    "name": "Police Pier",
+    "latitude": 1.4422,
+    "longitude": 125.2133,
+    "location_name": "Lembeh Strait"
+  },
+  {
+    "name": "Angel's Window",
+    "latitude": 1.4311,
+    "longitude": 125.2344,
+    "location_name": "Lembeh Strait"
+  },
+  {
+    "name": "Aw Shucks",
+    "latitude": 1.4588,
+    "longitude": 125.2231,
+    "location_name": "Lembeh Strait"
+  },
+  {
+    "name": "Menjangan Wall (Pos II)",
+    "latitude": -8.0833,
+    "longitude": 114.5166,
+    "location_name": "Bali - Buleleng"
+  },
+  {
+    "name": "Eel Garden (Menjangan)",
+    "latitude": -8.0811,
+    "longitude": 114.5022,
+    "location_name": "Bali - Buleleng"
+  },
+  {
+    "name": "Temple Point (Menjangan)",
+    "latitude": -8.0861,
+    "longitude": 114.5122,
+    "location_name": "Bali - Buleleng"
+  },
+  {
+    "name": "Secret Bay (Gilimanuk Muck)",
+    "latitude": -8.1633,
+    "longitude": 114.4391,
+    "location_name": "Bali - Buleleng"
+  },
+  {
+    "name": "Pemuteran Bio-Rock",
+    "latitude": -8.1435,
+    "longitude": 114.6531,
+    "location_name": "Bali - Buleleng"
+  },
+  {
+    "name": "Koh Bida Nok",
+    "latitude": 7.6533,
+    "longitude": 98.7663,
+    "location_name": "Krabi - Phi Phi Islands"
+  },
+  {
+    "name": "Koh Bida Nai",
+    "latitude": 7.6588,
+    "longitude": 98.7663,
+    "location_name": "Krabi - Phi Phi Islands"
+  },
+  {
+    "name": "King Cruiser Wreck",
+    "latitude": 7.8016,
+    "longitude": 98.6383,
+    "location_name": "Krabi - Phi Phi Islands"
+  },
+  {
+    "name": "Shark Point",
+    "latitude": 7.7972,
+    "longitude": 98.6258,
+    "location_name": "Krabi - Phi Phi Islands"
+  },
+  {
+    "name": "Anemone Reef",
+    "latitude": 7.8027,
+    "longitude": 98.6288,
+    "location_name": "Krabi - Phi Phi Islands"
+  },
+  {
+    "name": "The Canyons",
+    "latitude": 13.5288,
+    "longitude": 120.9766,
+    "location_name": "Puerto Galera"
+  },
+  {
+    "name": "Sabang Wrecks",
+    "latitude": 13.5255,
+    "longitude": 120.9744,
+    "location_name": "Puerto Galera"
+  },
+  {
+    "name": "Alma Jane Wreck",
+    "latitude": 13.5244,
+    "longitude": 120.9711,
+    "location_name": "Puerto Galera"
+  },
+  {
+    "name": "Hole in the Wall",
+    "latitude": 13.5299,
+    "longitude": 120.9788,
+    "location_name": "Puerto Galera"
+  },
+  {
+    "name": "Giant Clam",
+    "latitude": 13.5211,
+    "longitude": 120.9655,
+    "location_name": "Puerto Galera"
+  },
+  {
+    "name": "Monad Shoal",
+    "latitude": 11.3115,
+    "longitude": 124.1851,
+    "location_name": "Cebu - Malapascua"
+  },
+  {
+    "name": "Richelieu Rock",
+    "latitude": 9.3621,
+    "longitude": 98.0225,
+    "location_name": "Surin Islands (Richelieu Rock)"
+  },
+  {
+    "name": "Chumphon Pinnacle",
+    "latitude": 10.1871,
+    "longitude": 99.7955,
+    "location_name": "Koh Tao"
+  },
+  {
+    "name": "Barracuda Point",
+    "latitude": 4.1165,
+    "longitude": 118.6301,
+    "location_name": "Sipadan"
+  },
+  // ----- BALI - BULELENG (Including Pura Jati) -----
+  {
+    "name": "Pura Jati (Puri Jati)",
+    "latitude": -8.1881,
+    "longitude": 114.9665,
+    "location_name": "Bali - Buleleng"
+  },
+  {
+    "name": "Napoleon Reef",
+    "latitude": -8.1361,
+    "longitude": 114.6652,
+    "location_name": "Bali - Buleleng"
+  },
+  {
+    "name": "Close Encounters",
+    "latitude": -8.1345,
+    "longitude": 114.6541,
+    "location_name": "Bali - Buleleng"
+  },
+  {
+    "name": "Melanting",
+    "latitude": -8.1402,
+    "longitude": 114.6599,
+    "location_name": "Bali - Buleleng"
+  },
+
+  // ----- KOMODO NATIONAL PARK -----
+  {
+    "name": "Siaba Besar",
+    "latitude": -8.4972,
+    "longitude": 119.6455,
+    "location_name": "Komodo National Park"
+  },
+  {
+    "name": "Wainilu",
+    "latitude": -8.6251,
+    "longitude": 119.6912,
+    "location_name": "Komodo National Park"
+  },
+  {
+    "name": "Batu Tiga",
+    "latitude": -8.6515,
+    "longitude": 119.4588,
+    "location_name": "Komodo National Park"
+  },
+  {
+    "name": "Pengah Kecil",
+    "latitude": -8.5411,
+    "longitude": 119.6231,
+    "location_name": "Komodo National Park"
+  },
+  {
+    "name": "Makassar Reef (Manta Point)",
+    "latitude": -8.5621,
+    "longitude": 119.5605,
+    "location_name": "Komodo National Park"
+  },
+  {
+    "name": "Batu Moncho",
+    "latitude": -8.4231,
+    "longitude": 119.4455,
+    "location_name": "Komodo National Park"
+  },
+
+  // ----- BALI - NUSA PENIDA / LEMBONGAN -----
+  {
+    "name": "Manta Bay",
+    "latitude": -8.7611,
+    "longitude": 115.4672,
+    "location_name": "Bali - Nusa Penida"
+  },
+  {
+    "name": "Gamat Bay",
+    "latitude": -8.7055,
+    "longitude": 115.4851,
+    "location_name": "Bali - Nusa Penida"
+  },
+  {
+    "name": "Buyuk",
+    "latitude": -8.6651,
+    "longitude": 115.5412,
+    "location_name": "Bali - Nusa Penida"
+  },
+  {
+    "name": "Blue Corner (Lembongan)",
+    "latitude": -8.6622,
+    "longitude": 115.4411,
+    "location_name": "Bali - Nusa Penida"
+  },
+  {
+    "name": "Mangrove (Lembongan)",
+    "latitude": -8.6541,
+    "longitude": 115.4622,
+    "location_name": "Bali - Nusa Penida"
+  },
+
+  // ----- BALI - TULAMBEN -----
+  {
+    "name": "Batu Kelebit",
+    "latitude": -8.2811,
+    "longitude": 115.6085,
+    "location_name": "Bali - Tulamben (USAT Liberty)"
+  },
+  {
+    "name": "Alamanda",
+    "latitude": -8.2855,
+    "longitude": 115.6101,
+    "location_name": "Bali - Tulamben (USAT Liberty)"
+  },
+  {
+    "name": "Suci Place",
+    "latitude": -8.2731,
+    "longitude": 115.5962,
+    "location_name": "Bali - Tulamben (USAT Liberty)"
+  },
+  {
+    "name": "Kubu Monkey Reef",
+    "latitude": -8.2415,
+    "longitude": 115.5651,
+    "location_name": "Bali - Tulamben (USAT Liberty)"
+  },
+
+  // ----- BUNAKEN NATIONAL PARK -----
+  {
+    "name": "Muka Kampung",
+    "latitude": 1.6211,
+    "longitude": 124.7651,
+    "location_name": "Bunaken National Park"
+  },
+  {
+    "name": "Bunaken Timur",
+    "latitude": 1.6355,
+    "longitude": 124.7771,
+    "location_name": "Bunaken National Park"
+  },
+  {
+    "name": "Raymond's Point",
+    "latitude": 1.6331,
+    "longitude": 124.7312,
+    "location_name": "Bunaken National Park"
+  },
+  {
+    "name": "Alung Banua",
+    "latitude": 1.6055,
+    "longitude": 124.7381,
+    "location_name": "Bunaken National Park"
+  },
+  {
+    "name": "Tanjung Parigi",
+    "latitude": 1.6421,
+    "longitude": 124.7551,
+    "location_name": "Bunaken National Park"
+  },
+
+  // ----- LEMBEH STRAIT -----
+  {
+    "name": "Jahir",
+    "latitude": 1.4511,
+    "longitude": 125.2215,
+    "location_name": "Lembeh Strait"
+  },
+  {
+    "name": "Retak Larry",
+    "latitude": 1.4581,
+    "longitude": 125.2185,
+    "location_name": "Lembeh Strait"
+  },
+  {
+    "name": "Pantai Parigi",
+    "latitude": 1.4685,
+    "longitude": 125.2101,
+    "location_name": "Lembeh Strait"
+  },
+  {
+    "name": "Aer Bajo",
+    "latitude": 1.4155,
+    "longitude": 125.1951,
+    "location_name": "Lembeh Strait"
+  },
+  {
+    "name": "Bianca",
+    "latitude": 1.4285,
+    "longitude": 125.2115,
+    "location_name": "Lembeh Strait"
+  },
+
+  // ----- PUERTO GALERA -----
+  {
+    "name": "Verde Island Drop Off",
+    "latitude": 13.5581,
+    "longitude": 121.0772,
+    "location_name": "Puerto Galera"
+  },
+  {
+    "name": "Monkey Beach",
+    "latitude": 13.5235,
+    "longitude": 120.9601,
+    "location_name": "Puerto Galera"
+  },
+  {
+    "name": "Ernie's Cave",
+    "latitude": 13.5241,
+    "longitude": 120.9635,
+    "location_name": "Puerto Galera"
+  },
+  {
+    "name": "Dungon Wall",
+    "latitude": 13.5185,
+    "longitude": 120.9611,
+    "location_name": "Puerto Galera"
+  },
+  {
+    "name": "Sinandigan Wall",
+    "latitude": 13.5255,
+    "longitude": 120.9855,
+    "location_name": "Puerto Galera"
+  },
+  // ----- RAJA AMPAT -----
+  {
+    "name": "Cape Kri",
+    "latitude": -0.5583,
+    "longitude": 130.6381,
+    "location_name": "Raja Ampat"
+  },
+  {
+    "name": "Melissa's Garden",
+    "latitude": -0.5794,
+    "longitude": 130.2741,
+    "location_name": "Raja Ampat"
+  },
+  {
+    "name": "Blue Magic",
+    "latitude": -0.5431,
+    "longitude": 130.6315,
+    "location_name": "Raja Ampat"
+  },
+  {
+    "name": "Manta Sandy",
+    "latitude": -0.4633,
+    "longitude": 130.5611,
+    "location_name": "Raja Ampat"
+  },
+
+  // ----- OTHER INDONESIA (Wakatobi, Banda, Gili, Alor) -----
+  {
+    "name": "Roma",
+    "latitude": -5.7821,
+    "longitude": 123.9555,
+    "location_name": "Wakatobi"
+  },
+  {
+    "name": "Blade",
+    "latitude": -5.8122,
+    "longitude": 123.9451,
+    "location_name": "Wakatobi"
+  },
+  {
+    "name": "Gunung Api (Snake Island)",
+    "latitude": -6.5331,
+    "longitude": 126.6501,
+    "location_name": "Banda Sea"
+  },
+  {
+    "name": "Kal's Dream",
+    "latitude": -8.2435,
+    "longitude": 124.3541,
+    "location_name": "Alor Archipelago"
+  },
+  {
+    "name": "Deep Turbo",
+    "latitude": -8.3451,
+    "longitude": 116.0381,
+    "location_name": "Gili Islands"
+  },
+  {
+    "name": "Halik Reef",
+    "latitude": -8.3411,
+    "longitude": 116.0322,
+    "location_name": "Gili Islands"
+  },
+
+  // ----- IZU & OKINAWA OUTLIERS -----
+  {
+    "name": "Wan-nai",
+    "latitude": 35.0298,
+    "longitude": 138.7885,
+    "location_name": "Izu Peninsula - Osezaki"
+  },
+  {
+    "name": "Futo Beach",
+    "latitude": 34.9011,
+    "longitude": 139.1352,
+    "location_name": "Izu Peninsula - Futo"
+  },
+  {
+    "name": "Hakama",
+    "latitude": 34.9751,
+    "longitude": 139.1121,
+    "location_name": "Izu Peninsula - Ito"
+  },
+  {
+    "name": "Kabira Manta Scramble",
+    "latitude": 24.4533,
+    "longitude": 124.1355,
+    "location_name": "Okinawa - Ishigaki"
+  },
+  {
+    "name": "Maotida Cave",
+    "latitude": 24.8151,
+    "longitude": 125.2341,
+    "location_name": "Okinawa - Miyakojima"
+  },
+  {
+    "name": "Yonaguni Monument",
+    "latitude": 24.4325,
+    "longitude": 123.0118,
+    "location_name": "Okinawa - Yonaguni"
+  },
+  {
+    "name": "Dobu Iso",
+    "latitude": 27.0831,
+    "longitude": 142.1835,
+    "location_name": "Ogasawara Islands"
+  },
+
+  // ----- PHILIPPINES -----
+  {
+    "name": "Pescador Island",
+    "latitude": 9.9231,
+    "longitude": 123.3395,
+    "location_name": "Cebu - Moalboal"
+  },
+  {
+    "name": "Panagsama Beach (Sardine Run)",
+    "latitude": 9.9441,
+    "longitude": 123.3715,
+    "location_name": "Cebu - Moalboal"
+  },
+  {
+    "name": "Gato Island",
+    "latitude": 11.4501,
+    "longitude": 124.0155,
+    "location_name": "Cebu - Malapascua"
+  },
+  {
+    "name": "Balicasag Black Forest",
+    "latitude": 9.5191,
+    "longitude": 123.6825,
+    "location_name": "Bohol - Panglao"
+  },
+  {
+    "name": "Twin Rocks",
+    "latitude": 13.7141,
+    "longitude": 120.8875,
+    "location_name": "Batangas - Anilao"
+  },
+  {
+    "name": "Secret Bay (Mainit)",
+    "latitude": 13.6841,
+    "longitude": 120.8922,
+    "location_name": "Batangas - Anilao"
+  },
+  {
+    "name": "Irako Wreck",
+    "latitude": 11.9705,
+    "longitude": 120.0211,
+    "location_name": "Coron (Wrecks)"
+  },
+  {
+    "name": "Amos Rock",
+    "latitude": 8.8351,
+    "longitude": 119.8661,
+    "location_name": "Tubbataha Reefs"
+  },
+  {
+    "name": "Coconut Point",
+    "latitude": 9.0765,
+    "longitude": 123.2721,
+    "location_name": "Negros - Apo Island"
+  },
+
+  // ----- THAILAND -----
+  {
+    "name": "Elephant Head Rock",
+    "latitude": 8.5445,
+    "longitude": 97.6411,
+    "location_name": "Similan Islands"
+  },
+  {
+    "name": "West of Eden",
+    "latitude": 8.5711,
+    "longitude": 97.6455,
+    "location_name": "Similan Islands"
+  },
+  {
+    "name": "Sail Rock",
+    "latitude": 10.0155,
+    "longitude": 100.0121,
+    "location_name": "Koh Tao"
+  },
+  {
+    "name": "Southwest Pinnacle",
+    "latitude": 10.0461,
+    "longitude": 99.8665,
+    "location_name": "Koh Tao"
+  },
+  {
+    "name": "Hin Daeng",
+    "latitude": 7.1551,
+    "longitude": 98.8155,
+    "location_name": "Koh Lanta"
+  },
+  {
+    "name": "Hin Muang",
+    "latitude": 7.1581,
+    "longitude": 98.8185,
+    "location_name": "Koh Lanta"
+  },
+
+  // ----- MALAYSIA -----
+  {
+    "name": "South Point",
+    "latitude": 4.1081,
+    "longitude": 118.6255,
+    "location_name": "Sipadan"
+  },
+  {
+    "name": "Turtle Tomb",
+    "latitude": 4.1141,
+    "longitude": 118.6288,
+    "location_name": "Sipadan"
+  },
+  {
+    "name": "Froggy Lair",
+    "latitude": 4.2465,
+    "longitude": 118.6321,
+    "location_name": "Mabul & Kapalai"
+  },
+  {
+    "name": "Tiger Reef",
+    "latitude": 2.8531,
+    "longitude": 104.0955,
+    "location_name": "Tioman Island"
+  },
+
+  // ----- MALDIVES -----
+  {
+    "name": "Maaya Thila",
+    "latitude": 4.0415,
+    "longitude": 72.8421,
+    "location_name": "Ari Atoll"
+  },
+  {
+    "name": "Banana Reef",
+    "latitude": 4.2561,
+    "longitude": 73.5355,
+    "location_name": "Male Atoll"
+  },
+  {
+    "name": "Hanifaru Bay",
+    "latitude": 5.1711,
+    "longitude": 73.1455,
+    "location_name": "Baa Atoll"
+  },
+
+  // ----- EGYPT / RED SEA -----
+  {
+    "name": "SS Thistlegorm",
+    "latitude": 27.8145,
+    "longitude": 33.9181,
+    "location_name": "Sharm El-Sheikh"
+  },
+  {
+    "name": "Shark & Yolanda Reef",
+    "latitude": 27.7191,
+    "longitude": 34.2588,
+    "location_name": "Sharm El-Sheikh"
+  },
+  {
+    "name": "Blue Hole",
+    "latitude": 28.5721,
+    "longitude": 34.5365,
+    "location_name": "Dahab"
+  },
+  {
+    "name": "Giftun Police Station",
+    "latitude": 27.2021,
+    "longitude": 33.9555,
+    "location_name": "Hurghada"
+  },
+  {
+    "name": "Elphinstone Reef",
+    "latitude": 25.3135,
+    "longitude": 34.8691,
+    "location_name": "Marsa Alam"
+  },
+  {
+    "name": "Numidia Wreck",
+    "latitude": 26.3081,
+    "longitude": 34.8425,
+    "location_name": "Brother Islands"
+  },
+  // ----- JAPAN -----
+  {
+    "name": "Gorilla Chop",
+    "latitude": 26.6385,
+    "longitude": 127.8860,
+    "location_name": "Okinawa - Main Island"
+  },
+  {
+    "name": "Sotoumi (Outer Sea)",
+    "latitude": 35.0310,
+    "longitude": 138.7850,
+    "location_name": "Izu Peninsula - Osezaki"
+  },
+  {
+    "name": "Ito Wreck (Chinsen)",
+    "latitude": 34.9781,
+    "longitude": 139.1155,
+    "location_name": "Izu Peninsula - Ito"
+  },
+
+  // ----- PHILIPPINES -----
+  {
+    "name": "Akitsushima Wreck",
+    "latitude": 11.9775,
+    "longitude": 119.9651,
+    "location_name": "Coron (Wrecks)"
+  },
+  {
+    "name": "Okikawa Maru",
+    "latitude": 12.0121,
+    "longitude": 120.0051,
+    "location_name": "Coron (Wrecks)"
+  },
+  {
+    "name": "Delsan Wreck",
+    "latitude": 8.7885,
+    "longitude": 119.8222,
+    "location_name": "Tubbataha Reefs"
+  },
+  {
+    "name": "Sombrero Island",
+    "latitude": 13.7081,
+    "longitude": 120.8255,
+    "location_name": "Batangas - Anilao"
+  },
+  {
+    "name": "Basura (The Trash)",
+    "latitude": 13.7511,
+    "longitude": 120.8995,
+    "location_name": "Batangas - Anilao"
+  },
+
+  // ----- MEXICO -----
+  {
+    "name": "Santa Rosa Wall",
+    "latitude": 20.3705,
+    "longitude": -87.0181,
+    "location_name": "Cozumel"
+  },
+  {
+    "name": "Columbia Deep",
+    "latitude": 20.2911,
+    "longitude": -87.0112,
+    "location_name": "Cozumel"
+  },
+  {
+    "name": "Cenote Angelita",
+    "latitude": 20.1365,
+    "longitude": -87.5772,
+    "location_name": "Playa del Carmen - Cenotes"
+  },
+  {
+    "name": "Tajma Ha",
+    "latitude": 20.4951,
+    "longitude": -87.2595,
+    "location_name": "Playa del Carmen - Cenotes"
+  },
+  {
+    "name": "Roca Partida",
+    "latitude": 18.9951,
+    "longitude": -112.0622,
+    "location_name": "Socorro Islands (Revillagigedo)"
+  },
+  {
+    "name": "Cabo Pearce",
+    "latitude": 18.7751,
+    "longitude": -110.9525,
+    "location_name": "Socorro Islands (Revillagigedo)"
+  },
+
+  // ----- USA -----
+  {
+    "name": "Molasses Reef",
+    "latitude": 25.0115,
+    "longitude": -80.3771,
+    "location_name": "Florida Keys"
+  },
+  {
+    "name": "USCG Duane",
+    "latitude": 24.9921,
+    "longitude": -80.3955,
+    "location_name": "Florida Keys"
+  },
+  {
+    "name": "Pelagic Magic (Blackwater)",
+    "latitude": 19.6401,
+    "longitude": -156.0311,
+    "location_name": "Hawaii - Kona (Manta Ray Night Dive)"
+  },
+
+  // ----- AUSTRALIA -----
+  {
+    "name": "Steve's Bommie",
+    "latitude": -15.5021,
+    "longitude": 145.7661,
+    "location_name": "Great Barrier Reef"
+  },
+  {
+    "name": "Ribbon Reef No. 10",
+    "latitude": -14.8831,
+    "longitude": 145.6985,
+    "location_name": "Great Barrier Reef"
+  },
+
+  // ----- GALAPAGOS (ECUADOR) -----
+  {
+    "name": "Darwin's Arch",
+    "latitude": 1.6731,
+    "longitude": -91.9961,
+    "location_name": "Ecuador - Galapagos Islands"
+  },
+  {
+    "name": "Wolf Island (El Derrumbe)",
+    "latitude": 1.3831,
+    "longitude": -91.8161,
+    "location_name": "Ecuador - Galapagos Islands"
+  },
+
+  // ----- PALAU -----
+  {
+    "name": "German Channel",
+    "latitude": 7.1121,
+    "longitude": 134.3161,
+    "location_name": "Palau - Koror"
+  },
+  {
+    "name": "Ulong Channel",
+    "latitude": 7.2721,
+    "longitude": 134.2561,
+    "location_name": "Palau - Koror"
+  },
+  {
+    "name": "Chandelier Cave",
+    "latitude": 7.3515,
+    "longitude": 134.4621,
+    "location_name": "Palau - Koror"
+  },
+
+  // ----- FIJI -----
+  {
+    "name": "Great White Wall",
+    "latitude": -16.7901,
+    "longitude": -179.9405,
+    "location_name": "Fiji - Taveuni"
+  },
+  {
+    "name": "Mount Mutiny",
+    "latitude": -17.3115,
+    "longitude": 178.4722,
+    "location_name": "Fiji - Bligh Water"
+  },
+
+  // ----- FRENCH POLYNESIA -----
+  {
+    "name": "Avatoru Pass",
+    "latitude": -14.9331,
+    "longitude": -147.7011,
+    "location_name": "French Polynesia - Rangiroa"
+  },
+  {
+    "name": "Tumakohua Pass (South Pass)",
+    "latitude": -16.3111,
+    "longitude": -145.4522,
+    "location_name": "French Polynesia - Fakarava"
+  },
+
+  // ----- MALDIVES -----
+  {
+    "name": "Kandooma Thila",
+    "latitude": 3.9061,
+    "longitude": 73.4735,
+    "location_name": "Male Atoll"
+  },
+
+  // ----- SOUTH AFRICA -----
+  {
+    "name": "Produce Wreck",
+    "latitude": -30.2521,
+    "longitude": 30.8285,
+    "location_name": "South Africa - Aliwal Shoal"
+  },
+  // ----- BONAIRE -----
+  {
+    "name": "Hilma Hooker",
+    "latitude": 12.1030,
+    "longitude": -68.2882,
+    "location_name": "Bonaire National Marine Park"
+  },
+  {
+    "name": "1000 Steps",
+    "latitude": 12.1970,
+    "longitude": -68.3204,
+    "location_name": "Bonaire National Marine Park"
+  },
+  {
+    "name": "Bari Reef",
+    "latitude": 12.1648,
+    "longitude": -68.2789,
+    "location_name": "Bonaire National Marine Park"
+  },
+
+  // ----- CURACAO -----
+  {
+    "name": "Superior Producer",
+    "latitude": 12.1065,
+    "longitude": -68.9412,
+    "location_name": "Curacao"
+  },
+  {
+    "name": "Watamula",
+    "latitude": 12.3831,
+    "longitude": -69.1554,
+    "location_name": "Curacao"
+  },
+  {
+    "name": "Alice in Wonderland",
+    "latitude": 12.3481,
+    "longitude": -69.1502,
+    "location_name": "Curacao"
+  },
+
+  // ----- CAYMAN ISLANDS -----
+  {
+    "name": "USS Kittiwake",
+    "latitude": 19.3622,
+    "longitude": -81.4013,
+    "location_name": "Cayman Islands - Grand Cayman"
+  },
+  {
+    "name": "Babylon",
+    "latitude": 19.3521,
+    "longitude": -81.0825,
+    "location_name": "Cayman Islands - Grand Cayman"
+  },
+  {
+    "name": "Three Fathom Wall (Mixing Bowl)",
+    "latitude": 19.6821,
+    "longitude": -80.0551,
+    "location_name": "Cayman Islands - Little Cayman (Bloody Bay Wall)"
+  },
+
+  // ----- BAHAMAS -----
+  {
+    "name": "SS Sapona",
+    "latitude": 25.6512,
+    "longitude": -79.2932,
+    "location_name": "Bahamas - Bimini"
+  },
+  {
+    "name": "Bull Run",
+    "latitude": 25.7421,
+    "longitude": -79.2831,
+    "location_name": "Bahamas - Bimini"
+  },
+
+  // ----- HONDURAS -----
+  {
+    "name": "Texas",
+    "latitude": 16.2751,
+    "longitude": -86.5982,
+    "location_name": "Honduras - Roatan"
+  },
+  {
+    "name": "Spooky Channel",
+    "latitude": 16.3312,
+    "longitude": -86.5511,
+    "location_name": "Honduras - Roatan"
+  },
+  {
+    "name": "Halliburton Wreck",
+    "latitude": 16.0821,
+    "longitude": -86.9125,
+    "location_name": "Honduras - Utila"
+  },
+
+  // ----- COSTA RICA (COCOS ISLAND) -----
+  {
+    "name": "Dirty Rock",
+    "latitude": 5.5412,
+    "longitude": -87.0421,
+    "location_name": "Costa Rica - Cocos Island"
+  },
+  {
+    "name": "Manuelita Deep",
+    "latitude": 5.5521,
+    "longitude": -87.0451,
+    "location_name": "Costa Rica - Cocos Island"
+  },
+
+  // ----- CUBA -----
+  {
+    "name": "Farallon",
+    "latitude": 20.9521,
+    "longitude": -78.9612,
+    "location_name": "Cuba - Jardines de la Reina"
+  },
+  {
+    "name": "Black Coral I",
+    "latitude": 21.0315,
+    "longitude": -78.9315,
+    "location_name": "Cuba - Jardines de la Reina"
+  },
+
+  // ----- COLOMBIA -----
+  {
+    "name": "La Gringa",
+    "latitude": 4.0081,
+    "longitude": -81.6095,
+    "location_name": "Colombia - Malpelo Island"
+  },
+  {
+    "name": "Sahara",
+    "latitude": 3.9981,
+    "longitude": -81.6011,
+    "location_name": "Colombia - Malpelo Island"
+  },
+
+  // ----- MICRONESIA -----
+  {
+    "name": "Nippo Maru",
+    "latitude": 7.3712,
+    "longitude": 151.8821,
+    "location_name": "Micronesia - Chuuk (Truk) Lagoon"
+  },
+  {
+    "name": "San Francisco Maru",
+    "latitude": 7.3751,
+    "longitude": 151.8752,
+    "location_name": "Micronesia - Chuuk (Truk) Lagoon"
+  },
+  {
+    "name": "Vertigo",
+    "latitude": 9.5512,
+    "longitude": 138.1151,
+    "location_name": "Micronesia - Yap"
+  },
+
+  // ----- MALTA (EUROPE) -----
+  {
+    "name": "Inland Sea",
+    "latitude": 36.0531,
+    "longitude": 14.1895,
+    "location_name": "Malta - Gozo"
+  },
+  {
+    "name": "Reqqa Point",
+    "latitude": 36.0821,
+    "longitude": 14.2341,
+    "location_name": "Malta - Gozo"
+  },
+
+  // ----- UK (EUROPE) -----
+  {
+    "name": "SMS Cöln",
+    "latitude": 58.8921,
+    "longitude": -3.1311,
+    "location_name": "UK - Scapa Flow"
+  },
+  {
+    "name": "SMS Markgraf",
+    "latitude": 58.8901,
+    "longitude": -3.1251,
+    "location_name": "UK - Scapa Flow"
+  },
+
+  // ----- TANZANIA & MOZAMBIQUE -----
+  {
+    "name": "Wattabomi",
+    "latitude": -5.8231,
+    "longitude": 39.3812,
+    "location_name": "Tanzania - Zanzibar"
+  },
+  {
+    "name": "Kinasi Wall",
+    "latitude": -3.9875,
+    "longitude": 39.7752,
+    "location_name": "Tanzania - Mafia Island"
+  },
+  {
+    "name": "Giant's Castle",
+    "latitude": -23.9621,
+    "longitude": 35.5451,
+    "location_name": "Mozambique - Praia do Tofo"
+  },
+
+  // ----- OMAN -----
+  {
+    "name": "Daymaniyat Wall",
+    "latitude": 23.8581,
+    "longitude": 57.9912,
+    "location_name": "Oman - Daymaniyat Islands"
+  },
+
+  // ----- JAPAN (IZU ADDITIONS) -----
+  {
+    "name": "Kadone",
+    "latitude": 34.5711,
+    "longitude": 138.9325,
+    "location_name": "Izu Peninsula - Mikomoto Island"
+  },
+  {
+    "name": "Enza",
+    "latitude": 34.5761,
+    "longitude": 138.9405,
+    "location_name": "Izu Peninsula - Mikomoto Island"
+  },
+  {
+    "name": "Tobi-shima",
+    "latitude": 34.7451,
+    "longitude": 138.7481,
+    "location_name": "Izu Peninsula - Kumomi"
+  },
+  // ----- BALI - AMED (New Location) -----
+  {
+    "name": "Jemeluk Wall",
+    "latitude": -8.3375,
+    "longitude": 115.6666,
+    "location_name": "Bali - Amed"
+  },
+  {
+    "name": "Amed Pyramids",
+    "latitude": -8.3311,
+    "longitude": 115.6588,
+    "location_name": "Bali - Amed"
+  },
+  {
+    "name": "Bunutan (Eel Garden)",
+    "latitude": -8.3455,
+    "longitude": 115.6888,
+    "location_name": "Bali - Amed"
+  },
+  {
+    "name": "Japanese Shipwreck (Lipah Bay)",
+    "latitude": -8.3466,
+    "longitude": 115.6944,
+    "location_name": "Bali - Amed"
+  },
+  {
+    "name": "Ghost Bay (Muck Dive)",
+    "latitude": -8.3355,
+    "longitude": 115.6611,
+    "location_name": "Bali - Amed"
+  },
+
+  // ----- KOMODO NATIONAL PARK -----
+  {
+    "name": "Tatawa Kecil",
+    "latitude": -8.5350,
+    "longitude": 119.6133,
+    "location_name": "Komodo National Park"
+  },
+  {
+    "name": "Sebayur Kecil",
+    "latitude": -8.4550,
+    "longitude": 119.7222,
+    "location_name": "Komodo National Park"
+  },
+  {
+    "name": "Mawan",
+    "latitude": -8.5711,
+    "longitude": 119.6105,
+    "location_name": "Komodo National Park"
+  },
+  {
+    "name": "Pilarsteen",
+    "latitude": -8.5833,
+    "longitude": 119.5122,
+    "location_name": "Komodo National Park"
+  },
+  {
+    "name": "Yellow Wall of Texas",
+    "latitude": -8.7888,
+    "longitude": 119.5799,
+    "location_name": "Komodo National Park"
+  },
+
+  // ----- BALI - NUSA PENIDA & LEMBONGAN -----
+  {
+    "name": "Batu Meling",
+    "latitude": -8.6944,
+    "longitude": 115.5788,
+    "location_name": "Bali - Nusa Penida"
+  },
+  {
+    "name": "Ceningan Wall",
+    "latitude": -8.7055,
+    "longitude": 115.4522,
+    "location_name": "Bali - Nusa Penida"
+  },
+  {
+    "name": "Suana Bay",
+    "latitude": -8.7301,
+    "longitude": 115.5802,
+    "location_name": "Bali - Nusa Penida"
+  },
+
+  // ----- BALI - TULAMBEN -----
+  {
+    "name": "Melasti",
+    "latitude": -8.2833,
+    "longitude": 115.6155,
+    "location_name": "Bali - Tulamben (USAT Liberty)"
+  },
+  {
+    "name": "Batu Niti",
+    "latitude": -8.2977,
+    "longitude": 115.6201,
+    "location_name": "Bali - Tulamben (USAT Liberty)"
+  },
+  {
+    "name": "Emerald",
+    "latitude": -8.2611,
+    "longitude": 115.5833,
+    "location_name": "Bali - Tulamben (USAT Liberty)"
+  },
+  {
+    "name": "Palung Palung",
+    "latitude": -8.2933,
+    "longitude": 115.6166,
+    "location_name": "Bali - Tulamben (USAT Liberty)"
+  },
+
+  // ----- BALI - BULELENG (Menjangan & Pemuteran) -----
+  {
+    "name": "Cave Point",
+    "latitude": -8.0822,
+    "longitude": 114.5311,
+    "location_name": "Bali - Buleleng"
+  },
+  {
+    "name": "Bat Cave",
+    "latitude": -8.0844,
+    "longitude": 114.5205,
+    "location_name": "Bali - Buleleng"
+  },
+  {
+    "name": "Deep Reef",
+    "latitude": -8.1401,
+    "longitude": 114.6555,
+    "location_name": "Bali - Buleleng"
+  },
+
+  // ----- BUNAKEN NATIONAL PARK -----
+  {
+    "name": "Tanjung Kopi",
+    "latitude": 1.6322,
+    "longitude": 124.7133,
+    "location_name": "Bunaken National Park"
+  },
+  {
+    "name": "Siladen Point",
+    "latitude": 1.6311,
+    "longitude": 124.8015,
+    "location_name": "Bunaken National Park"
+  },
+  {
+    "name": "Panggulingan",
+    "latitude": 1.6433,
+    "longitude": 124.7301,
+    "location_name": "Bunaken National Park"
+  },
+  {
+    "name": "Ron's Point",
+    "latitude": 1.5833,
+    "longitude": 124.7211,
+    "location_name": "Bunaken National Park"
+  },
+
+  // ----- LEMBEH STRAIT -----
+  {
+    "name": "Nudi Retreat",
+    "latitude": 1.4422,
+    "longitude": 125.2155,
+    "location_name": "Lembeh Strait"
+  },
+  {
+    "name": "TK 2",
+    "latitude": 1.4705,
+    "longitude": 125.2260,
+    "location_name": "Lembeh Strait"
+  },
+  {
+    "name": "TK 3",
+    "latitude": 1.4688,
+    "longitude": 125.2265,
+    "location_name": "Lembeh Strait"
+  },
+  {
+    "name": "Rojos",
+    "latitude": 1.4611,
+    "longitude": 125.2210,
+    "location_name": "Lembeh Strait"
+  },
+  {
+    "name": "Critter Hunt",
+    "latitude": 1.4233,
+    "longitude": 125.2015,
+    "location_name": "Lembeh Strait"
+  },
+
+  // ----- PUERTO GALERA -----
+  {
+    "name": "Sabang Point",
+    "latitude": 13.5255,
+    "longitude": 120.9760,
+    "location_name": "Puerto Galera"
+  },
+  {
+    "name": "La Laguna Point",
+    "latitude": 13.5265,
+    "longitude": 120.9701,
+    "location_name": "Puerto Galera"
+  },
+  {
+    "name": "Shark Cave",
+    "latitude": 13.5266,
+    "longitude": 120.9788,
+    "location_name": "Puerto Galera"
+  },
+  {
+    "name": "Washing Machine (Verde Island)",
+    "latitude": 13.5411,
+    "longitude": 121.0822,
+    "location_name": "Puerto Galera"
+  }
+]
