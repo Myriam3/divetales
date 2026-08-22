@@ -42,7 +42,8 @@ export default class extends Controller {
   }
 
   validate() {
-    const photo = this.photoTarget.files.length > 0;
+    const fileCount = this.photoTarget.files.length;
+    const photo = fileCount >= 1 && fileCount <= 5;
     const dive = this.hasDiveTarget && this.diveTarget.value;
     this.submitTarget.disabled = !(photo && dive);
   }
