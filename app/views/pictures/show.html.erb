@@ -24,15 +24,30 @@
   </p>
 
   <div class="row g-4">
-    <div class="col-12 col-lg-7">
-      <% if @picture.photo.attached? %>
-        <%= cl_image_tag @picture.photo.key,
-            class: "img-fluid",
-            crop: :fit %>
-      <% else %>
-        <svg xmlns="http://www.w3.org/2000/svg" width="270" height="270" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-fish"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M16.69 7.44a6.973 6.973 0 0 0 -1.69 4.56c0 1.747 .64 3.345 1.699 4.571" /><path d="M2 9.504c7.715 8.647 14.75 10.265 20 2.498c-5.25 -7.761 -12.285 -6.142 -20 2.504" /><path d="M18 11v.01" /><path d="M11.5 10.5c-.667 1 -.667 2 0 3" /></svg>
-      <% end %>
-    </div>
+ <div class="col-12 col-lg-7">
+  <% if @picture.photo.attached? %>
+    <%= cl_image_tag @picture.photo.key,
+      class: "img-fluid",
+      crop: :fit %>
+
+    <% if @picture.photo.metadata["date_taken"].present? %>
+      <p class="small text-muted mt-2 mb-1">
+        Taken: <%= @picture.photo.metadata["date_taken"] %>
+        <% if @picture.photo.metadata["camera_model"].present? %>
+          (Taken with <%= @picture.photo.metadata["camera_model"] %>)
+        <% end %>
+      </p>
+    <% end %>
+
+    <% if @picture.photo.metadata["gps_latitude"].present? %>
+      <p class="small text-muted mb-1">
+        GPS: <%= @picture.photo.metadata["gps_latitude"].round(4) %>, <%= @picture.photo.metadata["gps_longitude"].round(4) %>
+      </p>
+    <% end %>
+  <% else %>
+    <svg xmlns="http://www.w3.org/2000/svg" width="270" height="270" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-fish"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M16.69 7.44a6.973 6.973 0 0 0 -1.69 4.56c0 1.747 .64 3.345 1.699 4.571" /><path d="M2 9.504c7.715 8.647 14.75 10.265 20 2.498c-5.25 -7.761 -12.285 -6.142 -20 2.504" /><path d="M18 11v.01" /><path d="M11.5 10.5c-.667 1 -.667 2 0 3" /></svg>
+  <% end %>
+</div>
 
     <div class="col-12 col-lg-5">
       <%= render "shared/picture_info",

@@ -6,12 +6,13 @@ export default class extends Controller {
     "trip",
     "dive",
     "submit",
-    "divesContainer"
+    "divesContainer",
+    "bulkDiveId"
   ];
 
   static values = {
-    // selectedTripId: String,
-    // selectedDiveId: String,
+    selectedTripId: String,
+    selectedDiveId: String,
     divesUrl: String
   };
 
@@ -20,6 +21,7 @@ export default class extends Controller {
 
     if (!tripId) {
       this.divesContainerTarget.innerHTML = "";
+      this.syncBulkDiveId("");
       this.validate();
       return;
     }
@@ -41,8 +43,21 @@ export default class extends Controller {
     this.validate();
   }
 
+  selectDive(event) {
+    this.syncBulkDiveId(event.target.value);
+    this.validate();
+  }
+
+  syncBulkDiveId(diveId) {
+    this.selectedDiveIdValue = diveId;
+    if (this.hasBulkDiveIdTarget) {
+      this.bulkDiveIdTarget.value = diveId;
+    }
+  }
+
   validate() {
-    const photo = this.photoTarget.files.length > 0;
+    const fileCount = this.photoTarget.files.length;
+    const photo = fileCount >= 1 && fileCount <= 5;
     const dive = this.hasDiveTarget && this.diveTarget.value;
     this.submitTarget.disabled = !(photo && dive);
   }
