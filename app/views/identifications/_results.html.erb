@@ -1,7 +1,9 @@
 <div id="identification-results" data-controller="results">
   <% if identification&.image&.attached? %>
     <div class="mb-4">
-      <h5>Your photo</h5>
+      <p class="d-flex align-items-center gap-2 mb-3">
+        <%= render "shared/icon", icon_name: "camera-spark" %> Your photo
+      </p>
 
       <%= image_tag identification.image,
             class: "img-fluid rounded",
@@ -9,40 +11,67 @@
     </div>
   <% end %>
 
-  <% if results.present? && results.any? %>
-    <h2 class="mb-4">Possible Matches</h2>
+  <div data-results-target="matchesContainer">
+    <% if results.present? && results.any? %>
+      <h2 class="mb-4 d-flex align-items-center gap-2">
+        <%= render "shared/icon", icon_name: "binary-tree", icon_size: 28 %> Possible Matches
+      </h2>
 
-    <!-- Tab Headers -->
-    <div class="nav nav-tabs mb-4">
-      <% results.each_with_index do |result, index| %>
-        <button type="button"
-                data-results-target="tab"
-                data-action="click->results#show"
-                class="nav-link <%= 'active' if index == 0 %>">
-          <%= result[:common_name].presence || result[:scientific_name] %>
+      <!-- Tab Headers -->
+      <div class="nav nav-tabs mb-4">
+        <% results.each_with_index do |result, index| %>
+          <button type="button"
+                  data-results-target="tab"
+                  data-action="click->results#show"
+                  class="nav-link <%= 'active' if index == 0 %> d-flex align-items-center gap-2">
 
-          <span class="ms-2 badge bg-secondary">
-            <%= result[:confidence] %>%
-          </span>
-        </button>
-      <% end %>
+            <%= render "shared/icon", icon_name: "fish", icon_size: 18 %>
+            <%= result[:common_name].presence || result[:scientific_name] %>
+
+            <span class="ms-2 badge bg-secondary">
+              <%= result[:confidence] %>%
+            </span>
+          </button>
+        <% end %>
+      </div>
+
+      <!-- Tab Contents -->
+      <div>
+        <% results.each_with_index do |result, index| %>
+          <div data-results-target="content"
+              class="<%= 'd-none' unless index == 0 %>">
+
+            <%= render "identifications/result_card",
+                        result: result,
+                        dive: @dive,
+                        identification: @identification %>
+
+          </div>
+        <% end %>
+      </div>
+
+    <% end %>
+  </div>
+
+  <div class="mt-5 pt-4 border-top text-center">
+    <p class="text-muted d-flex align-items-center justify-content-center gap-2">
+      <%= render "shared/icon", icon_name: "photo-question" %> Not seeing the right match?
+    </p>
+    <p class="small text-muted mb-3">
+      The Identification sometimes needs a little help. Provide a bit more context to narrow it down!
+    </p>
+
+    <button class="btn btn-outline-primary d-inline-flex align-items-center gap-2"
+            type="button"
+            data-action="click->results#toggleForm">
+      <%= render "shared/icon", icon_name: "pencil", icon_size: 18 %> Add more context & try again
+    </button>
+
+    <div class="d-none mt-4 text-start" data-results-target="refineForm">
+      <div class="card card-body bg-light">
+        <%= render "identifications/form" %>
+      </div>
     </div>
-
-    <!-- Tab Contents -->
-    <div>
-      <% results.each_with_index do |result, index| %>
-        <div data-results-target="content"
-            class="<%= 'd-none' unless index == 0 %>">
-
-          <%= render "identifications/result_card",
-                      result: result,
-                      dive: @dive,
-                      identification: @identification %>
-
-        </div>
-      <% end %>
-    </div>
-
-  <% end %>
+  </div>
 
 </div>

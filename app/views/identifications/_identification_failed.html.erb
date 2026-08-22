@@ -1,0 +1,28 @@
+<div class="text-center py-5 mx-auto" style="max-width: 500px;">
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-light">
+    <div class="card-body p-5">
+
+      <!-- Big, clear error icon -->
+      <div class="text-danger mb-4">
+        <%= render "shared/icon", icon_name: "alert-triangle", icon_size: 64 %>
+      </div>
+
+      <h4 class="fw-bold text-dark mb-3">
+        Identification Failed
+      </h4>
+
+      <p class="text-muted mb-4">
+        We couldn't quite figure out what species this is. Something went wrong while processing your photo and details.
+      </p>
+
+      <!-- Styled Retry Button -->
+      <%= button_to identification_retry_path,
+            method: :post,
+            params: { identification_id: identification.id },
+            class: "btn btn-primary btn-lg w-100 d-flex align-items-center justify-content-center gap-2 rounded-pill shadow-sm" do %>
+        <%= render "shared/icon", icon_name: "refresh", icon_size: 20 %> Try again
+      <% end %>
+
+    </div>
+  </div>
+</div>

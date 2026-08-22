@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = ["input", "container", "image"]
 
   preview() {
-    const file = this.inputTarget.files[0]
+    const file = event.target.files[0]
 
     if (!file) {
       this.containerTarget.classList.add("d-none")
