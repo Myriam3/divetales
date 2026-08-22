@@ -778,5 +778,21 @@
   {
     "name": "Zimbabwe",
     "code": "zw"
+  },
+  {
+    "name": "Bonaire",
+    "code": "bq"
+  },
+  {
+    "name": "Cayman Islands",
+    "code": "ky"
+  },
+  {
+    "name": "Curacao",
+    "code": "cw"
+  },
+  {
+    "name": "French Polynesia",
+    "code": "pf"
   }
 ]

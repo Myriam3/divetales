@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   get "/dives/:id", to: "dives#show", as: "dive"
   delete "/dives/:id", to: "dives#destroy"
 
+  resources :dive_sites, only: [:index]
   get "api/mapbox", to: "api#mapbox"
 
   authenticate :user, ->(user) { user.admin? } do
