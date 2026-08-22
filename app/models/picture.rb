@@ -8,7 +8,7 @@ class Picture < ApplicationRecord
   has_one_attached :photo
   validates :dive, presence: true
 
-  after_save :extract_photo_metadata
+  after_create_commit :extract_photo_metadata
 
   def species_default?
     species.any? { |s| s.default_photo.attached? && s.default_photo.blob_id == photo.blob_id }
