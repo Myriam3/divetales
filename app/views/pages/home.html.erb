@@ -1,2 +1,7 @@
 <h1>Pages#home</h1>
 <p>Find me in app/views/pages/home.html.erb</p>
+
+<div class="col-md-5">
+  <%= render "shared/latest_species", species: @latest_species %>
+  <%= render "shared/media_gallery", dives: @media_gallery %>
+</div>

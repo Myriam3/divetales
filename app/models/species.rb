@@ -11,6 +11,7 @@ class Species < ApplicationRecord
   belongs_to :category
   has_many :picture_species, dependent: :destroy
   has_many :pictures, through: :picture_species
+  has_many :dives, through: :pictures
   has_many :identifications
   has_one_attached :default_photo
 
