@@ -209,4 +209,22 @@ Not already registered fish category -> `Other Fish`
 
 # FIT File parser
 
+## Garmin FIT SDK
+
 https://github.com/garmin/fit-javascript-sdk
+
+# Charts
+
+## Chart.js
+
+https://www.chartjs.org/
+
+# Maps
+
+## Mapbox GL JS
+
+https://docs.mapbox.com/mapbox-gl-js/guides/
+
+## Mapbox GL Geocoder
+
+https://github.com/mapbox/mapbox-gl-geocoder

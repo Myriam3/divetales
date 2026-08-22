@@ -6,7 +6,8 @@ export default class extends Controller {
     "fileInput",
     "submitButton",
     "feedback",
-    "diveForm"
+    "diveForm",
+    "mapInfoContainer"
   ];
 
   connect() {
@@ -30,7 +31,7 @@ export default class extends Controller {
       const depthProfile = null;
 
       if (!diveData) return;
-      console.log(diveData);
+      //console.log(diveData);
       this.showSuccess("FIT file imported");
       this.fillDiveForm(diveData);
       this.setDepthProfile(diveData);
@@ -68,15 +69,13 @@ export default class extends Controller {
     this.setDateTime(data);
     this.setDepth(data);
     this.setTemperature(data);
-    this.setCoordinates(data);
     this.setGas(data);
+    this.setCoordinates(data);
   }
 
   setDiveNumber(data) {
     const diveNumberInput = this.diveFormTarget.dive_dive_number;
     const number = data.diveSummaryMesgs[1]?.diveNumber;
-
-    console.log(diveNumberInput, data.diveSummaryMesgs[0]);
 
     if (diveNumberInput && number) {
       diveNumberInput.value = number
@@ -181,9 +180,14 @@ export default class extends Controller {
       return;
     }
 
-    if (longInput && long) {
-      longInput.value = long;
-    }
+    if (!(longInput && long)) return;
+
+    longInput.value = long;
+
+    this.dispatch("import-coordinates", {
+      detail: { lat, long },
+      bubbles: true
+    });
   }
 
   setGas(data) {
@@ -207,7 +211,7 @@ export default class extends Controller {
     if (!(records && records.length && input)) return;
 
     const depthProfile = this.getDepthRecords(records);
-    console.log(JSON.stringify(depthProfile));
+    //console.log(JSON.stringify(depthProfile));
     input.value = JSON.stringify(depthProfile);
   }
 
@@ -218,6 +222,24 @@ export default class extends Controller {
         depth: record.depth
       }
     });
+  }
+
+  selectLocation(e) {
+    const diveLocationSelect = this.diveFormTarget.dive_location_id;
+    if (!(e.detail && diveLocationSelect)) return;
+    const words = e.detail.split(",");
+
+    for (let i = 0; i < diveLocationSelect.options.length; i++) {
+      const label = diveLocationSelect[i].label.toLowerCase();
+      const match = words.some(word => label.includes(word.toLowerCase()));
+      console.log(match);
+      if (match) {
+        diveLocationSelect.selectedIndex = i;
+        return;
+      } else {
+        diveLocationSelect.selectedIndex = 0;
+      }
+    }
   }
 
   showSuccess(message) {

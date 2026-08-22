@@ -78,6 +78,15 @@
     <hr>
   <% end %>
 
+<% unless dive.latitude.blank? || dive.longitude.blank? %>
+  <div data-controller="map"
+      data-map-api-url-value="<%= api_mapbox_path %>"
+      data-map-latitude-value="<%= dive.latitude %>"
+      data-map-longitude-value="<%= dive.longitude %>">
+    <%= render "/shared/map" %>
+  </div>
+<% end %>
+
   <h2>Log</h2>
 
   <% unless dive.duration.blank? %>
