@@ -20,3 +20,9 @@
 <% else %>
   Select a dive (in progress)
 <% end %>
+
+<%= form_with url: bulk_create_pictures_path, method: :post, local: true do %>
+  <%= hidden_field_tag "pictures_bulk[dive_id]", @selected_dive_id %>
+  <%= file_field_tag "pictures_bulk[photos][]", multiple: true %>
+  <%= submit_tag "Upload 5 Photos" %>
+<% end %>
