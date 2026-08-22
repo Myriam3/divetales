@@ -1,9 +1,17 @@
 <h1 class="mt-5 mb-4">Add a new dive</h1>
 
 <% if @trip %>
-  <p>
-    <strong>Trip:</strong>
-    <%= @trip.title %>
+  <p class="mt-3 mb-5 fs-3">
+
+      <%= render "shared/icon", icon_name: "luggage", icon_size: 36, label: "Trip:" %>
+      <%= @trip.title %>
+
+    <% @trip.countries.each do |country| %>
+      <span>
+        <%= icon country.code.downcase, library: "flags", width: 20, height: 20 %>
+        <span class="visually-hidden"><%= country.name %></span>
+      </span>
+    <% end %>
   </p>
 
   <%= render "form" %>
