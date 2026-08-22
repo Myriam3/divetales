@@ -1,13 +1,6 @@
 <% if dive %>
   <%
-    dive_title = "##{number} "
-    dive_title += dive.dive_site_name.blank? ? dive.location.name : dive.dive_site_name
-
     all_page = current_page?(dives_path) || current_page?(root_path)
-
-    if all_page
-      dive_title += ", #{dive.date}"
-    end
   %>
 
   <%= link_to(
@@ -16,9 +9,9 @@
     ) do %>
     <div class="card-body">
       <% if local_assigns[:heading_level] == 3 %>
-        <h3 class="card-title"><%= dive_title %></h3>
+        <h3 class="card-title"><%= dive.display_name_html %></h3>
       <% else %>
-        <h2 class="card-title"><%= dive_title %></h2>
+        <h2 class="card-title"><%= dive.display_name_html %></h2>
       <% end %>
 
       <% if all_page %>

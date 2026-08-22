@@ -6,7 +6,8 @@ export default class extends Controller {
     "fileInput",
     "submitButton",
     "feedback",
-    "diveForm"
+    "diveForm",
+    "mapInfoContainer"
   ];
 
   connect() {
@@ -30,6 +31,7 @@ export default class extends Controller {
       const depthProfile = null;
 
       if (!diveData) return;
+      //console.log(diveData);
       this.showSuccess("FIT file imported");
       this.fillDiveForm(diveData);
       this.setDepthProfile(diveData);
@@ -63,11 +65,21 @@ export default class extends Controller {
   fillDiveForm(data) {
     if (!this.diveFormTarget) return;
 
+    this.setDiveNumber(data);
     this.setDateTime(data);
     this.setDepth(data);
     this.setTemperature(data);
-    this.setCoordinates(data);
     this.setGas(data);
+    this.setCoordinates(data);
+  }
+
+  setDiveNumber(data) {
+    const diveNumberInput = this.diveFormTarget.dive_dive_number;
+    const number = data.diveSummaryMesgs[1]?.diveNumber;
+
+    if (diveNumberInput && number) {
+      diveNumberInput.value = number
+    }
   }
 
   setDateTime(data) {
@@ -77,14 +89,14 @@ export default class extends Controller {
     const durationInput = this.diveFormTarget.dive_duration;
 
     // Duration (s -> m)
-    const duration = data.sessionMesgs[0].totalElapsedTime;
-    const min = Math.floor(data.sessionMesgs[0].totalElapsedTime / 60);
+    const duration = data.sessionMesgs[0]?.totalElapsedTime;
+    const min = Math.floor(data.sessionMesgs[0]?.totalElapsedTime / 60);
     if (min && durationInput) {
       durationInput.value = min;
     }
 
     // Date
-    const startDate = data.sessionMesgs[0].startTime;
+    const startDate = data.sessionMesgs[0]?.startTime;
     if (!(startDate instanceof Date)) return;
 
     if (dateInput && dateInput.type === 'date') {
@@ -97,7 +109,7 @@ export default class extends Controller {
       startTimeInput.value = startTime;
     }
 
-    const endDate = data.sessionMesgs[0].timestamp;
+    const endDate = data.sessionMesgs[0]?.timestamp;
     const endtime = endDate ?  this.convertDatetime(endDate) : this.calculateEndTime(startDate, duration);
 
     if (endTimeInput && endTimeInput.type === 'datetime-local') {
@@ -109,8 +121,8 @@ export default class extends Controller {
     const maxDepthInput = this.diveFormTarget.dive_max_depth;
     const avgDepthInput = this.diveFormTarget.dive_avg_depth;
 
-    let maxDepth = data.diveSummaryMesgs[0].maxDepth
-    let avgDepth = data.diveSummaryMesgs[0].avgDepth
+    let maxDepth = data.diveSummaryMesgs[0]?.maxDepth
+    let avgDepth = data.diveSummaryMesgs[0]?.avgDepth
     // TODO if empty, calculate with records
 
     maxDepth = isNaN(maxDepth) ? null : Number(maxDepth.toFixed(2));
@@ -130,8 +142,8 @@ export default class extends Controller {
     const minTempInput = this.diveFormTarget.dive_min_temp;
     const avgTempInput = this.diveFormTarget.dive_avg_temp;
 
-    let maxTemp = data.sessionMesgs[0].maxTemperature
-    let minTemp = data.sessionMesgs[0].minTemperature
+    let maxTemp = data.sessionMesgs[0]?.maxTemperature
+    let minTemp = data.sessionMesgs[0]?.minTemperature
     let avgTemp = data.diveSummaryMesgs[0].avgTemperature
     // TODO if empty, calculate with records
 
@@ -155,8 +167,8 @@ export default class extends Controller {
   setCoordinates(data) {
     const latInput = this.diveFormTarget.dive_latitude;
     const longInput = this.diveFormTarget.dive_longitude;
-    let lat = data.sessionMesgs[0].startPositionLat;
-    let long = data.sessionMesgs[0].startPositionLong;
+    let lat = data.sessionMesgs[0]?.startPositionLat;
+    let long = data.sessionMesgs[0]?.startPositionLong;
 
     lat = this.convertSemicircles(lat);
     long = this.convertSemicircles(long);
@@ -168,9 +180,14 @@ export default class extends Controller {
       return;
     }
 
-    if (longInput && long) {
-      longInput.value = long;
-    }
+    if (!(longInput && long)) return;
+
+    longInput.value = long;
+
+    this.dispatch("import-coordinates", {
+      detail: { lat, long },
+      bubbles: true
+    });
   }
 
   setGas(data) {
@@ -194,7 +211,7 @@ export default class extends Controller {
     if (!(records && records.length && input)) return;
 
     const depthProfile = this.getDepthRecords(records);
-    console.log(JSON.stringify(depthProfile));
+    //console.log(JSON.stringify(depthProfile));
     input.value = JSON.stringify(depthProfile);
   }
 
@@ -205,6 +222,24 @@ export default class extends Controller {
         depth: record.depth
       }
     });
+  }
+
+  selectLocation(e) {
+    const diveLocationSelect = this.diveFormTarget.dive_location_id;
+    if (!(e.detail && diveLocationSelect)) return;
+    const words = e.detail.split(",");
+
+    for (let i = 0; i < diveLocationSelect.options.length; i++) {
+      const label = diveLocationSelect[i].label.toLowerCase();
+      const match = words.some(word => label.includes(word.toLowerCase()));
+      console.log(match);
+      if (match) {
+        diveLocationSelect.selectedIndex = i;
+        return;
+      } else {
+        diveLocationSelect.selectedIndex = 0;
+      }
+    }
   }
 
   showSuccess(message) {

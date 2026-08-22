@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
-    
+
   resources :trips, only: [:index, :show, :new, :create, :destroy, :edit, :update] do
     resources :dives, only: [:index, :show, :new, :create]
   end
@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get "/identification/details", to: "identifications#details", as: :identification_details
   get "/identification/confirm", to: "identifications#confirm"
   post "/identification/save", to: "identifications#save"
+  post "/identification/retry", to: "identifications#retry", as: :identification_retry
   # Defines the root path route ("/")
   # root "posts#index"
   #
@@ -37,6 +38,8 @@ Rails.application.routes.draw do
   post "/dives", to: "dives#create"
   get "/dives/:id", to: "dives#show", as: "dive"
   delete "/dives/:id", to: "dives#destroy"
+
+  get "api/mapbox", to: "api#mapbox"
 
   authenticate :user, ->(user) { user.admin? } do
     mount MissionControl::Jobs::Engine, at: "/jobs"
