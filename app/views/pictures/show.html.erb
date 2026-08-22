@@ -27,51 +27,107 @@
     </div>
 
     <div class="col-12 col-lg-5">
-      <div>
-        <strong>Species</strong>
+      <div class="card shadow-sm border-0 rounded-4 overflow-hidden mt-4" data-controller="picture-info-tab">
+        <div class="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
+          <!-- The Tab Navigation -->
+          <ul class="nav nav-tabs border-bottom" id="pictureTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active fw-bold text-dark border-0 border-bottom border-primary border-3 bg-transparent pb-3" id="photo-details-tab" role="tab" aria-controls="photo-details" aria-selected="true"
+                      type="button"
+                      data-picture-info-tab-target="tab"
+                      data-action="click->picture-info-tab#switch"
+                      data-target-id="photo-details">
+                <%= render "shared/icon", icon_name: "camera" %> Photo Details
+              </button>
+            </li>
 
-        <% if @picture.species.any? %>
-          <% @picture.species.each do |s| %>
-            <p>
-              <%= render "shared/icon", icon_name: "photo-check" %>
-              <%= s.name %>
-            </p>
+            <% if @picture.species.any? { |species| species.details.present? } %>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold text-secondary border-0 bg-transparent pb-3"
+                  type="button"
+                  data-picture-info-tab-target="tab"
+                  data-action="click->picture-info-tab#switch"
+                  data-target-id="species-details">
+                  <%= render "shared/icon", icon_name: "fish" %> Species Details
+                </button>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="card-body p-4">
+          <div class="tab-content">
+
+            <div class="tab-pane fade show active" id="photo-details" role="tabpanel" aria-labelledby="photo-details-tab"data-picture-info-tab-target="panel">
+              <% if @picture.species.any? %>
+                <% @picture.species.each do |s| %>
+                  <p>
+                    <%= render "shared/icon", icon_name: "photo-check" %>
+                    <%= s.name %>
+                  </p>
+                <% end %>
+                <p>
+                  <%= render "shared/icon", icon_name: "pencil" %>
+                  <%= link_to "Edit identification", "#" %>
+                </p>
+              <% else %>
+                <p>
+                  <%= render "shared/icon", icon_name: "photo-question" %>
+                  Unidentified
+                </p>
+                <p>
+                  <%= render "shared/icon", icon_name: "photo-spark" %>
+                  <%= link_to "Identify this picture", identification_path(picture_id: @picture.id, dive_id: @picture.dive.id) %>
+                </p>
+              <% end %>
+              <%= render "shared/picture_info",
+                  picture: @picture,
+                  dive: @picture.dive,
+                  details: true %>
+
+              <strong>Related Logs</strong>
+
+              <p>
+                <%= render "shared/icon", icon_name: "scuba-mask" %>
+                <%= link_to "View Dive Log", dive_path(@picture.dive) %>
+              </p>
+
+              <p>
+                <%= render "shared/icon", icon_name: "luggage" %>
+                <%= link_to "Trip: #{@picture.dive.trip.title}", trip_path(@picture.dive.trip) %>
+              </p>
+            </div>
+          </div>
+
+          <% if @picture.species.any? %>
+            <div class="tab-pane fade" id="species-details" role="tabpanel" aria-labelledby="species-details-tab" data-picture-info-tab-target="panel">
+
+              <% @picture.species.each do |species| %>
+                <% if species.details.present? %>
+                <div class="mb-5 border-bottom pb-4 last-border-none">
+                  <!-- Species Header -->
+                  <div class="d-flex align-items-center gap-3 mb-4">
+                    <div class="text-primary">
+                      <%= render "shared/icon", icon_name: "fish", icon_size: 32 %>
+                    </div>
+                    <div>
+                      <p class="mb-0 fw-bold text-dark"><%= species.name.presence || "Unknown species" %></p>
+                      <div class="text-muted fst-italic"><%= species.scientific_name %></div>
+                    </div>
+                  </div>
+                  <%= render "shared/species_info", details: species.details %>
+                </div>
+                <% end %>
+              <% end %>
+
+            </div>
           <% end %>
-          <p>
-            <%= render "shared/icon", icon_name: "pencil" %>
-            <%= link_to "Edit identification", "#" %>
-          </p>
-        <% else %>
-          <p>
-            <%= render "shared/icon", icon_name: "photo-question" %>
-            Unidentified
-          </p>
-          <p>
-            <%= render "shared/icon", icon_name: "photo-spark" %>
-            <%= link_to "Identify this picture", identification_path(picture_id: @picture.id, dive_id: @picture.dive.id) %>
-          </p>
-        <% end %>
-      </div>
-      <%= render "shared/picture_info",
-          picture: @picture,
-          dive: @picture.dive,
-          details: true %>
-
-      <div>
-        <strong>Related Logs</strong>
-
-        <p>
-          <%= render "shared/icon", icon_name: "scuba-mask" %>
-          <%= link_to "View Dive Log", dive_path(@picture.dive) %>
-        </p>
-
-        <p>
-          <%= render "shared/icon", icon_name: "luggage" %>
-          <%= link_to "Trip: #{@picture.dive.trip.title}", trip_path(@picture.dive.trip) %>
-        </p>
+        </div>
       </div>
     </div>
   </div>
+
+
 
   <!-- TODO refactor -->
   <% @related_species.each do |species, pictures| %>

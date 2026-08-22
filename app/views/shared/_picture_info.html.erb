@@ -1,5 +1,5 @@
 <div>
-  <%# <strong>Location</strong> %>
+  <strong>Location</strong>
 
   <p>
     <%= icon dive.location.country.code.downcase, library: "flags", width: 20, height: 20 %>
@@ -22,7 +22,7 @@
 </div>
 
 <div>
-  <%# <strong>Capture Details</strong> %>
+  <strong>Capture Details</strong>
 
   <% date_to_show = (picture.photo.attached? && picture.photo.metadata.present? && picture.photo.metadata["date_taken"].present?) ? picture.photo.metadata["date_taken"] : picture.date_time %>
 

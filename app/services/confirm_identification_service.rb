@@ -21,11 +21,12 @@ class ConfirmIdentificationService
     ActiveRecord::Base.transaction do
       species = find_or_initialize_species
       attach_default_photo_to_species(species) if @default_photo_url.present? && !species.default_photo.attached?
+
       species.save!
 
       create_dive_picture(species)
 
-      @identification.destroy!
+      # @identification.destroy!
 
       species
     end
@@ -40,6 +41,12 @@ class ConfirmIdentificationService
       species.name = @common_name
       species.category = find_category
       species.wiki_link = @result.dig("inaturalist", 0, "wikipedia_url")
+    end
+
+    if @identification.details.present? && @identification.details[@scientific_name].present?
+      species_facts = @identification.details[@scientific_name]
+
+      species.details = species_facts if species_facts["status"] == "completed"
     end
 
     species
