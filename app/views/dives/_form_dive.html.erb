@@ -56,7 +56,8 @@
                 prompt: "Select a location",
                 required: true,
                 input_html: {
-                  class: "#{'is-invalid' if @dive.errors[:location].any?}"
+                  class: "#{'is-invalid' if @dive.errors[:location].any?}",
+                  data: { autocomplete_target: "location" }
                 } %>
                 <!-- <% if @dive.errors[:location][1] %>
                   <div class="invalid-feedback d-block">
@@ -74,7 +75,7 @@
                     autocomplete: "off",
                     data: {
                       autocomplete_target: "input",
-                      action: "input->autocomplete#search"
+                      action: "input->autocomplete#search focus->autocomplete#search click->autocomplete#search"
                     }
                   } %>
               <div data-autocomplete-target="results"

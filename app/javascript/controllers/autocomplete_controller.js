@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["input", "results", "latitude", "longitude"]
+  static targets = ["input", "results", "latitude", "longitude", "location"]
   static values = { url: String }
 
   connect() {
@@ -12,15 +12,16 @@ export default class extends Controller {
   // Called every time the user types a letter
   async search(event) {
     const query = this.inputTarget.value
+    const locationId = this.locationTarget.value
 
     // Wait until they type at least 2 characters to avoid huge database queries
-    if (query.length < 2) {
+    if (query.length === 0 && !locationId) {
       this.resultsTarget.classList.add("d-none")
       return
     }
 
     // Fetch from your DiveSitesController
-    const response = await fetch(`${this.urlValue}?query=${encodeURIComponent(query)}`, {
+    const response = await fetch(`${this.urlValue}?query=${encodeURIComponent(query)}&location_id=${locationId}`, {
       headers: { "Accept": "application/json" }
     })
     const data = await response.json()
