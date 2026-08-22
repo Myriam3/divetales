@@ -1,5 +1,5 @@
 <div class="container mt-4">
-  <%= simple_form_for [@trip, @dive], data: { dive_data_import_target: "diveForm" } do |f| %>
+  <%= simple_form_for [@trip, @dive], data: { dive_data_import_target: "diveForm", controller: "autocomplete", autocomplete_url_value: "/dive_sites", action: "click@window->autocomplete#hide" } do |f| %>
     <%= f.error_notification %>
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
@@ -65,10 +65,23 @@
                 <% end %> -->
           </div>
           <div class="col-md-6">
-            <%= f.input :dive_site_name,
-                label: "Dive site",
-                placeholder: "Name of the dive site",
-                required: true %>
+            <div class="position-relative">
+              <%= f.input :dive_site_name,
+                  label: "Dive site",
+                  placeholder: "Name of the dive site",
+                  required: true,
+                  input_html: {
+                    autocomplete: "off",
+                    data: {
+                      autocomplete_target: "input",
+                      action: "input->autocomplete#search"
+                    }
+                  } %>
+              <div data-autocomplete-target="results"
+                    class="list-group position-absolute w-100 shadow-sm d-none z-3"
+                    style="max-height: 250px; overflow-y: auto; top: 100%;">
+              </div>
+            </div>
           </div>
         </div>
 
@@ -171,12 +184,12 @@
           <div class="col-md-6">
             <%= f.input :latitude,
                 label: "Latitude",
-                input_html: { step: 0.000001 } %>
+                input_html: { step: 0.000001, data: { autocomplete_target: "latitude"} } %>
           </div>
           <div class="col-md-6">
             <%= f.input :longitude,
                 label: "Longitude",
-                input_html: { step: 0.000001 } %>
+                input_html: { step: 0.000001, data: { autocomplete_target: "longitude" } } %>
           </div>
         </div>
 

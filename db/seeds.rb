@@ -23,8 +23,8 @@ Picture.destroy_all
 Location.destroy_all
 Country.destroy_all
 
-# Species.destroy_all
-#Category.destroy_all
+Species.destroy_all
+Category.destroy_all
 
 # ==========================================
 # User
