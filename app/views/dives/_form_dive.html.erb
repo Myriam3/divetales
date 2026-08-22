@@ -1,5 +1,5 @@
 <div class="container mt-4">
-  <%= simple_form_for [@trip, @dive], data: { dive_data_import_target: "diveForm", controller: "autocomplete", autocomplete_url_value: "/dive_sites", action: "click@window->autocomplete#hide" } do |f| %>
+  <%= simple_form_for [@trip, @dive], data: { dive_data_import_target: "diveForm", controller: "autocomplete-divesite", autocomplete_divesite_url_value: "/dive_sites", action: "click@window->autocomplete-divesite#hide" } do |f| %>
     <%= f.error_notification %>
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
@@ -56,7 +56,8 @@
                 prompt: "Select a location",
                 required: true,
                 input_html: {
-                  class: "#{'is-invalid' if @dive.errors[:location].any?}"
+                  class: "#{'is-invalid' if @dive.errors[:location].any?}",
+                  data: { autocomplete_divesite_target: "location" }
                 } %>
                 <!-- <% if @dive.errors[:location][1] %>
                   <div class="invalid-feedback d-block">
@@ -73,11 +74,11 @@
                   input_html: {
                     autocomplete: "off",
                     data: {
-                      autocomplete_target: "input",
-                      action: "input->autocomplete#search"
+                      autocomplete_divesite_target: "input",
+                      action: "input->autocomplete-divesite#search focus->autocomplete-divesite#search click->autocomplete-divesite#search"
                     }
                   } %>
-              <div data-autocomplete-target="results"
+              <div data-autocomplete-divesite-target="results"
                     class="list-group position-absolute w-100 shadow-sm d-none z-3"
                     style="max-height: 250px; overflow-y: auto; top: 100%;">
               </div>
@@ -184,12 +185,12 @@
           <div class="col-md-6">
             <%= f.input :latitude,
                 label: "Latitude",
-                input_html: { step: 0.000001, data: { autocomplete_target: "latitude"} } %>
+                input_html: { step: 0.000001, data: { autocomplete_divesite_target: "latitude"} } %>
           </div>
           <div class="col-md-6">
             <%= f.input :longitude,
                 label: "Longitude",
-                input_html: { step: 0.000001, data: { autocomplete_target: "longitude" } } %>
+                input_html: { step: 0.000001, data: { autocomplete_divesite_target: "longitude" } } %>
           </div>
         </div>
 

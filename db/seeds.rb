@@ -20,6 +20,7 @@ Trip.destroy_all
 
 Picture.destroy_all
 
+DiveSite.destroy_all
 Location.destroy_all
 Country.destroy_all
 
@@ -168,6 +169,16 @@ require_relative "seeds/locations"
 
 locations = create_locations(countries)
 puts "#{locations.length} locations created"
+
+# ==========================================
+# Dive sites
+# ==========================================
+
+require_relative "seeds/dive_sites"
+
+dive_sites = load_dive_sites
+puts "#{dive_sites.length} dive sites created"
+
 
 # ==========================================
 # Trips

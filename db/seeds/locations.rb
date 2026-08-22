@@ -19,6 +19,7 @@ def create_locations(countries)
     "nusa_penida" => Location.find_or_create_by!(name: "Bali - Nusa Penida", country: countries["id"]),
     "buleleng" => Location.find_or_create_by!(name: "Bali - Buleleng", country: countries["id"]),
     "tulamben" => Location.find_or_create_by!(name: "Bali - Tulamben (USAT Liberty)", country: countries["id"]),
+    "amed" => Location.find_or_create_by!(name: "Bali - Amed", country: countries["id"]),
     "komodo" => Location.find_or_create_by!(name: "Komodo National Park", country: countries["id"]),
     "raja_ampat" => Location.find_or_create_by!(name: "Raja Ampat", country: countries["id"]),
     "lembeh" => Location.find_or_create_by!(name: "Lembeh Strait", country: countries["id"]),
@@ -39,6 +40,7 @@ def create_locations(countries)
     "anilao" => Location.find_or_create_by!(name: "Batangas - Anilao", country: countries["ph"]),
     "tubbataha" => Location.find_or_create_by!(name: "Tubbataha Reefs", country: countries["ph"]),
     "apo_island" => Location.find_or_create_by!(name: "Negros - Apo Island", country: countries["ph"]),
+    "puerto_galera" => Location.find_or_create_by!(name: "Puerto Galera", country: countries["ph"]),
 
     # ----- Thailand -----
     "similan" => Location.find_or_create_by!(name: "Similan Islands", country: countries["th"]),
@@ -46,6 +48,7 @@ def create_locations(countries)
     "koh_tao" => Location.find_or_create_by!(name: "Koh Tao", country: countries["th"]),
     "phuket" => Location.find_or_create_by!(name: "Phuket", country: countries["th"]),
     "koh_lanta" => Location.find_or_create_by!(name: "Koh Lanta", country: countries["th"]),
+    "phi_phi" => Location.find_or_create_by!(name: "Krabi - Phi Phi Islands", country: countries["th"]),
 
     # ----- Malaysia -----
     "sipadan" => Location.find_or_create_by!(name: "Sipadan", country: countries["my"]),
