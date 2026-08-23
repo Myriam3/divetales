@@ -19,7 +19,7 @@
                 <%= render "shared/icon", icon_name: "fish", icon_size: 32 %>
               </div>
               <div>
-                <p class="mb-0 fw-bold text-dark"><%= s.name.presence.titleize || "Unknown species" %></p>
+                <p class="mb-0 fw-bold fs-4 text-dark"><%= s.name.presence.titleize || "Unknown species" %></p>
                 <div class="text-muted fst-italic"><%= s.scientific_name %></div>
                 <% if s.details %>
                   <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Family: <%= s.details&.dig("family") %></div>
