@@ -113,6 +113,19 @@ class PicturesController < ApplicationController
     end
   end
 
+  def destroy
+    @picture = Picture.find(params[:id])
+    authorize @picture
+    dive = @picture.dive
+    @picture.destroy
+
+    if params[:return_to] == "dive"
+      redirect_to dive_path(dive, anchor: "pictures"), notice: "Photo successfully deleted."
+    else
+      redirect_to pictures_path, notice: "Photo successfully deleted."
+    end
+  end
+
   private
 
   def picture_params

@@ -35,4 +35,8 @@ class PicturePolicy < ApplicationPolicy
   def update?
     record.dive.trip.user == user
   end
+
+  def destroy?
+    record.dive.trip.user == user
+  end
 end
