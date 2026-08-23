@@ -9,7 +9,7 @@ class PicturesController < ApplicationController
       @picture = Picture.new(dive: dive)
       @selected_trip_id = dive.trip_id
       @selected_dive_id = dive.id
-      @dives = dive.trip.dives.select(:id, :dive_site_name, :date).order(date: :desc)
+      @dives = dive.trip.dives.select(:id, :dive_site_name, :date, :dive_number, :start_time).order(date: :desc)
     else
       @picture = Picture.new
       @selected_trip_id = nil

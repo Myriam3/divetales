@@ -7,17 +7,12 @@
     Select a dive*
   </label>
 
-  <% total = @dives.size %>
   <% options = @dives.each_with_index.map do |dive, index|
       title = ""
-      if dive.dive_number
-        title += "#{dive.dive_number} "
-      end
+      title += "#{dive.dive_number} " if dive.dive_number.present?
       title += dive.dive_site_name.presence || dive.location.name
       title += ", #{dive.date}"
-      if dive.start_time
-        title += ", #{dive.start_time.strftime('%H:%M')}"
-      end
+      title += ", #{dive.start_time.strftime('%H:%M')}" if dive.start_time.present?
       [title, dive.id]
   end %>
 
