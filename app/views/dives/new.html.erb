@@ -1,12 +1,14 @@
 <h1 class="mt-5 mb-4">Add a new dive</h1>
 
 <% if @trip %>
-  <p class="mt-3 mb-4 fs-3">
+  <p class="mt-3 mb-2 fs-3">
       <%= render "shared/icon", icon_name: "luggage", icon_size: 36, label: "Trip:" %>
       <%= @trip.title %>
-
+  </p>
+  <p class="mb-4">
+    Trip countries:
     <% @trip.countries.each do |country| %>
-      <span>
+      <span title="<%= country.name %>">
         <%= icon country.code.downcase, library: "flags", width: 20, height: 20 %>
         <span class="visually-hidden"><%= country.name %></span>
       </span>
@@ -26,10 +28,4 @@
   <%= render "form" %>
 
   <div id="modal-container"></div>
-<% end %>
-
-<%= form_with url: bulk_create_pictures_path, method: :post, local: true do %>
-  <%= hidden_field_tag "pictures_bulk[dive_id]", @selected_dive_id %>
-  <%= file_field_tag "pictures_bulk[photos][]", multiple: true %>
-  <%= submit_tag "Upload 5 Photos" %>
 <% end %>

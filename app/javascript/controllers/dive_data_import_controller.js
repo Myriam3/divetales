@@ -249,15 +249,20 @@ export default class extends Controller {
   // Location selector update
   selectLocation(e) {
     const diveLocationSelect = this.diveFormTarget.dive_location_id;
-    if (!(e.detail && diveLocationSelect)) return;
-    const words = e.detail.split(",");
+    if (!(e.detail?.name && diveLocationSelect)) return;
+    const words = e.detail.name.split(",");
+    let options = Array.from(diveLocationSelect.options);
 
-    for (let i = 0; i < diveLocationSelect.options.length; i++) {
-      const label = diveLocationSelect[i].label.toLowerCase();
-      const match = words.some(word => label.includes(word.toLowerCase()));
-      //console.log(match);
+    if (e.detail.countryCode) {
+      options = options.filter((opt) => opt.parentElement.getAttribute('data-country-code') === e.detail.countryCode);
+    }
+
+    for (let i = 1; i < options.length; i++) {
+      const label = options[i].label.toLowerCase();
+      const match = words.some(word => label.includes(word.toLowerCase().replace(' ', '')));
+
       if (match) {
-        diveLocationSelect.selectedIndex = i;
+        diveLocationSelect.selectedIndex = options[i].index;
         return;
       } else {
         diveLocationSelect.selectedIndex = 0;

@@ -89,7 +89,7 @@ export default class extends Controller {
     const geoInfo = await this.fetchGeocodingPlace(lat, long, token);
     if (!geoInfo || !this.mapInfoContainerTarget) return;
 
-    this.mapInfoContainerTarget.insertAdjacentHTML('beforeend', geoInfo.replace(/<[^>]*>/g, ''));
+    this.mapInfoContainerTarget.insertAdjacentHTML('beforeend', geoInfo.name);
     this.mapInfoContainerTarget.style.display = 'block';
 
     // Event for updating the form
@@ -104,11 +104,15 @@ export default class extends Controller {
       const endpoint = `https://api.mapbox.com/search/geocode/v6/reverse?longitude=${long}&latitude=${lat}&language=en&limit=1&access_token=${token}`
       const response = await fetch(endpoint);
       const data = await response.json();
-      // console.log('GEOINFO', data);
+      console.log('GEOINFO', data);
       if (!data.features.length) return;
 
       const result = data.features[0].properties;
-      return `${result.full_address}`;
+
+      return {
+        name: `${result.full_address?.replace(/<[^>]*>/g, '')}`,
+        countryCode: result.context?.country?.country_code?.toLowerCase()
+      };
     } catch (error) {
       console.error('Mapbox Geocoding', error);
     }

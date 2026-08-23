@@ -48,7 +48,39 @@
               Location
           </h3>
           <div class="col-md-6">
-            <%= f.input :location_id,
+            <% if @trip_countries %>
+              <%= f.label :location_id,
+                'Dive location <abbr title="required">*</abbr>'.html_safe,
+                class: "form-label string required" %>
+
+              <%= f.select :location_id,
+                grouped_options_for_select(
+                  @trip_countries.map do |country|
+                    [
+                      country.name,
+                      country.locations.map { |location| [location.name, location.id] },
+                      {
+                        data: {
+                          country_code: country.code
+                        }
+                      }
+                    ]
+                  end
+                ),
+                {
+                  label: "Dive location",
+                  prompt: "Select a location",
+                  required: true
+                },
+                {
+                  class: "form-select select required #{'is-invalid' if @dive.errors[:location].any?}",
+                  data: {
+                    autocomplete_divesite_target: "location"
+                  }
+                }
+              %>
+            <% else %>
+              <%= f.input :location_id,
                 label: "Dive location",
                 collection: Location.all.order(:name),
                 label_method: :name,
@@ -59,11 +91,7 @@
                   class: "#{'is-invalid' if @dive.errors[:location].any?}",
                   data: { autocomplete_divesite_target: "location" }
                 } %>
-                <!-- <% if @dive.errors[:location][1] %>
-                  <div class="invalid-feedback d-block">
-                    Location <%= @dive.errors[:location][1] %>
-                  </div>
-                <% end %> -->
+            <% end %>
           </div>
           <div class="col-md-6">
             <div class="position-relative">

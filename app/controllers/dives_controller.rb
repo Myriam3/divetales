@@ -23,6 +23,7 @@ class DivesController < ApplicationController
       @trip = @trips.find(params[:trip_id])
       @dive = @trip.dives.new
       @other_trips = @trips.excluding(@trip).limit(5)
+      @trip_countries = @trip.countries.includes(:locations).order(:name)
     else
       @dive = Dive.new
     end
