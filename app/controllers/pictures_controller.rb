@@ -86,6 +86,33 @@ class PicturesController < ApplicationController
     render plain: "Not found", status: :not_found
   end
 
+  def edit
+    @picture = Picture.find(params[:id])
+    authorize @picture, :edit?
+    @trips = current_user.trips
+    @selected_trip_id = @picture.dive.trip_id
+    @selected_dive_id = @picture.dive_id
+    @dives = @picture.dive.trip.dives
+  end
+
+  def update
+    @picture = Picture.find(params[:id])
+    authorize @picture, :update?
+    if @picture.update(picture_params)
+      if @picture.photo.attached?
+        updated_metadata = @picture.photo.blob.metadata.merge(
+          "camera_model" => params[:picture][:camera_model],
+          "date_taken" => params[:picture][:date_taken]
+        )
+        @picture.photo.blob.update(metadata: updated_metadata)
+      end
+
+      redirect_to @picture, notice: "Photo details updated successfully!"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def picture_params
