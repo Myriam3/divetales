@@ -49,7 +49,7 @@
           </h3>
           <div class="col-md-6">
             <%= f.input :location_id,
-                label: "Dive location (Can only select existing one for now)",
+                label: "Dive location",
                 collection: Location.all.order(:name),
                 label_method: :name,
                 value_method: :id,
