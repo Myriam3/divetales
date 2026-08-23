@@ -1,0 +1,32 @@
+<div class="card shadow-sm">
+  <div class="card-header bg-white pt-3 pb-0 border-bottom-0">
+    <p class="mb-0">
+      <%= render "shared/icon", icon_name: "camera", icon_size: 24 %>
+      Media Gallery
+    </p>
+  </div>
+  <div class="card-body">
+    <% if dives.any? %>
+      <div class="d-flex flex-nowrap overflow-auto pb-2 custom-scrollbar" style="gap: 1rem; scroll-snap-type: x mandatory;">
+
+        <% dives.each do |dive| %>
+          <% dive.pictures.take(3).each do |photo| %>
+            <div class="position-relative flex-shrink-0" style="width: 140px; height: 140px; scroll-snap-align: start;">
+              <%= image_tag photo.photo.variant(resize_to_fill: [280, 280]),
+                  class: "w-100 h-100 object-fit-cover rounded shadow-sm",
+                  alt: "Dive media from #{dive.dive_site_name}" %>
+
+              <span class="position-absolute bottom-0 start-0 w-100 p-1 text-white text-truncate"
+                    style="font-size: 0.7rem; background: rgba(0,0,0,0.5); border-bottom-left-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);">
+                <%= dive.location.name %>
+              </span>
+            </div>
+          <% end %>
+        <% end %>
+
+      </div>
+    <% else %>
+      <p class="text-muted mb-0">No photos uploaded yet.</p>
+    <% end %>
+  </div>
+</div>
