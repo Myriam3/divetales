@@ -130,6 +130,9 @@ class PicturesController < ApplicationController
       "camera_model" => params[:picture][:camera_model],
       "date_taken" => params[:picture][:date_taken]
     )
+
+    @picture.update!(date_time: DateTime.parse(params[:picture][:date_taken])) if params[:picture][:date_taken].present?
+
     @picture.photo.blob.update(metadata: updated_metadata)
   end
 
