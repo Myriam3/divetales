@@ -87,10 +87,6 @@ class IdentificationsController < ApplicationController
 
     if @trip
       @dives = @trip.dives.order(date: :desc)
-      if @dive.present?
-        index = @dives.index(@dive)
-        @dive_number = @dives.length - index if index
-      end
     else
       @trips = current_user.trips.order(created_at: :desc)
     end
