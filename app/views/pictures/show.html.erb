@@ -2,7 +2,7 @@
   <div>
     <div class="card shadow-sm border-0 overflow-hidden mt-3">
       <% if @picture.photo.attached? %>
-        <%= cl_image_tag @picture.photo.key, class: "w-100 object-fit-cover", style: "max-height: 80vh;" %>
+        <%= cl_image_tag @picture.photo.key, class: "w-100 object-fit-cover" %>
       <% else %>
         <div class="bg-light d-flex align-items-center justify-content-center" style="height: 400px;">
           <%= render "shared/icon", icon_name: "fish", icon_size: 64, class: "text-muted" %>
