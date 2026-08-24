@@ -15,15 +15,24 @@
           class: "text-decoration-none text-dark",
           data: { action: "click->picture-selection#preventNavigation" } do %>
 
-      <p class="card-header <%= "d-none" unless show_info %>" data-picture-card-target="info">
+      <div class="card-header <%= "d-none" unless show_info %>" data-picture-card-target="info">
         <% if picture.species.any? %>
           <%= render "shared/icon", icon_name: "photo-check", icon_size: 36 %>
-          <strong><%= picture.species.map(&:name).join(", ") %></strong>
+          <% picture.species.each do |s| %>
+            <strong><%= s.name %></strong>
+            <div class="d-flex gap-1 flex-wrap">
+              <div class="badge bg-light text-secondary border px-3 py-2 rounded-pill">Class: <%= s.category.classification.titleize %></div>
+              <div class="badge bg-light text-secondary border px-3 py-2 rounded-pill">Category: <%= s.category.name.titleize %></div>
+              <% if s.details %>
+                <div class="badge bg-light text-secondary border px-3 py-2 rounded-pill">Family: <%= s.details&.dig("family").titleize %></div>
+              <% end %>
+            </div>
+          <% end %>
         <% else %>
           <%= render "shared/icon", icon_name: "photo-question", icon_size: 36 %>
           No species identified
         <% end %>
-      </p>
+      </div>
 
       <div class="ratio overflow-hidden" style="--bs-aspect-ratio: 75%;">
         <% if picture.photo.attached? %>
