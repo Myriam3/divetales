@@ -22,9 +22,13 @@
               <div>
                 <p class="mb-0 fw-bold fs-4 text-dark"><%= s.name.presence.titleize || "Unknown species" %></p>
                 <div class="text-muted fst-italic"><%= s.scientific_name %></div>
-                <% if s.details %>
-                  <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Family: <%= s.details&.dig("family") %></div>
-                <% end %>
+                <div class="d-flex gap-1">
+                  <% if s.details %>
+                    <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Family: <%= s.details&.dig("family").titleize %></div>
+                  <% end %>
+                  <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Class: <%= s.category.classification.titleize %></div>
+                  <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Category: <%= s.category.name.titleize %></div>
+                </div>
               </div>
             </div>
         <% end %>
