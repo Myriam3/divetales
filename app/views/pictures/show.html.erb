@@ -12,9 +12,10 @@
 
     <div>
       <% if @picture.species.any? %>
+      <div class="d-flex align-items-center justify-content-between mb-4">
+          <div>
         <% @picture.species.each do |s| %>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="d-flex align-items-center gap-3 my-4">
+            <div class="d-flex align-items-center gap-3 mt-4">
               <div class="text-primary">
                 <%= render "shared/icon", icon_name: "fish", icon_size: 32 %>
               </div>
@@ -26,12 +27,14 @@
                 <% end %>
               </div>
             </div>
-            <div>
-              <%= render "shared/delete_photo" %>
-              <%= render "shared/edit_photo" %>
-            </div>
-          </div>
         <% end %>
+          </div>
+
+        <div>
+          <%= render "shared/delete_photo" %>
+          <%= render "shared/edit_photo" %>
+        </div>
+      </div>
 
       <% else %>
       <div class="d-flex align-items-center justify-content-between">
