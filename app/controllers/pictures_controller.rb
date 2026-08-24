@@ -63,6 +63,9 @@ class PicturesController < ApplicationController
   end
 
   def edit
+    # @trip = policy_scope(Trip).find(params[:trip_id])
+    # authorize @trip, :dives_for_trip?
+    # @dives = @trip.dives.includes(:location).order(date: :desc)
   end
 
   def update
@@ -117,7 +120,7 @@ class PicturesController < ApplicationController
     if target_dive
       @selected_trip_id = target_dive.trip_id
       @selected_dive_id = target_dive.id
-      @dives = target_dive.trip.dives.select(:id, :dive_site_name, :date).order(date: :desc)
+      @dives = target_dive.trip.dives.select(:id, :dive_site_name, :date, :start_time, :dive_number).order(date: :desc)
     else
       @selected_trip_id = nil
       @selected_dive_id = nil

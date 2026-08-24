@@ -14,6 +14,7 @@ export default class extends Controller {
     this.feedbackTarget.textContent = "";
   }
 
+  // Import file
   async importFile(event) {
     event.preventDefault();
     const file = this.fileInputTarget.files[0];
@@ -31,16 +32,15 @@ export default class extends Controller {
       const depthProfile = null;
 
       if (!diveData) return;
-      //console.log(diveData);
       this.showSuccess("FIT file imported");
       this.fillDiveForm(diveData);
       this.setDepthProfile(diveData);
 
     } catch (error) {
-      console.log(error);
+        console.log(error);
       this.showError("Unable to read the FIT file.");
     } finally {
-      this.submitButtonTarget.disabled = false;
+        this.submitButtonTarget.disabled = false;
     }
   }
 
@@ -62,6 +62,7 @@ export default class extends Controller {
     return messages;
   }
 
+  // Update the form
   fillDiveForm(data) {
     if (!this.diveFormTarget) return;
 
@@ -73,6 +74,7 @@ export default class extends Controller {
     this.setCoordinates(data);
   }
 
+  // Dive number
   setDiveNumber(data) {
     const diveNumberInput = this.diveFormTarget.dive_dive_number;
     const number = data.diveSummaryMesgs[1]?.diveNumber;
@@ -82,6 +84,7 @@ export default class extends Controller {
     }
   }
 
+  // Date, time, duration
   setDateTime(data) {
     const dateInput = this.diveFormTarget.dive_date;
     const startTimeInput = this.diveFormTarget.dive_start_time;
@@ -103,8 +106,8 @@ export default class extends Controller {
       dateInput.valueAsDate = startDate;
     }
 
+    // Time
     const startTime = this.convertDatetime(startDate);
-
     if (startTimeInput && startTimeInput.type === 'datetime-local') {
       startTimeInput.value = startTime;
     }
@@ -117,6 +120,17 @@ export default class extends Controller {
     }
   }
 
+  calculateEndTime(startDate, duration) {
+    return this.convertDatetime(new Date(startDate.getTime() + duration * 1000));
+  }
+
+  // Date to YYYY-MM-DDTHH:mm
+  convertDatetime(date) {
+    const offset = date.getTimezoneOffset() * 60000;
+    return new Date(date.getTime() - offset).toISOString().slice(0, 16);
+  }
+
+  // Depth
   setDepth(data) {
     const maxDepthInput = this.diveFormTarget.dive_max_depth;
     const avgDepthInput = this.diveFormTarget.dive_avg_depth;
@@ -137,6 +151,7 @@ export default class extends Controller {
     }
   }
 
+  // Temperature
   setTemperature(data) {
     const maxTempInput = this.diveFormTarget.dive_max_temp;
     const minTempInput = this.diveFormTarget.dive_min_temp;
@@ -164,15 +179,16 @@ export default class extends Controller {
     }
   }
 
+  // Coordinates
   setCoordinates(data) {
     const latInput = this.diveFormTarget.dive_latitude;
     const longInput = this.diveFormTarget.dive_longitude;
+
     let lat = data.sessionMesgs[0]?.startPositionLat;
     let long = data.sessionMesgs[0]?.startPositionLong;
 
     lat = this.convertSemicircles(lat);
     long = this.convertSemicircles(long);
-    // TODO dive site with geocode API?
 
     if (latInput && lat) {
       latInput.value = lat;
@@ -190,6 +206,12 @@ export default class extends Controller {
     });
   }
 
+  // Semicircles to lat/long
+  convertSemicircles(num) {
+    return isNaN(num) ? null : Number(num * (180 / Math.pow(2, 31))).toFixed(6);
+  }
+
+  // Gas
   setGas(data) {
     const tankTypeInput = this.diveFormTarget.dive_tank_type;
     const gasInfo = data.diveGasMesgs ? data.diveGasMesgs[0] : null;
@@ -204,6 +226,7 @@ export default class extends Controller {
     }
   }
 
+  // Depth profile
   setDepthProfile(data) {
     const records = data.recordMesgs;
     const input = this.diveFormTarget.dive_depth_over_time;
@@ -211,7 +234,6 @@ export default class extends Controller {
     if (!(records && records.length && input)) return;
 
     const depthProfile = this.getDepthRecords(records);
-    //console.log(JSON.stringify(depthProfile));
     input.value = JSON.stringify(depthProfile);
   }
 
@@ -224,17 +246,23 @@ export default class extends Controller {
     });
   }
 
+  // Location selector update
   selectLocation(e) {
     const diveLocationSelect = this.diveFormTarget.dive_location_id;
-    if (!(e.detail && diveLocationSelect)) return;
-    const words = e.detail.split(",");
+    if (!(e.detail?.name && diveLocationSelect)) return;
+    const words = e.detail.name.split(",");
+    let options = Array.from(diveLocationSelect.options);
 
-    for (let i = 0; i < diveLocationSelect.options.length; i++) {
-      const label = diveLocationSelect[i].label.toLowerCase();
-      const match = words.some(word => label.includes(word.toLowerCase()));
-      console.log(match);
+    if (e.detail.countryCode) {
+      options = options.filter((opt) => opt.parentElement.getAttribute('data-country-code') === e.detail.countryCode);
+    }
+
+    for (let i = 1; i < options.length; i++) {
+      const label = options[i].label.toLowerCase();
+      const match = words.some(word => label.includes(word.toLowerCase().replace(' ', '')));
+
       if (match) {
-        diveLocationSelect.selectedIndex = i;
+        diveLocationSelect.selectedIndex = options[i].index;
         return;
       } else {
         diveLocationSelect.selectedIndex = 0;
@@ -242,6 +270,7 @@ export default class extends Controller {
     }
   }
 
+  // Messages
   showSuccess(message) {
     this.feedbackTarget.textContent = message
     this.feedbackTarget.className = "alert alert-success"
@@ -250,21 +279,5 @@ export default class extends Controller {
   showError(message) {
     this.feedbackTarget.textContent = message
     this.feedbackTarget.className = "alert alert-danger"
-  }
-
-  // Semicircles to lat/long
-  convertSemicircles(num) {
-    return isNaN(num) ? null : Number(num * (180 / Math.pow(2, 31))).toFixed(6);
-  }
-
-  // Calculate end time
-  calculateEndTime(startDate, duration) {
-    return this.convertDatetime(new Date(startDate.getTime() + duration * 1000));
-  }
-
-  // Date to YYYY-MM-DDTHH:mm
-  convertDatetime(date) {
-    const offset = date.getTimezoneOffset() * 60000;
-    return new Date(date.getTime() - offset).toISOString().slice(0, 16);
   }
 }

@@ -31,9 +31,9 @@
         This species will be added to your dive.
       </div>
 
-      <% dive_number = "##{@dive_number}" %>
-      <% dive_title = "##{dive_number} " %>
-      <% dive_title += @dive.dive_site_name.blank? ? @dive.location.name : @dive.dive_site_name %>
+      <%
+        dive_title = @dive.dive_number.present? ? @dive.display_name_html() : @dive.display_name_html(include_date: true, include_time: true)
+      %>
 
       <%= button_to identification_save_path,
             method: :post,
@@ -46,7 +46,7 @@
               picture_id: @picture&.id
             },
             class: "btn btn-primary btn-lg w-100 d-flex align-items-center justify-content-center gap-2 rounded-pill shadow-sm p-3" do %>
-        <%= render "shared/icon", icon_name: "photo-check", icon_size: 20 %> Add to <%= dive_title %>
+        <%= render "shared/icon", icon_name: "photo-check", icon_size: 20 %> Add to <%= dive_title.html_safe %>
       <% end %>
 
     <!-- State 2 & 3: We need to choose a Trip or Dive -->
@@ -74,9 +74,9 @@
 
         <div class="list-group shadow-sm rounded-4 overflow-hidden border-0">
           <% @dives.each_with_index do |dive, index| %>
-            <% dive_number = @dives.length - index %>
-            <% dive_title = "##{dive_number} " %>
-            <% dive_title += dive.dive_site_name.blank? ? dive.location.name : dive.dive_site_name %>
+            <%
+              dive_title = dive.dive_number.present? ? dive.display_name_html() : dive.display_name_html(include_date: true, include_time: true)
+            %>
 
             <%= button_to identification_save_path,
                   method: :post,
@@ -92,7 +92,7 @@
               <div class="text-primary bg-primary-subtle p-2 rounded-circle d-flex">
                 <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 20 %>
               </div>
-              <span class="fw-medium">Add to <%= dive_title %></span>
+              <span class="fw-medium">Add to <%= dive_title.html_safe %></span>
             <% end %>
           <% end %>
         </div>
