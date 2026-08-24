@@ -23,11 +23,11 @@
                 <p class="mb-0 fw-bold fs-4 text-dark"><%= s.name.presence.titleize || "Unknown species" %></p>
                 <div class="text-muted fst-italic"><%= s.scientific_name %></div>
                 <div class="d-flex gap-1">
+                  <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Class: <%= s.category.classification.titleize %></div>
+                  <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Category: <%= s.category.name.titleize %></div>
                   <% if s.details %>
                     <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Family: <%= s.details&.dig("family").titleize %></div>
                   <% end %>
-                  <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Class: <%= s.category.classification.titleize %></div>
-                  <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Category: <%= s.category.name.titleize %></div>
                 </div>
               </div>
             </div>
@@ -74,7 +74,7 @@
             </button>
           </li>
 
-          <% if @picture.species.any? { |species| species.details.present? } %>
+          <% if @picture.species.any? %>
             <li class="nav-item" role="presentation">
               <button class="nav-link fw-bold text-secondary border-0 bg-transparent pb-3"
                 type="button"
@@ -129,12 +129,19 @@
             <div class="tab-pane fade" id="species-details" role="tabpanel" aria-labelledby="species-details-tab" data-picture-info-tab-target="panel">
 
               <% @picture.species.each do |species| %>
-                <% if species.details.present? %>
                 <div class="mb-5 border-bottom pb-4 last-border-none">
-                  <!-- Species Header -->
-                  <%= render "shared/species_info", details: species.details %>
+                  <% if species.details.present? %>
+                    <%= render "shared/species_info", details: species.details %>
+                  <% else %>
+                    <%= turbo_stream_from "species-details-#{species.id}" %>
+                      <turbo-frame id="species-details-frame-<%= species.id %>" src="<%= generate_species_details_picture_path(@picture, species_id: species.id) %>" loading="lazy">
+                        <%= render "shared/loading_screen",
+                          animation: "fish",
+                          title: "Fetching #{species.name} Guide...",
+                          message: "Check out more about the habitat, diet, and fun facts." %>
+                      </turbo-frame>
+                  <% end %>
                 </div>
-                <% end %>
               <% end %>
 
             </div>

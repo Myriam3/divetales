@@ -31,6 +31,10 @@ Rails.application.routes.draw do
       get :dives_for_trip
       post :bulk_create
     end
+
+    member do
+      get :generate_species_details
+    end
   end
 
   resources :dives, only: [:index, :show, :destroy]
