@@ -42,7 +42,8 @@
               dive_id: @dive.id,
               scientific_name: @scientific_name,
               common_name: @common_name,
-              default_photo_url: @default_photo_url
+              default_photo_url: @default_photo_url,
+              picture_id: @picture&.id
             },
             class: "btn btn-primary btn-lg w-100 d-flex align-items-center justify-content-center gap-2 rounded-pill shadow-sm p-3" do %>
         <%= render "shared/icon", icon_name: "photo-check", icon_size: 20 %> Add to <%= dive_title %>
@@ -63,7 +64,8 @@
                 identification_id: @identification.id,
                 scientific_name: @scientific_name,
                 common_name: @common_name,
-                default_photo_url: @default_photo_url
+                default_photo_url: @default_photo_url,
+                picture_id: @picture&.id
               ),
               class: "btn btn-outline-secondary btn-sm d-flex align-items-center gap-1 rounded-pill px-3" do %>
             <%= render "shared/icon", icon_name: "arrow-left", icon_size: 16 %> Back to trips
@@ -83,7 +85,8 @@
                     dive_id: dive.id,
                     scientific_name: @scientific_name,
                     common_name: @common_name,
-                    default_photo_url: @default_photo_url
+                    default_photo_url: @default_photo_url,
+                    picture_id: @picture&.id
                   },
                   class: "list-group-item list-group-item-action border-0 border-bottom p-3 d-flex align-items-center gap-3" do %>
               <div class="text-primary bg-primary-subtle p-2 rounded-circle d-flex">
@@ -115,7 +118,8 @@
                   common_name: @common_name,
                   default_photo_url: @default_photo_url,
                   identification_id: @identification.id,
-                  trip_id: trip.id
+                  trip_id: trip.id,
+                  picture_id: @picture&.id
                 ),
                 class: "list-group-item list-group-item-action border-0 border-bottom p-3 d-flex align-items-center justify-content-between" do %>
 

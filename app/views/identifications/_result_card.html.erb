@@ -64,7 +64,8 @@
             scientific_name: result[:scientific_name],
             common_name: result[:common_name],
             dive_id: @dive&.id,
-            identification_id: identification.id
+            identification_id: identification.id,
+            picture_id: @picture&.id
           ),
           class: "btn btn-outline-primary d-flex align-items-center justify-content-center gap-2",
           data: { turbo: false } do %>
@@ -75,7 +76,8 @@
             scientific_name: result[:scientific_name],
             common_name: result[:common_name],
             identification_id: identification.id,
-            dive_id: @dive&.id
+            dive_id: @dive&.id,
+            picture_id: @picture&.id
           ),
           class: "btn btn-primary d-flex align-items-center justify-content-center gap-2",
           data: { turbo_frame: "_top" } do %>
