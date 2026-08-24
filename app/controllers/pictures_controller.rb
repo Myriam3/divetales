@@ -116,7 +116,7 @@ class PicturesController < ApplicationController
 
     if target_dive
       @selected_trip_id = target_dive.trip_id
-      @selected_dive_id = target_dive.in
+      @selected_dive_id = target_dive.id
       @dives = target_dive.trip.dives.select(:id, :dive_site_name, :date).order(date: :desc)
     else
       @selected_trip_id = nil
