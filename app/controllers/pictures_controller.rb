@@ -112,6 +112,23 @@ class PicturesController < ApplicationController
     head :no_content
   end
 
+  def bulk_destroy
+    @pictures = Picture.where(id: params[:picture_ids])
+
+    @pictures.each { |picture| authorize picture, :destroy? }
+
+    dive = @pictures.first&.dive
+
+    deleted_count = @pictures.destroy_all.count
+
+    if params[:return_to] == "dive" && dive
+      redirect_to dive_path(dive, anchor: "pictures"), notice: "Successfully deleted #{deleted_count} photos.",
+                                                       status: :see_other
+    else
+      redirect_to pictures_path, notice: "Successfully deleted #{deleted_count} photos.", status: :see_other
+    end
+  end
+
   private
 
   def set_picture

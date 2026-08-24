@@ -16,24 +16,43 @@
 </div>
 
 <% if @pictures.any? %>
-  <div data-controller="picture-card">
-    <div class="mb-3 text-center">
-      <button
-        type="button"
-        class="btn btn-outline-secondary"
-        data-action="click->picture-card#toggle"
-        data-picture-card-target="button"
-      >
-        Show picture info
-      </button>
-    </div>
-    <ul class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 list-unstyled">
-      <% @pictures.each do |picture| %>
-        <li class="col">
-          <%= render "shared/picture_card", picture: picture, show_info: false %>
-        </li>
-      <% end %>
-    </ul>
+  <div data-controller="picture-selection">
+    <%= form_with url: bulk_destroy_pictures_path, method: :delete, data: { turbo_confirm: "Are you sure you want to delete the selected photos?" } do |f| %>
+      <%= hidden_field_tag :return_to, "pictures" %>
+      <div data-controller="picture-card">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            data-action="click->picture-card#toggle"
+            data-picture-card-target="button"
+          >
+            Show picture info
+          </button>
+
+          <div class="d-flex gap-2">
+            <%= f.submit "Delete", class: "btn btn-outline-danger d-none", data: { picture_selection_target: "deleteButton" } %>
+
+            <button type="button" class="btn btn-outline-secondary" data-action="picture-selection#toggleMode" data-picture-selection-target="selectButton">
+              Select
+            </button>
+
+            <button type="button" class="btn btn-secondary d-none" data-action="picture-selection#toggleMode" data-picture-selection-target="cancelButton">
+              Cancel
+            </button>
+          </div>
+        </div>
+
+        <ul class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 list-unstyled">
+          <% @pictures.each do |picture| %>
+            <li class="col">
+              <%= render "shared/picture_card", picture: picture, show_info: false %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
   </div>
 <% else %>
   No picture yet
