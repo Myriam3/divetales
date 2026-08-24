@@ -24,7 +24,9 @@
 <div>
   <%# <strong>Capture Details</strong> %>
 
-  <% date_to_show = (picture.photo.attached? && picture.photo.metadata.present? && picture.photo.metadata["date_taken"].present?) ? picture.photo.metadata["date_taken"] : picture.date_time %>
+  <% #date_to_show = (picture.photo.attached? && picture.photo.metadata.present? && picture.photo.metadata["date_taken"].present?) ? picture.photo.metadata["date_taken"] : picture.date_time
+    date_to_show = picture.date_time
+  %>
 
   <% if date_to_show.present? %>
     <p>
