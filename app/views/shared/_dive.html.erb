@@ -255,7 +255,7 @@
     <ul class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 list-unstyled">
       <% @dive.pictures.each do |picture| %>
         <li class="col">
-          <%= render "shared/picture_card", picture: picture, show_info: false %>
+          <%= render "shared/picture_card", picture: picture, show_info: false, return_to: "dive" %>
         </li>
       <% end %>
     </ul>
