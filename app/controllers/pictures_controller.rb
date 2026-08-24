@@ -1,21 +1,20 @@
 class PicturesController < ApplicationController
-  skip_after_action :verify_authorized, only: %i[new create]
+  before_action :set_picture, only: %i[show edit update destroy]
+  before_action :set_form_data, only: %i[new edit]
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
-  def new
-    @trips = policy_scope(Trip).select(:id, :title)
 
-    if params[:dive_id].present?
-      dive = policy_scope(Dive).includes(:trip).find(params[:dive_id])
-      @picture = Picture.new(dive: dive)
-      @selected_trip_id = dive.trip_id
-      @selected_dive_id = dive.id
-      @dives = dive.trip.dives.select(:id, :dive_site_name, :date).order(date: :desc)
-    else
-      @picture = Picture.new
-      @selected_trip_id = nil
-      @selected_dive_id = nil
-      @dives = []
-    end
+  def index
+    @pictures = policy_scope(Picture).includes(dive: { location: :country }, species: []).order(date_time: :desc)
+  end
+
+  def show
+    @related_species = related_species
+    @related_categories = related_categories
+  end
+
+  def new
+    @picture = Picture.new(dive_id: @selected_dive_id)
+    authorize @picture
   end
 
   def create
@@ -26,10 +25,7 @@ class PicturesController < ApplicationController
     if @picture.save
       redirect_to picture_path(@picture), notice: "Uploaded!"
     else
-      @trips = policy_scope(Trip).includes(:dives)
-      @selected_trip_id = @dive&.trip_id
-      @selected_dive_id = @dive&.id
-      @dives = @dive&.trip&.dives || []
+      set_form_data(@dive)
       render :new, status: :unprocessable_entity
     end
   end
@@ -39,6 +35,13 @@ class PicturesController < ApplicationController
     authorize Picture.new(dive: @dive), :create?
 
     photos = params[:pictures_bulk][:photos] || []
+
+    if photos.size > 5
+      redirect_to new_picture_path(dive_id: @dive.id, trip_id: @dive.trip_id),
+                  alert: "Upload failed: You cannot upload more than 5 photos at a time."
+      return
+    end
+
     created = []
     errors = []
 
@@ -59,16 +62,28 @@ class PicturesController < ApplicationController
     end
   end
 
-  def index
-    @pictures = policy_scope(Picture).includes(dive: { location: :country }, species: []).order(date_time: :desc)
+  def edit
   end
 
-  def show
-    @picture = Picture.includes(:dive, :species).find(params[:id])
-    authorize @picture
+  def update
+    if @picture.update(picture_params)
+      update_metadata if @picture.photo.attached?
+      redirect_to @picture, notice: "Photo details updated successfully!"
+    else
+      set_form_data(@picture.dive)
+      render :edit, status: :unprocessable_entity
+    end
+  end
 
-    @related_species = related_species
-    @related_categories = related_categories
+  def destroy
+    dive = @picture.dive
+    @picture.destroy
+
+    if params[:return_to] == "dive"
+      redirect_to dive_path(dive, anchor: "pictures"), notice: "Photo successfully deleted."
+    else
+      redirect_to pictures_path, notice: "Photo successfully deleted."
+    end
   end
 
   def dives_for_trip
@@ -86,47 +101,37 @@ class PicturesController < ApplicationController
     render plain: "Not found", status: :not_found
   end
 
-  def edit
-    @picture = Picture.find(params[:id])
-    authorize @picture, :edit?
-    @trips = current_user.trips
-    @selected_trip_id = @picture.dive.trip_id
-    @selected_dive_id = @picture.dive_id
-    @dives = @picture.dive.trip.dives
-  end
-
-  def update
-    @picture = Picture.find(params[:id])
-    authorize @picture, :update?
-    if @picture.update(picture_params)
-      if @picture.photo.attached?
-        updated_metadata = @picture.photo.blob.metadata.merge(
-          "camera_model" => params[:picture][:camera_model],
-          "date_taken" => params[:picture][:date_taken]
-        )
-        @picture.photo.blob.update(metadata: updated_metadata)
-      end
-
-      redirect_to @picture, notice: "Photo details updated successfully!"
-    else
-      render :edit, status: :unprocessable_entity
-    end
-  end
-
-  def destroy
-    @picture = Picture.find(params[:id])
-    authorize @picture
-    dive = @picture.dive
-    @picture.destroy
-
-    if params[:return_to] == "dive"
-      redirect_to dive_path(dive, anchor: "pictures"), notice: "Photo successfully deleted."
-    else
-      redirect_to pictures_path, notice: "Photo successfully deleted."
-    end
-  end
-
   private
+
+  def set_picture
+    @picture = Picture.includes(:dive, :species).find(params[:id])
+    authorize @picture
+  end
+
+  def set_form_data(dive = nil)
+    @trips = policy_scope(Trip).select(:id, :title)
+
+    target_dive = dive || @picture&.dive
+    target_dive ||= policy_scope(Dive).find_by(id: params[:dive_id]) if params[:dive_id].present?
+
+    if target_dive
+      @selected_trip_id = target_dive.trip_id
+      @selected_dive_id = target_dive.in
+      @dives = target_dive.trip.dives.select(:id, :dive_site_name, :date).order(date: :desc)
+    else
+      @selected_trip_id = nil
+      @selected_dive_id = nil
+      @dives = []
+    end
+  end
+
+  def update_metadata
+    updated_metadata = @picture.photo.blob.metadata.merge(
+      "camera_model" => params[:picture][:camera_model],
+      "date_taken" => params[:picture][:date_taken]
+    )
+    @picture.photo.blob.update(metadata: updated_metadata)
+  end
 
   def picture_params
     params.require(:picture).permit(:photo, :dive_id)

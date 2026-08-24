@@ -20,6 +20,13 @@
           "picture-form-target": "photo",
           action: "change->picture-form#validate"
         } %>
+
+      <div data-picture-form-target="error" class="text-danger mt-2 small d-none fw-bold">
+        <%= render "shared/icon", icon_name: "alert-circle" %>
+        You can only select up to 5 photos at a time.
+      </div>
+
+      <div data-picture-form-target="previewContainer" class="mt-3"></div>
     </div>
 
     <%= render "pictures/form", trips: @trips, selected_trip_id: @selected_trip_id %>
