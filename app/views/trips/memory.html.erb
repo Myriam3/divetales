@@ -40,28 +40,15 @@
     </div>
   </div>
 
+  <div>
+    <%= render "memory_summary", stats: @stats, dives_by_time: @dives_by_time %>
+  </div>
 
   <section class="mb-5">
-    <h2>Summary</h2>
-    <ul>
-      <li><%= @stats[:dive_days_count] %> diving days</li>
-      <li><%= @stats[:dives_count] %> dives</li>
-      <% if @stats[:total_duration].positive? %>
-        <li><%= @stats[:total_duration]%> min underwater</li>
-      <% end %>
-      <% if @stats[:max_depth].present? %>
-        <li><%= @stats[:max_depth].round %> m deepest</li>
-      <% end %>
-      <% if @stats[:avg_temp].positive? %>
-        <li><%= @stats[:avg_temp].round(1) %> °C average</li>
-        <li><%= @stats[:pictures_count] %> pictures</li>
-        <li><%= @stats[:species_count] %> species identified</li>
-      <% end %>
-    </ul>
-  </section>
-
-  <section class="mb-5">
-    <h2 class="mb-3">Your dives</h2>
+    <h2 class="mb-3">
+      <%= render "shared/icon", icon_name: "map", icon_size: 36 %>
+      Itinary
+    </h2>
 
     <%
       map_dives = @dives.map do |d|
@@ -84,7 +71,7 @@
 
       <div data-map-target="mapContainer" style="visibility: hidden; height: 0; oveflow: hidden;"></div>
       <div data-map-target="mapCanvas"
-          style="height: 500px; width: 100%; border-radius: 8px; margin-top: 20px;">
+          style="height: 400px; width: 100%; border-radius: 8px; margin-top: 20px;">
       </div>
 
       <div id="memory-dive-container"></div>
@@ -97,6 +84,18 @@
       Encontered marine life
     </h2>
 
+    <div
+      data-controller="species-chart"
+      data-species-chart-labels-value="<%= @classification_pictures_stats.keys.to_json %>"
+      data-species-chart-data-value="<%= @classification_pictures_stats.values.to_json %>"
+      data-species-chart-categories-value="<%= @categories_by_class.to_json %>"
+      style="width: 300px;"
+    >
+      <canvas data-species-chart-target="canvas"></canvas>
+
+      <div data-species-chart-target="details"></div>
+    </div>
+
     <% @species_pictures_stats.each do |classification, species_stats| %>
       <h3><%= classification.humanize %></h3>
       <ul class="list-unstyled">
@@ -106,17 +105,5 @@
       </ul>
     <% end %>
 
-  <div
-    data-controller="species-chart"
-    data-species-chart-labels-value="<%= @classification_pictures_stats.keys.to_json %>"
-    data-species-chart-data-value="<%= @classification_pictures_stats.values.to_json %>"
-    data-species-chart-categories-value="<%= @categories_by_class.to_json %>"
-  >
-    <canvas data-species-chart-target="canvas"></canvas>
-
-    <div data-species-chart-target="details"></div>
-  </div>
-
   </section>
-
 <% end %>

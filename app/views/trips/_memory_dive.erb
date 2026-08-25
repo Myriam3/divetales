@@ -1,5 +1,8 @@
-<div id="memory-dive-container">
-  <%= dive.display_name_html %>
+<div id="memory-dive-container" class="mt-3">
+  <p>
+    <%= render "shared/icon", icon_name: "scuba-mask" %>
+    <%= dive.display_name_html %>
+  </p>
 
-  <%= render "depth_profile", dive: @dive %>
+  <%= render "/shared/dive_info", dive: @dive, display_site: false, display_coordinates: false %>
 </div>

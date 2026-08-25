@@ -1,0 +1,90 @@
+<div>
+  <% if stats.any? %>
+    <ul class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-3">
+      <li class="col d-flex align-items-start">
+        <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 36 %>
+        <div>
+          <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:dives_count] %> dives</p>
+          <p class="px-3"><%= @stats[:dive_days_count] %> diving days</p>
+        </div>
+      </li>
+      <% if @stats[:total_duration].positive? %>
+      <li class="col d-flex align-items-start">
+        <%= render "shared/icon", icon_name: "clock", icon_size: 36 %>
+        <div>
+          <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:total_duration] %>m</p>
+          <p class="px-3">Total underwater</p>
+        </div>
+      </li>
+      <% end %>
+      <% if @stats[:max_depth].present? %>
+        <li class="col d-flex align-items-start">
+          <%= render "shared/icon", icon_name: "arrow-bar-to-down", icon_size: 36 %>
+          <div>
+            <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:max_depth].round %>m</p>
+            <p class="px-3">Deepest dive</p>
+          </div>
+        </li>
+      <% end %>
+      <% if @stats[:max_duration].positive? %>
+        <li class="col d-flex align-items-start">
+          <%= render "shared/icon", icon_name: "clock", icon_size: 36 %>
+          <div>
+            <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:max_duration] %>m</p>
+            <p class="px-3">Longuest dive</p>
+          </div>
+        </li>
+      <% end %>
+      <% if @stats[:avg_temp].positive? %>
+        <li class="col d-flex align-items-start">
+          <%= render "shared/icon", icon_name: "temperature", icon_size: 36 %>
+          <div>
+            <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:avg_temp].round(1) %>°C</p>
+            <p class="px-3">Average temperature</p>
+          </div>
+        </li>
+      <% end %>
+      <li class="col d-flex align-items-start">
+        <%= render "shared/icon", icon_name: "camera-spark", icon_size: 36 %>
+        <div>
+          <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:pictures_count] %> Pictures</p>
+        </div>
+      </li>
+      <li class="col d-flex align-items-start">
+        <%= render "shared/icon", icon_name: "fish", icon_size: 36 %>
+        <div>
+          <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:species_count] %> Species</p>
+          <p class="px-3">Identified</p>
+        </div>
+      </li>
+    </ul>
+  <% end %>
+</div>
+
+<% if dives_by_time.any? %>
+<div class="mb-5">
+  <div style="width: 300px;">
+    <canvas id="diveTimeChart"></canvas>
+  </div>
+
+  <script>
+    (() => {
+      console.log('test')
+        window.addEventListener('DOMContentLoaded', (e) => {
+          console.log(e)
+          const ctx = document.getElementById('diveTimeChart').getContext('2d');
+          const chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: ['Night', 'Morning', 'Afternoon'],
+              datasets: [{
+                data: [<%= @dives_by_time[:night] %>, <%= @dives_by_time[:morning] %>, <%= @dives_by_time[:afternoon] %>],
+                backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56']
+              }]
+            }
+          });
+        });
+    })();
+  </script>
+  </div>
+<% end %>

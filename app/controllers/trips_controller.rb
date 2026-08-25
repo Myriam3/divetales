@@ -61,6 +61,8 @@ class TripsController < ApplicationController
                                               .group_by { |species| species.category.classification }
                                               .transform_values(&:count)
     @categories_by_class = categories_by_class
+    @dives_by_time = dives_by_time
+    @dives_by_entry = dives_by_entry
   end
 
   def memory_dive
@@ -91,7 +93,8 @@ class TripsController < ApplicationController
       species_count: @species.size,
       max_depth: @dives.filter_map(&:max_depth).max,
       total_duration: @dives.filter_map(&:duration).sum,
-      avg_temp: avg_temp
+      avg_temp: avg_temp,
+      max_duration: @dives.filter_map(&:duration).max
     }
   end
 
@@ -132,5 +135,20 @@ class TripsController < ApplicationController
       .transform_values do |categories|
         categories.sort_by(&:name).map(&:name)
       end
+  end
+
+  def dives_by_time
+    {
+      night: @dives.count { |dive| dive.dive_types.include?("night") },
+      morning: @dives.count { |dive| dive.start_time < 12 },
+      afternoon: @dives.count { |dive| dive.start_time >= 12 }
+    }
+  end
+
+  def dives_by_entry
+    {
+      boat: @dives.count { |dive| dive.dive_types.include?("boat") },
+      shore: @dives.count { |dive| dive.dive_types.include?("shore") }
+    }
   end
 end
