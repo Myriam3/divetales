@@ -1,72 +1,110 @@
 <% content_for :title, "#{@trip.title} | DiveTales" %>
 
-<section class="trip-show mt-5">
-  <%= link_to trips_path do %>
+<section class="trip-show">
+  <%= link_to trips_path, class: "trip-back-link" do %>
     <%= render "shared/icon", icon_name: "arrow-left" %>
     Back to trips
   <% end %>
 
-  <h1 class="mt-5 mb-5"><%= @trip.title %></h1>
+  <div class="trip-show__header dive-card">
+    <div class="trip-show__details">
+      <h1><%= @trip.title %></h1>
 
-  <p class="mt-3 mb-3 text-center">
-    <%= link_to new_trip_dive_path(@trip), class: "btn btn-secondary" do %>
-      <%= render "shared/icon", icon_name: "scuba-mask" %>
-      Add a new dive
-    <% end %>
-  </p>
+      <p>
+        <%= render "shared/icon", icon_name: "calendar-week" %>
+        <%= @trip.start_date.strftime("%d %B %Y") %> -
+        <%= @trip.end_date.strftime("%d %B %Y") %>
+      </p>
 
-  <p class="text-center">
-    <%= link_to edit_trip_path(@trip), class: "btn btn-outline-secondary" do %>
-      <%= render "shared/icon", icon_name: "edit" %>
-      Edit trip
-    <% end %>
-  </p>
-
-  <p class="mt-5">
-    <%= render "shared/icon", icon_name: "calendar-week", label: "Date: " %>
-    <%= @trip.start_date.strftime("%d %B %Y") %>
-    -
-    <%= @trip.end_date.strftime("%d %B %Y") %>
-  </p>
-
-  <% if @trip.info.present? %>
-    <p><%= @trip.info %></p>
-  <% end %>
-
-  <% if @trip.countries.any? %>
-    <p>
-      <strong>Countries:</strong>
-      <% @trip.countries.each do |country| %>
-        <span>
-          <%= icon country.code.downcase, library: "flags", width: 20, height: 20 %>
-          <%= country.name %>
-        </span>
+      <% if @trip.info.present? %>
+        <p><%= @trip.info %></p>
       <% end %>
-    </p>
-  <% end %>
 
-  <h2 class="mt-5 mb-5">
-    <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 40 %>
-    Dives
-  </h2>
+      <% if @trip.countries.any? %>
+        <p>
+          <strong>Countries:</strong>
+          <% @trip.countries.each do |country| %>
+            <span class="trip-country">
+              <%= icon country.code.downcase, library: "flags", width: 20, height: 20 %>
+              <%= country.name %>
+            </span>
+          <% end %>
+        </p>
+      <% end %>
+    </div>
+
+    <div class="trip-show__actions">
+      <%= link_to new_trip_dive_path(@trip), class: "btn-dive btn-dive-accent" do %>
+        <%= render "shared/icon", icon_name: "scuba-mask" %>
+        Add a new dive
+      <% end %>
+
+      <%= link_to edit_trip_path(@trip), class: "btn-dive btn-dive-secondary" do %>
+        <%= render "shared/icon", icon_name: "edit" %>
+        Edit trip
+      <% end %>
+    </div>
+  </div>
+
+  <div class="trip-dives-heading">
+    <h2>
+      <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 40 %>
+      Dives
+    </h2>
+    <span><%= pluralize(@dives.count, "dive") %></span>
+  </div>
 
   <% if @dives.any? %>
-    <ul class="list-unstyled">
-    <% @dives.each_with_index do |dive, index| %>
-      <li><%= render "shared/dive_card", dive: dive, number: @dives.length - index, heading_level: 3 %></li>
-    <% end %>
-    </ul>
+    <div class="trip-dives-grid">
+      <% @dives.each do |dive| %>
+        <%= link_to trip_dive_path(@trip, dive), class: "trip-dive-card-link" do %>
+          <article class="trip-dive-card">
+            <%= image_tag "dive-default.png", alt: "Underwater reef", class: "trip-dive-card__image" %>
+
+            <div class="trip-dive-card__body">
+              <h3><%= dive.display_name_html %></h3>
+
+              <p>
+                <%= render "shared/icon", icon_name: "calendar" %>
+                <%= dive.date.strftime("%d %B %Y") %>
+              </p>
+
+              <p>
+                <%= render "shared/icon", icon_name: "world-pin" %>
+                <%= dive.location.name %>
+              </p>
+
+              <% if dive.max_depth.present? %>
+                <p>
+                  <%= render "shared/icon", icon_name: "arrow-bar-to-down" %>
+                  Maximum depth:
+                  <%= number_with_precision(dive.max_depth, precision: 1, strip_insignificant_zeros: true) %>m
+                </p>
+              <% end %>
+
+              <% if dive.duration.present? %>
+                <p>
+                  <%= render "shared/icon", icon_name: "clock" %>
+                  Duration: <%= dive.duration %> minutes
+                </p>
+              <% end %>
+
+              <span class="btn-dive btn-dive-primary">View dive</span>
+            </div>
+          </article>
+        <% end %>
+      <% end %>
+    </div>
   <% else %>
-    <p>No dives have been added yet.</p>
+    <div class="trips-empty">
+      <h3>No dives yet</h3>
+      <p>Your dives for this trip will appear here.</p>
+      <%= link_to "Add your first dive", new_trip_dive_path(@trip), class: "btn-dive btn-dive-accent" %>
+    </div>
   <% end %>
 
-  <div class="mt-5">
-    <%= link_to trip_path(@trip),
-      class: "btn btn-outline-secondary",
-      data: {
-        turbo_method: :delete,
-        turbo_confirm: "Are you sure? This will also delete the dives and pictures."
-      } do %>
+  <div class="trip-delete">
+    <%= link_to trip_path(@trip), class: "btn-dive btn-dive-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure? This will also delete the dives and pictures." } do %>
       <%= render "shared/icon", icon_name: "trash", icon_size: 24 %>
       Delete trip
     <% end %>
