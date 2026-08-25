@@ -43,4 +43,8 @@ class PicturePolicy < ApplicationPolicy
   def destroy?
     record.dive.trip.user == user
   end
+
+  def generate_species_details?
+    show?
+  end
 end
