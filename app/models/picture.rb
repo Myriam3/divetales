@@ -33,8 +33,15 @@ class Picture < ApplicationRecord
 
       new_metadata = {}
       date = data.date_time_original || data.date_time
-      new_metadata["date_taken"] = date.strftime("%Y-%m-%d %H:%M:%S") if date
+      if date
+        new_metadata["date_taken"] = date.strftime("%Y-%m-%d %H:%M:%S")
+        self.date_time = date
+
+        save!(validate: false) if date_time_changed?
+      end
+
       new_metadata["camera_model"] = data.model if data.model
+
       if data.gps
         new_metadata["gps_latitude"] = data.gps.latitude
         new_metadata["gps_longitude"] = data.gps.longitude

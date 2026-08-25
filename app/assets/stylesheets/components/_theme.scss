@@ -1,0 +1,28 @@
+.dive-heading {
+  color: $dive-navy;
+  font-family: $headers-font;
+  font-weight: 700;
+}
+
+.dive-text {
+  color: $dive-text;
+}
+
+.dive-muted {
+  color: $dive-muted;
+}
+
+.dive-page {
+  background-color: $dive-background;
+}
+
+.dive-banner {
+  background-color: $dive-banner;
+}
+
+.dive-card {
+  background-color: $dive-white;
+  border: 1px solid $dive-border;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(11, 58, 102, 0.10);
+}
