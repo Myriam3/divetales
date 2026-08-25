@@ -4,7 +4,28 @@ class PicturesController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   def index
-    @pictures = policy_scope(Picture).includes(dive: { location: :country }, species: []).order(date_time: :desc)
+    @pictures = policy_scope(Picture).includes(dive: { location: :country }, species: [])
+
+    @pictures = @pictures.joins(dive: :trip).where(trips: { id: params[:trip_id] }) if params[:trip_id].present?
+    if params[:location_id].present?
+      @pictures = @pictures.joins(dive: :location).where(locations: { id: params[:location_id] })
+    end
+    @pictures = @pictures.where("pictures.date_time >= ?", params[:date_from]) if params[:date_from].present?
+    @pictures = @pictures.where("pictures.date_time <= ?", params[:date_to]) if params[:date_to].present?
+
+    @pictures = case params[:sort]
+                when "date_asc"
+                  @pictures.order(date_time: :asc)
+                when "trip"
+                  @pictures.joins(dive: :trip).order("trips.title ASC")
+                when "location"
+                  @pictures.joins(dive: :location).order("locations.name ASC")
+                else
+                  @pictures.order(date_time: :desc)
+                end
+
+    @trips = current_user.trips.order(:title)
+    @locations = Location.joins(dives: :trip).where(trips: { user_id: current_user.id }).distinct.order(:name)
   end
 
   def show
@@ -63,9 +84,6 @@ class PicturesController < ApplicationController
   end
 
   def edit
-    # @trip = policy_scope(Trip).find(params[:trip_id])
-    # authorize @trip, :dives_for_trip?
-    # @dives = @trip.dives.includes(:location).order(date: :desc)
   end
 
   def update
