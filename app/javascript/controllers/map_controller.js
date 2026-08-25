@@ -6,13 +6,17 @@ export default class extends Controller {
     "mapContainer",
     "coordinatesContainer",
     "mapInfoContainer",
-    "mapCanvas"
+    "mapCanvas",
+    "memoryDiveContainer"
   ];
 
   static values = {
     apiUrl: String,
     latitude: String,
-    longitude: String
+    longitude: String,
+    tripId: String,
+    dives: Array,
+    diveUrl: String
   };
 
   connect() {
@@ -20,9 +24,17 @@ export default class extends Controller {
   }
 
   async init() {
-    if (!(this.latitudeValue && this.longitudeValue)) return;
     const settings = await this.getMapboxInfo();
-    if (!settings.token) return;
+    if (!settings?.token) return;
+
+    // Trip map
+    if (this.divesValue?.length) {
+      this.initTripMap(settings);
+      return;
+    }
+
+     // Dive map
+    if (!(this.latitudeValue && this.longitudeValue)) return;;
     this.initMapbox(this.latitudeValue, this.longitudeValue, settings);
   }
 
@@ -42,6 +54,16 @@ export default class extends Controller {
     this.setGeoInfo(lat, long, settings.token);
   }
 
+  // Trip Map
+  initTripMap(settings) {
+    //const bounds = new mapboxgl.LngLatBounds();
+    //console.log(bounds);;
+    const startLat = this.divesValue[0].lat;
+    const startLong = this.divesValue[0].long
+
+    this.displayMap(startLat, startLong, settings);
+  }
+
   async getMapboxInfo() {
     return fetch(this.apiUrlValue, {
       headers: {
@@ -56,25 +78,77 @@ export default class extends Controller {
   // Display map
   displayMap(lat, long, { token }) {
     mapboxgl.accessToken = token;
-    this.map = new mapboxgl.Map({
+    const options = {
       container: this.mapCanvasTarget,
       style: "mapbox://styles/mapbox/streets-v12",
       center: [long, lat],
       zoom: 8,
-      minZoom: 4
-    });
+    }
+
+    if (!this.divesValue.length) options.minZoom = 4;
+
+    this.map = new mapboxgl.Map(options);
 
     this.mapContainerTarget.style.visibility = 'visible';
     this.mapContainerTarget.style.height = 'auto';
-    //this.map._container.style.display = 'block';
 
-    // Marker
-    window.setTimeout(() => {
-    new mapboxgl.Marker()
+    if (this.divesValue.length) {
+      this.addTripMarkers();
+    } else {
+      window.setTimeout(() => {
+        this.addDiveMarker(lat, long);
+      }, 500);
+    }
+  }
+
+  // Markers
+  addDiveMarker(lat, long) {
+    const marker = new mapboxgl.Marker()
       .setLngLat([long, lat])
-      //.setPopup(new mapboxgl.Popup().setHTML("Here!"))
       .addTo(this.map);
-    }, 500);
+
+    return marker;
+  }
+
+  addTripMarkers() {
+    const points = this.divesValue.reduce((acc, dive) => {
+      const key = `${dive.lat},${dive.long}`;
+      if (!acc[key]) acc[key] = [];
+      acc[key].push(dive);
+      return acc;
+    }, {});
+    console.log(points);
+
+    for (const key in points) {
+      const item = points[key];
+      const marker = this.addDiveMarker(item[0].lat, item[0].long);
+
+      if (item.length < 2) {
+        marker.getElement().addEventListener('click', (e) => {
+          this.displayDive(item[0].id);
+        });
+      } else {
+          // TODO popup
+      }
+    }
+  }
+
+  async displayDive(id) {
+    const url = new URL(this.diveUrlValue, window.location.origin);
+    url.searchParams.set("dive_id", id);
+    console.log(url);
+
+    try {
+      const response = await fetch(url, {
+        headers: { Accept: "text/vnd.turbo-stream.html" },
+        "X-CSRF-Token": document.querySelector("[name='csrf-token']").content
+      });
+      const html = await response.text();
+      console.log("📄 HTML reçu :", html.substring(0, 100) + "...");
+      Turbo.renderStreamMessage(html);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   // Geocoding info

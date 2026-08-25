@@ -1,0 +1,42 @@
+<% if dive %>
+  <p>
+    <%= render "shared/icon", icon_name: "calendar", label: "Date: " %>
+    <%= dive.date.strftime("%d %B %Y") %>
+  </p>
+
+  <% if dive.dive_types.any? %>
+    <p>
+      <%= render "shared/icon", icon_name: "scuba-diving" %>
+      <span>Dive types:</span>
+      <% dive.dive_types.each do |type| %>
+        <span class="badge text-bg-secondary">
+          <%= type.capitalize %>
+        </span>
+      <% end %>
+    </p>
+  <% end %>
+
+  <% unless dive.dive_site_name.blank? %>
+    <p>
+      <%= render "shared/icon", icon_name: "anchor", label: "Dive site: " %>
+      <%= dive.dive_site_name %>
+    </p>
+  <% end %>
+
+  <% unless dive.latitude.blank? || dive.longitude.blank? %>
+    <p>
+      <%= render "shared/icon", icon_name: "map-pin", label: "Coordinates: " %>
+      <%= dive.latitude %>,<%= dive.longitude %>
+    </p>
+  <% end %>
+
+  <p>
+    <%= render "shared/icon", icon_name: "world-pin", label: "Location: " %>
+    <%= dive.location.name %>
+  </p>
+
+  <p>
+    <%= icon dive.location.country.code.downcase, library: "flags", width: 20, height: 20 %>
+    <%= dive.location.country.name %>
+  </p>
+<% end %>

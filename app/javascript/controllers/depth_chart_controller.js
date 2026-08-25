@@ -8,6 +8,7 @@ export default class extends Controller {
   }
 
   connect() {
+    console.log(('chart'));
     this.createDepthChart();
   }
 
