@@ -17,26 +17,44 @@
     <% if @trips.any? %>
       <div class="trips-grid">
         <% @trips.each do |trip| %>
-          <%= link_to trip_path(trip), class: "trip-card-link" do %>
-            <article class="trip-card">
-              <%= image_tag "trip-waves.png", alt: "Blue ocean waves", class: "trip-card__image" %>
-
-              <div class="trip-card__body">
-                <h3><%= render "shared/icon", icon_name: "luggage", icon_size: 30 %> <%= trip.title %></h3>
-
-                <p>
-                  <%= trip.start_date.strftime("%d %B %Y") %> -
-                  <%= trip.end_date.strftime("%d %B %Y") %>
-                </p>
-
-                <% if trip.info.present? %>
-                  <p><%= trip.info %></p>
+          <div class="trip-card-wrapper">
+            <%= link_to trip_path(trip), class: "trip-card-link" do %>
+              <article class="trip-card">
+                <% if trip.cover_photo.attached? %>
+                  <%= image_tag trip.cover_photo, alt: trip.title, class: "trip-card__image" %>
+                <% else %>
+                  <%= image_tag "trip-waves.png", alt: "Blue ocean waves", class: "trip-card__image" %>
                 <% end %>
 
-                <span class="btn-dive btn-dive-primary">View trip</span>
-              </div>
-            </article>
-          <% end %>
+                <div class="trip-card__body">
+                  <h3>
+                    <%= render "shared/icon", icon_name: "luggage", icon_size: 30 %>
+                    <%= trip.title %>
+                  </h3>
+
+                  <p>
+                    <%= trip.start_date.strftime("%d %B %Y") %> -
+                    <%= trip.end_date.strftime("%d %B %Y") %>
+                  </p>
+
+                  <% if trip.info.present? %>
+                    <p><%= trip.info %></p>
+                  <% end %>
+
+                  <span class="btn-dive btn-dive-primary">View trip</span>
+                </div>
+              </article>
+            <% end %>
+
+            <%= form_with model: trip, url: update_cover_photo_trip_path(trip), method: :patch, html: { class: "cover-photo-form", multipart: true } do |form| %>
+              <label for="trip_cover_photo_<%= trip.id %>" class="cover-photo-button">
+                <%= render "shared/icon", icon_name: "camera", icon_size: 20 %>
+                Edit
+              </label>
+
+              <%= form.file_field :cover_photo, id: "trip_cover_photo_#{trip.id}", accept: "image/png,image/jpeg,image/webp", class: "cover-photo-input", onchange: "this.form.requestSubmit()" %>
+            <% end %>
+          </div>
         <% end %>
       </div>
     <% else %>

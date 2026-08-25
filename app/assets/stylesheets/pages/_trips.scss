@@ -339,3 +339,45 @@
     margin-left: 0;
   }
 }
+
+.trip-card-wrapper,
+.trip-dive-card-wrapper {
+  position: relative;
+  height: 100%;
+}
+
+.cover-photo-form {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+}
+
+.cover-photo-button {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.7rem;
+  color: $dive-navy;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid $dive-border;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(11, 58, 102, 0.18);
+  font-family: $headers-font;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cover-photo-button:hover {
+  color: $dive-blue;
+  background: $dive-white;
+}
+
+.cover-photo-input {
+  display: none;
+}
+
+.trip-card__image,
+.trip-dive-card__image {
+  object-position: center;
+}
