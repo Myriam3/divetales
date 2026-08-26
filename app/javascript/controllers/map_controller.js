@@ -7,7 +7,8 @@ export default class extends Controller {
     "coordinatesContainer",
     "mapInfoContainer",
     "mapCanvas",
-    "memoryDiveContainer"
+    "memoryDiveContainer",
+    "itinaryBtn",
   ];
 
   static values = {
@@ -49,22 +50,6 @@ export default class extends Controller {
     this.isInit = true;
   }
 
-  initMapbox(lat, long, settings) {
-    if (!(lat && long)) return;
-    this.displayMap(lat, long, settings);
-    this.setGeoInfo(lat, long, settings.token);
-  }
-
-  // Trip Map
-  initTripMap(settings) {
-    //const bounds = new mapboxgl.LngLatBounds();
-    //console.log(bounds);
-    const startLat = this.divesValue[0].lat;
-    const startLong = this.divesValue[0].long
-
-    this.displayMap(startLat, startLong, settings);
-  }
-
   async getMapboxInfo() {
     return fetch(this.apiUrlValue, {
       headers: {
@@ -76,30 +61,87 @@ export default class extends Controller {
     .catch(error => console.error("Mapbox:", error));
   }
 
+  initMapbox(lat, long, settings) {
+    if (!(lat && long)) return;
+    this.displayMap([long, lat], 8, settings);
+    this.setGeoInfo(lat, long, 8, settings.token);
+  }
+
+  // Trip Map
+  initTripMap(settings) {
+    // const bounds = new mapboxgl.LngLatBounds();
+    // let startLat = 0;
+    // let startLong = 0;
+
+    // this.divesValue.forEach((dive) => {
+    //   if (!(dive.lat && dive.long)) return;
+    //   bounds.extend([dive.long, dive.lat]);
+
+    //   if (!(startLat && startLong)) {
+    //     startLat = dive.lat;
+    //     startLong = dive.long;
+    //   }
+    // });
+
+    const centerOptions = this.getDivesBounds(this.divesValue);
+    this.displayMap(centerOptions.center, 6, settings, centerOptions.bounds);
+  }
+
   // Display map
-  displayMap(lat, long, { token }) {
+  displayMap(center, zoom, { token }, bounds = null) {
     mapboxgl.accessToken = token;
     const options = {
       container: this.mapCanvasTarget,
       style: "mapbox://styles/mapbox/streets-v12",
-      center: [long, lat],
-      zoom: 8,
+      center,
+      projection: "mercator",
+      renderWorldCopies: false,
+      minZoom: 2,
+      zoom
     }
 
     if (!this.divesValue.length) options.minZoom = 4;
 
     this.map = new mapboxgl.Map(options);
+    if (bounds) {
+      window.setTimeout(() => {
+        try {
+          this.map.fitBounds(bounds, {
+            padding: 50
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }, 500);
+    }
 
     this.mapContainerTarget.style.visibility = 'visible';
     this.mapContainerTarget.style.height = 'auto';
 
-    if (this.divesValue.length) {
-      this.addTripMarkers();
-    } else {
+    // Dive map
+    if (!this.divesValue.length) {
       window.setTimeout(() => {
         this.addDiveMarker(lat, long);
       }, 500);
+
+      return;
     }
+
+    // Trip map
+    this.addTripMarkers();
+
+    this.itinaryBtnTargets.forEach((btn) => {
+      const locationId = btn.getAttribute('data-location');
+      if (!locationId) return;
+
+      const locationDives = this.divesValue.filter((item) => item.location_id === Number(locationId));
+      if (!locationDives.length) return;
+      const centerOptions = this.getDivesBounds(locationDives);
+
+      btn.addEventListener('click', (e) => {
+        this.centerMap(e, btn, centerOptions.center, centerOptions.bounds);
+      });
+    });
   }
 
   // Markers
@@ -126,10 +168,7 @@ export default class extends Controller {
     const setMarker = (point) => {
       const marker = this.addDiveMarker(point[0].lat, point[0].long);
 
-      if (!marker) {
-        console.log('marker not added', point)
-        return;
-      }
+      if (!marker) return;
 
       // Click on marker handler
       if (point.length < 2) {
@@ -150,7 +189,6 @@ export default class extends Controller {
   async displayDive(id) {
     const url = new URL(this.diveUrlValue, window.location.origin);
     url.searchParams.set("dive_id", id);
-    console.log(url);
 
     try {
       const response = await fetch(url, {
@@ -191,7 +229,6 @@ export default class extends Controller {
       const endpoint = `https://api.mapbox.com/search/geocode/v6/reverse?longitude=${long}&latitude=${lat}&language=en&limit=1&access_token=${token}`
       const response = await fetch(endpoint);
       const data = await response.json();
-      console.log('GEOINFO', data);
       if (!data.features.length) return;
 
       const result = data.features[0].properties;
@@ -206,8 +243,49 @@ export default class extends Controller {
   }
 
   // Center map on itinerary click
-  centerMap(location) {
-    console.log(location, 'center map');
+  centerMap(e, btn, center, bounds = null) {
+    e.preventDefault();
+    try {
+      if (bounds) {
+        this.map.fitBounds(bounds, {
+          maxZoom: 10,
+        });
+      } else {
+        this.map.flyTo({
+          center,
+          zoom: 11
+        });
+      }
+
+      // Toggle current location
+      if (this.currentLocation) this.currentLocation.style.border = '0';
+      btn.style.border = 'solid 2px red';
+      this.currentLocation = btn;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // Set location bounds with dives
+  getDivesBounds(dives) {
+    const bounds = new mapboxgl.LngLatBounds();
+    let startLat = 0;
+    let startLong = 0;
+
+    dives.forEach((dive) => {
+      if (!(dive.lat && dive.long)) return;
+      bounds.extend([dive.long, dive.lat]);
+
+      if (!(startLat && startLong)) {
+        startLat = dive.lat;
+        startLong = dive.long;
+      }
+    });
+
+    return {
+      center: [startLong, startLat],
+      bounds
+    }
   }
 
   disconnect() {
