@@ -34,10 +34,11 @@ export default class extends Controller {
     }
 
      // Dive map
-    if (!(this.latitudeValue && this.longitudeValue)) return;;
+    if (!(this.latitudeValue && this.longitudeValue)) return;
     this.initMapbox(this.latitudeValue, this.longitudeValue, settings);
   }
 
+  // New dive form
   async initNew(e = {}) {
     if (this.isInit) return;
 
@@ -57,7 +58,7 @@ export default class extends Controller {
   // Trip Map
   initTripMap(settings) {
     //const bounds = new mapboxgl.LngLatBounds();
-    //console.log(bounds);;
+    //console.log(bounds);
     const startLat = this.divesValue[0].lat;
     const startLong = this.divesValue[0].long
 
@@ -103,36 +104,49 @@ export default class extends Controller {
 
   // Markers
   addDiveMarker(lat, long) {
-    const marker = new mapboxgl.Marker()
-      .setLngLat([long, lat])
-      .addTo(this.map);
-
-    return marker;
+    try {
+      const marker = new mapboxgl.Marker()
+        .setLngLat([long, lat])
+        .addTo(this.map);
+      return marker;
+    } catch(error) {
+      console.log(error);
+    }
   }
 
   addTripMarkers() {
+    // Group dives by coordinates
     const points = this.divesValue.reduce((acc, dive) => {
       const key = `${dive.lat},${dive.long}`;
       if (!acc[key]) acc[key] = [];
       acc[key].push(dive);
       return acc;
     }, {});
-    console.log(points);
 
-    for (const key in points) {
-      const item = points[key];
-      const marker = this.addDiveMarker(item[0].lat, item[0].long);
+    const setMarker = (point) => {
+      const marker = this.addDiveMarker(point[0].lat, point[0].long);
 
-      if (item.length < 2) {
-        marker.getElement().addEventListener('click', (e) => {
-          this.displayDive(item[0].id);
+      if (!marker) {
+        console.log('marker not added', point)
+        return;
+      }
+
+      // Click on marker handler
+      if (point.length < 2) {
+        marker?.getElement().addEventListener('click', (e) => {
+          this.displayDive(point[0].id);
         });
       } else {
-          // TODO popup
+          // TODO if multiple dives by point, popup
       }
+    }
+
+    for (const key in points) {
+      setMarker(points[key]);
     }
   }
 
+  // Display dive on marker click
   async displayDive(id) {
     const url = new URL(this.diveUrlValue, window.location.origin);
     url.searchParams.set("dive_id", id);
@@ -144,7 +158,6 @@ export default class extends Controller {
         "X-CSRF-Token": document.querySelector("[name='csrf-token']").content
       });
       const html = await response.text();
-      console.log("📄 HTML reçu :", html.substring(0, 100) + "...");
       Turbo.renderStreamMessage(html);
     } catch (error) {
       console.log(error);
@@ -190,6 +203,11 @@ export default class extends Controller {
     } catch (error) {
       console.error('Mapbox Geocoding', error);
     }
+  }
+
+  // Center map on itinerary click
+  centerMap(location) {
+    console.log(location, 'center map');
   }
 
   disconnect() {

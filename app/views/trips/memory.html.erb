@@ -40,45 +40,29 @@
     </div>
   </div>
 
-  <div>
-    <%= render "memory_summary", stats: @stats, dives_by_time: @dives_by_time %>
+  <div class="container">
+    <%= render "memory_summary",
+        stats: @stats,
+        dives_by_time: @dives_by_time,
+        dives_by_entry: @dives_by_entry
+    %>
   </div>
 
-  <section class="mb-5">
-    <h2 class="mb-3">
-      <%= render "shared/icon", icon_name: "map", icon_size: 36 %>
-      Itinary
+  <section class="mb-5 container">
+    <h2 class="mb-4" id="itinerary">
+      <%= render "shared/icon", icon_name: "route", icon_size: 36 %>
+      Itinerary
     </h2>
 
-    <%
-      map_dives = @dives.map do |d|
-        {
-          id: d.id,
-          lat: d.latitude,
-          long: d.longitude,
-          name: d.dive_site_name || d.location.name,
-          date: d.date,
-          time: d.start_time ? d.start_time.strftime("%HH:%mm") : nil
-        }
-      end
+    <%= render 'memory_map',
+        dives: @dives,
+        trip: @trip,
+        itinerary: @itinerary,
+        stats: @stats
     %>
-
-    <div data-controller="map"
-          data-map-trip-id-value="<%= @trip.id %>"
-          data-map-api-url-value="<%= api_mapbox_path %>"
-          data-map-dive-url-value ="<%= memory_dive_trip_path %>"
-          data-map-dives-value="<%=  map_dives.to_json %>">
-
-      <div data-map-target="mapContainer" style="visibility: hidden; height: 0; oveflow: hidden;"></div>
-      <div data-map-target="mapCanvas"
-          style="height: 400px; width: 100%; border-radius: 8px; margin-top: 20px;">
-      </div>
-
-      <div id="memory-dive-container"></div>
-    </div>
   </section>
 
-  <section class="mb-5">
+  <section class="mb-5 container">
     <h2 class="mb-3">
       <%= render "shared/icon", icon_name: "fish", icon_size: 36 %>
       Encontered marine life

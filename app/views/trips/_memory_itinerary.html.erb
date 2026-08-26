@@ -1,0 +1,36 @@
+<div class="row">
+<% itinerary.each do |item| %>
+    <div class="col col-3 mb-4 fs-6"
+        role="button"
+        tabindex="0"
+        data-action="click->dive-data-import#selectLocation">
+      <h3 class="fs-5 fw-bold">
+        <% if countries_count.positive? %>
+          <span title="<%= item[:location].country.name %>">
+            <%= icon item[:location].country.code.downcase, library: "flags", width: 20, height: 20 %>
+            <span class="visually-hidden"><%= item[:location].country.name %></span>
+          </span>
+        <% end %>
+        <%= item[:location].name %>
+      </h3>
+      <p class="mb-0" style="font-size: 0.8rem;">
+        <%= l(item[:start_date]) %>
+        <% if item[:end_date] != item[:start_date] %>
+          → <%= l(item[:end_date]) %>
+        <% end %>
+      </p>
+      <% if item[:dives_count].positive? %>
+        <p class="mb-0" style="font-size: 0.9rem;">
+          <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 16 %>
+          <%= pluralize(item[:dives_count], "dive") %>
+        </p>
+        <% if item[:pictures_count].positive? %>
+          <p class="mb-0" style="font-size: 0.9rem;" >
+            <%= render "shared/icon", icon_name: "camera-spark", icon_size: 16 %>
+            <%= pluralize(item[:pictures_count], "picture") %>
+          </p>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

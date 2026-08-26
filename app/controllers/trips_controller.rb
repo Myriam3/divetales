@@ -1,6 +1,6 @@
 class TripsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_trip, only: %i[new create show edit update destroy memory memory_dive]
+  before_action :set_trip, only: %i[show edit update destroy memory memory_dive]
 
   def index
     @trips = policy_scope(Trip).order(start_date: :desc)
@@ -63,6 +63,7 @@ class TripsController < ApplicationController
     @categories_by_class = categories_by_class
     @dives_by_time = dives_by_time
     @dives_by_entry = dives_by_entry
+    @itinerary = build_itinerary
   end
 
   def memory_dive
@@ -91,10 +92,15 @@ class TripsController < ApplicationController
       dive_days_count: @dives.map(&:date).compact.uniq.size,
       pictures_count: @pictures.size,
       species_count: @species.size,
+      dive_site_count: @dives.filter_map(&:dive_site_name).uniq.size,
       max_depth: @dives.filter_map(&:max_depth).max,
       total_duration: @dives.filter_map(&:duration).sum,
       avg_temp: avg_temp,
-      max_duration: @dives.filter_map(&:duration).max
+      max_duration: @dives.filter_map(&:duration).max,
+      countries_count: @trip.trip_countries.distinct.count,
+      wreck_count: @dives.count { |dive| dive.dive_types.include?("wreck") },
+      drift_count: @dives.count { |dive| dive.dive_types.include?("drift") },
+      cave_count: @dives.count { |dive| dive.dive_types.include?("cave") }
     }
   end
 
@@ -140,15 +146,40 @@ class TripsController < ApplicationController
   def dives_by_time
     {
       night: @dives.count { |dive| dive.dive_types.include?("night") },
-      morning: @dives.count { |dive| dive.start_time < 12 },
-      afternoon: @dives.count { |dive| dive.start_time >= 12 }
+      morning: @dives.count { |dive| dive.start_time ? dive.start_time.to_datetime.hour < 12 : false },
+      afternoon: @dives.count { |dive| dive.start_time ? dive.start_time.to_datetime.hour >= 12 : false }
     }
   end
 
   def dives_by_entry
     {
       boat: @dives.count { |dive| dive.dive_types.include?("boat") },
-      shore: @dives.count { |dive| dive.dive_types.include?("shore") }
+      shore: @dives.count { |dive| dive.dive_types.include?("shore") },
+      other: @dives.size - @dives.count { |dive| dive.dive_types.include?("boat") || dive.dive_types.include?("shore") }
     }
+  end
+
+  def build_itinerary
+    itinerary = []
+
+    @dives.sort_by { |dive| [dive.date, dive.id] }.each do |dive|
+      last_item = itinerary.last
+
+      if last_item && last_item[:location].id == dive.location_id
+        last_item[:end_date] = dive.date
+        last_item[:dives_count] += 1
+        last_item[:pictures_count] += dive.pictures.size
+      else
+        itinerary << {
+          location: dive.location,
+          start_date: dive.date,
+          end_date: dive.date,
+          dives_count: 1,
+          pictures_count: dive.pictures.size
+        }
+      end
+    end
+
+    itinerary
   end
 end

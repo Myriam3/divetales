@@ -1,0 +1,32 @@
+<%
+  map_dives = dives.map do |d|
+    {
+      id: d.id,
+      lat: d.latitude,
+      long: d.longitude,
+      name: d.dive_site_name || d.location.name,
+      date: d.date,
+      time: d.start_time ? d.start_time.strftime("%HH:%mm") : nil
+    }
+  end
+%>
+
+<div data-controller="map"
+      data-map-trip-id-value="<%= trip.id %>"
+      data-map-api-url-value="<%= api_mapbox_path %>"
+      data-map-dive-url-value ="<%= memory_dive_trip_path %>"
+      data-map-dives-value="<%=  map_dives.to_json %>">
+
+  <% if itinerary.any? %>
+    <div data-controller="itinerary">
+      <%= render "memory_itinerary", itinerary: itinerary, countries_count: stats[:countries_count] %>
+    </div>
+  <% end %>
+
+  <div data-map-target="mapContainer" style="visibility: hidden; height: 0; oveflow: hidden;"></div>
+  <div data-map-target="mapCanvas"
+      style="height: 400px; width: 100%; border-radius: 8px; margin-top: 20px;">
+  </div>
+
+  <div id="memory-dive-container"></div>
+</div>
