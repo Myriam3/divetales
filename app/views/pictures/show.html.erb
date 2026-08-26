@@ -2,7 +2,7 @@
   <div>
     <div class="card shadow-sm border-0 overflow-hidden mt-3">
       <% if @picture.photo.attached? %>
-        <%= cl_image_tag @picture.photo.key, class: "w-100 object-fit-cover", style: "max-height: 80vh;" %>
+        <%= cl_image_tag @picture.photo.key, class: "w-100 object-fit-cover" %>
       <% else %>
         <div class="bg-light d-flex align-items-center justify-content-center" style="height: 400px;">
           <%= render "shared/icon", icon_name: "fish", icon_size: 64, class: "text-muted" %>
@@ -12,26 +12,33 @@
 
     <div>
       <% if @picture.species.any? %>
+      <div class="d-flex align-items-center justify-content-between mb-4">
+          <div>
         <% @picture.species.each do |s| %>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="d-flex align-items-center gap-3 my-4">
+            <div class="d-flex align-items-center gap-3 mt-4">
               <div class="text-primary">
                 <%= render "shared/icon", icon_name: "fish", icon_size: 32 %>
               </div>
               <div>
                 <p class="mb-0 fw-bold fs-4 text-dark"><%= s.name.presence.titleize || "Unknown species" %></p>
                 <div class="text-muted fst-italic"><%= s.scientific_name %></div>
-                <% if s.details %>
-                  <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Family: <%= s.details&.dig("family") %></div>
-                <% end %>
+                <div class="d-flex gap-1">
+                  <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Class: <%= s.category.classification.titleize %></div>
+                  <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Category: <%= s.category.name.titleize %></div>
+                  <% if s.details %>
+                    <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Family: <%= s.details&.dig("family").titleize %></div>
+                  <% end %>
+                </div>
               </div>
             </div>
-            <div>
-              <%= render "shared/delete_photo" %>
-              <%= render "shared/edit_photo" %>
-            </div>
-          </div>
         <% end %>
+          </div>
+
+        <div>
+          <%= render "shared/delete_photo" %>
+          <%= render "shared/edit_photo" %>
+        </div>
+      </div>
 
       <% else %>
       <div class="d-flex align-items-center justify-content-between">
@@ -67,7 +74,7 @@
             </button>
           </li>
 
-          <% if @picture.species.any? { |species| species.details.present? } %>
+          <% if @picture.species.any? %>
             <li class="nav-item" role="presentation">
               <button class="nav-link fw-bold text-secondary border-0 bg-transparent pb-3"
                 type="button"
@@ -122,12 +129,19 @@
             <div class="tab-pane fade" id="species-details" role="tabpanel" aria-labelledby="species-details-tab" data-picture-info-tab-target="panel">
 
               <% @picture.species.each do |species| %>
-                <% if species.details.present? %>
                 <div class="mb-5 border-bottom pb-4 last-border-none">
-                  <!-- Species Header -->
-                  <%= render "shared/species_info", details: species.details %>
+                  <% if species.details.present? %>
+                    <%= render "shared/species_info", details: species.details %>
+                  <% else %>
+                    <%= turbo_stream_from "species-details-#{species.id}" %>
+                      <turbo-frame id="species-details-frame-<%= species.id %>" src="<%= generate_species_details_picture_path(@picture, species_id: species.id) %>" loading="lazy">
+                        <%= render "shared/loading_screen",
+                          animation: "fish",
+                          title: "Fetching #{species.name} Guide...",
+                          message: "Check out more about the habitat, diet, and fun facts." %>
+                      </turbo-frame>
+                  <% end %>
                 </div>
-                <% end %>
               <% end %>
 
             </div>
