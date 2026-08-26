@@ -69,20 +69,6 @@ export default class extends Controller {
 
   // Trip Map
   initTripMap(settings) {
-    // const bounds = new mapboxgl.LngLatBounds();
-    // let startLat = 0;
-    // let startLong = 0;
-
-    // this.divesValue.forEach((dive) => {
-    //   if (!(dive.lat && dive.long)) return;
-    //   bounds.extend([dive.long, dive.lat]);
-
-    //   if (!(startLat && startLong)) {
-    //     startLat = dive.lat;
-    //     startLong = dive.long;
-    //   }
-    // });
-
     const centerOptions = this.getDivesBounds(this.divesValue);
     this.displayMap(centerOptions.center, 6, settings, centerOptions.bounds);
   }

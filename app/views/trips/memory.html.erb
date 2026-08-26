@@ -42,15 +42,15 @@
 
   <div class="container">
     <%= #render "memory_summary",
-        #stats: @stats,
-        #dives_by_time: @dives_by_time,
-        #dives_by_entry: @dives_by_entry
+        # stats: @stats,
+        # dives_by_time: @dives_by_time,
+        # dives_by_entry: @dives_by_entry
     %>
   </div>
 
   <section class="mb-5 container">
-    <h2 class="mb-4" id="itinerary">
-      <%= render "shared/icon", icon_name: "route", icon_size: 36 %>
+    <h2 class="mb-4 mt-5 fw-bold" id="itinerary">
+      <%= render "shared/icon", icon_name: "route", icon_size: 40 %>
       Itinerary
     </h2>
 
@@ -62,32 +62,39 @@
     %>
   </section>
 
-  <section class="mb-5 container">
-    <h2 class="mb-3">
-      <%= render "shared/icon", icon_name: "fish", icon_size: 36 %>
+  <section class="mb-5 mb-5 container">
+    <h2 class="mb-3 fw-bold text-center">
+      <%= render "shared/icon", icon_name: "fish", icon_size: 40 %>
       Encontered marine life
     </h2>
 
-    <div
-      data-controller="species-chart"
-      data-species-chart-labels-value="<%= @classification_pictures_stats.keys.to_json %>"
-      data-species-chart-data-value="<%= @classification_pictures_stats.values.to_json %>"
-      data-species-chart-categories-value="<%= @categories_by_class.to_json %>"
-      style="width: 300px;"
-    >
-      <canvas data-species-chart-target="canvas"></canvas>
-
-      <div data-species-chart-target="details"></div>
-    </div>
-
-    <% @species_pictures_stats.each do |classification, species_stats| %>
-      <h3><%= classification.humanize %></h3>
-      <ul class="list-unstyled">
-        <% species_stats.each do |species, picture_count| %>
-          <li><%= species.name %> : <%= picture_count %> picture<%= "s" unless picture_count == 1 %></li>
-        <% end %>
-      </ul>
-    <% end %>
-
+    <%= #render "memory_species",
+      #categories_by_class: @categories_by_class,
+      #classification_pictures_stats: @classification_pictures_stats,
+      #species_pictures_stats: @species_pictures_stats
+    %>
   </section>
+
+  <% if @pictures.any? %>
+  <section class="mb-5">
+    <h2 class="mb-5 fw-bold text-center">
+      <%= render "shared/icon", icon_name: "library-photo", icon_size: 40 %>
+      Pictures from your trips
+    </h2>
+
+    <div data-controller="slider">
+      <div data-slider-target="sliderContainer" class="splide" aria-label="Trip pictures">
+        <div class="splide__track">
+          <ul class="splide__list list-unstyled">
+            <% @pictures.first(10).each do |picture| %>
+              <li class="splide__slide">
+                <%= render "shared/picture_card", picture: picture, show_info: false %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <% end %>
 <% end %>
