@@ -12,22 +12,27 @@
   end
 %>
 
-<div data-controller="map"
-      data-map-trip-id-value="<%= trip.id %>"
-      data-map-api-url-value="<%= api_mapbox_path %>"
-      data-map-dive-url-value ="<%= memory_dive_trip_path %>"
-      data-map-dives-value="<%=  map_dives.to_json %>">
+  <div data-controller="map"
+        data-map-trip-id-value="<%= trip.id %>"
+        data-map-api-url-value="<%= api_mapbox_path %>"
+        data-map-dive-url-value ="<%= memory_dive_trip_path %>"
+        data-map-dives-value="<%=  map_dives.to_json %>">
 
-  <% if itinerary.any? %>
-    <div data-controller="itinerary">
-      <%= render "memory_itinerary", itinerary: itinerary, countries_count: stats[:countries_count] %>
+    <div class="container">
+      <% if itinerary.any? %>
+        <div data-controller="itinerary">
+          <%= render "memory_itinerary", itinerary: itinerary, countries_count: stats[:countries_count] %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
 
-  <div data-map-target="mapContainer" style="visibility: hidden; height: 0; oveflow: hidden;"></div>
-  <div data-map-target="mapCanvas"
-      style="height: 400px; width: 100%; border-radius: 8px;">
+    <div class="container">
+      <div data-map-target="mapContainer" style="visibility: hidden; height: 0; oveflow: hidden;">
+        <div data-map-target="mapCanvas"
+            style="height: 400px; width: 100%; border-radius: 8px;">
+        </div>
+      </div>
+    </div>
+
+    <div id="memory-dive-container"></div>
   </div>
-
-  <div id="memory-dive-container"></div>
-</div>

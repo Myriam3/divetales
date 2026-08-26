@@ -1,0 +1,16 @@
+<%
+  max = local_assigns[:max] || 10
+%>
+<div data-controller="slider">
+  <div data-slider-target="sliderContainer" class="splide" aria-label="Trip pictures">
+    <div class="splide__track">
+      <ul class="splide__list list-unstyled">
+        <% pictures.first(max).each do |picture| %>
+          <li class="splide__slide">
+            <%= render "shared/picture_card", picture: picture, show_info: false %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -107,10 +107,9 @@
       Depth profile
     </h2>
 
-    <%= render "depth_profile", dive: @dive %>
+    <%= render "/shared/depth_profile", dive: @dive %>
     <hr>
   <% end %>
-
 
   <p class="mt-5 mb-5">
     <%= button_to dive_path(@dive),

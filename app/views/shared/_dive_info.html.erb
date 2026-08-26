@@ -4,7 +4,7 @@
     <%= dive.date.strftime("%d %B %Y") %>
   </p>
 
-  <% unless dive.start_time.blank? %>
+  <% unless local_assigns[:display_time] == false || dive.start_time.blank? %>
     <p>
       <%= render "shared/icon", icon_name: "clock", label: "Time: " %>
       <%= dive.start_time.strftime("%H:%m") %>
@@ -24,27 +24,32 @@
     </p>
   <% end %>
 
-  <% unless !local_assigns[:display_site] || dive.dive_site_name.blank? %>
+  <% unless local_assigns[:display_site] == false || dive.dive_site_name.blank? %>
     <p>
       <%= render "shared/icon", icon_name: "anchor", label: "Dive site: " %>
       <%= dive.dive_site_name %>
     </p>
   <% end %>
 
-  <% unless !local_assigns[:display_coordinates] || dive.latitude.blank? || dive.longitude.blank? %>
+  <% unless local_assigns[:display_coordinates] == false || dive.latitude.blank? || dive.longitude.blank? %>
     <p>
       <%= render "shared/icon", icon_name: "map-pin", label: "Coordinates: " %>
       <%= dive.latitude %>,<%= dive.longitude %>
     </p>
   <% end %>
 
-  <p>
-    <%= render "shared/icon", icon_name: "world-pin", label: "Location: " %>
-    <%= dive.location.name %>
-  </p>
 
-  <p>
-    <%= icon dive.location.country.code.downcase, library: "flags", width: 20, height: 20 %>
-    <%= dive.location.country.name %>
-  </p>
+  <% unless local_assigns[:display_location] == false %>
+    <p>
+      <%= render "shared/icon", icon_name: "world-pin", label: "Location: " %>
+      <%= dive.location.name %>
+    </p>
+  <% end %>
+
+  <% unless local_assigns[:display_country] == false %>
+    <p>
+      <%= icon dive.location.country.code.downcase, library: "flags", width: 20, height: 20 %>
+      <%= dive.location.country.name %>
+    </p>
+  <% end %>
 <% end %>

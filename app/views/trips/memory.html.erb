@@ -48,11 +48,13 @@
     %>
   </div>
 
-  <section class="mb-5 container">
-    <h2 class="mb-4 mt-5 fw-bold" id="itinerary">
-      <%= render "shared/icon", icon_name: "route", icon_size: 40 %>
-      Itinerary
-    </h2>
+  <section class="mb-5">
+    <div class="container">
+      <h2 class="mb-4 mt-5 fw-bold" id="itinerary">
+        <%= render "shared/icon", icon_name: "route", icon_size: 40 %>
+        Itinerary
+      </h2>
+    </div>
 
     <%= render 'memory_map',
         dives: @dives,
@@ -76,25 +78,13 @@
   </section>
 
   <% if @pictures.any? %>
-  <section class="mb-5">
-    <h2 class="mb-5 fw-bold text-center">
-      <%= render "shared/icon", icon_name: "library-photo", icon_size: 40 %>
-      Pictures from your trips
-    </h2>
+    <section class="mb-5">
+      <h2 class="mb-5 fw-bold text-center">
+        <%= render "shared/icon", icon_name: "library-photo", icon_size: 40 %>
+        Pictures from your trips
+      </h2>
 
-    <div data-controller="slider">
-      <div data-slider-target="sliderContainer" class="splide" aria-label="Trip pictures">
-        <div class="splide__track">
-          <ul class="splide__list list-unstyled">
-            <% @pictures.first(10).each do |picture| %>
-              <li class="splide__slide">
-                <%= render "shared/picture_card", picture: picture, show_info: false %>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+      <%= render "memory_slider", pictures: @pictures %>
+    </section>
   <% end %>
 <% end %>

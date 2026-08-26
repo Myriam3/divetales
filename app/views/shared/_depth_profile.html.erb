@@ -1,0 +1,13 @@
+<% unless local_assigns[:display_info] == false %>
+  <div class="mb-2">
+    <%= render "/shared/dive_info_log", dive: dive %>
+  </div>
+<% end %>
+
+<div class="mb-5"
+    data-controller="depth-chart"
+    data-depth-chart-data-value="<%= html_escape(dive.depth_over_time) %>">
+    <canvas data-depth-chart-target="canvas"
+            height="400"
+    ></canvas>
+</div>

@@ -1,8 +1,32 @@
 <div id="memory-dive-container" class="mt-3">
-  <p>
-    <%= render "shared/icon", icon_name: "scuba-mask" %>
+  <h3 class="fw-bold text-center">
+    <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 36 %>
     <%= dive.display_name_html %>
-  </p>
+  </h3>
+  <div class="container-fluid">
+    <% if dive.pictures.any? %>
+      <%= render "memory_slider", pictures: dive.pictures, max: dive.pictures.length > 20 ? 20 : dive.pictures.length %>
+    <% end %>
+  </div>
 
-  <%= render "/shared/dive_info", dive: @dive, display_site: false, display_coordinates: false %>
+  <div class="container">
+    <div class="row">
+      <div class="col col-3">
+        <%= render "/shared/dive_info",
+            dive: @dive,
+            display_location: false,
+            display_country: false,
+            display_site: false,
+            display_time: false
+          %>
+        <%= render "/shared/dive_info_log", dive: dive %>
+      </div>
+
+      <% if dive.depth_over_time.present? %>
+        <div class="col col-9">
+          <%= render "/shared/depth_profile", dive: dive, display_info: false %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
