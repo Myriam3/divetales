@@ -5,7 +5,8 @@ export default class extends Controller {
   static targets = [
     "mapContainer",
     "coordinatesContainer",
-    "mapInfoContainer"
+    "mapInfoContainer",
+    "mapCanvas"
   ];
 
   static values = {
@@ -22,7 +23,7 @@ export default class extends Controller {
     if (!(this.latitudeValue && this.longitudeValue)) return;
     const settings = await this.getMapboxInfo();
     if (!settings.token) return;
-    this.setMap(this.latitudeValue, this.longitudeValue, settings);
+    this.initMapbox(this.latitudeValue, this.longitudeValue, settings);
   }
 
   async initNew(e = {}) {
@@ -30,21 +31,21 @@ export default class extends Controller {
 
     const settings = await this.getMapboxInfo();
     if (!settings.token) return;
-    this.setMap(e.detail.lat, e.detail.long, settings);
+    this.initMapbox(e.detail.lat, e.detail.long, settings);
     // TODO update map & info when re-upload fit file or change coordinates
     this.isInit = true;
   }
 
-  setMap(lat, long, settings) {
+  initMapbox(lat, long, settings) {
     if (!(lat && long)) return;
-    this.initMap(lat, long, settings);
+    this.displayMap(lat, long, settings);
     this.setGeoInfo(lat, long, settings.token);
   }
 
-  getMapboxInfo() {
+  async getMapboxInfo() {
     return fetch(this.apiUrlValue, {
       headers: {
-        'X-CSRF-Token': this.getCsrfToken()
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content
       }
     })
     .then(res => res.json())
@@ -52,64 +53,69 @@ export default class extends Controller {
     .catch(error => console.error("Mapbox:", error));
   }
 
-  initMap(lat, long, { token, style}) {
+  // Display map
+  displayMap(lat, long, { token }) {
     mapboxgl.accessToken = token;
     this.map = new mapboxgl.Map({
-      container: this.mapContainerTarget,
-      style: style,
+      container: this.mapCanvasTarget,
+      style: "mapbox://styles/mapbox/streets-v12",
       center: [long, lat],
-      zoom: 8
+      zoom: 8,
+      minZoom: 4
     });
 
+    this.mapContainerTarget.style.visibility = 'visible';
+    this.mapContainerTarget.style.height = 'auto';
+    //this.map._container.style.display = 'block';
 
-    this.map._container.style.display = 'block';
-
-     // Marker
+    // Marker
     window.setTimeout(() => {
     new mapboxgl.Marker()
       .setLngLat([long, lat])
       //.setPopup(new mapboxgl.Popup().setHTML("Here!"))
       .addTo(this.map);
     }, 500);
-
   }
 
-  async fetchGeocodingPlace(lat, long, token) {
-    try {
-      const response = await fetch(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${long},${lat}.json?access_token=${token}&language=en&types=place`
-      );
-      const data = await response.json();
-      console.log(data);
-      if (data.features && data.features[0]) {
-        return data.features[0].place_name
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
+  // Geocoding info
   async setGeoInfo(lat, long, token) {
+    // Display coordinates
     if (this.coordinatesContainerTarget) {
       this.coordinatesContainerTarget.insertAdjacentHTML('beforeend', `${lat}, ${long}`);
       this.coordinatesContainerTarget.style.display = 'block';
     }
 
+    // Display geo info
     const geoInfo = await this.fetchGeocodingPlace(lat, long, token);
-
     if (!geoInfo || !this.mapInfoContainerTarget) return;
 
+    this.mapInfoContainerTarget.insertAdjacentHTML('beforeend', geoInfo.name);
+    this.mapInfoContainerTarget.style.display = 'block';
+
+    // Event for updating the form
     this.dispatch("geoinfo", {
       detail: geoInfo,
       bubbles: true
     });
-
-    this.mapInfoContainerTarget.insertAdjacentHTML('beforeend', geoInfo.replace(/<[^>]*>/g, ''));
-    this.mapInfoContainerTarget.style.display = 'block';
   }
 
-  getCsrfToken() {
-    return document.querySelector('meta[name="csrf-token"]')?.content;
+  async fetchGeocodingPlace(lat, long, token) {
+    try {
+      const endpoint = `https://api.mapbox.com/search/geocode/v6/reverse?longitude=${long}&latitude=${lat}&language=en&limit=1&access_token=${token}`
+      const response = await fetch(endpoint);
+      const data = await response.json();
+      console.log('GEOINFO', data);
+      if (!data.features.length) return;
+
+      const result = data.features[0].properties;
+
+      return {
+        name: `${result.full_address?.replace(/<[^>]*>/g, '')}`,
+        countryCode: result.context?.country?.country_code?.toLowerCase()
+      };
+    } catch (error) {
+      console.error('Mapbox Geocoding', error);
+    }
   }
 
   disconnect() {

@@ -1,7 +1,7 @@
 class SpeciesDetailsJob < ApplicationJob
   queue_as :default
 
-  def perform(identification_id, scientific_name)
+  def perform(identification_id, scientific_name, picture_id = nil)
     identification = Identification.find(identification_id)
 
     scientific_name = scientific_name.to_s.strip
@@ -44,7 +44,8 @@ class SpeciesDetailsJob < ApplicationJob
         common_name: result["common_name"],
         identification_id: identification.id,
         dive_id: identification.dive_id,
-        default_photo_url: details[scientific_name]["default_photo_url"]
+        default_photo_url: details[scientific_name]["default_photo_url"],
+        picture_id: picture_id
       }
     )
     Rails.logger.info(
@@ -73,7 +74,8 @@ class SpeciesDetailsJob < ApplicationJob
         common_name: result&.[]("common_name"),
         identification_id: identification.id,
         dive_id: identification.dive_id,
-        default_photo_url: details[scientific_name]["default_photo_url"]
+        default_photo_url: details[scientific_name]["default_photo_url"],
+        picture_id: picture_id
       }
     )
   end

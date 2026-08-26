@@ -145,6 +145,7 @@ GEM
     event_stream_parser (1.0.0)
     execjs (2.10.2)
       json (>= 2)
+    exifr (1.5.1)
     faraday (2.14.3)
       faraday-net_http (>= 2.0, < 3.5)
       json
@@ -497,6 +498,7 @@ DEPENDENCIES
   debug
   devise
   dotenv-rails
+  exifr
   font-awesome-sass (~> 6.1)
   image_processing (~> 2.0)
   importmap-rails
@@ -570,6 +572,7 @@ CHECKSUMS
   et-orbi (1.4.1) sha256=007e2685b1d873415a7587ef889336c6dcdf8a47fc9c9a63547582b21660a11b
   event_stream_parser (1.0.0) sha256=a2683bab70126286f8184dc88f7968ffc4028f813161fb073ec90d171f7de3c8
   execjs (2.10.2) sha256=466cf2b49e50c0cfdff8fdb88a7a983dfab7ac0f6185c317ccb434a75c224c88
+  exifr (1.5.1) sha256=ad87a5dbc92946fbf1d8ccd178d557d95d9168e8b3c5c5f381ea2bffcc312521
   faraday (2.14.3) sha256=1882247e6766615c8220b4392bf1d27f6ebb63d8e28267587cef1fb0bf37f278
   faraday-follow_redirects (0.5.0) sha256=5cde93c894b30943a5d2b93c2fe9284216a6b756f7af406a1e55f211d97d10ad
   faraday-multipart (1.2.0) sha256=7d89a949693714176f612323ca13746a2ded204031a6ba528adee788694ef757

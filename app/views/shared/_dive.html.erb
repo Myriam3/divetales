@@ -244,22 +244,47 @@
     Dive pictures
   </h2>
 
-  <p class="mb-4">
-    <%= link_to new_picture_path(dive_id: @dive.id, trip_id: @dive.trip_id), class: "btn btn-secondary" do %>
-    <%= render "shared/icon", icon_name: "camera-spark" %>
-      Add a new picture
-    <% end %>
-  </p>
+  <div data-controller="picture-selection">
+    <% if @dive.pictures.any? %>
+      <%= form_with url: bulk_destroy_pictures_path, method: :delete, data: { turbo_confirm: "Are you sure you want to delete the selected photos?" } do |f| %>
 
-  <% if @dive.pictures.any? %>
-    <ul class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 list-unstyled">
-      <% @dive.pictures.each do |picture| %>
-        <li class="col">
-          <%= render "shared/picture_card", picture: picture, show_info: false %>
-        </li>
+        <%= hidden_field_tag :return_to, "dive" %>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+              <%= link_to new_picture_path(dive_id: @dive.id, trip_id: @dive.trip_id), class: "btn btn-secondary" do %>
+              <%= render "shared/icon", icon_name: "camera-spark" %>
+                Add a new picture
+              <% end %>
+          </div>
+          <div class="d-flex gap-2">
+            <%= f.submit "Delete", class: "btn btn-outline-danger d-none", data: { picture_selection_target: "deleteButton" } %>
+
+            <button type="button" class="btn btn-outline-secondary" data-action="picture-selection#toggleMode" data-picture-selection-target="selectButton">
+              Select
+            </button>
+
+            <button type="button" class="btn btn-secondary d-none" data-action="picture-selection#toggleMode" data-picture-selection-target="cancelButton">
+              Cancel
+            </button>
+          </div>
+        </div>
+
+        <ul class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 list-unstyled">
+          <% @dive.pictures.order(:date_time).each do |picture| %>
+            <li class="col">
+              <%= render "shared/picture_card", picture: picture, show_info: false, return_to: "dive" %>
+            </li>
+          <% end %>
+        </ul>
       <% end %>
-    </ul>
-  <% else %>
-    <p>No pictures for this dive.</p>
-  <% end %>
+    <% else %>
+      <p class="mb-4">
+        <%= link_to new_picture_path(dive_id: @dive.id, trip_id: @dive.trip_id), class: "btn btn-secondary" do %>
+        <%= render "shared/icon", icon_name: "camera-spark" %>
+          Add a new picture
+        <% end %>
+      </p>
+      <p>No pictures for this dive.</p>
+    <% end %>
+  </div>
 </section>

@@ -24,7 +24,27 @@ class PicturePolicy < ApplicationPolicy
     record.dive.trip.user == user
   end
 
+  def new?
+    true
+  end
+
   def create?
     record.dive.trip.user == user
+  end
+
+  def edit?
+    record.dive.trip.user == user
+  end
+
+  def update?
+    record.dive.trip.user == user
+  end
+
+  def destroy?
+    record.dive.trip.user == user
+  end
+
+  def generate_species_details?
+    show?
   end
 end

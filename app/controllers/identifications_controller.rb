@@ -4,6 +4,7 @@ class IdentificationsController < ApplicationController
   before_action :set_dive, only: %i[index create confirm]
   before_action :set_identification, only: %i[details confirm save retry]
   before_action :set_species_params, only: %i[details confirm save]
+  before_action :set_picture, only: %i[index create details confirm save]
 
   def index
     identification = Identification.new
@@ -23,8 +24,12 @@ class IdentificationsController < ApplicationController
   end
 
   def create
+    authorize Identification.new, :create?
+
     if no_input_provided?
       flash.now[:alert] = "Please provide a description or upload an image."
+      @identification = Identification.new
+      @results = []
       render :index, status: :unprocessable_entity
       return
     end
@@ -51,7 +56,8 @@ class IdentificationsController < ApplicationController
 
     redirect_to identification_path(
       identification_id: @identification.id,
-      dive_id: @dive&.id
+      dive_id: @dive&.id,
+      picture_id: @picture&.id
     )
   end
 
@@ -81,10 +87,6 @@ class IdentificationsController < ApplicationController
 
     if @trip
       @dives = @trip.dives.order(date: :desc)
-      if @dive.present?
-        index = @dives.index(@dive)
-        @dive_number = @dives.length - index if index
-      end
     else
       @trips = current_user.trips.order(created_at: :desc)
     end
@@ -116,7 +118,8 @@ class IdentificationsController < ApplicationController
       dive: @dive,
       result: result,
       common_name: @common_name,
-      default_photo_url: params[:default_photo_url]
+      default_photo_url: params[:default_photo_url],
+      picture_id: params[:picture_id]
     )
 
     redirect_to dive_path(@dive), notice: "Successfully added #{@species.name} to your dive!"
@@ -129,7 +132,8 @@ class IdentificationsController < ApplicationController
 
     redirect_to identification_path(
       identification_id: @identification.id,
-      dive_id: @identification.dive_id
+      dive_id: @identification.dive_id,
+      picture_id: params[:picture_id]
     )
   end
 
@@ -147,6 +151,10 @@ class IdentificationsController < ApplicationController
   def set_species_params
     @scientific_name = params[:scientific_name].to_s.strip
     @common_name = params[:common_name].to_s.strip
+  end
+
+  def set_picture
+    @picture = Picture.find_by(id: params[:picture_id]) if params[:picture_id].present?
   end
 
   def identification_params
@@ -190,7 +198,12 @@ class IdentificationsController < ApplicationController
   end
 
   def no_input_provided?
-    uploaded_image.blank? && observation_params.blank? && dive_context_params.blank? && identification_params[:additional_info].blank?
+    uploaded_image.blank? &&
+      params[:existing_image_signed_id].blank? &&
+      params[:picture_id].blank? &&
+      observation_params.blank? &&
+      dive_context_params.blank? &&
+      identification_params[:additional_info].blank?
   end
 
   def build_user_prompt
@@ -211,6 +224,9 @@ class IdentificationsController < ApplicationController
       )
     elsif params[:existing_image_signed_id].present?
       @identification.image.attach(params[:existing_image_signed_id])
+    elsif params[:picture_id].present?
+      picture = Picture.find_by(id: params[:picture_id])
+      @identification.image.attach(picture.photo.blob) if picture&.photo&.attached?
     end
   end
 
@@ -227,7 +243,7 @@ class IdentificationsController < ApplicationController
       # preventing the app from accidentally queuing up multiple identical AI jobs
       details[@scientific_name] = { "status" => "pending" }
       @identification.update!(details: details)
-      SpeciesDetailsJob.perform_later(@identification.id, @scientific_name)
+      SpeciesDetailsJob.perform_later(@identification.id, @scientific_name, @picture&.id)
     end
 
     details[@scientific_name]

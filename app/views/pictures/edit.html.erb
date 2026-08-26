@@ -1,0 +1,36 @@
+<div class="container max-w-md mt-5"
+     data-controller="picture-form"
+     data-picture-form-selected-trip-id-value="<%= @selected_trip_id %>"
+     data-picture-form-selected-dive-id-value="<%= @selected_dive_id %>"
+     data-picture-form-dives-url-value="<%= dives_for_trip_pictures_path %>">
+  <%= form_with model: @picture, class: "card shadow-sm border-0 rounded-4 p-4" do |f| %>
+    <h1 class="fw-bold mb-4">Edit Photo Details</h1>
+
+    <div class="mb-4">
+      <%= render "pictures/form", trips: @trips, selected_trip_id: @selected_trip_id %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :camera_model, class: "form-label fw-bold text-dark" do %>
+        <%= render "shared/icon", icon_name: "camera" %>
+        Camera Model
+      <% end %>
+      <%= f.text_field :camera_model,
+          value: @picture.photo.attached? ? @picture.photo.metadata["camera_model"] : "",
+          class: "form-control rounded-3 bg-light border-0 py-2",
+          placeholder: "e.g., TG-7" %>
+    </div>
+
+    <div class="mb-5">
+      <%= f.label :date_time, "Date Time Taken", class: "form-label fw-bold text-dark" %>
+
+      <%= f.datetime_local_field :date_time,
+          class: "form-control rounded-3 bg-light border-0 py-2" %>
+    </div>
+
+    <div class="d-flex gap-2">
+      <%= f.submit "Save Changes", class: "btn btn-primary rounded-pill px-4 fw-bold" %>
+      <%= link_to "Cancel", picture_path(@picture), class: "btn btn-light rounded-pill px-4 fw-bold text-secondary" %>
+    </div>
+  <% end %>
+</div>

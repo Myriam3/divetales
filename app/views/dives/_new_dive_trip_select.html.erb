@@ -1,0 +1,44 @@
+<%
+  button_label = local_assigns[:label] || "Add a new dive"
+  button_icon = local_assigns[:icon] || "scuba-mask"
+  button_style = local_assigns[:button_style] || "btn-secondary"
+  current_trip = local_assigns[:current_trip]
+%>
+<div class="dropdown">
+  <button class="btn <%= button_style %> dropdown-toggle" type="button" id="dropdownTrips" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <% unless button_icon == 'none' %>
+      <%= render "shared/icon", icon_name: button_icon %>
+    <% end %>
+    <%= button_label %>
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownTrips">
+    <%# Display current trip if within a trip %>
+    <% if local_assigns[:current_trip] %>
+      <span>Add to the same trip:</span>
+      <a class="dropdown-item" href="<%= new_trip_dive_path(current_trip) %>"><%= current_trip.title %></a>
+    <% end %>
+
+    <%# Display few other trips %>
+    <% if local_assigns[:other_trips].length > 1 %>
+      <% if local_assigns[:current_trip] %>
+        <div class="dropdown-divider mb-3"></div>
+        <span>Or add to another trip:</span>
+      <% else %>
+        <span>Select a trip:</span>
+      <% end %>
+
+      <% other_trips.each do |trip| %>
+        <a class="dropdown-item" href="<%= new_trip_dive_path(trip) %>"><%= trip.title %></a>
+      <% end %>
+
+      <% if current_user.trips.length > other_trips.length + 1  %>
+      <p class="mt-3 text-center">
+        <%= link_to trips_path, class: "text-decoration-none" do %>
+          <%= render "shared/icon", icon_name: "luggage" %>
+            See all trips
+          <% end %>
+        <% end %>
+      </p>
+    <% end %>
+  </div>
+</div>

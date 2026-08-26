@@ -1,10 +1,7 @@
 <% if @dive %>
-  <p class="mt-5 mb-2 text-end">
-      <%= link_to "#", class: "btn btn-secondary" do %>
-        <%= render "shared/icon", icon_name: "scuba-mask" %>
-        Add a new dive
-      <% end %>
-  </p>
+  <div class="mt-5 mb-2 text-end">
+    <%= render "new_dive_trip_select", other_trips: @other_trips, current_trip: @dive.trip %>
+  </div>
 
   <div class="mb-2">
     <%= link_to trip_path(@dive.trip), class: "text-decoration-none" do %>
@@ -27,6 +24,7 @@
       <%= render "shared/icon", icon_name: "edit" %>
       Edit dive
   <% end %>
+  </p>
 
 
   <%= render "shared/dive", dive: @dive %>

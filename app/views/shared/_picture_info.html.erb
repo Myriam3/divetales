@@ -1,23 +1,48 @@
-<p>
-  <% unless picture.date_time.blank? %>
-    <%= render "shared/icon", icon_name: "calendar", label: "Date: " %>
-    <%= picture.date_time.strftime("%d/%m/%Y %H:%M") %>
-  <% end %>
-</p>
+<div>
+  <%# <strong>Location</strong> %>
 
-<% unless dive.dive_site_name.blank? %>
   <p>
-    <%= render "shared/icon", icon_name: "anchor", label: "Dive site: " %>
-    <%= dive.dive_site_name %>
+    <%= icon dive.location.country.code.downcase, library: "flags", width: 20, height: 20 %>
+    <%= dive.location.country.name %>, <%= dive.location.name %>
   </p>
-<% end %>
 
-<p>
-  <%= render "shared/icon", icon_name: "world-pin", label: "Location: " %>
-  <%= dive.location.name %>
-</p>
+  <% unless dive.dive_site_name.blank? %>
+    <p>
+      <%= render "shared/icon", icon_name: "anchor" %>
+      <%= dive.dive_site_name %>
+    </p>
+  <% end %>
 
-<p>
-  <%= icon dive.location.country.code.downcase, library: "flags", width: 20, height: 20 %>
-  <%= dive.location.country.name %>
-</p>
+  <% if picture.photo.attached? && picture.photo.metadata.present? && picture.photo.metadata["gps_latitude"].present? %>
+    <p>
+      <%= render "shared/icon", icon_name: "map-pin" %>
+      <%= picture.photo.metadata["gps_latitude"].round(4) %>, <%= picture.photo.metadata["gps_longitude"].round(4) %>
+    </p>
+  <% end %>
+</div>
+
+<div>
+  <%# <strong>Capture Details</strong> %>
+
+  <% #date_to_show = (picture.photo.attached? && picture.photo.metadata.present? && picture.photo.metadata["date_taken"].present?) ? picture.photo.metadata["date_taken"] : picture.date_time
+    date_to_show = picture.date_time
+  %>
+
+  <% if date_to_show.present? %>
+    <p>
+      <%= render "shared/icon", icon_name: "calendar" %>
+      <% if date_to_show.is_a?(String) %>
+        <%= date_to_show %>
+      <% else %>
+        <%= date_to_show.strftime("%B %d, %Y at %H:%M") %>
+      <% end %>
+    </p>
+  <% end %>
+
+  <% if picture.photo.attached? && picture.photo.metadata.present? && picture.photo.metadata["camera_model"].present? %>
+    <p>
+      <%= render "shared/icon", icon_name: "camera" %>
+      <%= picture.photo.metadata["camera_model"] %>
+    </p>
+  <% end %>
+</div>

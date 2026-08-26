@@ -24,21 +24,24 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   #
-  resources :pictures, only: [:index, :show, :new, :create] do
+  resources :pictures do
     resources :dives, only: [:create]
 
     collection do
       get :dives_for_trip
+      post :bulk_create
+      delete :bulk_destroy
+    end
+
+    member do
+      get :generate_species_details
     end
   end
 
-  get "/dives", to: "dives#index", as: "dives"
-  get "/dives/new", to: "dives#new", as: "new_dive"
-  post "/dives", to: "dives#create"
-  get "/dives/:id", to: "dives#show", as: "dive"
-  delete "/dives/:id", to: "dives#destroy"
+  resources :dives, only: [:index, :show, :destroy]
 
   resources :dive_sites, only: [:index]
+
   get "api/mapbox", to: "api#mapbox"
 
   authenticate :user, ->(user) { user.admin? } do
