@@ -3,7 +3,7 @@
     "name": "Kame-ne (Turtle Root)",
     "latitude": 34.5744,
     "longitude": 138.9372,
-    "location_key": "mikomoto_island"
+    "location_key": "mikomoto"
   },
   {
     "name": "Ushitsuki-iwa (Cow Rock)",
@@ -231,31 +231,31 @@
     "name": "Koh Bida Nok",
     "latitude": 7.6533,
     "longitude": 98.7663,
-    "location_key": "krabi_phi_phi"
+    "location_key": "phi_phi"
   },
   {
     "name": "Koh Bida Nai",
     "latitude": 7.6588,
     "longitude": 98.7663,
-    "location_key": "krabi_phi_phi"
+    "location_key": "phi_phi"
   },
   {
     "name": "King Cruiser Wreck",
     "latitude": 7.8016,
     "longitude": 98.6383,
-    "location_key": "krabi_phi_phi"
+    "location_key": "phi_phi"
   },
   {
     "name": "Shark Point",
     "latitude": 7.7972,
     "longitude": 98.6258,
-    "location_key": "krabi_phi_phi"
+    "location_key": "phi_phi"
   },
   {
     "name": "Anemone Reef",
     "latitude": 7.8027,
     "longitude": 98.6288,
-    "location_key": "krabi_phi_phi"
+    "location_key": "phi_phi"
   },
   {
     "name": "The Canyons",
@@ -297,7 +297,7 @@
     "name": "Richelieu Rock",
     "latitude": 9.3621,
     "longitude": 98.0225,
-    "location_key": "surin_islands"
+    "location_key": "surin"
   },
   {
     "name": "Chumphon Pinnacle",
@@ -315,25 +315,25 @@
     "name": "Pura Jati (Puri Jati)",
     "latitude": -8.1881,
     "longitude": 114.9665,
-    "location_key": "bali_buleleng"
+    "location_key": "buleleng"
   },
   {
     "name": "Napoleon Reef",
     "latitude": -8.1361,
     "longitude": 114.6652,
-    "location_key": "bali_buleleng"
+    "location_key": "buleleng"
   },
   {
     "name": "Close Encounters",
     "latitude": -8.1345,
     "longitude": 114.6541,
-    "location_key": "bali_buleleng"
+    "location_key": "buleleng"
   },
   {
     "name": "Melanting",
     "latitude": -8.1402,
     "longitude": 114.6599,
-    "location_key": "bali_buleleng"
+    "location_key": "buleleng"
   },
   {
     "name": "Siaba Besar",
@@ -375,55 +375,55 @@
     "name": "Manta Bay",
     "latitude": -8.7611,
     "longitude": 115.4672,
-    "location_key": "bali_nusa_penida"
+    "location_key": "nusa_penida"
   },
   {
     "name": "Gamat Bay",
     "latitude": -8.7055,
     "longitude": 115.4851,
-    "location_key": "bali_nusa_penida"
+    "location_key": "nusa_penida"
   },
   {
     "name": "Buyuk",
     "latitude": -8.6651,
     "longitude": 115.5412,
-    "location_key": "bali_nusa_penida"
+    "location_key": "nusa_penida"
   },
   {
     "name": "Blue Corner (Lembongan)",
     "latitude": -8.6622,
     "longitude": 115.4411,
-    "location_key": "bali_nusa_penida"
+    "location_key": "nusa_penida"
   },
   {
     "name": "Mangrove (Lembongan)",
     "latitude": -8.6541,
     "longitude": 115.4622,
-    "location_key": "bali_nusa_penida"
+    "location_key": "nusa_penida"
   },
   {
     "name": "Batu Kelebit",
     "latitude": -8.2811,
     "longitude": 115.6085,
-    "location_key": "bali_tulamben"
+    "location_key": "tulamben"
   },
   {
     "name": "Alamanda",
     "latitude": -8.2855,
     "longitude": 115.6101,
-    "location_key": "bali_tulamben"
+    "location_key": "tulamben"
   },
   {
     "name": "Suci Place",
     "latitude": -8.2731,
     "longitude": 115.5962,
-    "location_key": "bali_tulamben"
+    "location_key": "tulamben"
   },
   {
     "name": "Kubu Monkey Reef",
     "latitude": -8.2415,
     "longitude": 115.5651,
-    "location_key": "bali_tulamben"
+    "location_key": "tulamben"
   },
   {
     "name": "Muka Kampung",
@@ -561,7 +561,7 @@
     "name": "Kal's Dream",
     "latitude": -8.2435,
     "longitude": 124.3541,
-    "location_key": "alor_archipelago"
+    "location_key": "alor"
   },
   {
     "name": "Deep Turbo",
@@ -591,31 +591,31 @@
     "name": "Hakama",
     "latitude": 34.9751,
     "longitude": 139.1121,
-    "location_key": "izu_ito"
+    "location_key": "ito"
   },
   {
     "name": "Kabira Manta Scramble",
     "latitude": 24.4533,
     "longitude": 124.1355,
-    "location_key": "okinawa_ishigaki"
+    "location_key": "ishigaki"
   },
   {
     "name": "Maotida Cave",
     "latitude": 24.8151,
     "longitude": 125.2341,
-    "location_key": "okinawa_miyakojima"
+    "location_key": "miyakojima"
   },
   {
     "name": "Yonaguni Monument",
     "latitude": 24.4325,
     "longitude": 123.0118,
-    "location_key": "okinawa_yonaguni"
+    "location_key": "yonaguni"
   },
   {
     "name": "Dobu Iso",
     "latitude": 27.0831,
     "longitude": 142.1835,
-    "location_key": "ogasawara_islands"
+    "location_key": "ogasawara"
   },
   {
     "name": "Pescador Island",
@@ -639,7 +639,7 @@
     "name": "Balicasag Black Forest",
     "latitude": 9.5191,
     "longitude": 123.6825,
-    "location_key": "bohol_panglao"
+    "location_key": "bohol"
   },
   {
     "name": "Twin Rocks",
@@ -657,7 +657,7 @@
     "name": "Irako Wreck",
     "latitude": 11.9705,
     "longitude": 120.0211,
-    "location_key": "coron_wrecks"
+    "location_key": "coron"
   },
   {
     "name": "Amos Rock",
@@ -675,13 +675,13 @@
     "name": "Elephant Head Rock",
     "latitude": 8.5445,
     "longitude": 97.6411,
-    "location_key": "similan_islands"
+    "location_key": "similan"
   },
   {
     "name": "West of Eden",
     "latitude": 8.5711,
     "longitude": 97.6455,
-    "location_key": "similan_islands"
+    "location_key": "similan"
   },
   {
     "name": "Sail Rock",
@@ -723,13 +723,13 @@
     "name": "Froggy Lair",
     "latitude": 4.2465,
     "longitude": 118.6321,
-    "location_key": "mabul_kapalai"
+    "location_key": "mabul"
   },
   {
     "name": "Tiger Reef",
     "latitude": 2.8531,
     "longitude": 104.0955,
-    "location_key": "tioman_island"
+    "location_key": "tioman"
   },
   {
     "name": "Maaya Thila",
@@ -783,13 +783,13 @@
     "name": "Numidia Wreck",
     "latitude": 26.3081,
     "longitude": 34.8425,
-    "location_key": "brother_islands"
+    "location_key": "brothers"
   },
   {
     "name": "Gorilla Chop",
     "latitude": 26.6385,
     "longitude": 127.886,
-    "location_key": "okinawa_main_island"
+    "location_key": "okinawa_main"
   },
   {
     "name": "Sotoumi (Outer Sea)",
@@ -801,19 +801,19 @@
     "name": "Ito Wreck (Chinsen)",
     "latitude": 34.9781,
     "longitude": 139.1155,
-    "location_key": "izu_ito"
+    "location_key": "ito"
   },
   {
     "name": "Akitsushima Wreck",
     "latitude": 11.9775,
     "longitude": 119.9651,
-    "location_key": "coron_wrecks"
+    "location_key": "coron"
   },
   {
     "name": "Okikawa Maru",
     "latitude": 12.0121,
     "longitude": 120.0051,
-    "location_key": "coron_wrecks"
+    "location_key": "coron"
   },
   {
     "name": "Delsan Wreck",
@@ -849,25 +849,25 @@
     "name": "Cenote Angelita",
     "latitude": 20.1365,
     "longitude": -87.5772,
-    "location_key": "playa_del_carmen_cenotes"
+    "location_key": "cenotes"
   },
   {
     "name": "Tajma Ha",
     "latitude": 20.4951,
     "longitude": -87.2595,
-    "location_key": "playa_del_carmen_cenotes"
+    "location_key": "cenotes"
   },
   {
     "name": "Roca Partida",
     "latitude": 18.9951,
     "longitude": -112.0622,
-    "location_key": "socorro_islands"
+    "location_key": "socorro"
   },
   {
     "name": "Cabo Pearce",
     "latitude": 18.7751,
     "longitude": -110.9525,
-    "location_key": "socorro_islands"
+    "location_key": "socorro"
   },
   {
     "name": "Molasses Reef",
@@ -903,13 +903,13 @@
     "name": "Darwin's Arch",
     "latitude": 1.6731,
     "longitude": -91.9961,
-    "location_key": "galapagos_islands"
+    "location_key": "galapagos"
   },
   {
     "name": "Wolf Island (El Derrumbe)",
     "latitude": 1.3831,
     "longitude": -91.8161,
-    "location_key": "galapagos_islands"
+    "location_key": "galapagos"
   },
   {
     "name": "German Channel",
@@ -939,19 +939,19 @@
     "name": "Mount Mutiny",
     "latitude": -17.3115,
     "longitude": 178.4722,
-    "location_key": "fiji_bligh_water"
+    "location_key": "fiji_bligh"
   },
   {
     "name": "Avatoru Pass",
     "latitude": -14.9331,
     "longitude": -147.7011,
-    "location_key": "french_polynesia_rangiroa"
+    "location_key": "rangiroa"
   },
   {
     "name": "Tumakohua Pass (South Pass)",
     "latitude": -16.3111,
     "longitude": -145.4522,
-    "location_key": "french_polynesia_fakarava"
+    "location_key": "fakarava"
   },
   {
     "name": "Kandooma Thila",
@@ -969,19 +969,19 @@
     "name": "Hilma Hooker",
     "latitude": 12.103,
     "longitude": -68.2882,
-    "location_key": "bonaire_national_marine_park"
+    "location_key": "bonaire_marine_park"
   },
   {
     "name": "1000 Steps",
     "latitude": 12.197,
     "longitude": -68.3204,
-    "location_key": "bonaire_national_marine_park"
+    "location_key": "bonaire_marine_park"
   },
   {
     "name": "Bari Reef",
     "latitude": 12.1648,
     "longitude": -68.2789,
-    "location_key": "bonaire_national_marine_park"
+    "location_key": "bonaire_marine_park"
   },
   {
     "name": "Superior Producer",
@@ -1005,127 +1005,127 @@
     "name": "USS Kittiwake",
     "latitude": 19.3622,
     "longitude": -81.4013,
-    "location_key": "cayman_islands_grand_cayman"
+    "location_key": "grand_cayman"
   },
   {
     "name": "Babylon",
     "latitude": 19.3521,
     "longitude": -81.0825,
-    "location_key": "cayman_islands_grand_cayman"
+    "location_key": "grand_cayman"
   },
   {
     "name": "Three Fathom Wall (Mixing Bowl)",
     "latitude": 19.6821,
     "longitude": -80.0551,
-    "location_key": "cayman_islands_little_cayman"
+    "location_key": "little_cayman"
   },
   {
     "name": "SS Sapona",
     "latitude": 25.6512,
     "longitude": -79.2932,
-    "location_key": "bahamas_bimini"
+    "location_key": "bimini"
   },
   {
     "name": "Bull Run",
     "latitude": 25.7421,
     "longitude": -79.2831,
-    "location_key": "bahamas_bimini"
+    "location_key": "bimini"
   },
   {
     "name": "Texas",
     "latitude": 16.2751,
     "longitude": -86.5982,
-    "location_key": "honduras_roatan"
+    "location_key": "roatan"
   },
   {
     "name": "Spooky Channel",
     "latitude": 16.3312,
     "longitude": -86.5511,
-    "location_key": "honduras_roatan"
+    "location_key": "roatan"
   },
   {
     "name": "Halliburton Wreck",
     "latitude": 16.0821,
     "longitude": -86.9125,
-    "location_key": "honduras_utila"
+    "location_key": "utila"
   },
   {
     "name": "Dirty Rock",
     "latitude": 5.5412,
     "longitude": -87.0421,
-    "location_key": "costa_rica_cocos_island"
+    "location_key": "cocos"
   },
   {
     "name": "Manuelita Deep",
     "latitude": 5.5521,
     "longitude": -87.0451,
-    "location_key": "costa_rica_cocos_island"
+    "location_key": "cocos"
   },
   {
     "name": "Farallon",
     "latitude": 20.9521,
     "longitude": -78.9612,
-    "location_key": "cuba_jardines_de_la_reina"
+    "location_key": "jardines_reina"
   },
   {
     "name": "Black Coral I",
     "latitude": 21.0315,
     "longitude": -78.9315,
-    "location_key": "cuba_jardines_de_la_reina"
+    "location_key": "jardines_reina"
   },
   {
     "name": "La Gringa",
     "latitude": 4.0081,
     "longitude": -81.6095,
-    "location_key": "colombia_malpelo_island"
+    "location_key": "malpelo"
   },
   {
     "name": "Sahara",
     "latitude": 3.9981,
     "longitude": -81.6011,
-    "location_key": "colombia_malpelo_island"
+    "location_key": "malpelo"
   },
   {
     "name": "Nippo Maru",
     "latitude": 7.3712,
     "longitude": 151.8821,
-    "location_key": "micronesia_chuuk"
+    "location_key": "truk_lagoon"
   },
   {
     "name": "San Francisco Maru",
     "latitude": 7.3751,
     "longitude": 151.8752,
-    "location_key": "micronesia_chuuk"
+    "location_key": "truk_lagoon"
   },
   {
     "name": "Vertigo",
     "latitude": 9.5512,
     "longitude": 138.1151,
-    "location_key": "micronesia_yap"
+    "location_key": "yap"
   },
   {
     "name": "Inland Sea",
     "latitude": 36.0531,
     "longitude": 14.1895,
-    "location_key": "malta_gozo"
+    "location_key": "gozo"
   },
   {
     "name": "Reqqa Point",
     "latitude": 36.0821,
     "longitude": 14.2341,
-    "location_key": "malta_gozo"
+    "location_key": "gozo"
   },
   {
     "name": "SMS Cöln",
     "latitude": 58.8921,
     "longitude": -3.1311,
-    "location_key": "uk_scapa_flow"
+    "location_key": "scapa_flow"
   },
   {
     "name": "SMS Markgraf",
     "latitude": 58.8901,
     "longitude": -3.1251,
-    "location_key": "uk_scapa_flow"
+    "location_key": "scapa_flow"
   },
   {
     "name": "Wattabomi",
@@ -1149,7 +1149,7 @@
     "name": "Daymaniyat Wall",
     "latitude": 23.8581,
     "longitude": 57.9912,
-    "location_key": "oman_daymaniyat_islands"
+    "location_key": "daymaniyat"
   },
   {
     "name": "Kadone",
@@ -1173,31 +1173,31 @@
     "name": "Jemeluk Wall",
     "latitude": -8.3375,
     "longitude": 115.6666,
-    "location_key": "bali_amed"
+    "location_key": "amed"
   },
   {
     "name": "Amed Pyramids",
     "latitude": -8.3311,
     "longitude": 115.6588,
-    "location_key": "bali_amed"
+    "location_key": "amed"
   },
   {
     "name": "Bunutan (Eel Garden)",
     "latitude": -8.3455,
     "longitude": 115.6888,
-    "location_key": "bali_amed"
+    "location_key": "amed"
   },
   {
     "name": "Japanese Shipwreck (Lipah Bay)",
     "latitude": -8.3466,
     "longitude": 115.6944,
-    "location_key": "bali_amed"
+    "location_key": "amed"
   },
   {
     "name": "Ghost Bay (Muck Dive)",
     "latitude": -8.3355,
     "longitude": 115.6611,
-    "location_key": "bali_amed"
+    "location_key": "amed"
   },
   {
     "name": "Tatawa Kecil",
@@ -1233,61 +1233,61 @@
     "name": "Batu Meling",
     "latitude": -8.6944,
     "longitude": 115.5788,
-    "location_key": "bali_nusa_penida"
+    "location_key": "nusa_penida"
   },
   {
     "name": "Ceningan Wall",
     "latitude": -8.7055,
     "longitude": 115.4522,
-    "location_key": "bali_nusa_penida"
+    "location_key": "nusa_penida"
   },
   {
     "name": "Suana Bay",
     "latitude": -8.7301,
     "longitude": 115.5802,
-    "location_key": "bali_nusa_penida"
+    "location_key": "nusa_penida"
   },
   {
     "name": "Melasti",
     "latitude": -8.2833,
     "longitude": 115.6155,
-    "location_key": "bali_tulamben"
+    "location_key": "tulamben"
   },
   {
     "name": "Batu Niti",
     "latitude": -8.2977,
     "longitude": 115.6201,
-    "location_key": "bali_tulamben"
+    "location_key": "tulamben"
   },
   {
     "name": "Emerald",
     "latitude": -8.2611,
     "longitude": 115.5833,
-    "location_key": "bali_tulamben"
+    "location_key": "tulamben"
   },
   {
     "name": "Palung Palung",
     "latitude": -8.2933,
     "longitude": 115.6166,
-    "location_key": "bali_tulamben"
+    "location_key": "tulamben"
   },
   {
     "name": "Cave Point",
     "latitude": -8.0822,
     "longitude": 114.5311,
-    "location_key": "bali_buleleng"
+    "location_key": "buleleng"
   },
   {
     "name": "Bat Cave",
     "latitude": -8.0844,
     "longitude": 114.5205,
-    "location_key": "bali_buleleng"
+    "location_key": "buleleng"
   },
   {
     "name": "Deep Reef",
     "latitude": -8.1401,
     "longitude": 114.6555,
-    "location_key": "bali_buleleng"
+    "location_key": "buleleng"
   },
   {
     "name": "Tanjung Kopi",
