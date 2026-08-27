@@ -48,15 +48,11 @@ Rails.application.routes.draw do
     end
   end
 
-<<<<<<< HEAD
   # Dives
-  resources :dives, only: [:index, :show, :destroy]
-=======
   resources :dives, only: [:index, :show, :destroy] do
     patch :update_cover_photo, on: :member
   end
 
->>>>>>> develop
   resources :dive_sites, only: [:index]
 
   # Other
