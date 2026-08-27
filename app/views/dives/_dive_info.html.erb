@@ -7,7 +7,7 @@
   <% unless local_assigns[:display_time] == false || dive.start_time.blank? %>
     <p>
       <%= render "shared/icon", icon_name: "clock", label: "Time: " %>
-      <%= dive.start_time.strftime("%H:%m") %>
+      <%= dive.start_time.strftime("%H:%M") %>
     </p>
   <% end %>
 

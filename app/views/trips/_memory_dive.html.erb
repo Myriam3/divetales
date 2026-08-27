@@ -1,8 +1,17 @@
 <div id="memory-dive-container" class="mt-3">
-  <h3 class="fw-bold text-center">
-    <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 36 %>
-    <%= dive.display_name_html %>
-  </h3>
+  <% unless dive.dive_site_name.blank? %>
+    <h3 class="fw-bold text-center">
+      <%= render "shared/icon", icon_name: "anchor", icon_size: 36 %>
+      <%= dive.dive_site_name %>
+    </h3>
+  <% end %>
+
+  <div data-map-target="itineraryLocationWrapper" style="display: none;">
+    <div class="container">
+      <div data-map-target="itineraryLocation"></div>
+    </div>
+  </div>
+
   <div class="container-fluid">
     <% if dive.pictures.any? %>
       <%= render "memory_slider", pictures: dive.pictures, max: dive.pictures.length > 20 ? 20 : dive.pictures.length %>
@@ -12,19 +21,35 @@
   <div class="container">
     <div class="row">
       <div class="col col-3">
-        <%= render "/shared/dive_info",
-            dive: @dive,
-            display_location: false,
-            display_country: false,
-            display_site: false,
+        <h4>
+          <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 36 %>
+          <%= dive.display_name_html %>
+        </h4>
+        <p>
+          <%= render "shared/icon", icon_name: "calendar", label: "Date: " %>
+          <%= dive.date.strftime("%d %B %Y") %>
+          <% unless dive.start_time.blank? %>
+            <%= dive.start_time.strftime("%H:%M") %>
+          <% end %>
+        </p>
+
+        <%= render "/shared/dive_info_log",
+            dive: dive,
             display_time: false
-          %>
-        <%= render "/shared/dive_info_log", dive: dive %>
+        %>
+        <p>
+          <%= link_to dive_path(dive, anchor: "log"), class: "text-decoration-none" do %>
+            <%= render "shared/icon", icon_name: "device-watch-stats" %>
+            View dive log
+          <% end %>
+        </p>
       </div>
 
       <% if dive.depth_over_time.present? %>
         <div class="col col-9">
-          <%= render "/shared/depth_profile", dive: dive, display_info: false %>
+          <%= render "/shared/depth_profile",
+              dive: dive, display_info: false
+        %>
         </div>
       <% end %>
     </div>

@@ -5,8 +5,9 @@
       lat: d.latitude,
       long: d.longitude,
       name: d.dive_site_name || d.location.name,
+      number: d.dive_number,
       date: d.date,
-      time: d.start_time ? d.start_time.strftime("%HH:%mm") : nil,
+      time: d.start_time ? d.start_time.strftime("%HH:%M") : nil,
       location_id: d.location.id,
     }
   end

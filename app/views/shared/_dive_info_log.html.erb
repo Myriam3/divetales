@@ -6,7 +6,7 @@
   </p>
 <% end %>
 
-<% unless dive.start_time.blank? %>
+<% unless local_assigns[:display_time] == false || dive.start_time.blank? %>
   <p>
     <%= render "shared/icon", icon_name: "ripple-down" %>
     Start: <%= dive.start_time.strftime("%H:%M") %>

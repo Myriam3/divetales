@@ -70,7 +70,6 @@ class TripsController < ApplicationController
     @dive = @trip.dives.find(params[:dive_id])
 
     respond_to do |format|
-      puts format.turbo_stream
       format.turbo_stream
     end
   end
