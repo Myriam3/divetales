@@ -9,8 +9,10 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   resources :trips, only: [:index, :show, :new, :create, :destroy, :edit, :update] do
+    patch :update_cover_photo, on: :member
     resources :dives, only: [:index, :show, :new, :create]
   end
+
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
@@ -38,7 +40,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :dives, only: [:index, :show, :destroy]
+  resources :dives, only: [:index, :show, :destroy] do
+    patch :update_cover_photo, on: :member
+  end
 
   resources :dive_sites, only: [:index]
 

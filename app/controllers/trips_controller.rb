@@ -43,6 +43,17 @@ class TripsController < ApplicationController
     end
   end
 
+  def update_cover_photo
+    @trip = policy_scope(Trip).find(params[:id])
+    authorize @trip, :update?
+
+    if @trip.update(cover_photo_params)
+      redirect_back fallback_location: trips_path, notice: "Trip photo updated!"
+    else
+      redirect_back fallback_location: trips_path, alert: "Photo could not be updated."
+    end
+  end
+
   def destroy
     @trip = policy_scope(Trip).find(params[:id])
     authorize @trip
@@ -55,5 +66,9 @@ class TripsController < ApplicationController
 
   def trip_params
     params.require(:trip).permit(:title, :start_date, :end_date, :info, country_ids: [])
+  end
+
+  def cover_photo_params
+    params.require(:trip).permit(:cover_photo)
   end
 end

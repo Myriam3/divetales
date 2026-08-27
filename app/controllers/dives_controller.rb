@@ -73,6 +73,17 @@ class DivesController < ApplicationController
     redirect_to params[:trip_id] ? trip_path(@dive.trip) : dives_path, notice: "Dive deleted!"
   end
 
+  def update_cover_photo
+    @dive = Dive.find(params[:id])
+    authorize @dive, :update?
+
+    if @dive.update(cover_photo_params)
+      redirect_back fallback_location: trip_path(@dive.trip), notice: "Dive photo updated!"
+    else
+      redirect_back fallback_location: trip_path(@dive.trip), alert: "Photo could not be updated."
+    end
+  end
+
   private
 
   def dive_params
@@ -100,5 +111,9 @@ class DivesController < ApplicationController
     ).tap do |data|
       data.delete(:dive_types) if data[:dive_types].blank?
     end
+  end
+
+  def cover_photo_params
+    params.require(:dive).permit(:cover_photo)
   end
 end
