@@ -3,6 +3,9 @@ import Splide from "@splidejs/splide"
 
 export default class extends Controller {
   static targets = ["sliderContainer"];
+  static values = {
+    focus: String
+  };
 
   connect() {
     if (!this.sliderContainerTarget) return;
@@ -14,9 +17,14 @@ export default class extends Controller {
       {
         type   : 'loop',
         perPage: 5,
-        perMove: 1,
-        focus  : 'center',
-        gap: "10px"
+        //rewind: false,
+        //perMove: 1,
+        //focus  : 'center',
+        gap: "10px",
+        padding: {
+          left: '50px',
+          right: '50px'
+        }
       }
     );
 

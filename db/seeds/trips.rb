@@ -35,7 +35,7 @@ def create_trips(user, countries)
   ) do |trip|
     trip.user = user
     trip.start_date = Date.new(2026, 07, 01)
-    trip.end_date = Date.new(2025, 07, 31)
+    trip.end_date = Date.new(2026, 07, 31)
     trip.info = "1 month traveling to Bali, Mabul, Sipadan, North Sulawesi and Raja Ampat"
   end
 

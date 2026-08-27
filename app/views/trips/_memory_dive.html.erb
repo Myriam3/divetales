@@ -3,6 +3,10 @@
     <h3 class="fw-bold text-center">
       <%= render "shared/icon", icon_name: "anchor", icon_size: 36 %>
       <%= dive.dive_site_name %>
+      <br>
+      <small class="fs-6 fw-normal" style="font-size: 0.7rem;">
+        <%= dive.latitude %>,<%= dive.longitude %>
+      </small>
     </h3>
   <% end %>
 
@@ -14,7 +18,18 @@
 
   <div class="container-fluid">
     <% if dive.pictures.any? %>
-      <%= render "memory_slider", pictures: dive.pictures, max: dive.pictures.length > 20 ? 20 : dive.pictures.length %>
+      <% dive_pictures = dive.pictures.sort_by do |picture|
+          [
+            picture.date_time.nil? ? 1 : 0,
+            picture.date_time || dive.start.to_time
+          ]
+          end
+      %>
+      <%= render "memory_slider",
+          pictures: dive_pictures,
+          max: [dive_pictures.length, 20].min,
+          label: "Dive pictures"
+      %>
     <% end %>
   </div>
 
