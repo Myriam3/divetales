@@ -1,7 +1,46 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<% content_for :title, "DiveTales" %>
 
-<div class="col-md-5">
-  <%= render "shared/latest_species", species: @latest_species %>
-  <%= render "shared/media_gallery", dives: @media_gallery %>
-</div>
+<section class="home-hero">
+  <div class="home-bubbles">
+    <%= image_tag "home-title-bubbles.png", alt: "", class: "home-title-bubbles" %>
+  </div>
+
+  <div class="home-title">
+    <%= image_tag "home-wave.png", alt: "", class: "home-wave home-wave-left" %>
+
+    <div class="home-title-text">
+      <h1>DIVE TALES</h1>
+      <p>Every dive has a story.</p>
+    </div>
+
+    <%= image_tag "home-wave.png", alt: "", class: "home-wave home-wave-right" %>
+  </div>
+
+  <div class="home-content">
+    <%= render "shared/latest_species", species: @latest_species %>
+    <%= render "shared/media_gallery", dives: @media_gallery %>
+  </div>
+
+  <div class="home-fish home-fish-one">
+    <%= image_tag "home-fish.png", alt: "" %>
+  </div>
+
+  <div class="home-fish home-fish-two">
+    <%= image_tag "home-fish.png", alt: "" %>
+  </div>
+
+  <div class="home-fish home-fish-three">
+    <%= image_tag "home-fish.png", alt: "" %>
+  </div>
+
+  <div class="home-fish home-fish-four">
+    <%= image_tag "home-fish.png", alt: "" %>
+  </div>
+
+  <div class="home-fish home-fish-five">
+    <%= image_tag "home-fish.png", alt: "" %>
+  </div>
+
+  <%= image_tag "home-diving-helmet.png", alt: "Vintage diving helmet", class: "home-diving-helmet" %>
+  <%= image_tag "home-coral-reef.png", alt: "Colorful coral reef", class: "home-coral" %>
+</section>
