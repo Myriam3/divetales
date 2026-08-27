@@ -60,11 +60,14 @@
         <div class="trip-dive-card-wrapper">
           <%= link_to trip_dive_path(@trip, dive), class: "trip-dive-card-link" do %>
             <article class="trip-dive-card">
-              <% if dive.cover_photo.attached? %>
-                <%= image_tag dive.cover_photo, alt: dive.dive_site_name, class: "trip-dive-card__image" %>
-              <% else %>
-                <%= image_tag "dive-default.png", alt: "Underwater reef", class: "trip-dive-card__image" %>
-              <% end %>
+              <% first_picture = dive.pictures.order(:created_at).first %>
+                <% if dive.cover_photo.attached? %>
+                  <%= image_tag dive.cover_photo, alt: dive.dive_site_name, class: "trip-dive-card__image" %>
+                <% elsif first_picture&.photo&.attached? %>
+                  <%= image_tag first_picture.photo, alt: dive.dive_site_name, class: "trip-dive-card__image" %>
+                <% else %>
+                  <%= image_tag "dive-default.png", alt: "Underwater reef", class: "trip-dive-card__image" %>
+                <% end %>
 
               <div class="trip-dive-card__body">
                 <h3><%= dive.display_name_html %></h3>
@@ -101,7 +104,7 @@
 
           <%= form_with model: dive, url: update_cover_photo_dive_path(dive), method: :patch, html: { class: "cover-photo-form", multipart: true } do |form| %>
             <label for="dive_cover_photo_<%= dive.id %>" class="cover-photo-button">
-              <%= render "shared/icon", icon_name: "camera", icon_size: 20 %>
+              <%= render "shared/icon", icon_name: "camera", icon_size: 16 %>
               Edit
             </label>
 

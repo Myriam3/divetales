@@ -48,7 +48,7 @@
 
             <%= form_with model: trip, url: update_cover_photo_trip_path(trip), method: :patch, html: { class: "cover-photo-form", multipart: true } do |form| %>
               <label for="trip_cover_photo_<%= trip.id %>" class="cover-photo-button">
-                <%= render "shared/icon", icon_name: "camera", icon_size: 20 %>
+                <%= render "shared/icon", icon_name: "camera", icon_size: 16 %>
                 Edit
               </label>
 
