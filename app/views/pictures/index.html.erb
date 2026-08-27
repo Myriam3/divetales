@@ -13,13 +13,19 @@
       class: "form-select" %>
   </div>
 
-  <div class="col-auto">
-    <%= date_field_tag :date_from, params[:date_from], class: "form-control", placeholder: "From date" %>
-  </div>
+<div class="col-auto">
+  <%= select_tag :year,
+    options_for_select(@years.map { |y| [y.to_i, y.to_i] }, params[:year]),
+    prompt: "All years",
+    class: "form-select" %>
+</div>
 
-  <div class="col-auto">
-    <%= date_field_tag :date_to, params[:date_to], class: "form-control", placeholder: "To date" %>
-  </div>
+<div class="col-auto">
+  <%= select_tag :category_id,
+    options_from_collection_for_select(@categories, :id, :name, params[:category_id]),
+    prompt: "All categories",
+    class: "form-select" %>
+</div>
 
   <div class="col-auto">
     <%= select_tag :sort,
@@ -36,7 +42,7 @@
     <%= submit_tag "Apply", class: "btn btn-secondary" %>
   </div>
 
-  <% if params[:trip_id].present? || params[:location_id].present? || params[:date_from].present? || params[:date_to].present? || params[:sort].present? %>
+  <% if params[:trip_id].present? || params[:location_id].present? || params[:year].present? || params[:sort].present? %>
     <div class="col-auto">
       <%= link_to "Clear filters", pictures_path, class: "btn btn-outline-secondary" %>
     </div>

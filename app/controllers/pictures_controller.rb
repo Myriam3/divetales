@@ -5,13 +5,17 @@ class PicturesController < ApplicationController
 
   def index
     @pictures = policy_scope(Picture).includes(dive: { location: :country }, species: [])
+    if params[:category_id].present?
+      @pictures = @pictures.joins(:species).where(species: { category_id: params[:category_id] }).distinct
+    end
+
+    @categories = Category.order(:name)
 
     @pictures = @pictures.joins(dive: :trip).where(trips: { id: params[:trip_id] }) if params[:trip_id].present?
     if params[:location_id].present?
       @pictures = @pictures.joins(dive: :location).where(locations: { id: params[:location_id] })
     end
-    @pictures = @pictures.where("pictures.date_time >= ?", params[:date_from]) if params[:date_from].present?
-    @pictures = @pictures.where("pictures.date_time <= ?", params[:date_to]) if params[:date_to].present?
+    @pictures = @pictures.where("EXTRACT(YEAR FROM pictures.date_time) = ?", params[:year]) if params[:year].present?
 
     @pictures = case params[:sort]
                 when "date_asc"
@@ -26,6 +30,7 @@ class PicturesController < ApplicationController
 
     @trips = current_user.trips.order(:title)
     @locations = Location.joins(dives: :trip).where(trips: { user_id: current_user.id }).distinct.order(:name)
+    @years = policy_scope(Picture).where.not(date_time: nil).pluck(Arel.sql("EXTRACT(YEAR FROM date_time)")).uniq.sort.reverse
   end
 
   def show
