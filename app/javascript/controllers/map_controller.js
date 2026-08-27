@@ -305,11 +305,11 @@ export default class extends Controller {
 
       // Toggle current location
       if (this.currentLocation) this.currentLocation.style.border = '0';
-      btn.style.border = 'solid 2px red';
-      this.currentLocation = btn;
-    } catch (error) {
-      console.log(error);
-    }
+        btn.style.border = 'solid 2px red';
+        this.currentLocation = btn;
+      } catch (error) {
+        console.log(error);
+      }
   }
 
   // Set location bounds with dives

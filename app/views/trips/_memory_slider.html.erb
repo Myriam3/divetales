@@ -14,7 +14,7 @@
     <div class="splide__track">
       <ul class="splide__list list-unstyled">
         <% pictures.first(max).each do |picture| %>
-          <li class="splide__slide" data-time="<%= picture.date_time&.iso8601 %>">
+          <li class="splide__slide" data-time="<%= picture.date_time %>">
             <%= render "shared/picture_card", picture: picture, show_info: false %>
             <span style="color:red"><%= picture.date_time ? picture.date_time.strftime("%H:%M") : 'no time' %></span>
           </li>
