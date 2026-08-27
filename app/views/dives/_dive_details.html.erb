@@ -1,0 +1,88 @@
+<% if dive %>
+  <section id="species" class="mt-5">
+    <h2 class="mb-4">
+      <%= render "shared/icon", icon_name: "fish", icon_size: 36 %>
+      Encountered marine life
+    </h2>
+
+    <p class="mb-4">
+      <%= link_to identification_path(dive_id: @dive.id), class: "btn btn-secondary" do %>
+      <%= render "shared/icon", icon_name: "photo-spark" %>
+        Identify a new species
+      <% end %>
+    </p>
+
+    <% if @species.any? %>
+      <ul class="list-unstyled">
+        <% @species.each do |species| %>
+          <li class="d-flex align-items-center gap-3 mb-3">
+            <% picture = species.pictures.find { |picture| picture.photo.attached? } %>
+            <% if picture %>
+              <div class="position-relative flex-shrink-0">
+                <%= image_tag picture.photo,
+                    class: "rounded object-fit-cover",
+                    style: "width: 100px; height: 100px;" %>
+
+                <% if picture.species_default? %>
+                  <span class="badge bg-secondary position-absolute bottom-0 start-0 m-1">
+                    Reference
+                  </span>
+                <% end %>
+              </div>
+            <% end %>
+
+            <p>
+              <strong><%= species.name %></strong>
+              <br>
+              <em><%= species.scientific_name %></em>
+              <br>
+              <%= render "shared/icon", icon_name: "binary-tree" %>
+              <span><%= species.category.classification.humanize %>
+              <br>
+              <%= render "shared/icon", icon_name: "fish" %>
+              <span><%= species.category.name %>
+            </span>
+
+            <% unless species.wiki_link.blank? %>
+              <br>
+              <a href="<%= species.wiki_link %>" class="text-decoration-none" target="_blank">
+                <%= render "shared/icon", icon_name: "brand-wikipedia" %>
+                Wikipedia
+              </a>
+            <% end %>
+
+            </p>
+          </li>
+        <% end %>
+    </ul>
+    <% else %>
+      <p>No species identified for this dive.</p>
+    <% end %>
+  </section>
+
+  <section id="pictures" class="mt-5">
+    <h2 class="mb-4">
+      <%= render "shared/icon", icon_name: "library-photo", icon_size: 36 %>
+      Dive pictures
+    </h2>
+
+    <p class="mb-4">
+      <%= link_to new_picture_path(dive_id: @dive.id, trip_id: @dive.trip_id), class: "btn btn-secondary" do %>
+      <%= render "shared/icon", icon_name: "camera-spark" %>
+        Add a new picture
+      <% end %>
+    </p>
+
+    <% if @dive.pictures.any? %>
+      <ul class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 list-unstyled">
+        <% @dive.pictures.each do |picture| %>
+          <li class="col">
+            <%= render "shared/picture_card", picture: picture, show_info: false, return_to: "dive" %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No pictures for this dive.</p>
+    <% end %>
+  </section>
+<% end %>

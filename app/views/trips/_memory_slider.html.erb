@@ -1,0 +1,25 @@
+<%
+  max = local_assigns[:max] || 20
+  label = local_assigns[:label] || "Pictures"
+  focus = local_assigns[:focus] || "center"
+  type = local_assigns[:type] || "loop"
+  rewind = local_assigns[:type] || true
+%>
+<div data-controller="slider">
+  <div class="splide"
+      aria-label="<%= label %>"
+      data-slider-target="sliderContainer"
+      data-slider-focus-value="<%= focus %>"
+  >
+    <div class="splide__track">
+      <ul class="splide__list list-unstyled">
+        <% pictures.first(max).each do |picture| %>
+          <li class="splide__slide" data-time="<%= picture.date_time&.iso8601 %>">
+            <%= render "shared/picture_card", picture: picture, show_info: false %>
+            <span style="color:red"><%= picture.date_time ? picture.date_time.strftime("%H:%M") : 'no time' %></span>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

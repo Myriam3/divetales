@@ -18,7 +18,7 @@ def create_locations(countries)
     "gili" => Location.find_or_create_by!(name: "Gili Islands", country: countries["id"]),
     "nusa_penida" => Location.find_or_create_by!(name: "Bali - Nusa Penida", country: countries["id"]),
     "buleleng" => Location.find_or_create_by!(name: "Bali - Buleleng", country: countries["id"]),
-    "tulamben" => Location.find_or_create_by!(name: "Bali - Tulamben (USAT Liberty)", country: countries["id"]),
+    "tulamben" => Location.find_or_create_by!(name: "Bali - Tulamben", country: countries["id"]),
     "amed" => Location.find_or_create_by!(name: "Bali - Amed", country: countries["id"]),
     "komodo" => Location.find_or_create_by!(name: "Komodo National Park", country: countries["id"]),
     "raja_ampat" => Location.find_or_create_by!(name: "Raja Ampat", country: countries["id"]),

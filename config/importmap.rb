@@ -9,3 +9,4 @@ pin "bootstrap", to: "bootstrap.min.js", preload: true
 pin "@popperjs/core", to: "popper.js", preload: true
 pin "@garmin/fitsdk", to: "@garmin--fitsdk.js" # @21.213.0
 pin "mapbox-gl" # @3.28.1
+pin "@splidejs/splide", to: "@splidejs--splide.js" # @4.1.4

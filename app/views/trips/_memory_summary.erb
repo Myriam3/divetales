@@ -1,0 +1,146 @@
+<div class="mb-5">
+  <div class="mb-3">
+    <% if local_assigns[:stats] && local_assigns[:stats].any? %>
+      <ul class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-3">
+        <li class="col d-flex align-items-start">
+          <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 36 %>
+          <div>
+            <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= pluralize(@stats[:dives_count], "Dive") %></p>
+            <p class="px-3"><%= pluralize(@stats[:dive_days_count], "Diving day") %></p>
+          </div>
+        </li>
+        <% if @stats[:total_duration].positive? %>
+        <li class="col d-flex align-items-start">
+          <%= render "shared/icon", icon_name: "clock", icon_size: 36 %>
+          <div>
+            <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:total_duration] %>min</p>
+            <p class="px-3">Total underwater</p>
+          </div>
+        </li>
+        <% end %>
+        <% if @stats[:max_depth].present? %>
+          <li class="col d-flex align-items-start">
+            <%= render "shared/icon", icon_name: "arrow-bar-to-down", icon_size: 36 %>
+            <div>
+              <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:max_depth].round %>m</p>
+              <p class="px-3">Deepest dive</p>
+            </div>
+          </li>
+        <% end %>
+        <% if @stats[:max_duration].positive? %>
+          <li class="col d-flex align-items-start">
+            <%= render "shared/icon", icon_name: "clock", icon_size: 36 %>
+            <div>
+              <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:max_duration] %>min</p>
+              <p class="px-3">Longuest dive</p>
+            </div>
+          </li>
+        <% end %>
+        <% if @stats[:avg_temp].positive? %>
+          <li class="col d-flex align-items-start">
+            <%= render "shared/icon", icon_name: "temperature", icon_size: 36 %>
+            <div>
+              <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:avg_temp].round(1) %>°C</p>
+              <p class="px-3">Average temperature</p>
+            </div>
+          </li>
+        <% end %>
+        <li class="col d-flex align-items-start">
+          <%= render "shared/icon", icon_name: "camera-spark", icon_size: 36 %>
+          <div>
+            <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= pluralize(@stats[:pictures_count], "Picture") %></p>
+          </div>
+        </li>
+        <li class="col d-flex align-items-start">
+          <%= render "shared/icon", icon_name: "fish", icon_size: 36 %>
+          <div>
+            <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:species_count] %> Species</p>
+            <p class="px-3">Identified</p>
+          </div>
+        </li>
+        <% if @stats[:drift_count].positive? %>
+          <li class="col d-flex align-items-start">
+            <%= render "shared/icon", icon_name: "wind", icon_size: 36 %>
+            <div>
+              <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:drift_count] %> Drift</p>
+              <p class="px-3">Dive<% if @stats[:drift_count] > 1  %>s<% end %></p>
+            </div>
+          </li>
+        <% end %>
+        <% if @stats[:wreck_count].positive? %>
+          <li class="col d-flex align-items-start">
+            <%= render "shared/icon", icon_name: "submarine", icon_size: 36 %>
+            <div>
+              <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:wreck_count] %> Wreck</p>
+              <p class="px-3">Dive<% if @stats[:wreck_count] > 1  %>s<% end %></p>
+            </div>
+          </li>
+        <% end %>
+        <% if @stats[:cave_count].positive? %>
+          <li class="col d-flex align-items-start">
+            <%= render "shared/icon", icon_name: "lighter", icon_size: 36 %>
+            <div>
+              <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:cave_count] %> Cave</p>
+              <p class="px-3">Dive<% if @stats[:cave_count] > 1  %>s<% end %></p>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <% if local_assigns[:dives_by_time] && local_assigns[:dives_by_time].any? %>
+      <div class="col">
+        <div style="width: 300px; max-width: 100%;">
+          <canvas id="diveTimeChart"></canvas>
+        </div>
+      </div>
+    <% end %>
+
+    <% if local_assigns[:dives_by_entry] && local_assigns[:dives_by_time].any? %>
+      <div class="col">
+        <div style="width: 300px; max-width: 100%;">
+          <canvas id="diveEntryChart"></canvas>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+    (() => {
+        window.addEventListener('DOMContentLoaded', (e) => {
+          console.log(e)
+          const chartTimeCtx = document.getElementById('diveTimeChart')?.getContext('2d');
+          const chartEntryCtx = document.getElementById('diveEntryChart')?.getContext('2d');
+
+          if (chartTimeCtx) {
+            const chartTime = new Chart(chartTimeCtx, {
+              type: 'pie',
+              data: {
+                labels: ['Night', 'Morning', 'Afternoon'],
+                datasets: [{
+                  data: [<%= dives_by_time[:night] %>, <%= dives_by_time[:morning] %>, <%= dives_by_time[:afternoon] %>],
+                  backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56']
+                }]
+              }
+            });
+          }
+
+          if (chartEntryCtx) {
+            const chartEntry = new Chart(chartEntryCtx, {
+              type: 'pie',
+              data: {
+                labels: ['Boat', 'Shore', 'Other'],
+                datasets: [{
+                  data: [<%= @dives_by_entry[:boat] %>, <%= @dives_by_entry[:shore] %>, <%= @dives_by_entry[:other] %>],
+                  backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56']
+                }]
+              }
+            });
+          }
+
+        });
+    })();
+  </script>

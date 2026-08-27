@@ -1,0 +1,20 @@
+<div
+  data-controller="species-chart"
+  data-species-chart-labels-value="<%= classification_pictures_stats.keys.to_json %>"
+  data-species-chart-data-value="<%= classification_pictures_stats.values.to_json %>"
+  data-species-chart-categories-value="<%= categories_by_class.to_json %>"
+  style="width: 300px;"
+>
+  <canvas data-species-chart-target="canvas"></canvas>
+
+  <div data-species-chart-target="details"></div>
+</div>
+
+<% species_pictures_stats.each do |classification, species_stats| %>
+  <h3><%= classification.humanize %></h3>
+  <ul class="list-unstyled">
+    <% species_stats.each do |species, picture_count| %>
+      <li><%= species.name %> : <%= picture_count %> picture<%= "s" unless picture_count == 1 %></li>
+    <% end %>
+  </ul>
+<% end %>
