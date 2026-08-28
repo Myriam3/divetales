@@ -102,8 +102,10 @@ export default class extends Controller {
     const startDate = data.sessionMesgs[0]?.startTime;
     if (!(startDate instanceof Date)) return;
 
+    console.log(startDate);
+
     if (dateInput && dateInput.type === 'date') {
-      dateInput.valueAsDate = startDate;
+      dateInput.value = this.convertDatetime(startDate).split('T')[0];
     }
 
     // Time

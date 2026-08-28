@@ -6,7 +6,15 @@
 
 <div class="mb-5"
     data-controller="depth-chart"
-    data-depth-chart-data-value="<%= html_escape(dive.depth_over_time) %>">
+    data-depth-chart-data-value="<%= html_escape(dive.depth_over_time) %>"
+    data-depth-chart-pictures-value="<%= dive.pictures.sort_by(&:date_time).map { |picture|
+    {
+      id: picture.id,
+      timestamp: picture.date_time.strftime('%Y-%m-%d %H:%M:%S.%3N'),
+      categories: picture.categories
+    }
+  }.to_json %>"
+>
     <canvas data-depth-chart-target="canvas"
             height="400"
     ></canvas>

@@ -55,10 +55,8 @@ class TripsController < ApplicationController
   end
 
   def memory
-    @dives = @trip.dives.includes(
-      :location,
-      pictures: { species: :category }
-    )
+    @dives = @trip.dives.includes(:location, pictures: { species: :category })
+                  .order(date: :asc)
 
     @pictures = @dives.flat_map(&:pictures)
 
