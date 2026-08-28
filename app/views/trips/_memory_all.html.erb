@@ -4,7 +4,7 @@
     Pictures from your trip
   </h2>
 
-  <%= render "memory_slider", pictures: pictures %>
+  <%= render "memory_slider", pictures: pictures, context: 'trip' %>
 
   <% if pictures.length > 1  %>
     <p class="mt-5 text-center">

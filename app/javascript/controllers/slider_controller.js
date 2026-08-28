@@ -51,8 +51,8 @@ export default class extends Controller {
     else if (this.widthValue) {
       options.fixedWidth = this.widthValue;
       //options.omitEnd = true;
-    } else if (this.pageValue) {
-      options.perPage = this.pageValue;
+    } else if (Number(this.pageValue)) {
+      options.perPage = Number(this.pageValue);
     } else {
       options.perPage = 5;
     }
@@ -93,10 +93,6 @@ export default class extends Controller {
     selected.el.classList.add('is-selected');
     this.currentSelected = selected;
     //this.slider.root.style.minHeight = this.slider.root.offsetHeight;
-  }
-
-  unselectPicture(e) {
-
   }
 
   disconnect() {

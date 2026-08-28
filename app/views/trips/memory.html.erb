@@ -6,7 +6,6 @@
     <% end %>
   </div>
 
-
   <div>
     <h1 class="mt-5 mb-4 text-center">
       <%= render "shared/icon", icon_name: "album", icon_size: 42 %>
@@ -47,24 +46,27 @@
         #dives_by_entry: @dives_by_entry
     %>
   </div>
+  <div data-controller="lightbox">
+    <section class="mb-5">
+      <div class="container">
+        <h2 class="mb-4 mt-5 fw-bold" id="itinerary">
+          <%= render "shared/icon", icon_name: "route", icon_size: 40 %>
+          Itinerary
+        </h2>
+      </div>
 
-  <section class="mb-5">
-    <div class="container">
-      <h2 class="mb-4 mt-5 fw-bold" id="itinerary">
-        <%= render "shared/icon", icon_name: "route", icon_size: 40 %>
-        Itinerary
-      </h2>
-    </div>
+      <%= render 'memory_map',
+          dives: @dives,
+          trip: @trip,
+          itinerary: @itinerary,
+          stats: @stats
+      %>
+    </section>
 
-    <%= render 'memory_map',
-        dives: @dives,
-        trip: @trip,
-        itinerary: @itinerary,
-        stats: @stats
-    %>
-  </section>
+    <% if @pictures.any? %>
+      <%= render "memory_all", pictures: @pictures %>
+    <% end %>
 
-  <% if @pictures.any? %>
-    <%# render "memory_all", pictures: @pictures %>
-  <% end %>
+    <%= render 'pictures/lightbox' %>
+  </div>
 <% end %>

@@ -162,7 +162,6 @@ export default class extends Controller {
         },
         font: [{size: 20}],
         click: ({element}) => {
-          console.log(element);
           if (this.selectedLabel) {
             this.selectedLabel.options.backgroundColor = this.iconBgColor;
           }
@@ -203,6 +202,5 @@ export default class extends Controller {
 
   disconnect() {
     this.chart?.destroy();
-    console.log('test');
   }
 }

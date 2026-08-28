@@ -102,8 +102,6 @@ export default class extends Controller {
     const startDate = data.sessionMesgs[0]?.startTime;
     if (!(startDate instanceof Date)) return;
 
-    console.log(startDate);
-
     if (dateInput && dateInput.type === 'date') {
       dateInput.value = this.convertDatetime(startDate).split('T')[0];
     }
@@ -250,7 +248,6 @@ export default class extends Controller {
 
   // Location selector update
   selectLocation(e) {
-    console.log('select location');
     const diveLocationSelect = this.diveFormTarget.dive_location_id;
     if (!(e.detail?.name && diveLocationSelect)) return;
     const words = e.detail.name.split(",");

@@ -1,0 +1,24 @@
+<%
+  start_index = pictures.find_index do |picture|
+    picture.id == selected_picture_id&.to_i
+  end || 0
+%>
+
+<div>
+  <div class="splide"
+      data-start="<%= start_index %>"
+      data-lightbox-target="slider"
+      aria-label="Lightbox slider"
+  >
+    <div class="splide__track">
+      <ul class="splide__list list-unstyled">
+        <% pictures.each do |picture| %>
+          <li class="splide__slide" data-time="<%= picture.date_time&.iso8601 %>"  data-id="<%= picture.id %>">
+            <%= render "shared/picture_slide", picture: picture, show_info: false %>
+            <span style="color:red;"><%= picture.dive.date %> - <%= picture.date_time ? picture.date_time.strftime("%H:%M") : 'no time' %> - ID: <%= picture.id %></span>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
