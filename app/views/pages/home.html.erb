@@ -21,6 +21,42 @@
     <%= render "shared/media_gallery", dives: @media_gallery %>
   </div>
 
+    <div class="mt-5"
+        data-controller="slider"
+        data-slider-page-value="3"
+        data-slider-arrows-value="false"
+        data-slider-type-value="slide"
+        data-slider-rewind-value="false"
+        data-slider-width-value="270"
+        data-slider-padding-value="calc((100vw - 1100px - (1.5rem * 2)) / 2)",
+        data-slider-pagination-value="false">
+    <div class="splide"
+          aria-label="Lastest pictures"
+          data-slider-target="sliderContainer"
+      >
+        <div class="splide__track">
+          <ul class="splide__list list-unstyled">
+            <% @media_gallery.each do |dive| %>
+              <% dive.pictures.take(3).each do |photo| %>
+                <li class="splide__slide">
+                  <div class="position-relative">
+                    <%= image_tag photo.photo.variant(resize_to_fill: [280, 280]),
+                        class: "w-100 h-100 object-fit-cover rounded shadow-sm",
+                        alt: "Dive media from #{dive.dive_site_name}" %>
+
+                      <span class="position-absolute bottom-0 start-0 w-100 p-1 text-white text-truncate"
+                            style="font-size: 0.7rem; background: rgba(0,0,0,0.5); border-bottom-left-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);">
+                        <%= dive.location.name %>
+                      </span>
+                  </div>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+    </div>
+  </div>
+
   <div class="home-fish home-fish-one">
     <%= image_tag "home-fish.png", alt: "" %>
   </div>
@@ -43,4 +79,5 @@
 
   <%= image_tag "home-diving-helmet.png", alt: "Vintage diving helmet", class: "home-diving-helmet" %>
   <%= image_tag "home-coral-reef.png", alt: "Colorful coral reef", class: "home-coral" %>
+  <%# image_tag "test_4.png", alt: "Colorful coral reef", class: "home-coral" %>
 </section>
