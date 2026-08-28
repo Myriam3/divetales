@@ -15,6 +15,8 @@ export default class extends Controller {
     this.chartBorderWidth = 2;
     this.iconColor = '#FFFFF';
     this.iconBgColor = '#145DA0';
+    this.iconBgColorSelected = "#E9634B";
+    this.selectedLabel = null;
     this.init();
   }
 
@@ -142,7 +144,6 @@ export default class extends Controller {
         icon.alt = "Picture";
       }
 
-      //TODO check start/end time
       annotations[`annotation${index + 1}`] = {
         type: 'label',
         //type: 'point',
@@ -160,9 +161,24 @@ export default class extends Controller {
           bottom: 6
         },
         font: [{size: 20}],
-        click: ({chart, element}) => {
-          console.log('Picture:', picture.id, picture.timestamp);
-          console.log(picture.species, picture.category);
+        click: ({element}) => {
+          console.log(element);
+          if (this.selectedLabel) {
+            this.selectedLabel.options.backgroundColor = this.iconBgColor;
+          }
+
+          if (this.selectedLabel === element) {
+            this.selectedLabel = null;
+          } else {
+            element.options.backgroundColor = this.iconBgColorSelected;
+            this.selectedLabel = element;
+          }
+          // TODO prevent reset at window resize ↓
+          //this.chart.options.plugins.annotation.annotations.annotation1.backgroundColor = this.iconBgColorSelected
+
+          this.dispatch("picture-selected", {
+            detail: { picture, element }
+          });
         }
       };
     }, {});
@@ -186,6 +202,7 @@ export default class extends Controller {
   }
 
   disconnect() {
-    this.chart?.destroy()
+    this.chart?.destroy();
+    console.log('test');
   }
 }

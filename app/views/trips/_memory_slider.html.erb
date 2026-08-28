@@ -5,20 +5,56 @@
   type = local_assigns[:type] || "loop"
   rewind = local_assigns[:type] || true
 %>
-<div data-controller="slider">
+
+<style>
+  .splide__slide {
+    transition: width;
+    width: 250px;
+    transition: width 0.3s;
+  }
+
+  .splide__slide .pic-slide {
+    width: 100%;
+    overflow: hidden;
+    aspect-ratio: 3/2;
+    transition: width 0.3s;
+    border-radius: 4px;
+  }
+
+  .splide__slide .pic-slide img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+
+  .splide__slide.is-selected {
+    width: 360px;
+  }
+</style>
+
+<div data-controller="slider"
+    data-action="depth-chart:picture-selected@window->slider#selectPicture"
+    data-action="depth-chart:picture-uselected@window->slider#unselectPicture"
+    data-slider-type-value="slide"
+    data-slider-rewind-value="false"
+    data-slider-auto-width-value="true"
+    data-slider-arrows-value="false"
+    data-slider-focus-value="0"
+    data-slider-padding-left-value="calc((100vw - 1200px) / 2)"
+    class="my-3"
+    style="min-height: 264px;"
+>
   <div class="splide"
       aria-label="<%= label %>"
       data-slider-target="sliderContainer"
   >
     <div class="splide__track">
-      <ul class="splide__list list-unstyled">
+      <ol class="splide__list list-unstyled">
         <% pictures.first(max).each do |picture| %>
-          <li class="splide__slide" data-time="<%= picture.date_time&.iso8601 %>">
-            <%= render "shared/picture_card", picture: picture, show_info: false %>
-            <span style="color:red"><%= picture.dive.date %> - <%= picture.date_time ? picture.date_time.strftime("%H:%M") : 'no time' %></span>
+          <li class="splide__slide" data-time="<%= picture.date_time&.iso8601 %>"  data-id="<%= picture.id %>">
+            <%= render "shared/picture_slide", picture: picture, show_info: false %>
+            <span style="color:red"><%= picture.dive.date %> - <%= picture.date_time ? picture.date_time.strftime("%H:%M") : 'no time' %> - ID: <%= picture.id %></span>
           </li>
         <% end %>
-      </ul>
+      </ol>
     </div>
   </div>
 </div>

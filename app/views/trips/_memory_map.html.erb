@@ -23,7 +23,7 @@
     <div class="container">
       <% if itinerary.any? %>
         <div data-controller="itinerary">
-          <%# render "memory_itinerary", itinerary: itinerary, countries_count: stats[:countries_count] %>
+          <%= render "memory_itinerary", itinerary: itinerary, countries_count: stats[:countries_count] %>
         </div>
       <% end %>
     </div>
@@ -37,6 +37,4 @@
     </div>
 
     <div id="memory-dive-container"></div>
-
-    <%= render "trips/memory_dive", dive: @dives.find_by(dive_number: 184) %>
   </div>
