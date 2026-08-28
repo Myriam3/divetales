@@ -17,12 +17,13 @@
         data-map-trip-id-value="<%= trip.id %>"
         data-map-api-url-value="<%= api_mapbox_path %>"
         data-map-dive-url-value ="<%= memory_dive_trip_path %>"
-        data-map-dives-value="<%=  map_dives.to_json %>">
+        data-map-dives-value ="<%=  map_dives.to_json %>"
+  >
 
     <div class="container">
       <% if itinerary.any? %>
         <div data-controller="itinerary">
-          <%= render "memory_itinerary", itinerary: itinerary, countries_count: stats[:countries_count] %>
+          <%# render "memory_itinerary", itinerary: itinerary, countries_count: stats[:countries_count] %>
         </div>
       <% end %>
     </div>
@@ -36,4 +37,6 @@
     </div>
 
     <div id="memory-dive-container"></div>
+
+    <%= render "trips/memory_dive", dive: @dives.find_by(dive_number: 184) %>
   </div>

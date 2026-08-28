@@ -74,7 +74,7 @@ export default class extends Controller {
   // Trip Map
   initTripMap(settings) {
     const centerOptions = this.getDivesBounds(this.divesValue);
-    this.displayMap(centerOptions.center, 6, settings, centerOptions.bounds);
+    //this.displayMap(centerOptions.center, 6, settings, centerOptions.bounds);
   }
 
   // Display map
@@ -185,13 +185,12 @@ export default class extends Controller {
       Turbo.renderStreamMessage(html);
       this.currentDive = dive;
 
-      //if (pointDives.length > 1) this.pointDivesToRender = pointDives
-
     } catch (error) {
       console.log(error);
     }
   }
 
+  // When multiple dives on same coordinates
   displayPointDives(dives) {
     if (!this.itineraryLocationTarget) return;
 
@@ -289,7 +288,7 @@ export default class extends Controller {
     }
   }
 
-  // Center map on itinerary click
+  // Center map on location dives
   centerMap(e, btn, center, bounds = null) {
     e.preventDefault();
     try {

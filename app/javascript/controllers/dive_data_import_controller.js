@@ -62,7 +62,7 @@ export default class extends Controller {
     return messages;
   }
 
-  // Update the form
+  // Update the new dive form
   fillDiveForm(data) {
     if (!this.diveFormTarget) return;
 

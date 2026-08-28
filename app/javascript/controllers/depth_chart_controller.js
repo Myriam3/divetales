@@ -5,15 +5,20 @@ export default class extends Controller {
 
   static values = {
     data: Array,
-    pictures: Array
+    pictures: Array,
+    icon: String
   }
 
   connect() {
-    console.log(('chart'));
-    this.createDepthChart();
+    this.chartBorderColor = '#2588E4';
+    this.chartBgColor = '#7FB9F0';
+    this.chartBorderWidth = 2;
+    this.iconColor = '#FFFFF';
+    this.iconBgColor = '#145DA0';
+    this.init();
   }
 
-  createDepthChart() {
+  init() {
     const points = this.dataValue
       .map(point => ({
         x: new Date(point.timestamp),
@@ -21,8 +26,12 @@ export default class extends Controller {
       }))
       .filter(point => !isNaN(point.x.getTime()) && !isNaN(point.y));
 
-    const annotations = this.mapPictures(points);
+    const pictureLabels = this.picturesValue.length ? this.mapPictures(points) : {};
 
+    this.createDepthChart(points, pictureLabels);
+  }
+
+  createDepthChart(points, annotations){
     try {
       this.chart = new window.Chart(this.canvasTarget, {
         type: "line",
@@ -31,9 +40,9 @@ export default class extends Controller {
             {
               label: "Depth",
               data: points,
-              borderColor: "#168BCB",
-              backgroundColor: "#25A7DE",
-              borderWidth: 2,
+              borderColor: this.chartBorderColor,
+              backgroundColor: this.chartBgColor,
+              borderWidth: this.chartBorderWidth,
               pointRadius: 0,
               tension: 0.3,
               fill: true
@@ -112,13 +121,26 @@ export default class extends Controller {
     }
   }
 
+  // Map pictures with chart data
   mapPictures(points) {
     const annotations = {};
+    const start = points[0].x;
+    const end = points[points.length - 1].x;
 
     this.picturesValue.forEach((picture, index) => {
       if (!picture.timestamp) return;
       const closestPoint = this.findClosestPoint(picture.timestamp, points);
-      console.log(picture.categories);
+      const pictureDate = new Date(picture.timestamp);
+      if (!(pictureDate >= start && pictureDate <= end)) return;
+
+      let icon = '📷';
+      if (this.iconValue) {
+        icon = document.createElement('img');
+        icon.src = this.iconValue;
+        icon.width = 18;
+        icon.height = 18;
+        icon.alt = "Picture";
+      }
 
       //TODO check start/end time
       annotations[`annotation${index + 1}`] = {
@@ -126,26 +148,29 @@ export default class extends Controller {
         //type: 'point',
         xValue: new Date(picture.timestamp),
         yValue: closestPoint.y,
-        backgroundColor: 'transparent',
-        content: '📷',
-        borderRadius: 14,
+        color: this.iconColor,
+        backgroundColor: this.iconBgColor,
+        content: icon,
+        drawTime: 'afterDraw',
+        borderRadius: 24,
         padding: {
-          top: 0,
+          top: 6,
           left: 6,
           right: 6,
           bottom: 6
         },
-        font: [{size: 24}],
-        click: function({chart, element}) {
-          console.log('Line picture:', picture.id, chart, element);
+        font: [{size: 20}],
+        click: ({chart, element}) => {
+          console.log('Picture:', picture.id, picture.timestamp);
+          console.log(picture.species, picture.category);
         }
       };
     }, {});
 
-
     return annotations;
   }
 
+  // Find closest timestamp point
   findClosestPoint(timestamp, points) {
     const pictureTime = new Date(timestamp).getTime();
     const closestPoint = points.reduce((closest, point) => {
