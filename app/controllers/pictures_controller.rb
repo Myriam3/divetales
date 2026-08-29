@@ -1,5 +1,5 @@
 class PicturesController < ApplicationController
-  before_action :set_picture, only: %i[show edit update destroy]
+  before_action :set_picture, only: %i[show edit update destroy generate_species_details]
   before_action :set_form_data, only: %i[new edit]
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
@@ -127,6 +127,31 @@ class PicturesController < ApplicationController
     render plain: "Not found", status: :not_found
   end
 
+  def generate_species_details
+    @species = Species.find(params[:species_id])
+
+    PopulateSpeciesDetailsJob.perform_later(@species.id)
+
+    head :no_content
+  end
+
+  def bulk_destroy
+    @pictures = Picture.where(id: params[:picture_ids])
+
+    @pictures.each { |picture| authorize picture, :destroy? }
+
+    dive = @pictures.first&.dive
+
+    deleted_count = @pictures.destroy_all.count
+
+    if params[:return_to] == "dive" && dive
+      redirect_to dive_path(dive, anchor: "pictures"), notice: "Successfully deleted #{deleted_count} photos.",
+                                                       status: :see_other
+    else
+      redirect_to pictures_path, notice: "Successfully deleted #{deleted_count} photos.", status: :see_other
+    end
+  end
+
   private
 
   def set_picture
@@ -163,7 +188,7 @@ class PicturesController < ApplicationController
   end
 
   def picture_params
-    params.require(:picture).permit(:photo, :dive_id)
+    params.require(:picture).permit(:photo, :dive_id, :date_time)
   end
 
   def related_species

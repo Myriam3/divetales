@@ -176,7 +176,7 @@ puts "#{locations.length} locations created"
 
 require_relative "seeds/dive_sites"
 
-dive_sites = load_dive_sites
+dive_sites = load_dive_sites(locations)
 puts "#{dive_sites.length} dive sites created"
 
 
@@ -188,6 +188,7 @@ require_relative "seeds/trips"
 
 trips = create_trips(user, countries)
 puts "#{trips.length} trips created"
+
 # ==========================================
 # Dives
 # ==========================================
@@ -200,4 +201,4 @@ puts "#{dives.length} dives created"
 # Pictures
 # ==========================================
 require_relative "seeds/pictures"
-create_pictures_species(dives)
+# create_pictures_species(dives)

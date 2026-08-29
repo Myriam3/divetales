@@ -30,10 +30,10 @@
             </div>
           <% end %>
 
-          <h2 class="fw-bold text-dark mb-1 d-flex align-items-center justify-content-center gap-2">
+          <h1 class="dive-heading fw-bold text-dark mb-1 d-flex align-items-center justify-content-center gap-2">
             <%= render "shared/icon", icon_name: "fish", icon_size: 32 %>
             <%= common_name.presence || "Unknown species" %>
-          </h2>
+          </h1>
 
           <p class="fst-italic text-muted fs-5 mb-2">
             <%= scientific_name %>
@@ -55,7 +55,7 @@
                   dive_id: dive_id,
                   picture_id: picture_id
                 ),
-                class: "btn btn-primary btn-lg d-inline-flex align-items-center justify-content-center gap-2 rounded-pill px-4 shadow-sm",
+                class: "btn btn-dive btn-dive-primary btn-lg d-inline-flex align-items-center justify-content-center gap-2 rounded-pill px-4 shadow-sm",
                 data: { turbo_frame: "_top" } do %>
               <%= render "shared/icon", icon_name: "photo-check", icon_size: 20 %> Confirm this species
             <% end %>

@@ -41,7 +41,7 @@
                         label: false,
                         input_html: {
                           id: "identification_upload",
-                          accept: "image/*",
+                          accept: "image/*, .orf, .ORF",
                           data: { action: "change->image-preview#preview" }
                         } %>
                 </div>
@@ -64,7 +64,7 @@
                         input_html: {
                           id: "identification_camera",
                           capture: "environment",
-                          accept: "image/*",
+                          accept: "image/*, .orf, .ORF",
                           data: { action: "change->image-preview#preview" }
                         } %>
                 </div>
@@ -117,7 +117,7 @@
           <div class="identification-content d-none" data-identification-form-target="content">
             <%= f.input :color,
                   as: :text,
-                  label: "<span class='d-flex align-items-center gap-2'>#{render 'shared/icon', icon_name: 'palette'} Color & Pattern</span>".html_safe,
+                  label: "<span class='dive-text d-flex align-items-center gap-2'>#{render 'shared/icon', icon_name: 'palette'} Color & Pattern</span>".html_safe,
                   placeholder: "e.g. blue body with yellow stripes",
                   required: false %>
 
@@ -215,7 +215,7 @@
         </div>
       </div>
 
-      <%= f.button :button, class: "btn btn-secondary mt-5 d-flex align-items-center justify-content-center gap-2 w-100" do %>
+      <%= f.button :button, class: "btn-dive-primary btn btn-secondary mt-5 d-flex align-items-center justify-content-center gap-2 w-100" do %>
         <%= render "shared/icon", icon_name: "photo-spark" %> Identify
       <% end %>
     </div>

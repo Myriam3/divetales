@@ -22,14 +22,10 @@
     </div>
 
     <div class="mb-5">
-      <%= f.label :date_taken, class: "form-label fw-bold text-dark" do %>
-        <%= render "shared/icon", icon_name: "calendar" %>
-        Date Time Taken
-      <% end %>
-      <%= f.text_field :date_taken,
-          value: @picture.photo.attached? ? @picture.photo.metadata["date_taken"] : "",
-          class: "form-control rounded-3 bg-light border-0 py-2",
-          placeholder: "e.g., 2026-07-15 14:30:00" %>
+      <%= f.label :date_time, "Date Time Taken", class: "form-label fw-bold text-dark" %>
+
+      <%= f.datetime_local_field :date_time,
+          class: "form-control rounded-3 bg-light border-0 py-2" %>
     </div>
 
     <div class="d-flex gap-2">

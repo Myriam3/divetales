@@ -67,7 +67,7 @@
             identification_id: identification.id,
             picture_id: @picture&.id
           ),
-          class: "btn btn-outline-primary d-flex align-items-center justify-content-center gap-2",
+          class: "btn-dive-secondary btn btn-outline-primary d-flex align-items-center justify-content-center gap-2",
           data: { turbo: false } do %>
         <%= render "shared/icon", icon_name: "zoom-in", icon_size: 18 %> View more details
       <% end %>
@@ -79,7 +79,7 @@
             dive_id: @dive&.id,
             picture_id: @picture&.id
           ),
-          class: "btn btn-primary d-flex align-items-center justify-content-center gap-2",
+          class: "btn-dive-primary btn btn-primary d-flex align-items-center justify-content-center gap-2",
           data: { turbo_frame: "_top" } do %>
         <%= render "shared/icon", icon_name: "photo-check", icon_size: 18 %> Confirm this species
       <% end %>

@@ -248,6 +248,7 @@ export default class extends Controller {
 
   // Location selector update
   selectLocation(e) {
+    console.log('select location');
     const diveLocationSelect = this.diveFormTarget.dive_location_id;
     if (!(e.detail?.name && diveLocationSelect)) return;
     const words = e.detail.name.split(",");

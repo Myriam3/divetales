@@ -25,6 +25,14 @@ class TripPolicy < ApplicationPolicy
     record.user == user
   end
 
+  def memory?
+    record.user == user
+  end
+
+  def memory_dive?
+    record.user == user
+  end
+
   def destroy?
     record.user == user
   end

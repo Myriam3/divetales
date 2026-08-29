@@ -1,25 +1,31 @@
 <div class="identification-page">
-  <h1 class="mt-5 mb-5">Marine Life ID</h1>
+  <div class="trips-hero">
+    <h1>Marine Life ID</h1>
+    <h2>Name every encounter.</h2>
+    <p>Easily identify and record the distinct marine life that makes each of your dives unforgettable.</p>
+  </div>
 
-  <%= turbo_frame_tag "identification-content" do %>
+<div class="container">
+    <%= turbo_frame_tag "identification-content" do %>
 
-    <% if @identification&.failed? %>
+      <% if @identification&.failed? %>
 
-      <%= render "identifications/identification_failed",
-          identification: @identification,
-          dive: @dive %>
+        <%= render "identifications/identification_failed",
+            identification: @identification,
+            dive: @dive %>
 
-    <% elsif @identification&.completed? && @results.present? %>
+      <% elsif @identification&.completed? && @results.present? %>
 
-      <%= render "identifications/results",
-          identification: @identification,
-          results: @results %>
+        <%= render "identifications/results",
+            identification: @identification,
+            results: @results %>
 
-    <% else %>
+      <% else %>
 
-      <%= render "identifications/form" %>
+        <%= render "identifications/form" %>
+
+      <% end %>
 
     <% end %>
-
-  <% end %>
+  </div>
 </div>

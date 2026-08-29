@@ -1,0 +1,81 @@
+<% if dive %>
+  <h2 id="log">Log</h2>
+
+  <div>
+    <% unless dive.duration.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "clock" %>
+        <span>Duration:</span>
+        <%= dive.duration %>min
+      </p>
+    <% end %>
+
+    <% unless dive.start_time.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "ripple-down" %>
+        Start: <%= dive.start_time.strftime("%H:%M") %>
+      </p>
+
+      <% unless dive.end_time.blank? %>
+        <p>
+          <%= render "shared/icon", icon_name: "ripple-up" %>
+          End: <%= dive.end_time.strftime("%H:%M") %>
+        </p>
+      <% end %>
+    <% end %>
+
+    <% unless dive.tank_type.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "scuba-diving-tank", label: "Tank:" %>
+        <%= dive.tank_type.humanize %>
+      </p>
+    <% end %>
+
+    <% unless dive.gauge_pressure_start.blank? || dive.gauge_pressure_end.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "gauge", label: "Gauge:" %>
+        <%= format("Start: %.0f bar / End: %.0f bar", dive.gauge_pressure_start, dive.gauge_pressure_end) %>
+      </p>
+    <% end %>
+
+    <% unless dive.max_depth.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "arrow-bar-to-down" %>
+        <span>Max-depth:</span>
+        <%= number_with_precision(dive.max_depth, precision: 1, strip_insignificant_zeros: true) %>m
+      </p>
+    <% end %>
+
+    <% unless dive.avg_depth.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "arrows-down-up" %>
+        <span>Average depth:</span>
+        <%= number_with_precision(dive.avg_depth, precision: 1, strip_insignificant_zeros: true) %>m
+      </p>
+    <% end %>
+
+    <% unless dive.avg_temp.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "temperature" %>
+        <span>Average temperature:</span>
+        <%= number_with_precision(dive.avg_temp, precision: 1, strip_insignificant_zeros: true) %>°C
+      </p>
+    <% end %>
+
+    <% unless dive.min_temp.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "temperature-minus" %>
+        <span>Temperature min:</span>
+        <%= number_with_precision(dive.min_temp, precision: 1, strip_insignificant_zeros: true) %>°C
+      </p>
+    <% end %>
+
+    <% unless dive.max_temp.blank? %>
+      <p>
+        <%= render "shared/icon", icon_name: "temperature-plus" %>
+        <span>Temperature max:</span>
+        <%= number_with_precision(dive.max_temp, precision: 1, strip_insignificant_zeros: true) %>°C
+      </p>
+    <% end %>
+  </div>
+<% end %>

@@ -148,5 +148,29 @@
     "species": [],
     "image_path": "184-seahorse",
     "date_time": "2025-10-10 13:39"
+  },
+    {
+    "dive_key": ["castle_rock"],
+    "species": [],
+    "image_path": "bikini-bottom-01",
+    "date_time": "2026-07-12 10:15"
+  },
+  {
+    "dive_key": ["castle_rock"],
+    "species": [],
+    "image_path": "bikini-bottom-02",
+    "date_time": "2026-07-12 10:20"
+  },
+  {
+    "dive_key": ["manta_point_night"],
+    "species": [],
+    "image_path": "bikini-bottom-03",
+    "date_time": "2026-07-15 20:20"
+  },
+  {
+    "dive_key": ["manta_point_night"],
+    "species": [],
+    "image_path": "bikini-bottom-04",
+    "date_time": "2026-07-15 20:25"
   }
 ]

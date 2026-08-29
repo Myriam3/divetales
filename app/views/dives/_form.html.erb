@@ -2,13 +2,11 @@
 
 
 <div data-controller="dive-data-import map"
+    data-map-api-url-value="<%= api_mapbox_path %>"
     data-action="
       dive-data-import:import-coordinates->map#initNew
       map:geoinfo->dive-data-import#selectLocation
     "
-    data-map-api-url-value="<%= api_mapbox_path %>"
-    data-action="dive-data-import:import-coordinates->map#init"
-    data-action="map:geoinfo->dive-data-import#selectLocation"
     >
     <%= render "form_import" %>
 
