@@ -10,10 +10,10 @@
     data-depth-chart-icon-value="<%= asset_url("icon-camera-spark.svg") %>"
     data-depth-chart-pictures-value="<%= dive.pictures.sort_by(&:date_time).map { |picture|
     {
-      #id: picture.id,
-      #timestamp: picture.date_time.strftime('%Y-%m-%d %H:%M:%S.%3N'),
-      #species: picture.species,
-     # category: picture.species&.first&.category
+      id: picture.id,
+      timestamp: picture.date_time.strftime('%Y-%m-%d %H:%M:%S.%3N'),
+      species: picture.species,
+     category: picture.species&.first&.category
     }
   }.to_json %>"
 >
