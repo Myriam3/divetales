@@ -19,11 +19,11 @@
   <div class="container-fluid">
 
     <% dive.pictures.sort_by do |picture| %>
-      <%= picture.date_time %><br>
-      <%= picture.date_time.to_json %><br>
-      <%= dive.date %><br>
-      <%= dive.date.to_time.to_json %><br>
-      <%= dive.date.to_time %><br><br>
+      1 <%= picture.date_time %><br>
+      2 <%= picture.date_time.to_json %><br>
+      3 <%= dive.date %><br>
+      4 <%= dive.date.to_time.to_json %><br>
+      5 <%= dive.date.to_time %><br><br>
   <% end %>
     <% if false %>
       <% dive_pictures = dive.pictures.sort_by do |picture|
