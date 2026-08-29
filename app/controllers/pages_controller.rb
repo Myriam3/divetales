@@ -2,6 +2,9 @@ class PagesController < ApplicationController
   # skip_before_action :authenticate_user!, only: [ :home ]
 
   def home
+    @ongoing_trip = current_user.trips.find_by(
+      title: "Indonesia & Malaysia travel 2025"
+    )
     latest_species_ids = PictureSpecy
                          .joins(picture: { dive: :trip })
                          .where(trips: { user_id: current_user.id })
