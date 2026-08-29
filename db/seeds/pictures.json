@@ -84,70 +84,64 @@
     "date_time": "2026-08-11 07:45"
   },
   {
-    "dive_key": ["mikomoto_main_rock"],
-    "species": ["Sphyrna lewini"],
-    "image_path": "dummy-hammerhead",
-    "date_time": "2026-08-11 07:45"
-  },
-  {
     "dive_key": ["buleleng_182"],
     "species": ["Thaumoctopus mimicus"],
     "image_path": "182-mimic-octopus",
-    "date_time": "2025-10-09 18:44"
+    "date_time": "2026-07-29 19:58"
   },
   {
     "dive_key": ["buleleng_182"],
     "species": [],
     "image_path": "182-nudi",
-    "date_time": "2025-10-09 19:07"
+    "date_time": "2026-07-29 20:15"
   },
   {
     "dive_key": ["buleleng_182"],
     "species": [],
     "image_path": "182-octopus",
-    "date_time": "2025-10-09 19:22"
+    "date_time": "2026-07-29 20:22"
   },
   {
     "dive_key": ["buleleng_182"],
     "species": ["Solenostomus paradoxus"],
     "image_path": "182-ornament-ghost-pipefish",
-    "date_time": "2025-10-09 19:48"
+    "date_time": "2026-07-29 20:34"
   },
   {
     "dive_key": ["buleleng_182"],
     "species": [],
     "image_path": "182-pipefish",
-    "date_time": "2025-10-09 19:53"
+    "date_time": "2025-10-09 20:40"
   },
   {
     "dive_key": ["buleleng_184"],
     "species": [],
     "image_path": "184-cuttlefish",
-    "date_time": "2025-10-10 14:08"
+    "date_time": "2026-07-30 14:30"
   },
   {
     "dive_key": ["buleleng_184"],
     "species": [],
     "image_path": "184-frog-fish",
-    "date_time": "2025-10-10 14:26"
+    "date_time": "2026-07-30 14:46"
   },
   {
     "dive_key": ["buleleng_184"],
     "species": [],
     "image_path": "184-pipefish",
-    "date_time": "2025-10-10 13:45"
+    "date_time": "2026-07-30 14:55"
   },
   {
     "dive_key": ["buleleng_184"],
     "species": [],
     "image_path": "184-pipefish-2",
-    "date_time": "2025-10-10 13:46"
+    "date_time": "2026-07-30 15:15"
   },
   {
     "dive_key": ["buleleng_184"],
     "species": [],
     "image_path": "184-seahorse",
-    "date_time": "2025-10-10 13:39"
+    "date_time": "2026-07-30 15:45"
   },
     {
     "dive_key": ["castle_rock"],
@@ -172,6 +166,18 @@
     "species": [],
     "image_path": "bikini-bottom-04",
     "date_time": "2026-07-15 20:25"
+  },
+  {
+    "dive_key": ["nusa_penida_195"],
+    "species": [],
+    "image_path": "nusa_penida_195_shrimp",
+    "date_time": "2026-08-27 13:07"
+  },
+  {
+    "dive_key": ["nusa_penida_195"],
+    "species": [],
+    "image_path": "nusa_penida_195_nudi",
+    "date_time": "2026-08-27 13:13"
   },
   {
     "dive_key": ["nusa_penida_197"],
