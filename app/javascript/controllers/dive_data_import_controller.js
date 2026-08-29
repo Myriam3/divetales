@@ -62,7 +62,7 @@ export default class extends Controller {
     return messages;
   }
 
-  // Update the form
+  // Update the new dive form
   fillDiveForm(data) {
     if (!this.diveFormTarget) return;
 
@@ -103,7 +103,7 @@ export default class extends Controller {
     if (!(startDate instanceof Date)) return;
 
     if (dateInput && dateInput.type === 'date') {
-      dateInput.valueAsDate = startDate;
+      dateInput.value = this.convertDatetime(startDate).split('T')[0];
     }
 
     // Time
@@ -248,7 +248,6 @@ export default class extends Controller {
 
   // Location selector update
   selectLocation(e) {
-    console.log('select location');
     const diveLocationSelect = this.diveFormTarget.dive_location_id;
     if (!(e.detail?.name && diveLocationSelect)) return;
     const words = e.detail.name.split(",");

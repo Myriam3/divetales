@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "lightbox-content" do %>
+  <div id="lightbox-content">
+    <%= render "lightbox_content",
+        selected_picture_id: @lightbox_selected_picture_id,
+        pictures: @lightbox_pictures %>
+  </div>
+<% end %>
