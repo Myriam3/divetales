@@ -12,17 +12,22 @@ export default class extends Controller {
     width: String,
     gap: String,
     padding: String,
-    pagination: String
+    paddingLeft: String,
+    pagination: String,
+    trimSpace: String,
+    autoWidth: String
   };
 
   connect() {
     if (!this.sliderContainerTarget) return;
+    this.slidePictures = {};
+    this.currentSelected = null;
     this.init();
   }
 
   init() {
-    const padding = this.paddingValue || '50px'
-
+    const padding = this.paddingValue || '0'
+    const trimSpace = this.trimSpaceValue === 'false' ? false : (this.trimSpaceValue || true)
     const options = {
         type: this.typeValue || 'loop',
         rewind: this.arrowsValue === 'false' ? false : true,
@@ -30,26 +35,64 @@ export default class extends Controller {
         focus: this.focusValue || 'center',
         arrows: this.arrowsValue === 'false' ? false : true,
         pagination: this.paginationValue === 'false' ? false : true,
-        gap: '10px',
+        updateOnMove : true,
+        gap: this.gapValue || '10px',
+        trimSpace,
         padding: {
-          left: padding,
+          left: this.paddingLeftValue || padding,
           right: padding
         }
     }
 
-    if (this.widthValue) {
-      options.fixedWidth = Number(this.widthValue);
-    } else if (this.pageValue) {
-      options.perPage = this.pageValue;
+    if (this.autoWidthValue === 'true') {
+      options.autoWidth = true;
+      //options.omitEnd = true;
+    }
+    else if (this.widthValue) {
+      options.fixedWidth = this.widthValue;
+      //options.omitEnd = true;
+    } else if (Number(this.pageValue)) {
+      options.perPage = Number(this.pageValue);
     } else {
       options.perPage = 5;
     }
 
-    console.log(options);
+    //console.log(options);
 
     this.slider = new Splide(this.sliderContainerTarget, options);
-
     this.slider.mount();
+
+    this.slider.Components.Slides.forEach((item) => {
+      const id = item.slide.getAttribute('data-id');
+      if (!id) return;
+
+      this.slidePictures[id] = {
+        index: item.index,
+        el: item.slide
+      };
+    });
+  }
+
+  selectPicture(e) {
+    const picture = e.detail?.picture;
+    if (!picture) return;
+
+    const selected = this.slidePictures[picture.id];
+    if (!selected) return;
+
+    if (this.currentSelected) {
+      this.currentSelected.el.classList.remove('is-selected');
+    }
+
+    if (this.currentSelected === selected) {
+      this.currentSelected = null;
+      return;
+    }
+
+    this.slider.go(selected.index);
+    selected.el.classList.add('is-selected');
+    this.currentSelected = selected;
+    //this.slider.root.style.minHeight = this.slider.root.offsetHeight;
   }
 
   disconnect() {
@@ -57,5 +100,8 @@ export default class extends Controller {
       this.slider.destroy()
       this.slider = null;
     }
+
+    this.slidePictures = {};
+    this.currentSelected = null;
   }
 }

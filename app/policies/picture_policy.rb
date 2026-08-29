@@ -47,4 +47,8 @@ class PicturePolicy < ApplicationPolicy
   def generate_species_details?
     show?
   end
+
+  def lightbox?
+    new?
+  end
 end
