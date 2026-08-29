@@ -64,7 +64,7 @@
       <% if dive.depth_over_time.present? %>
         <div class="col col-9">
           <% render "/shared/depth_profile",
-              #dive: dive, display_info: false
+              dive: dive, display_info: false
         %>
         </div>
       <% end %>
