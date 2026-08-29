@@ -13,7 +13,7 @@
       id: picture.id,
       timestamp: picture.date_time.strftime('%Y-%m-%d %H:%M:%S.%3N'),
       species: picture.species,
-      category: picture.species&.first&.category
+     category: picture.species&.first&.category
     }
   }.to_json %>"
 >
