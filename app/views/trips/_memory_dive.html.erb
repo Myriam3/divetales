@@ -21,7 +21,7 @@
       <% dive_pictures = dive.pictures.sort_by do |picture|
           [
             picture.date_time.nil? ? 1 : 0,
-            picture.date_time || dive.start.to_time
+            picture.date_time || dive.date.to_time
           ]
           end
       %>
