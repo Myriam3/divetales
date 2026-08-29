@@ -6,7 +6,6 @@
     <% end %>
   </div>
 
-
   <div>
     <h1 class="mt-5 mb-4 text-center">
       <%= render "shared/icon", icon_name: "album", icon_size: 42 %>
@@ -47,54 +46,27 @@
         #dives_by_entry: @dives_by_entry
     %>
   </div>
-
-  <section class="mb-5">
-    <div class="container">
-      <h2 class="mb-4 mt-5 fw-bold" id="itinerary">
-        <%= render "shared/icon", icon_name: "route", icon_size: 40 %>
-        Itinerary
-      </h2>
-    </div>
-
-    <%= render 'memory_map',
-        dives: @dives,
-        trip: @trip,
-        itinerary: @itinerary,
-        stats: @stats
-    %>
-  </section>
-
-  <% if @pictures.any? %>
+  <div data-controller="lightbox">
     <section class="mb-5">
-      <h2 class="mb-5 fw-bold text-center">
-        <%= render "shared/icon", icon_name: "camera-spark", icon_size: 40 %>
-        Pictures from your trips
-      </h2>
+      <div class="container">
+        <h2 class="mb-4 mt-5 fw-bold" id="itinerary">
+          <%= render "shared/icon", icon_name: "route", icon_size: 40 %>
+          Itinerary
+        </h2>
+      </div>
 
-      <%= render "memory_slider", pictures: @pictures %>
-
-      <% if @pictures.length > 1  %>
-        <p class="mt-5 text-center">
-          <%= link_to pictures_path,
-              class: "btn btn-secondary" do %>
-              <%= render "shared/icon", icon_name: "library-photo", icon_size: 20 %>
-              All trip pictures<small> (<%= @pictures.length %>)</small>
-            <% end %>
-        </p>
-      <% end %>
-    </section>
-
-    <section class="mb-5 mb-5 container">
-      <h2 class="mb-3 fw-bold text-center">
-        <%= render "shared/icon", icon_name: "fish", icon_size: 44 %>
-        Encountered Marine life
-      </h2>
-
-      <%= #render "memory_species",
-        #categories_by_class: @categories_by_class,
-        #classification_pictures_stats: @classification_pictures_stats,
-        #species_pictures_stats: @species_pictures_stats
+      <%= render 'memory_map',
+          dives: @dives,
+          trip: @trip,
+          itinerary: @itinerary,
+          stats: @stats
       %>
     </section>
-  <% end %>
+
+    <% if @pictures.any? %>
+      <%= render "memory_all", pictures: @pictures %>
+    <% end %>
+
+    <%= render 'pictures/lightbox' %>
+  </div>
 <% end %>

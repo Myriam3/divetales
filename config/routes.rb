@@ -39,6 +39,7 @@ Rails.application.routes.draw do
 
     collection do
       get :dives_for_trip
+      get :lightbox
       post :bulk_create
       delete :bulk_destroy
     end
