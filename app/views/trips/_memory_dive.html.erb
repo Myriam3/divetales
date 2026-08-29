@@ -17,7 +17,7 @@
   </div>
 
   <div class="container-fluid">
-    <% if false %>
+    <% if dive.pictures? %>
       <% dive_pictures = dive.pictures.sort_by do |picture|
           [
             picture.date_time.nil? ? 1 : 0,
@@ -63,7 +63,7 @@
 
       <% if dive.depth_over_time.present? %>
         <div class="col col-9">
-          <%# render "/shared/depth_profile",
+          <% render "/shared/depth_profile",
               #dive: dive, display_info: false
         %>
         </div>
