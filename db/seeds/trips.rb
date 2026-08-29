@@ -31,7 +31,7 @@ def create_trips(user, countries)
 
   # Trip 3 Indonesia & Malaysia
   indonesia_malaysia = Trip.find_or_create_by!(
-    title: "Indonesia & Malaysia travel 2025"
+    title: "Indonesia & Malaysia travel 2026"
   ) do |trip|
     trip.user = user
     trip.start_date = Date.new(2026, 07, 01)

@@ -1,0 +1,31 @@
+<section class="mb-5">
+  <h2 class="mb-5 fw-bold text-center">
+    <%= render "shared/icon", icon_name: "camera-spark", icon_size: 40 %>
+    Pictures from your trip
+  </h2>
+
+  <%= render "memory_slider", pictures: pictures, context: 'trip' %>
+
+  <% if pictures.length > 1  %>
+    <p class="mt-5 text-center">
+      <%= link_to pictures_path,
+          class: "btn btn-secondary", data: { turbo: false } do %>
+          <%= render "shared/icon", icon_name: "library-photo", icon_size: 20 %>
+          All trip pictures<small> (<%= pictures.length %>)</small>
+        <% end %>
+    </p>
+  <% end %>
+</section>
+
+<section class="mb-5 mb-5 container">
+  <h2 class="mb-3 fw-bold text-center">
+    <%= render "shared/icon", icon_name: "fish", icon_size: 44 %>
+    Encountered Marine life
+  </h2>
+
+  <%= #render "memory_species",
+    #categories_by_class: @categories_by_class,
+    #classification_pictures_stats: @classification_pictures_stats,
+    #species_pictures_stats: @species_pictures_stats
+  %>
+</section>
