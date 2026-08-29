@@ -21,10 +21,10 @@
           <% picture.species.each do |s| %>
             <strong><%= s.name %></strong>
             <div class="d-flex gap-1 flex-wrap">
-              <div class="badge bg-light text-secondary border px-3 py-2 rounded-pill">Class: <%= s.category.classification.titleize %></div>
-              <div class="badge bg-light text-secondary border px-3 py-2 rounded-pill">Category: <%= s.category.name.titleize %></div>
+              <div class="badge bg-light text-secondary border px-3 py-2 rounded-pill">Class: <%= s.category.classification&.titleize %></div>
+              <div class="badge bg-light text-secondary border px-3 py-2 rounded-pill">Category: <%= s.category.name&.titleize %></div>
               <% if s.details %>
-                <div class="badge bg-light text-secondary border px-3 py-2 rounded-pill">Family: <%= s.details&.dig("family").titleize %></div>
+                <div class="badge bg-light text-secondary border px-3 py-2 rounded-pill">Family: <%= s.details&.dig("family")&.titleize %></div>
               <% end %>
             </div>
           <% end %>
