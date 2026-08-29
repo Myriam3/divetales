@@ -6,11 +6,14 @@ def create_dives(trips, locations)
   )
 
   dives_json.each_with_object({}) do |data, dives|
-    dive = Dive.find_or_create_by!(
+    attributes = {
       trip: trips[data["trip_key"]],
       date: Date.parse(data["date"]),
+      dive_number: data["dive_number"],
       dive_site_name: data["dive_site_name"]
-    ) do |new_dive|
+    }
+
+    dive = Dive.find_or_create_by!(attributes) do |new_dive|
       new_dive.location = locations[data["location_key"]]
       new_dive.latitude = data["latitude"]
       new_dive.longitude = data["longitude"]
@@ -31,6 +34,7 @@ def create_dives(trips, locations)
       new_dive.dive_number = data["dive_number"]
     end
 
+    existing += 1 unless dive.previous_changes.key?("id")
     dives[data["key"]] = dive
   end
 end

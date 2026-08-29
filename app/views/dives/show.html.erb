@@ -11,11 +11,11 @@
   </div>
 
   <div class="mb-5">
-  <%= link_to dives_path, class: "text-decoration-none" do %>
-    <%= render "shared/icon", icon_name: "arrow-left" %>
-    All dives
-  <% end %>
-</div>
+    <%= link_to dives_path, class: "text-decoration-none" do %>
+      <%= render "shared/icon", icon_name: "arrow-left" %>
+      All dives
+    <% end %>
+  </div>
 
   <h1 class="mb-4"><%= render "shared/icon", icon_name: "scuba-mask", icon_size: 40 %><%= @dive.display_name_html %></h1>
 
@@ -23,14 +23,93 @@
     <%= link_to "#", class: "btn btn-outline-secondary" do %>
       <%= render "shared/icon", icon_name: "edit" %>
       Edit dive
-  <% end %>
+    <% end %>
   </p>
 
+  <!-- Dive info -->
+  <%= render "dive_info", dive: @dive, display_site: true, display_coordinates: true %>
 
-  <%= render "shared/dive", dive: @dive %>
+  <hr>
 
-  <%= render "depth_profile", dive: @dive %>
-<% end %>
+  <!-- Trip -->
+  <p>
+    <%= link_to trip_path(@dive.trip), class: "text-decoration-none" do %>
+      <%= render "shared/icon", icon_name: "luggage", label: "Trip:" %>
+      <%= @dive.trip.title %>
+    <% end %>
+  </p>
+
+  <!-- Memo -->
+  <% unless @dive.note.blank? %>
+      <hr>
+      <h2>Memo</h2>
+      <p>
+        <%= render "shared/icon", icon_name: "notebook" %>
+        <%= @dive.note %>
+      </p>
+  <% end %>
+
+  <hr>
+
+  <!-- Summary -->
+  <% if @dive.pictures.any? %>
+    <p>
+      <%= render "shared/icon", icon_name: "camera-spark" %>
+      <%= @dive.pictures.size %> pictures
+      <br>
+      <%= link_to "See pictures", "#pictures" %>
+    </p>
+  <% end %>
+
+  <% species = @dive.pictures.flat_map(&:species).uniq %>
+  <% if species.any? %>
+    <p>
+      <%= render "shared/icon", icon_name: "fish" %>
+      <%= species.count %> species
+      <br>
+      <% species.each do |item| %>
+        <span class="badge text-bg-secondary">
+          <%= item.name %>
+        </span>
+      <% end %>
+        <br>
+      <%= link_to "See all species", "#species" %>
+    </p>
+  <% end %>
+
+  <hr>
+
+  <!-- Map -->
+  <% unless @dive.latitude.blank? || @dive.longitude.blank? %>
+    <div data-controller="map"
+        data-map-api-url-value="<%= api_mapbox_path %>"
+        data-map-latitude-value="<%= @dive.latitude %>"
+        data-map-longitude-value="<%= @dive.longitude %>">
+      <%= render "/shared/map" %>
+    </div>
+  <% end %>
+
+  <hr>
+
+  <!-- Dive log -->
+  <%= render "dive_log", dive: @dive %>
+
+  <hr>
+
+  <!-- Dive details -->
+  <%= render "dive_details", dive: @dive %>
+
+  <!-- Depth profile -->
+  <% if @dive.depth_over_time.present? %>
+    <hr>
+    <h2 class="mt-5 mb-2">
+      <%= render "shared/icon", icon_name: "scuba-diving", icon_size: 40 %>
+      Depth profile
+    </h2>
+
+    <%= render "/shared/depth_profile", dive: @dive %>
+    <hr>
+  <% end %>
 
   <p class="mt-5 mb-5">
     <%= button_to dive_path(@dive),
@@ -42,4 +121,5 @@
       <%= render "shared/icon", icon_name: "trash", icon_size: 24 %>
       Delete dive
     <% end %>
-</p>
+  </p>
+<% end %>

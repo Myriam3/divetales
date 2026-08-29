@@ -35,7 +35,7 @@
 
     <div class="trip-show__actions">
       <%= link_to new_trip_dive_path(@trip), class: "btn-dive btn-dive-accent" do %>
-        <%= render "shared/icon", icon_name: "scuba-mask" %>
+        <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 24 %>
         Add a new dive
       <% end %>
 
@@ -57,42 +57,60 @@
   <% if @dives.any? %>
     <div class="trip-dives-grid">
       <% @dives.each do |dive| %>
-        <%= link_to trip_dive_path(@trip, dive), class: "trip-dive-card-link" do %>
-          <article class="trip-dive-card">
-            <%= image_tag "dive-default.png", alt: "Underwater reef", class: "trip-dive-card__image" %>
+        <div class="trip-dive-card-wrapper">
+          <%= link_to trip_dive_path(@trip, dive), class: "trip-dive-card-link" do %>
+            <article class="trip-dive-card">
+              <% first_picture = dive.pictures.order(:created_at).first %>
+                <% if dive.cover_photo.attached? %>
+                  <%= image_tag dive.cover_photo, alt: dive.dive_site_name, class: "trip-dive-card__image" %>
+                <% elsif first_picture&.photo&.attached? %>
+                  <%= image_tag first_picture.photo, alt: dive.dive_site_name, class: "trip-dive-card__image" %>
+                <% else %>
+                  <%= image_tag "dive-default.png", alt: "Underwater reef", class: "trip-dive-card__image" %>
+                <% end %>
 
-            <div class="trip-dive-card__body">
-              <h3><%= dive.display_name_html %></h3>
+              <div class="trip-dive-card__body">
+                <h3><%= dive.display_name_html %></h3>
 
-              <p>
-                <%= render "shared/icon", icon_name: "calendar" %>
-                <%= dive.date.strftime("%d %B %Y") %>
-              </p>
-
-              <p>
-                <%= render "shared/icon", icon_name: "world-pin" %>
-                <%= dive.location.name %>
-              </p>
-
-              <% if dive.max_depth.present? %>
                 <p>
-                  <%= render "shared/icon", icon_name: "arrow-bar-to-down" %>
-                  Maximum depth:
-                  <%= number_with_precision(dive.max_depth, precision: 1, strip_insignificant_zeros: true) %>m
+                  <%= render "shared/icon", icon_name: "calendar" %>
+                  <%= dive.date.strftime("%d %B %Y") %>
                 </p>
-              <% end %>
 
-              <% if dive.duration.present? %>
                 <p>
-                  <%= render "shared/icon", icon_name: "clock" %>
-                  Duration: <%= dive.duration %> minutes
+                  <%= render "shared/icon", icon_name: "world-pin" %>
+                  <%= dive.location.name %>
                 </p>
-              <% end %>
 
-              <span class="btn-dive btn-dive-primary">View dive</span>
-            </div>
-          </article>
-        <% end %>
+                <% if dive.max_depth.present? %>
+                  <p>
+                    <%= render "shared/icon", icon_name: "arrow-bar-to-down" %>
+                    Maximum depth:
+                    <%= number_with_precision(dive.max_depth, precision: 1, strip_insignificant_zeros: true) %>m
+                  </p>
+                <% end %>
+
+                <% if dive.duration.present? %>
+                  <p>
+                    <%= render "shared/icon", icon_name: "clock" %>
+                    Duration: <%= dive.duration %> minutes
+                  </p>
+                <% end %>
+
+                <span class="btn-dive btn-dive-primary">View dive</span>
+              </div>
+            </article>
+          <% end %>
+
+          <%= form_with model: dive, url: update_cover_photo_dive_path(dive), method: :patch, html: { class: "cover-photo-form", multipart: true } do |form| %>
+            <label for="dive_cover_photo_<%= dive.id %>" class="cover-photo-button">
+              <%= render "shared/icon", icon_name: "camera", icon_size: 16 %>
+              Edit
+            </label>
+
+            <%= form.file_field :cover_photo, id: "dive_cover_photo_#{dive.id}", accept: "image/png,image/jpeg,image/webp", class: "cover-photo-input", onchange: "this.form.requestSubmit()" %>
+          <% end %>
+        </div>
       <% end %>
     </div>
   <% else %>
