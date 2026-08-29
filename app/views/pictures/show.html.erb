@@ -15,24 +15,22 @@
       <div class="d-flex align-items-center justify-content-between mb-4">
           <div>
         <% @picture.species.each do |s| %>
-            <% if s %>
-              <div class="d-flex align-items-center gap-3 mt-4">
-                <div class="text-primary">
-                  <%= render "shared/icon", icon_name: "fish", icon_size: 32 %>
-                </div>
-                <div>
-                  <p class="mb-0 fw-bold fs-4 text-dark"><%= s.name.presence.titleize || "Unknown species" %></p>
-                  <div class="text-muted fst-italic"><%= s.scientific_name %></div>
-                  <div class="d-flex gap-1">
-                    <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Class: <%= s.category.classification.titleize %></div>
-                    <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Category: <%= s.category.name.titleize %></div>
-                    <% if s.details %>
-                      <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Family: <%= s.details&.dig("family").titleize %></div>
-                    <% end %>
-                  </div>
+            <div class="d-flex align-items-center gap-3 mt-4">
+              <div class="text-primary">
+                <%= render "shared/icon", icon_name: "fish", icon_size: 32 %>
+              </div>
+              <div>
+                <p class="mb-0 fw-bold fs-4 text-dark"><%= s.name&.titleize || "Unknown species" %></p>
+                <div class="text-muted fst-italic"><%= s.scientific_name %></div>
+                <div class="d-flex gap-1">
+                  <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Class: <%= s.category.classification&.titleize %></div>
+                  <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Category: <%= s.category.name&.titleize %></div>
+                  <% if s.details %>
+                    <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Family: <%= s.details&.dig("family")&.titleize %></div>
+                  <% end %>
                 </div>
               </div>
-            <% end %>
+            </div>
         <% end %>
           </div>
 
