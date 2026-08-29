@@ -157,6 +157,19 @@ class PicturesController < ApplicationController
     end
   end
 
+  def lightbox
+    authorize Picture, :lightbox?
+
+    @lightbox_pictures = load_lightbox_pictures
+    @lightbox_selected_picture_id = params[:picture_id]
+
+    respond_to do |format|
+      format.turbo_stream
+      puts @lightbox_selected_picture_id
+      format.html
+    end
+  end
+
   private
 
   def set_picture
@@ -214,6 +227,27 @@ class PicturesController < ApplicationController
                  .includes(:dive, :species)
                  .limit(10)
       result[category] = pictures
+    end
+  end
+
+  def load_lightbox_pictures
+    if params[:trip_id]
+      Trip.find(params[:trip_id])
+          .dives
+          .includes(:pictures)
+          .flat_map(&:pictures)
+
+    elsif params[:dive_id]
+      Dive.find(params[:dive_id])
+          .pictures
+
+    elsif params[:location_id]
+      Location.find(params[:location_id])
+              .dives
+              .includes(:pictures)
+              .flat_map(&:pictures)
+    else
+      Picture.none
     end
   end
 end

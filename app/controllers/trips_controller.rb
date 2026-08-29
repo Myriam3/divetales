@@ -1,6 +1,6 @@
 class TripsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_trip, only: %i[show edit update destroy memory memory_dive]
+  before_action :set_trip, only: %i[show edit update destroy memory memory_dive update_cover_photo]
 
   def index
     @trips = policy_scope(Trip).order(start_date: :desc)
@@ -39,7 +39,6 @@ class TripsController < ApplicationController
   end
 
   def update_cover_photo
-    @trip = policy_scope(Trip).find(params[:id])
     authorize @trip, :update?
 
     if @trip.update(cover_photo_params)
@@ -55,10 +54,8 @@ class TripsController < ApplicationController
   end
 
   def memory
-    @dives = @trip.dives.includes(
-      :location,
-      pictures: { species: :category }
-    )
+    @dives = @trip.dives.includes(:location, pictures: { species: :category })
+                  .order(date: :asc)
 
     @pictures = @dives.flat_map(&:pictures)
 

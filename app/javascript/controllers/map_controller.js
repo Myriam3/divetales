@@ -68,7 +68,7 @@ export default class extends Controller {
   initMapbox(lat, long, settings) {
     if (!(lat && long)) return;
     this.displayMap([long, lat], 8, settings);
-    this.setGeoInfo(lat, long, 8, settings.token);
+    this.setGeoInfo(lat, long, settings.token);
   }
 
   // Trip Map
@@ -111,7 +111,7 @@ export default class extends Controller {
     // Dive map
     if (!this.divesValue.length) {
       window.setTimeout(() => {
-        this.addDiveMarker(lat, long);
+        this.addDiveMarker(center[0], center[1]);
       }, 500);
 
       return;
@@ -135,7 +135,7 @@ export default class extends Controller {
   }
 
   // Markers
-  addDiveMarker(lat, long) {
+  addDiveMarker(long, lat) {
     try {
       const marker = new mapboxgl.Marker()
         .setLngLat([long, lat])
@@ -156,7 +156,7 @@ export default class extends Controller {
     }, {});
 
     const setMarker = (point) => {
-      const marker = this.addDiveMarker(point[0].lat, point[0].long);
+      const marker = this.addDiveMarker(point[0].long, point[0].lat);
 
       if (!marker) return;
 
@@ -185,13 +185,12 @@ export default class extends Controller {
       Turbo.renderStreamMessage(html);
       this.currentDive = dive;
 
-      //if (pointDives.length > 1) this.pointDivesToRender = pointDives
-
     } catch (error) {
       console.log(error);
     }
   }
 
+  // When multiple dives on same coordinates
   displayPointDives(dives) {
     if (!this.itineraryLocationTarget) return;
 
@@ -275,7 +274,8 @@ export default class extends Controller {
       const endpoint = `https://api.mapbox.com/search/geocode/v6/reverse?longitude=${long}&latitude=${lat}&language=en&limit=1&access_token=${token}`
       const response = await fetch(endpoint);
       const data = await response.json();
-      if (!data.features.length) return;
+
+      if (!data.features || !data.features.length) return;
 
       const result = data.features[0].properties;
 
@@ -288,7 +288,7 @@ export default class extends Controller {
     }
   }
 
-  // Center map on itinerary click
+  // Center map on location dives
   centerMap(e, btn, center, bounds = null) {
     e.preventDefault();
     try {
@@ -305,11 +305,11 @@ export default class extends Controller {
 
       // Toggle current location
       if (this.currentLocation) this.currentLocation.style.border = '0';
-      btn.style.border = 'solid 2px red';
-      this.currentLocation = btn;
-    } catch (error) {
-      console.log(error);
-    }
+        btn.style.border = 'solid 2px red';
+        this.currentLocation = btn;
+      } catch (error) {
+        console.log(error);
+      }
   }
 
   // Set location bounds with dives

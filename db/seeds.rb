@@ -201,4 +201,7 @@ puts "#{dives.length} dives created"
 # Pictures
 # ==========================================
 require_relative "seeds/pictures"
-# create_pictures_species(dives)
+create_pictures_species(dives)
+
+# ==========================================
+puts "seed finished"
