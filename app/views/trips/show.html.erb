@@ -43,6 +43,11 @@
         <%= render "shared/icon", icon_name: "edit" %>
         Edit trip
       <% end %>
+
+      <%= link_to memory_trip_path(@trip), class: "btn-dive btn-dive-secondary" do %>
+        <%= render "shared/icon", icon_name: "fish" %>
+        Memory map
+      <% end %>
     </div>
   </div>
 
