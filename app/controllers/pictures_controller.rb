@@ -2,20 +2,17 @@ class PicturesController < ApplicationController
   before_action :set_picture, only: %i[show edit update destroy generate_species_details]
   before_action :set_form_data, only: %i[new edit]
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
-
   def index
     @pictures = policy_scope(Picture).includes(dive: { location: :country }, species: [])
-    if params[:category_id].present?
-      @pictures = @pictures.joins(:species).where(species: { category_id: params[:category_id] }).distinct
-    end
-
-    @categories = Category.order(:name)
 
     @pictures = @pictures.joins(dive: :trip).where(trips: { id: params[:trip_id] }) if params[:trip_id].present?
     if params[:location_id].present?
       @pictures = @pictures.joins(dive: :location).where(locations: { id: params[:location_id] })
     end
     @pictures = @pictures.where("EXTRACT(YEAR FROM pictures.date_time) = ?", params[:year]) if params[:year].present?
+    if params[:species_id].present?
+      @pictures = @pictures.joins(:species).where(species: { id: params[:species_id] }).distinct
+    end
 
     @pictures = case params[:sort]
                 when "date_asc"
@@ -29,8 +26,16 @@ class PicturesController < ApplicationController
                 end
 
     @trips = current_user.trips.order(:title)
-    @locations = Location.joins(dives: :trip).where(trips: { user_id: current_user.id }).distinct.order(:name)
+    @locations_by_country = Location.joins(dives: :trip)
+                                    .where(trips: { user_id: current_user.id })
+                                    .includes(:country)
+                                    .distinct
+                                    .order(:name)
+                                    .group_by { |l| l.country.name }
     @years = policy_scope(Picture).where.not(date_time: nil).pluck(Arel.sql("EXTRACT(YEAR FROM date_time)")).uniq.sort.reverse
+    @species_by_classification = Species.includes(:category)
+                                        .order(:name)
+                                        .group_by { |s| s.category.classification }
   end
 
   def show

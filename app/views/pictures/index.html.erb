@@ -6,12 +6,16 @@
       class: "form-select" %>
   </div>
 
-  <div class="col-auto">
-    <%= select_tag :location_id,
-      options_from_collection_for_select(@locations, :id, :name, params[:location_id]),
-      prompt: "All locations",
-      class: "form-select" %>
-  </div>
+<div class="col-auto">
+  <%= select_tag :location_id,
+    grouped_options_for_select(
+      @locations_by_country.map { |country, location_list| [country, location_list.map { |l| [l.name, l.id] }] },
+      params[:location_id]
+    ),
+    prompt: "All locations",
+    class: "form-select" %>
+</div>
+
 
 <div class="col-auto">
   <%= select_tag :year,
@@ -21,9 +25,12 @@
 </div>
 
 <div class="col-auto">
-  <%= select_tag :category_id,
-    options_from_collection_for_select(@categories, :id, :name, params[:category_id]),
-    prompt: "All categories",
+  <%= select_tag :species_id,
+    grouped_options_for_select(
+      @species_by_classification.transform_keys(&:humanize).map { |classification, species_list| [classification, species_list.map { |s| [s.name, s.id] }] },
+      params[:species_id]
+    ),
+    prompt: "All species",
     class: "form-select" %>
 </div>
 
@@ -42,7 +49,7 @@
     <%= submit_tag "Apply", class: "btn btn-secondary" %>
   </div>
 
-  <% if params[:trip_id].present? || params[:location_id].present? || params[:year].present? || params[:sort].present? %>
+ <% if params[:trip_id].present? || params[:location_id].present? || params[:year].present? || params[:species_id].present? || params[:sort].present? %>
     <div class="col-auto">
       <%= link_to "Clear filters", pictures_path, class: "btn btn-outline-secondary" %>
     </div>

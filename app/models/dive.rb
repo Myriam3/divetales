@@ -13,6 +13,7 @@ class Dive < ApplicationRecord
 
   belongs_to :trip
   belongs_to :location
+  belongs_to :dive_site, optional: true
   has_one_attached :cover_photo
   has_many :pictures, dependent: :destroy
   has_many :species, through: :pictures
