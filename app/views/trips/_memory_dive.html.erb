@@ -17,7 +17,7 @@
   </div>
 
   <div class="container-fluid">
-    <% if dive.pictures? %>
+    <% if dive.pictures.any? %>
       <% dive_pictures = dive.pictures.sort_by do |picture|
           [
             picture.date_time.nil? ? 1 : 0,
