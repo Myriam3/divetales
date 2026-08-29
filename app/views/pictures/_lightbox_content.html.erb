@@ -13,9 +13,65 @@
     <div class="splide__track">
       <ul class="splide__list list-unstyled">
         <% pictures.each do |picture| %>
+        <%
+          dive = picture.dive
+        %>
           <li class="splide__slide" data-time="<%= picture.date_time&.iso8601 %>"  data-id="<%= picture.id %>">
-            <%= render "shared/picture_slide", picture: picture, show_info: false %>
-            <span style="color:red;"><%= picture.dive.date %> - <%= picture.date_time ? picture.date_time.strftime("%H:%M") : 'no time' %> - ID: <%= picture.id %></span>
+              <p class="text-end" style="opacity: .8;">
+                <%= render "shared/icon", icon_name: "camera-spark" %>
+                  <%= link_to picture_path(picture), class: "text-decoration-none", data: { turbo: false }, style: "color: #fff; margin-right: 20px" do %>
+                    See details
+                  <% end %>
+                <% if picture.species.empty? %>
+                    <%= render "shared/icon", icon_name: "photo-spark" %>
+                    <%= link_to "Identify species", identification_path(picture_id: picture.id, dive_id: picture.dive.id), class: "text-decoration-none",  data: { turbo: false }, style: "color: #fff;" %>
+                <% end %>
+              </p>
+              <%= render "shared/picture_slide", picture: picture, show_info: false %>
+
+              <div class="lightbox__footer">
+                <div class="ligthbox__info">
+                  <span>
+                    <%= icon dive.location.country.code.downcase, library: "flags", width: 18, height: 18 %>
+                    <span class="visually-hidden"><%= dive.location.country.name %></span>
+                    <%= dive.location.name %>
+                  </span>
+                  <% unless dive.dive_site_name.blank? %>
+                    <span>
+                      <%= render "shared/icon", icon_name: "anchor" %>
+                      <%= dive.dive_site_name %>
+                    </span>
+                  <% end %>
+                  <% if picture.date_time.present? %>
+                    <span>
+                      <%= render "shared/icon", icon_name: "calendar" %>
+                      <% if picture.date_time.is_a?(String) %>
+                        <%= picture.date_time %>
+                      <% else %>
+                        <%= picture.date_time.strftime("%B %d, %Y at %H:%M") %>
+                      <% end %>
+                    </span>
+                  <% end %>
+                  <% if picture.photo.attached? && picture.photo.metadata.present? && picture.photo.metadata["camera_model"].present? %>
+                    <span>
+                      <%= render "shared/icon", icon_name: "camera" %>
+                      <%= picture.photo.metadata["camera_model"] %>
+                    </span>
+                  <% end %>
+
+              </p>
+              </div>
+              <% if picture.species.any? %>
+                <div class="ligthbox__species" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px;">
+                  <% picture.species.each do |s| %>
+                    <div style="display: flex; flex-wrap:wrap; justify-content: center; align-items: center; margin-top: 20px;">
+                      <strong style="margin-right: 20px;"><%= s.name %></strong>
+                      <div class="badge bg-light text-secondary border px-3 py-1 rounded-pill" style=" opacity: 0.7;"><%= s.category.name.titleize %></div>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
           </li>
         <% end %>
       </ul>

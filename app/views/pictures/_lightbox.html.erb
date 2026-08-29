@@ -19,10 +19,11 @@
     overflow: hidden;
     border: 0;
     background: transparent;
+    padding: 0;
   }
 
   .lightbox::backdrop {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.95);
   }
 
   .lightbox__content {
@@ -45,8 +46,8 @@
   }
 
   .lightbox .splide__slide .pic-slide {
-    height: 80vh;
-    overflow: hidden;
+    height: 70vh;
+    /* overflow: hidden; */
     width: 100%;
   }
 
@@ -54,5 +55,44 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
+    object-position: top;
+  }
+
+  .ligthbox__info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 20px;
+    justify-content: center;
+    font-size: 1rem;
+    color: rgba(255,255,255,.8)
+  }
+
+  .lightbox .splide__pagination {
+    bottom: 5px;
+  }
+
+  .lightbox .splide__arrow {
+    background: transparent;
+    opacity: .5;
+  }
+
+  .lightbox .splide__arrow svg {
+    fill: #fff;
+  }
+
+  .lightbox .splide__arrow--prev {
+    left: -50px;
+  }
+
+  .lightbox .splide__arrow--next {
+    right: -50px;
+  }
+
+  .lightbox__footer {
+    /* position: absolute; */
+    bottom: 0;
+    width: 100%;
+    padding: 10px 10px 40px;
   }
 </style>
