@@ -19,8 +19,8 @@
   <div class="container-fluid">
 
     <% dive.pictures.sort_by do |picture| %>
-      <%= picture.date_time %><br>
-    <% end %>
+      <%= picture.date_time.to_json %><br>
+      <%= dive.date.to_json %>
     <% if false %>
       <% dive_pictures = dive.pictures.sort_by do |picture|
           [
