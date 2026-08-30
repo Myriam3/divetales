@@ -1,57 +1,162 @@
-<%= form_with url: pictures_path, method: :get, local: true, html: { class: "row g-3 mb-4" } do %>
-  <div class="col-auto">
-    <%= select_tag :trip_id,
-      options_from_collection_for_select(@trips, :id, :title, params[:trip_id]),
-      prompt: "All trips",
-      class: "form-select" %>
-  </div>
+<div>
+  <%= form_with url: pictures_path,
+                method: :get,
+                local: true,
+                html: { class: "g-3 mb-4" },
+                data: { turbo: false },
+                autocomplete: "off" do %>
+    <%
+      selected_country_id = nil
+      selected_year = nil
+      disable_year = false
+      disable_country = false
+      selected_category_id = nil
 
-<div class="col-auto">
-  <%= select_tag :location_id,
-    grouped_options_for_select(
-      @locations_by_country.map { |country, location_list| [country, location_list.map { |l| [l.name, l.id] }] },
-      params[:location_id]
-    ),
-    prompt: "All locations",
-    class: "form-select" %>
-</div>
+      # Select country if params, location, or trip with 1 country only
+      if params[:country_id]&.present?
+        selected_country_id = params[:country_id]
+      elsif params[:location_id]&.present?
+        selected_country_id = Location.find_by(id: params[:location_id])&.country_id
+        disable_country = true
+      elsif params[:trip_id]&.present? && @countries.length == 1
+        selected_country_id = @countries.first.id
+        disable_country = true
+      end
 
+      # Select year if params or trip with 1 year only
+      if params[:year_id]&.present?
+        selected_year = params[:year_id]
+      elsif params[:trip_id]&.present? && @years.length == 1
+        selected_year = @years.first
+        disable_year = true
+      end
 
-<div class="col-auto">
-  <%= select_tag :year,
-    options_for_select(@years.map { |y| [y.to_i, y.to_i] }, params[:year]),
-    prompt: "All years",
-    class: "form-select" %>
-</div>
+      # Select category if params or species is selected
+      if params[:category_id]&.present?
+        selected_category_id = params[:category_id]
+      elsif @selected_species&.present?
+        selected_category_id = @selected_species.category_id
+      end
+    %>
 
-<div class="col-auto">
-  <%= select_tag :species_id,
-    grouped_options_for_select(
-      @species_by_classification.transform_keys(&:humanize).map { |classification, species_list| [classification, species_list.map { |s| [s.name, s.id] }] },
-      params[:species_id]
-    ),
-    prompt: "All species",
-    class: "form-select" %>
-</div>
+    <div>
+      <h2>Country/Date</h2>
+      <div class="row">
+        <div class="col-auto">
+          <%= select_tag :country_id,
+            options_from_collection_for_select(@countries, :id, :name, selected = selected_country_id),
+            prompt: "All countries",
+            disabled: disable_country,
+            class: "form-select" %>
+        </div>
+        <div class="col-auto">
+        <%= select_tag :year,
+          options_for_select(@years.map { |y| [y.to_i, y.to_i] }, selected = selected_year),
+          disabled: disable_year,
+          prompt: "All years",
+          class: "form-select" %>
+        </div>
+      </div>
+    </div>
 
-  <div class="col-auto">
-    <%= select_tag :sort,
-      options_for_select([
-        ["Newest first", "date_desc"],
-        ["Oldest first", "date_asc"],
-        ["Trip name", "trip"],
-        ["Location name", "location"]
-      ], params[:sort]),
-      class: "form-select" %>
-  </div>
+    <div>
+      <h2>Trips/Dives</h2>
+      <div class="row">
+        <div class="col-auto">
+        <%= select_tag :trip_id,
+          options_from_collection_for_select(@trips, :id, :title, selected = params[:trip_id]),
+          prompt: "All trips",
+          class: "form-select" %>
+        </div>
+      </div>
+    </div>
 
-  <div class="col-auto">
-    <%= submit_tag "Apply", class: "btn btn-secondary" %>
-  </div>
+    <div>
+      <h2>Location/Dive site</h2>
+      <div class="row">
+        <div class="col-auto">
+          <%= select_tag :location_id,
+            grouped_options_for_select(
+              @locations_by_country.map { |country, location_list| [country, location_list.map { |l| [l.name, l.id] }] },
+              params[:location_id]
+            ),
+            prompt: "All locations",
+            class: "form-select" %>
+        </div>
+      </div>
+    </div>
 
-<% if params[:trip_id].present? || params[:location_id].present? || params[:year].present? || params[:species_id].present? || params[:sort].present? %>
-    <div class="col-auto">
-      <%= link_to "Clear filters", pictures_path, class: "btn btn-outline-secondary" %>
+    <div>
+      <h2>Species</h2>
+      <div class="row">
+        <div class="col-auto">
+          <%= select_tag :category_id,
+            grouped_options_for_select(
+              @categories
+                .sort_by { |classification, _| classification }
+                .map do |classification, categories|
+                  [
+                    classification.humanize,
+                    categories
+                      .sort_by(&:name)
+                      .map { |category| [category.name, category.id] }
+                  ]
+                end,
+                selected = selected_category_id
+            ),
+            prompt: "All categories",
+            class: "form-select",
+            disabled: @selected_species&.present?
+          %>
+        </div>
+
+        <div class="col-auto">
+          <%= select_tag :species_id,
+            grouped_options_for_select(
+              @species
+                .group_by(&:category)
+                .sort_by { |category, _| category.name }
+                .map do |category, species_list|
+                  [
+                    category.name,
+                    species_list
+                      .sort_by(&:name)
+                      .map { |species| [species.name, species.id] }
+                  ]
+                end,
+              params[:species_id]
+            ),
+            prompt: "All species",
+            class: "form-select"
+          %>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h2>Sort</h2>
+      <div>
+        <%= select_tag :sort,
+          options_for_select([
+            ["Recently added", "created_desc"],
+            ["Oldest added", "created_asc"],
+            ["Newest picture", "date_desc"],
+            ["Oldest picture", "date_asc"],
+          ], params[:sort]),
+          class: "form-select" %>
+      </div>
+    </div>
+
+    <div>
+      <div>
+        <%= submit_tag "Apply", class: "btn btn-secondary" %>
+      </div>
+
+      <% if params[:trip_id].present? || params[:location_id].present? || params[:year].present? || params[:species_id].present? || params[:sort].present? %>
+          <div class="col-auto">
+            <%= link_to "Clear filters", pictures_path, class: "btn btn-outline-secondary" %>
+          </div>
+      <% end %>
     </div>
   <% end %>
-<% end %>
+</div>
