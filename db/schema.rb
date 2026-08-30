@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_29_012007) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_21_092015) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -76,7 +76,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_29_012007) do
     t.date "date", null: false
     t.text "depth_over_time", default: ""
     t.integer "dive_number"
-    t.bigint "dive_site_id"
     t.string "dive_site_name", default: "", null: false
     t.string "dive_types", default: [], array: true
     t.integer "duration"
@@ -95,7 +94,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_29_012007) do
     t.bigint "trip_id", null: false
     t.datetime "updated_at", null: false
     t.index ["dive_number"], name: "index_dives_on_dive_number", unique: true
-    t.index ["dive_site_id"], name: "index_dives_on_dive_site_id"
     t.index ["location_id"], name: "index_dives_on_location_id"
     t.index ["trip_id"], name: "index_dives_on_trip_id"
   end
@@ -335,7 +333,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_29_012007) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "dive_sites", "locations"
-  add_foreign_key "dives", "dive_sites"
   add_foreign_key "dives", "locations"
   add_foreign_key "dives", "trips"
   add_foreign_key "identifications", "dives"
