@@ -1,8 +1,8 @@
 <% if @picture %>
   <div>
-    <div class="card shadow-sm border-0 overflow-hidden mt-3">
+    <div class="card shadow-sm border-0 overflow-hidden mt-3 vh-100">
       <% if @picture.photo.attached? %>
-        <%= cl_image_tag @picture.photo.key, class: "w-100 object-fit-cover" %>
+        <%= cl_image_tag @picture.photo.key, class: "object-fit-contain h-100" %>
       <% else %>
         <div class="bg-light d-flex align-items-center justify-content-center" style="height: 400px;">
           <%= render "shared/icon", icon_name: "fish", icon_size: 64, class: "text-muted" %>
@@ -10,7 +10,7 @@
       <% end %>
     </div>
 
-    <div>
+    <div class="trips-content">
       <% if @picture.species.any? %>
       <div class="d-flex align-items-center justify-content-between mb-4">
           <div>
@@ -63,7 +63,7 @@
     <div class="card shadow-sm border-0 rounded-4 overflow-hidden" data-controller="picture-info-tab">
       <div class="card-header bg-white border-bottom-0 pt-3 pb-0 px-4">
         <!-- The Tab Navigation -->
-        <ul class="nav nav-tabs border-bottom" id="pictureTabs" role="tablist">
+        <ul class="trips-content nav nav-tabs border-bottom" id="pictureTabs" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active fw-bold text-dark border-0 border-bottom border-primary border-3 bg-transparent pb-3" id="photo-details-tab" role="tab" aria-controls="photo-details" aria-selected="true"
                     type="button"
@@ -88,7 +88,7 @@
         </ul>
       </div>
 
-      <div class="card-body p-4">
+      <div class="trips-content card-body p-4">
         <div class="tab-content">
 
           <div class="tab-pane fade show active" id="photo-details" role="tabpanel" aria-labelledby="photo-details-tab" data-picture-info-tab-target="panel">
@@ -151,7 +151,7 @@
     </div>
   </div>
 
-  <div class="mt-3">
+  <div class="mt-3 trips-content">
     <% @related_species.each do |species, pictures| %>
       <% if pictures.any? %>
         <h2>More <%= species.name %> Photos</h2>
@@ -171,7 +171,7 @@
     <% end %>
   </div>
 
-  <div class="mt-3">
+  <div class="mt-3 trips-content">
     <% @related_categories.each do |category, pictures| %>
       <% if pictures.any? %>
         <h2>More <%= category.name %> Photos</h2>
@@ -193,3 +193,7 @@
 <% end %>
 
 <%= render "shared/delete_modal", picture: @picture %>
+<footer class="coral-footer">
+  <div class="footer-content">
+  </div>
+</footer>
