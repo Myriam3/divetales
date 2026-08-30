@@ -76,7 +76,6 @@
                   } do %>
               <%= render "shared/picture_slide", picture: picture, show_info: false %>
             <% end %>
-            <span style="color:red; display:none;"><%= picture.dive.date %> - <%= picture.date_time ? picture.date_time.strftime("%H:%M") : 'no time' %> - ID: <%= picture.id %></span>
           </li>
         <% end %>
       </ol>
