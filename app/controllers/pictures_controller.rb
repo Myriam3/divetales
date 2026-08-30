@@ -3,27 +3,7 @@ class PicturesController < ApplicationController
   before_action :set_form_data, only: %i[new edit]
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   def index
-    @pictures = policy_scope(Picture).includes(dive: { location: :country }, species: [])
-
-    @pictures = @pictures.joins(dive: :trip).where(trips: { id: params[:trip_id] }) if params[:trip_id].present?
-    if params[:location_id].present?
-      @pictures = @pictures.joins(dive: :location).where(locations: { id: params[:location_id] })
-    end
-    @pictures = @pictures.where("EXTRACT(YEAR FROM pictures.date_time) = ?", params[:year]) if params[:year].present?
-    if params[:species_id].present?
-      @pictures = @pictures.joins(:species).where(species: { id: params[:species_id] }).distinct
-    end
-
-    @pictures = case params[:sort]
-                when "date_asc"
-                  @pictures.order(date_time: :asc)
-                when "trip"
-                  @pictures.joins(dive: :trip).order("trips.title ASC")
-                when "location"
-                  @pictures.joins(dive: :location).order("locations.name ASC")
-                else
-                  @pictures.order(date_time: :desc)
-                end
+    @pictures = filtered_pictures(index_pictures)
 
     @trips = current_user.trips.order(:title)
     @locations_by_country = Location.joins(dives: :trip)
@@ -249,5 +229,57 @@ class PicturesController < ApplicationController
     else
       Picture.none
     end
+  end
+
+  def filtered_pictures(pictures)
+    # Trip
+    pictures = pictures.where(trips: { id: params[:trip_id] }) if params[:trip_id].present?
+
+    # Location
+    pictures = pictures.where(locations: { id: params[:location_id] }) if params[:location_id].present?
+
+    # Species
+    pictures = pictures.where(species: { id: params[:species_id] }) if params[:species_id].present?
+
+    # Year
+    if params[:year].present?
+      year = params[:year].to_i
+
+      if year.positive?
+        start_date = Date.new(year, 1, 1)
+        end_date = start_date.next_year
+
+        pictures = pictures.where(date_time: start_date...end_date)
+      end
+    end
+
+    sorted_pictures(pictures.distinct)
+  end
+
+  def sorted_pictures(pictures)
+    case params[:sort]
+    when "date_asc"
+      pictures.order(date_time: :asc)
+    when "date_desc"
+      pictures.order(date_time: :desc)
+    when "trip"
+      pictures.order("trips.title ASC")
+    when "location"
+      pictures.order("locations.name ASC")
+    else
+      pictures.order(created_at: :desc)
+    end
+  end
+
+  def index_pictures
+    pictures = policy_scope(Picture).includes(:species, dive: { location: :country })
+
+    pictures = pictures.joins(dive: :trip) if params[:trip_id].present? || params[:sort] == "trip"
+
+    pictures = pictures.joins(dive: :location) if params[:location_id].present? || params[:sort] == "location"
+
+    pictures = pictures.joins(:species) if params[:species_id].present?
+
+    pictures
   end
 end
