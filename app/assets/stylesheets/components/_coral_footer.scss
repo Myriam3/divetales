@@ -4,30 +4,30 @@
   z-index: 10;
 
   width: 100%;
-  height: 250px; /* Adjust based on your image proportions */
-  margin-top: 100px; /* Gives breathing room after your main content */
+  height: 130px; /* Adjust based on your image proportions */
+  margin-top: 50px; /* Gives breathing room after your main content */
 
   /* Insert your coral asset here */
-  background-image: url('image_eccd7f.jpg');
+  background-image: url('corals.png');
   background-size: cover;
   background-position: bottom center;
   background-repeat: no-repeat;
 
-  /* Centers the text inside the footer */
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 20px;
+  // /* Centers the text inside the footer */
+  // display: flex;
+  // align-items: flex-end;
+  // justify-content: center;
+  // padding-bottom: 20px;
 
-  .footer-content {
-    color: #0A285A; /* Your deep navy */
-    font-weight: 700;
-    font-size: 1rem;
-    /* Soft frosted pill to ensure text is readable over busy corals */
-    background: rgba(238, 247, 252, 0.85);
-    padding: 8px 24px;
-    border-radius: 50px;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  }
+  // .footer-content {
+  //   color: #0A285A; /* Your deep navy */
+  //   font-weight: 700;
+  //   font-size: 1rem;
+  //   /* Soft frosted pill to ensure text is readable over busy corals */
+  //   background: rgba(238, 247, 252, 0.85);
+  //   padding: 8px 24px;
+  //   border-radius: 50px;
+  //   backdrop-filter: blur(4px);
+  //   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  // }
 }
