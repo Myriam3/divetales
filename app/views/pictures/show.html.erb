@@ -172,7 +172,10 @@
   </div>
 
   <div class="mt-3">
+    <% related_species_ids = @related_species.values.flatten.map(&:id) %>
     <% @related_categories.each do |category, pictures| %>
+      <% pictures = pictures.reject { |picture| related_species_ids.include?(picture.id) } %>
+
       <% if pictures.any? %>
         <h2>More <%= category.name %> Photos</h2>
 
