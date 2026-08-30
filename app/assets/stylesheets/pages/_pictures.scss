@@ -1,6 +1,45 @@
 .pictures {
   .trips-hero {
     margin-bottom: 1.5rem;
+
+    h1 {
+      > span {
+        position: relative;
+
+        svg {
+          position: absolute;
+          color: $dive-blue;
+          opacity: 0;
+          right: -40px;
+          //transform: scale(.8)  rotate(0) translateY(-10px);
+          //transition: 3s;
+          transform: scale(0.7) rotate(20deg) translateY(0);
+          animation: title-bubbles 7s .5s ease infinite;
+        }
+      }
+    }
+  }
+
+  @keyframes title-bubbles {
+    0% {
+      opacity: 0;
+      transform: scale(0.7) rotate(20deg) translateY(0);
+    }
+
+    10% {
+      opacity: 0.5;
+      transform: scale(0.7) rotate(26deg) translateY(0);
+    }
+
+    80% {
+      opacity: .2;
+      transform: scale(1) rotate(40deg) translateY(-10px);
+    }
+
+    100% {
+      opacity: 0;
+      transform: scale(1) rotate(50deg) translateY(-10px);
+    }
   }
 
   .form-check-input:checked {

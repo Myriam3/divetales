@@ -3,3 +3,7 @@ body {
   color: $dive-text;
   background-color: $dive-background;
 }
+
+body > main {
+  min-height: 70vh;
+}
