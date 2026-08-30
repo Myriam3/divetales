@@ -26,3 +26,8 @@
   border-radius: 14px;
   box-shadow: 0 10px 25px rgba(11, 58, 102, 0.10);
 }
+
+.bubble-background {
+  position: relative;
+  z-index: 1;
+}
