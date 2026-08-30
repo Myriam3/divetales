@@ -43,5 +43,10 @@
     </div>
 
     <%= yield %>
+
+
+    <% unless current_page?(root_path) %>
+      <%= render "shared/footer_wave" %>
+    <% end %>
   </body>
 </html>

@@ -67,4 +67,8 @@
     color: $dive-muted;
     border-color: $dive-muted;
   }
+
+  &--toggle {
+    min-width: 155px;
+  }
 }

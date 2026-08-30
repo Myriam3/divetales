@@ -1,8 +1,7 @@
 <% if picture %>
   <% show_info = local_assigns.fetch(:show_info, true) %>
 
-  <div class="card position-relative border-0 shadow-sm">
-
+  <div class="card picture-card h-100 position-relative border-0 shadow-sm">
     <div class="position-absolute d-none" data-picture-selection-target="checkboxWrapper" style="top: 10px; right: 10px; z-index: 10;">
       <%= check_box_tag "picture_ids[]", picture.id, false,
             class: "form-check-input fs-3 m-0 shadow border-2 rounded-circle",
@@ -12,24 +11,18 @@
             } %>
     </div>
     <%= link_to picture_path(picture),
-          class: "text-decoration-none text-dark",
+          class: "text-decoration-none",
           data: { action: "click->picture-selection#preventNavigation" } do %>
 
-      <div class="card-header <%= "d-none" unless show_info %>" data-picture-card-target="info">
+      <div class="card-header <%= "card-header--id" if picture.species.any? %> <%= "d-none" unless show_info %>" data-picture-card-target="info">
         <% if picture.species.any? %>
-          <%= render "shared/icon", icon_name: "photo-check", icon_size: 36 %>
           <% picture.species.each do |s| %>
-            <strong><%= s.name %></strong>
-            <div class="d-flex gap-1 flex-wrap">
-              <div class="badge bg-light text-secondary border px-3 py-2 rounded-pill">Class: <%= s.category.classification&.titleize %></div>
-              <div class="badge bg-light text-secondary border px-3 py-2 rounded-pill">Category: <%= s.category.name&.titleize %></div>
-              <% if s.details %>
-                <div class="badge bg-light text-secondary border px-3 py-2 rounded-pill">Family: <%= s.details&.dig("family")&.titleize %></div>
-              <% end %>
-            </div>
+            <p class="picture-card__id-name">
+              <%= render "shared/icon", icon_name: "photo-check", icon_size: 20 %> <strong><%= s.name %></strong>
+            </p>
           <% end %>
         <% else %>
-          <%= render "shared/icon", icon_name: "photo-question", icon_size: 36 %>
+          <%= render "shared/icon", icon_name: "photo-question", icon_size: 20 %>
           No species identified
         <% end %>
       </div>
@@ -52,9 +45,29 @@
       </div>
 
       <div class="card-body <%= "d-none" unless show_info %>" data-picture-card-target="info">
+        <% if picture.species.any? %>
+        <div class="picture-card__id-list">
+          <% picture.species.each do |s| %>
+          <div>
+            <span class="badge badge--cat">
+              <span class="visually-hidden">Category:</span>
+              <%= render "shared/icon", icon_name: "fish", icon_size: 16 %>
+              <%= s.category.name&.titleize %></span>
+              <% if s.details.present? %>
+                <% family = s.details&.dig("family")&.titleize %>
+                <% if family.present? %>
+                  <span  class="badge badge--family">
+                    <%= render "shared/icon", icon_name: "binary-tree", icon_size: 16 %>
+                    Family: <%= s.details&.dig("family")&.titleize %>
+                  </span>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+        <% end %>
         <%= render "shared/picture_info", picture: picture, dive: picture.dive %>
       </div>
-
     <% end %>
   </div>
 <% end %>

@@ -1,6 +1,7 @@
 <div class="pictures">
   <div class="trips-hero">
     <h1>Pictures</h1>
+    <h2>Need to find a subtitle.</h2>
   </div>
 
   <div class="container">
@@ -16,12 +17,12 @@
       <% end %>
     </div>
 
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-      <div class="offcanvas-header">
-        <h2 class="offcanvas-title" id="offcanvasRightLabel">Filter & Sort</h2>
+    <div class="pictures-drawer offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+      <div class="offcanvas-header pictures-drawer__header">
+        <h2 class="offcanvas-title pictures-drawer__title" id="offcanvasRightLabel">Filter & Sort</h2>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
-      <div class="offcanvas-body">
+      <div class="offcanvas-body pictures-drawer__body">
         <%= render "filters" %>
       </div>
     </div>
@@ -36,7 +37,7 @@
                 <% if @pictures.any? %>
                   <button
                       type="button"
-                      class="btn-dive btn-filter"
+                      class="btn-dive btn-filter btn-filter--toggle"
                       data-action="click->picture-card#toggle"
                       data-picture-card-target="button"
                     >
@@ -97,11 +98,13 @@
               <% end %>
             </ul>
           <% else %>
-            <p class="text-center">No picture found<% if @active_filters.present? %> with the current filters <% end %> </p>
+            <p class="pictures__empty">
+              <%= render "shared/icon", icon_name: "fish-bone", icon_size: 40 %>
+              <span class="text-center">No picture found<% if @active_filters.present? %> with the current filters <% end %></span>
+            </p>
           <% end %>
         </div>
       <% end %>
     </div>
-
   </div>
 </div>

@@ -1,4 +1,4 @@
-<div>
+<div class="pictures-filters">
   <%= form_with url: pictures_path,
                 method: :get,
                 local: true,
@@ -39,28 +39,38 @@
       end
     %>
 
-    <div>
-      <h3>Country/Date</h3>
+    <div class="pictures-filters__group">
       <div class="row">
         <div class="col-auto">
+          <h3>
+            <%= render "shared/icon", icon_name: "world-map" %>
+            Country
+          </h3>
           <%= select_tag :country_id,
             options_from_collection_for_select(@countries, :id, :name, selected = selected_country_id),
-            prompt: "All countries",
-            disabled: disable_country,
-            class: "form-select" %>
+              prompt: "All countries",
+              disabled: disable_country,
+              class: "form-select" %>
         </div>
         <div class="col-auto">
-        <%= select_tag :year,
+          <h3>
+            <%= render "shared/icon", icon_name: "calendar" %>
+            Date
+          </h3>
+          <%= select_tag :year,
           options_for_select(@years.map { |y| [y.to_i, y.to_i] }, selected = selected_year),
-          disabled: disable_year,
-          prompt: "All years",
-          class: "form-select" %>
+            disabled: disable_year,
+            prompt: "All years",
+            class: "form-select" %>
         </div>
       </div>
     </div>
 
-    <div>
-      <h3>Trips/Dives</h3>
+    <div class="pictures-filters__group">
+      <h3>
+        <%= render "shared/icon", icon_name: "luggage", icon_size: 24 %>
+        Trips
+      </h3>
       <div class="row">
         <div class="col-auto">
         <%= select_tag :trip_id,
@@ -71,8 +81,11 @@
       </div>
     </div>
 
-    <div>
-      <h3>Location/Dive site</h3>
+    <div class="pictures-filters__group">
+      <h3>
+        <%= render "shared/icon", icon_name: "world-pin" %>
+        Location
+      </h3>
       <div class="row">
         <div class="col-auto">
           <%= select_tag :location_id,
@@ -86,8 +99,11 @@
       </div>
     </div>
 
-    <div>
-      <h3>Species</h3>
+    <div class="pictures-filters__group">
+      <h3>
+        <%= render "shared/icon", icon_name: "fish", icon_size: 24 %>
+        Marine life
+      </h3>
       <div class="row">
         <div class="col-auto">
           <%= select_tag :category_id,
@@ -133,8 +149,11 @@
       </div>
     </div>
 
-    <div>
-      <h3>Sort</h3>
+    <div class="pictures-filters__group">
+      <h3>
+        <%= render "shared/icon", icon_name: "arrows-sort" %>
+        Sort
+      </h3>
       <div>
         <%= select_tag :sort,
           options_for_select([
@@ -147,16 +166,23 @@
       </div>
     </div>
 
-    <div>
-      <div>
-        <%= submit_tag "Apply", class: "btn btn-secondary" %>
+    <div class="pictures-filters__footer">
+      <div class="pictures-filters__footer-btn">
+        <button type="submit" class="btn-dive btn-dive-accent">
+        <%= render "shared/icon", icon_name: "adjustments-horizontal" %>
+        Apply
+      </button>
+        <% if params[:trip_id].present? || params[:location_id].present? || params[:year].present? || params[:species_id].present? || params[:sort].present? %>
+            <%= link_to pictures_path, class: "btn-dive btn-dive-secondary" do %>
+              <%= render "shared/icon", icon_name: "adjustments-off" %>
+              Clear
+            <% end %>
+        <% end %>
       </div>
 
-      <% if params[:trip_id].present? || params[:location_id].present? || params[:year].present? || params[:species_id].present? || params[:sort].present? %>
-          <div class="col-auto">
-            <%= link_to "Clear filters", pictures_path, class: "btn btn-outline-secondary" %>
-          </div>
-      <% end %>
+      <div class="pictures-filters__footer-img">
+        <%= image_tag "dive-default.png", alt: "" %>
+      </div>
     </div>
   <% end %>
 </div>
