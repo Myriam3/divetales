@@ -42,7 +42,7 @@
                       <%= dive.dive_site_name %>
                     </span>
                   <% end %>
-                  <% if picture.date_time.present? %>
+                  <% unless picture.date_time.blank? %>
                     <span>
                       <%= render "shared/icon", icon_name: "calendar" %>
                       <% if picture.date_time.is_a?(String) %>
