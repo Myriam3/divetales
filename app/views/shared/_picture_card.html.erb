@@ -1,7 +1,7 @@
 <% if picture %>
   <% show_info = local_assigns.fetch(:show_info, true) %>
 
-  <div class="card position-relative border-0 shadow-sm mb-4">
+  <div class="card position-relative border-0 shadow-sm">
 
     <div class="position-absolute d-none" data-picture-selection-target="checkboxWrapper" style="top: 10px; right: 10px; z-index: 10;">
       <%= check_box_tag "picture_ids[]", picture.id, false,

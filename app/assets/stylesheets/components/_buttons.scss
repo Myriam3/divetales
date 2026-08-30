@@ -13,41 +13,58 @@
   color: $dive-white;
   background: $dive-blue;
   box-shadow: 0 6px 14px rgba(20, 93, 160, 0.20);
-}
 
-.btn-dive-primary:hover {
-  color: $dive-white;
-  background: $dive-blue-hover;
+  &:hover,
+  &:focus {
+    color: $dive-white;
+    background: $dive-blue-hover;
+  }
 }
 
 .btn-dive-accent {
   color: $dive-white;
   background: $dive-coral;
   box-shadow: 0 6px 14px rgba(233, 99, 75, 0.22);
-}
 
-.btn-dive-accent:hover {
-  color: $dive-white;
-  background: $dive-coral-hover;
+  &:hover,
+  &:focus {
+    color: $dive-white;
+    background: $dive-coral-hover;
+  }
 }
 
 .btn-dive-secondary {
   color: $dive-blue;
   background: $dive-white;
   border-color: $dive-blue;
-}
 
-.btn-dive-secondary:hover {
-  color: $dive-blue-hover;
-  background: $dive-banner;
+  &:hover,
+  &:focus {
+    color: $dive-blue-hover;
+    background: $dive-banner;
+  }
 }
 
 .btn-dive-danger {
   color: $dive-white;
   background: $dive-danger;
+
+  &:hover,
+  &:focus {
+    color: $dive-white;
+    opacity: 0.9;
+  }
 }
 
-.btn-dive-danger:hover {
-  color: $dive-white;
-  opacity: 0.9;
+.btn-filter {
+  padding: 0.5rem 1rem;
+  color: $dive-text;
+  background: $dive-white;
+  border-color: $dive-text;
+
+  &:hover,
+  &:focus {
+    color: $dive-muted;
+    border-color: $dive-muted;
+  }
 }

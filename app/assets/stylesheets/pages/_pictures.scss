@@ -1,0 +1,90 @@
+.pictures {
+  .trips-hero {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-check-input:checked {
+    background-color: $dive-blue;
+    border-color: $dive-blue;
+  }
+
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__toolbar {
+    padding: 1.5rem;
+    background-color: $dive-white;
+    border: 1px solid $dive-border;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(11, 58, 102, 0.10);
+    margin-bottom: 1rem;
+  }
+
+  &__toolbar-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  &__toolbar-title {
+    margin: 0 0 1.5rem;
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  &__toolbar-btn {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  &__toolbar-active {
+    flex: 1;
+
+    &-label {
+      margin: 0 0 4px;
+      font-size: 0.9rem;
+    }
+
+    &-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      background-color: $dive-banner;
+      color: $dive-text;
+      border-radius: 24px;
+    }
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+}
+
+
+@media (max-width: 700px) {
+  .pictures {
+    &__header {
+
+    }
+  }
+}
