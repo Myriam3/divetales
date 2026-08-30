@@ -1,60 +1,3 @@
-<%= form_with url: pictures_path, method: :get, local: true, html: { class: "row g-3 mb-4" } do %>
-  <div class="col-auto">
-    <%= select_tag :trip_id,
-      options_from_collection_for_select(@trips, :id, :title, params[:trip_id]),
-      prompt: "All trips",
-      class: "form-select" %>
-  </div>
-
-<div class="col-auto">
-  <%= select_tag :location_id,
-    grouped_options_for_select(
-      @locations_by_country.map { |country, location_list| [country, location_list.map { |l| [l.name, l.id] }] },
-      params[:location_id]
-    ),
-    prompt: "All locations",
-    class: "form-select" %>
-</div>
-
-
-<div class="col-auto">
-  <%= select_tag :year,
-    options_for_select(@years.map { |y| [y.to_i, y.to_i] }, params[:year]),
-    prompt: "All years",
-    class: "form-select" %>
-</div>
-
-<div class="col-auto">
-  <%= select_tag :species_id,
-    grouped_options_for_select(
-      @species_by_classification.transform_keys(&:humanize).map { |classification, species_list| [classification, species_list.map { |s| [s.name, s.id] }] },
-      params[:species_id]
-    ),
-    prompt: "All species",
-    class: "form-select" %>
-</div>
-
-  <div class="col-auto">
-    <%= select_tag :sort,
-      options_for_select([
-        ["Newest first", "date_desc"],
-        ["Oldest first", "date_asc"],
-        ["Trip name", "trip"],
-        ["Location name", "location"]
-      ], params[:sort]),
-      class: "form-select" %>
-  </div>
-
-  <div class="col-auto">
-    <%= submit_tag "Apply", class: "btn btn-secondary" %>
-  </div>
-
- <% if params[:trip_id].present? || params[:location_id].present? || params[:year].present? || params[:species_id].present? || params[:sort].present? %>
-    <div class="col-auto">
-      <%= link_to "Clear filters", pictures_path, class: "btn btn-outline-secondary" %>
-    </div>
-  <% end %>
-<% end %>
 <h1 class="mt-5 mb-1">Pictures</h1>
 <div class="d-flex justify-content-evenly">
   <p class="mt-3 text-center">
@@ -70,6 +13,10 @@
       Add a picture
     <% end %>
   </p>
+</div>
+
+<div class="mt-3 mb-3">
+  <% render "filters" %>
 </div>
 
 <% if @pictures.any? %>
