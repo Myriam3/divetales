@@ -83,6 +83,14 @@ def species_list
       description: "A hammerhead shark commonly encountered in large schools around oceanic islands and offshore reefs.",
       wiki_link: "https://en.wikipedia.org/wiki/Scalloped_hammerhead"
     },
+    {
+      name: "Tassled Scorpionfish",
+      scientific_name: "Scorpaenopsis oxycephala",
+      category: "Scorpionfish & Stonefish",
+      tags: ["tropical", "reef", "macro"],
+      description: "A highly camouflaged ambush predator featuring fleshy skin flaps (tassels) that help it blend seamlessly into rocky and coral reef environments.",
+      wiki_link: "https://en.wikipedia.org/wiki/Scorpaenopsis_oxycephala"
+    },
 
 
     # ----------------------------------------
@@ -110,6 +118,14 @@ def species_list
       tags: ["tropical", "reef", "macro"],
       description: "A brightly colored mantis shrimp known for its powerful striking appendages.",
       wiki_link: "https://en.wikipedia.org/wiki/Odontodactylus_scyllarus"
+    },
+    {
+      name: "Red-Spotted Coral Crab",
+      scientific_name: "Trapezia rufopunctata",
+      category: "Crabs",
+      tags: ["tropical", "reef", "macro"],
+      description: "A small, vividly patterned crab that typically lives symbiotically within the branches of Pocillopora corals.",
+      wiki_link: "https://en.wikipedia.org/wiki/Trapezia_rufopunctata"
     },
 
 

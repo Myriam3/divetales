@@ -181,8 +181,44 @@
   },
   {
     "dive_key": ["nusa_penida_197"],
+    "species": ["Chelonia mydas"],
+    "image_path": "197-green-turtle",
+    "date_time": "2026-08-28 09:29"
+  },
+  {
+    "dive_key": ["nusa_penida_197"],
     "species": [],
-    "image_path": "P8280157",
-    "date_time": "2026-08-28 09:08"
+    "image_path": "197-nudi",
+    "date_time": "2026-08-28 09:19"
+  },
+  {
+    "dive_key": ["nusa_penida_197"],
+    "species": ["Odontodactylus scyllarus"],
+    "image_path": "197-peacock-mantis-shrimp",
+    "date_time": "2026-08-28 09:38"
+  },
+  {
+    "dive_key": ["nusa_penida_197"],
+    "species": [],
+    "image_path": "197-pufferfish",
+    "date_time": "2026-08-28 09:38"
+  },
+  {
+    "dive_key": ["nusa_penida_197"],
+    "species": ["Trapezia rufopunctata"],
+    "image_path": "197-red-spotted-coral-crab",
+    "date_time": "2026-08-28 09:52"
+  },
+  {
+    "dive_key": ["nusa_penida_197"],
+    "species": ["Scorpaenopsis oxycephala"],
+    "image_path": "197-scorpionfish",
+    "date_time": "2026-08-28 09:16"
+  },
+  {
+    "dive_key": ["nusa_penida_197"],
+    "species": [],
+    "image_path": "197-spotfin-lionfish",
+    "date_time": "2026-08-28 09:24"
   }
 ]
