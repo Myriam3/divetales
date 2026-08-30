@@ -21,7 +21,7 @@
       <% dive_pictures = dive.pictures.sort_by do |picture|
           [
             picture.date_time.nil? ? 1 : 0,
-            picture.date_time || dive.start_time
+            picture.date_time || dive.date.to_time
           ]
           end
       %>
@@ -65,7 +65,7 @@
         <div class="col col-9">
           <%= render "/shared/depth_profile",
               dive: dive, display_info: false
-        %>
+          %>
         </div>
       <% end %>
     </div>
