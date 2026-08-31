@@ -222,60 +222,6 @@
   gap: 1.5rem;
 }
 
-.trip-dive-card-link {
-  display: block;
-  height: 100%;
-  color: inherit;
-  text-decoration: none;
-}
-
-.trip-dive-card-link:hover {
-  color: inherit;
-  text-decoration: none;
-}
-
-.trip-dive-card {
-  height: 100%;
-  overflow: hidden;
-  background: $dive-white;
-  border: 1px solid $dive-border;
-  border-radius: 14px;
-  box-shadow: 0 10px 25px rgba(11, 58, 102, 0.10);
-  transition: 0.2s;
-}
-
-.trip-dive-card-link:hover .trip-dive-card {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 30px rgba(11, 58, 102, 0.16);
-}
-
-.trip-dive-card__image {
-  display: block;
-  width: 100%;
-  height: 190px;
-  object-fit: cover;
-  border-bottom: 1px solid $dive-border;
-}
-
-.trip-dive-card__body {
-  padding: 1.25rem;
-}
-
-.trip-dive-card__body h3 {
-  margin: 0 0 0.75rem;
-  color: $dive-navy;
-  font-weight: 700;
-}
-
-.trip-dive-card__body p {
-  margin: 0.5rem 0;
-  color: $dive-muted;
-}
-
-.trip-dive-card__body .btn-dive {
-  margin-top: 0.75rem;
-}
-
 .trip-delete {
   margin-top: 3rem;
   padding-top: 2rem;
@@ -340,8 +286,7 @@
   }
 }
 
-.trip-card-wrapper,
-.trip-dive-card-wrapper {
+.trip-card-wrapper {
   position: relative;
   height: 100%;
 }
@@ -378,7 +323,6 @@
   display: none;
 }
 
-.trip-card__image,
-.trip-dive-card__image {
+.trip-card__image {
   object-position: center;
 }
