@@ -46,10 +46,8 @@
       <%= yield %>
     </main>
 
-    <% unless current_page?(root_path) ||
-              current_page?(identification_path) ||
-              current_page?(identification_details_path) ||
-              current_page?(identification_confirm_path) %>
+    <% paths = ["/dives", "/trips", "/pictures"] %>
+    <% if paths.any? { |path| request.path.include?(path) } %>
       <%= render "shared/footer_wave" %>
     <% end %>
   </body>
