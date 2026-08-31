@@ -86,10 +86,98 @@ def species_list
     {
       name: "Tassled Scorpionfish",
       scientific_name: "Scorpaenopsis oxycephala",
-      category: "Scorpionfish & Stonefish",
+      category: "Lionfish, Scorpionfish & Stonefish",
       tags: ["tropical", "reef", "macro"],
       description: "A highly camouflaged ambush predator featuring fleshy skin flaps (tassels) that help it blend seamlessly into rocky and coral reef environments.",
       wiki_link: "https://en.wikipedia.org/wiki/Scorpaenopsis_oxycephala"
+    },
+    {
+      name: "Spotfin Lionfish",
+      scientific_name: "Pterois antennata",
+      category: "Lionfish, Scorpionfish & Stonefish",
+      tags: ["tropical", "reef", "venomous"],
+      description: "A visually striking, venomous reef fish characterized by its bold reddish-brown stripes and distinctive, fan-like pectoral fins with spotted patterns.",
+      wiki_link: "https://en.wikipedia.org/wiki/Pterois_antennata"
+    },
+    {
+      name: "Striped Eel Catfish",
+      scientific_name: "Plotosus lineatus",
+      category: "Catfish",
+      tags: ["tropical", "reef", "venomous"],
+      description: "A marine catfish famously known for forming dense, swarming balls as juveniles. They possess highly venomous spines in their dorsal and pectoral fins.",
+      wiki_link: "https://en.wikipedia.org/wiki/Plotosus_lineatus"
+    },
+    {
+      name: "Bicolor Parrotfish (Juvenile)",
+      scientific_name: "Cetoscarus bicolor",
+      category: "Parrotfish",
+      tags: ["tropical", "reef"],
+      description: "A reef fish that undergoes drastic color changes throughout its life. Juveniles are striking, featuring a white body with a broad orange band across the head and an eyespot on the dorsal fin.",
+      wiki_link: "https://en.wikipedia.org/wiki/Bicolor_parrotfish"
+    },
+    {
+      name: "Blackspotted Pufferfish",
+      scientific_name: "Arothron nigropunctatus",
+      category: "Pufferfish & Porcupinefish",
+      tags: ["tropical", "reef"],
+      description: "Also known as the dog-faced puffer, this highly recognizable fish features a rounded snout and distinct black spots scattered across its body. It is frequently seen foraging around tropical coral reefs.",
+      wiki_link: "https://en.wikipedia.org/wiki/Arothron_nigropunctatus"
+    },
+    {
+      name: "Red-spotted Goby",
+      scientific_name: "Istigobius ornatus",
+      category: "Gobies & Blennies",
+      tags: ["tropical", "reef", "macro"],
+      description: "A small, delicate goby found on sandy and rubble reef bottoms. It has a pale, translucent body, a distinctly pinkish-red head, and is covered in precise red spots, as captured in this photograph perched amongst coral rubble. This species is often seen near the entrance of a burrow that it shares with a blind alpheid shrimp, though the shrimp is often not visible.",
+      wiki_link: "https://en.wikipedia.org/wiki/Istigobius_ornatus"
+    },
+    {
+      name: "Whitetip Reef Shark (Juvenile)",
+      scientific_name: "Triaenodon obesus",
+      category: "Sharks",
+      tags: ["tropical", "reef", "nocturnal"],
+      description: "A young reef-dwelling shark that spends its days resting in tight coral crevices or beneath ledges. Like the adults, juveniles are easily identified by the bright white tips on their first dorsal and upper caudal fins, but they feature a much smaller, slender frame.",
+      wiki_link: "https://en.wikipedia.org/wiki/Whitetip_reef_shark"
+    },
+    {
+      name: "Spotted Boxfish (Female)",
+      scientific_name: "Ostracion meleagris",
+      category: "Boxfish & Cowfish",
+      tags: ["tropical", "reef"],
+      description: "A slow-moving reef fish encased in a rigid, bony carapace. The distinctive dark body completely covered in white spots identifies this specifically as a female or juvenile, as adult males develop bright blue sides with gold spots.",
+      wiki_link: "https://en.wikipedia.org/wiki/Spotted_boxfish"
+    },
+    {
+      name: "Red Lionfish",
+      scientific_name: "Pterois volitans",
+      category: "Lionfish, Scorpionfish & Stonefish",
+      tags: ["tropical", "reef", "venomous"],
+      description: "Often referred to as the common lionfish, this species is famous for its striking red, maroon, and white vertical stripes and long, showy pectoral fins. It possesses highly venomous dorsal spines and, while native to the Indo-Pacific, has become a notoriously successful invasive species in the Atlantic and Caribbean.",
+      wiki_link: "https://en.wikipedia.org/wiki/Red_lionfish"
+    },
+    {
+      name: "Fire Dartfish",
+      scientific_name: "Nemateleotris magnifica",
+      category: "Gobies & Blennies",
+      tags: ["tropical", "reef", "macro"],
+      description: "Also known as the fire goby, this strikingly colorful fish features a bright yellow head that fades into a brilliant red and orange body. It is easily identified by its elongated first dorsal fin, which it flicks back and forth while hovering above its burrow.",
+      wiki_link: "https://en.wikipedia.org/wiki/Fire_goby"
+    },
+    {
+      name: "Giant Frogfish",
+      scientific_name: "Antennarius commerson",
+      category: "Frogfish & Anglerfish",
+      tags: ["tropical", "reef"],
+      description: "A master of camouflage and one of the largest frogfish species. As perfectly captured in your photograph, it frequently perches on large sponges, utilizing its highly textured skin to blend in seamlessly while waiting to ambush prey with its modified dorsal fin lure.",
+      wiki_link: "https://en.wikipedia.org/wiki/Giant_frogfish"
+    },
+    {
+      name: "Oriental Sweetlips (Juvenile)",
+      scientific_name: "Plectorhinchus vittatus",
+      category: "Other Fish",
+      tags: ["tropical", "reef"],
+      description: "Juveniles of this species look and behave completely differently from the horizontally striped adults. They feature a striking, high-contrast pattern of dark brown and white blotches and are famous for an erratic, fluttering swimming style thought to mimic a toxic flatworm.",
+      wiki_link: "https://en.wikipedia.org/wiki/Plectorhinchus_vittatus"
     },
 
 
@@ -104,6 +192,14 @@ def species_list
       tags: ["tropical", "reef", "seagrass"],
       description: "A widely distributed sea turtle commonly found around reefs, shallow coastal waters, and seagrass meadows.",
       wiki_link: "https://en.wikipedia.org/wiki/Green_sea_turtle"
+    },
+    {
+      name: "Banded Sea Krait",
+      scientific_name: "Laticauda colubrina",
+      category: "Sea Snakes",
+      tags: ["tropical", "reef", "venomous"],
+      description: "A highly venomous but generally docile marine reptile recognized by its distinctive black and white bands. It actively hunts in coral crevices for eels and must periodically swim to the surface to breathe air.",
+      wiki_link: "https://en.wikipedia.org/wiki/Laticauda_colubrina"
     },
 
 
@@ -126,6 +222,46 @@ def species_list
       tags: ["tropical", "reef", "macro"],
       description: "A small, vividly patterned crab that typically lives symbiotically within the branches of Pocillopora corals.",
       wiki_link: "https://en.wikipedia.org/wiki/Trapezia_rufopunctata"
+    },
+    {
+      name: "Spotted Porcelain Crab",
+      scientific_name: "Neopetrolisthes maculatus",
+      category: "Crabs",
+      tags: ["tropical", "reef", "macro"],
+      description: "A small, filter-feeding crab with a pale body covered in distinct reddish-brown spots, commonly found living symbiotically within the stinging tentacles of sea anemones.",
+      wiki_link: "https://en.wikipedia.org/wiki/Neopetrolisthes_maculatus"
+    },
+    {
+      name: "Orangutan Crab",
+      scientific_name: "Achaeus japonicus",
+      category: "Crabs",
+      tags: ["tropical", "reef", "macro"],
+      description: "A small spider crab covered in long, reddish-brown hairs that resemble an orangutan's fur. It is typically found living symbiotically inside bubble corals.",
+      wiki_link: "https://en.wikipedia.org/wiki/Achaeus_japonicus"
+    },
+    {
+      name: "Candy Crab",
+      scientific_name: "Hoplophrys oatesi",
+      category: "Crabs",
+      tags: ["tropical", "reef", "macro"],
+      description: "A tiny, masterfully camouflaged spider crab that lives exclusively on Dendronephthya soft corals. It actively decorates its carapace with polyps from its host, allowing it to seamlessly blend into the vibrant pink, red, and white spiky branches shown in your photograph.",
+      wiki_link: "https://en.wikipedia.org/wiki/Hoplophrys"
+    },
+    {
+      name: "Sponge Shrimp",
+      scientific_name: "Gelastocaris paronae",
+      category: "Shrimps",
+      tags: ["tropical", "reef", "macro"],
+      description: "A small, masterfully camouflaged crustacean that lives exclusively on sponges. Its textured, nodular body perfectly mimics the surface and color of its host, making it nearly invisible to the naked eye.",
+      wiki_link: "https://en.wikipedia.org/wiki/Caridea"
+    },
+    {
+      name: "Squat Shrimp",
+      scientific_name: "Thor amboinensis",
+      category: "Shrimps",
+      tags: ["tropical", "reef", "macro"],
+      description: "A tiny, distinctively patterned crustacean famous for its unusual habit of waving its abdomen back and forth. It is commonly found living symbiotically among the tentacles of sea anemones or large tube anemones.",
+      wiki_link: "https://en.wikipedia.org/wiki/Thor_amboinensis"
     },
 
 
