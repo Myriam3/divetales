@@ -1,0 +1,68 @@
+.dives {
+  &__header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    background: $dive-white;
+    border: 1px solid $dive-border;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(11, 58, 102, 0.10);
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    &-info {
+      font-size: 1.2rem;
+
+      .t-icon {
+        color: $dive-blue;
+      }
+    }
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .dives__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .dives__list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dives-select {
+  .dropdown-menu {
+    background: $dive-white;
+    border: 1px solid $dive-border;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(11, 58, 102, 0.10);
+    color: $dive-text;
+
+      span {
+        display: block;
+        padding: 0.5rem 1rem;
+        font-weight: 700;
+      }
+
+    .dropdown-item {
+      padding: 0.25rem 1rem;
+
+      &:focus,
+      &:hover {
+        background-color: $dive-background;
+      }
+    }
+  }
+}

@@ -1,59 +1,116 @@
-<h1 class="mt-5 mb-1">Pictures</h1>
-<div class="d-flex justify-content-evenly">
-  <p class="mt-3 text-center">
-    <%= link_to identification_path, class: "btn btn-secondary" do %>
-    <%= render "shared/icon", icon_name: "photo-spark" %>
-      Identify a species
-    <% end %>
-  </p>
+<div class="pictures">
+  <div class="trips-hero">
+    <h1>
+      <span>
+        Pictures
+        <%= render "shared/icon", icon_name: "chart-bubble", icon_size: 36 %>
+      </span>
+    </h1>
 
-  <p class="mt-3 text-center">
-    <%= link_to new_picture_path, class: "btn btn-secondary" do %>
-    <%= render "shared/icon", icon_name: "camera-spark" %>
-      Add a picture
-    <% end %>
-  </p>
-</div>
-
-<% if @pictures.any? %>
-  <div data-controller="picture-selection">
-    <%= form_with url: bulk_destroy_pictures_path, method: :delete, data: { turbo_confirm: "Are you sure you want to delete the selected photos?" } do |f| %>
-      <%= hidden_field_tag :return_to, "pictures" %>
-      <div data-controller="picture-card">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-
-          <button
-            type="button"
-            class="btn btn-outline-secondary"
-            data-action="click->picture-card#toggle"
-            data-picture-card-target="button"
-          >
-            Show picture info
-          </button>
-
-          <div class="d-flex gap-2">
-            <%= f.submit "Delete", class: "btn btn-outline-danger d-none", data: { picture_selection_target: "deleteButton" } %>
-
-            <button type="button" class="btn btn-outline-secondary" data-action="picture-selection#toggleMode" data-picture-selection-target="selectButton">
-              Select
-            </button>
-
-            <button type="button" class="btn btn-secondary d-none" data-action="picture-selection#toggleMode" data-picture-selection-target="cancelButton">
-              Cancel
-            </button>
-          </div>
-        </div>
-
-        <ul class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 list-unstyled">
-          <% @pictures.each do |picture| %>
-            <li class="col">
-              <%= render "shared/picture_card", picture: picture, show_info: false %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
+    <h2>Need to find a subtitle.</h2>
   </div>
-<% else %>
-  No picture yet
-<% end %>
+
+  <div class="container">
+    <div class="pictures__header">
+      <%= link_to identification_path, class: "btn-dive btn-dive-secondary" do %>
+        <%= render "shared/icon", icon_name: "photo-spark" %>
+          Identify a species
+        <% end %>
+
+      <%= link_to new_picture_path, class: "btn-dive btn-dive-accent" do %>
+        <%= render "shared/icon", icon_name: "camera-spark" %>
+        Add a picture
+      <% end %>
+    </div>
+
+    <div class="pictures-drawer offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+      <div class="offcanvas-header pictures-drawer__header">
+        <h2 class="offcanvas-title pictures-drawer__title" id="offcanvasRightLabel">Filter & Sort</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body pictures-drawer__body">
+        <%= render "filters" %>
+      </div>
+    </div>
+
+    <div data-controller="picture-selection">
+      <%= form_with url: bulk_destroy_pictures_path, method: :delete, data: { turbo_confirm: "Are you sure you want to delete the selected photos?" } do |f| %>
+        <%= hidden_field_tag :return_to, "pictures" %>
+        <div data-controller="picture-card">
+          <div class="pictures__toolbar">
+            <div class="pictures__toolbar-top">
+              <div class="pictures__toolbar-btn">
+                <% if @pictures.any? %>
+                  <button
+                      type="button"
+                      class="btn-dive btn-filter btn-filter--toggle"
+                      data-action="click->picture-card#toggle"
+                      data-picture-card-target="button"
+                    >
+                    <span data-picture-card-target="buttonHide" class="d-none">
+                      <%= render "shared/icon", icon_name: "toggle-right" %>
+                      Hide details
+                    </span>
+                    <span data-picture-card-target="buttonShow">
+                      <%= render "shared/icon", icon_name: "toggle-left" %>
+                      Show details
+                    </span>
+                  </button>
+                <% end %>
+
+                <button class="btn-dive btn-filter" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                  <%= render "shared/icon", icon_name: "adjustments-horizontal" %>
+                  Filter
+                </button>
+              </div>
+
+              <% if @active_filters.present? %>
+                <div class="pictures__toolbar-active">
+                  <p class="pictures__toolbar-active-label">Current filters:</p>
+                  <ul class="pictures__toolbar-active-list list-unstyled">
+                    <%= render 'active_filter', filters: @active_filters %>
+                  </ul>
+                </div>
+            <% end %>
+
+              <% if @pictures.any? %>
+                <div class="pictures__toolbar-select">
+                  <%= f.button :submit, class: "btn btn-link dive-link dive-link-danger d-none", data: { picture_selection_target: "deleteButton" } do %>
+                    <%= render "shared/icon", icon_name: "trash", icon_size: 16 %>
+                    Delete
+                  <% end %>
+
+                  <button type="button" class="btn btn-link dive-link dive-link-secondary" data-action="picture-selection#toggleMode" data-picture-selection-target="selectButton">
+                    <%= render "shared/icon", icon_name: "selector", icon_size: 16 %>
+                    Select
+                  </button>
+
+                  <button type="button" class="btn btn-link dive-link dive-link-secondary d-none" data-action="picture-selection#toggleMode" data-picture-selection-target="cancelButton">
+                    Cancel
+                  </button>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <% if @pictures.any? %>
+            <h2 class="pictures__toolbar-title"><%= pluralize(@pictures.length, "picture") %></h2>
+
+            <ul class="pictures__list list-unstyled">
+              <% @pictures.each do |picture| %>
+                <li>
+                  <%= render "shared/picture_card", picture: picture, show_info: false %>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="pictures__empty">
+              <%= render "shared/icon", icon_name: "fish-bone", icon_size: 40 %>
+              <span class="text-center">No picture found<% if @active_filters.present? %> with the current filters <% end %></span>
+            </p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
