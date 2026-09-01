@@ -96,6 +96,18 @@
     "location_key": "nusa_penida"
   },
   {
+    "name": "PMG (Pura Mas Gading)",
+    "latitude": -8.66826,
+    "longitude": 115.53497,
+    "location_key": "nusa_penida"
+  },
+  {
+    "name": "Karang Sari",
+    "latitude": -8.70355,
+    "longitude": 115.59437,
+    "location_key": "nusa_penida"
+  },
+  {
     "name": "Sental",
     "latitude": -8.6775,
     "longitude": 115.5311,
