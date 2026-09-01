@@ -1,0 +1,52 @@
+.picture {
+  &__wrapper {
+    --max-width-wide: 100%;
+    overflow: hidden;
+    height: 83vh;
+    max-height: 600px;
+    background: #020A12;
+
+    img {
+      display: block;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      margin: 0 auto;
+    }
+
+    &--placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 50vh;
+      background: $dive-banner;
+      border-bottom: solid 1px $dive-border;
+    }
+  }
+
+  &__info {
+    border: solid green;
+  }
+
+  &__related {
+    padding: 4rem 0;
+    border: solid blue;
+
+    &-title {
+      margin: 0 0 2rem;
+    }
+  }
+}
+
+@media (min-width: 900px) {
+  .picture {
+    &__wrapper {
+      max-height: 800px;
+
+      img {
+        max-width: var(--max-width-wide);
+      }
+    }
+  }
+}
