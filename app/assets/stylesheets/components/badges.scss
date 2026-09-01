@@ -1,0 +1,32 @@
+.badge.badge--filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background-color: $dive-banner;
+  color: $dive-text;
+  border-radius: 24px;
+}
+
+.badge.badge--type {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background-color: $dive-banner;
+  color: $dive-text;
+  border-radius: 24px;
+
+  &.badge--night {
+    background-color: $dive-navy;
+    color: #fff;
+  }
+
+  &.badge--cave {
+    background-color: $dive-text;
+    color: #fff;
+  }
+
+  &.badge--wreck {
+    background-color: $dive-muted;
+    color: #fff;
+  }
+}
