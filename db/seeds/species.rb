@@ -39,6 +39,14 @@ def species_list
       description: "A large moray eel found around rocky reefs and coastal waters of the tropical Atlantic.",
       wiki_link: "https://en.wikipedia.org/wiki/Green_moray"
     },
+    {
+      name: "Yellowmargin Moray",
+      scientific_name: "Gymnothorax flavimarginatus",
+      category: "Eels",
+      tags: ["tropical", "reef", "nocturnal"],
+      description: "A large moray eel characterized by its yellowish-brown mottled body and the distinctive bright yellow-green margin along the posterior edge of its fin. It is frequently encountered hiding in reef crevices, often with only its head visible.",
+      wiki_link: "https://en.wikipedia.org/wiki/Yellow-edged_moray"
+    },
 
     {
       name: "Moorish Idol",
@@ -227,6 +235,22 @@ def species_list
       description: "A massive, powerful apex predator commonly found patrolling reef drop-offs and areas with strong currents. Known for their silvery, muscular bodies and steep head profiles, these jacks are highly aggressive hunters.",
       wiki_link: "https://en.wikipedia.org/wiki/Giant_trevally"
     },
+    {
+      name: "Yellow Boxfish (Juvenile)",
+      scientific_name: "Ostracion cubicum",
+      category: "Boxfish & Cowfish",
+      tags: ["tropical", "reef", "macro"],
+      description: "Juveniles of this species are unmistakable, featuring a bright yellow, cube-shaped body covered in perfectly round black spots. As they mature into adults, their body elongates, the bright yellow fades to a mustard or brownish-blue, and the black spots become white spots with black margins.",
+      wiki_link: "https://en.wikipedia.org/wiki/Yellow_boxfish"
+    },
+    {
+      name: "Robust Ghostpipefish",
+      scientific_name: "Solenostomus cyanopterus",
+      category: "Seahorses & Pipefish",
+      tags: ["tropical", "reef", "macro"],
+      description: "A master of camouflage that closely resembles a piece of drifting seagrass or a dead leaf. It typically hangs vertically with its snout pointing downward, blending in perfectly with nearby vegetation or sponges to hide from predators and ambush tiny crustaceans.",
+      wiki_link: "https://en.wikipedia.org/wiki/Robust_ghost_pipefish"
+    },
 
 
     # ----------------------------------------
@@ -319,6 +343,22 @@ def species_list
       description: "The largest of all mantis shrimp species, easily identifiable by its distinct black and pale yellow zebra-like bands. Unlike the smashing peacock mantis, this species is a 'spearer' that waits vertically in deep sandy burrows to ambush passing fish with its barbed appendages.",
       wiki_link: "https://en.wikipedia.org/wiki/Lysiosquillina_maculata"
     },
+    {
+      name: "Crinoid Squat Lobster",
+      scientific_name: "Allogalathea elegans",
+      category: "Other Crustaceans",
+      tags: ["tropical", "reef", "macro"],
+      description: "A tiny, teardrop-shaped squat lobster that lives exclusively in a symbiotic relationship with feather stars (crinoids). Its coloration is highly variable, adapting to match its specific host to perfectly camouflage itself among the feathery arms.",
+      wiki_link: "https://en.wikipedia.org/wiki/Allogalathea_elegans"
+    },
+    {
+      name: "Coral Guard Crab",
+      scientific_name: "Trapezia cymodoce",
+      category: "Crabs",
+      tags: ["tropical", "reef", "macro"],
+      description: "A small, symbiotic crab that lives exclusively within the tightly packed branches of hard corals, primarily Pocillopora. As seen in your photograph, it can often be identified by a striking blue line across its eyes and upper carapace. These crabs aggressively defend their host corals from predators like the crown-of-thorns starfish.",
+      wiki_link: "https://en.wikipedia.org/wiki/Trapezia_cymodoce"
+    },
 
 
     # ----------------------------------------
@@ -406,6 +446,14 @@ def species_list
       tags: ["tropical", "reef", "macro"],
       description: "A highly recognizable, tough-bodied nudibranch featuring a black base covered by longitudinal blue-grey ridges and bright yellow-capped tubercles. As seen in your photograph, it is frequently found resting directly on the sponges it feeds upon.",
       wiki_link: "https://en.wikipedia.org/wiki/Phyllidia_varicosa"
+    },
+    {
+      name: "Eel Bornella",
+      scientific_name: "Bornella anguilla",
+      category: "Nudibranchs",
+      tags: ["tropical", "reef", "macro"],
+      description: "A highly distinct nudibranch characterized by a pale body covered in a mosaic pattern of black, brown, and yellow-orange spots. It features unique, branched cerata along its back and is famous for its ability to swim with a vigorous, eel-like undulating motion when disturbed.",
+      wiki_link: "https://en.wikipedia.org/wiki/Bornella_anguilla"
     },
 
     # ----------------------------------------

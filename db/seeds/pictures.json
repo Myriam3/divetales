@@ -467,5 +467,47 @@
     "species": ["Neopetrolisthes maculatus"],
     "image_path": "202-spotted-porcelain-crab",
     "date_time": "2026-08-30 12:31"
+  },
+  {
+    "dive_key": ["nusa_penida_203"],
+    "species": ["Gymnothorax flavimarginatus"],
+    "image_path": "203-yellow-margin-moray",
+    "date_time": "2026-08-31 8:43"
+  },
+  {
+    "dive_key": ["nusa_penida_203"],
+    "species": ["Ostracion cubicum"],
+    "image_path": "203-baby-yellow-boxfish",
+    "date_time": "2026-08-31 8:46"
+  },
+  {
+    "dive_key": ["nusa_penida_203"],
+    "species": ["Bornella anguilla"],
+    "image_path": "203-bornella",
+    "date_time": "2026-08-31 8:48"
+  },
+  {
+    "dive_key": ["nusa_penida_203"],
+    "species": ["Allogalathea elegans"],
+    "image_path": "203-crinoid-squat-lobster",
+    "date_time": "2026-08-31 8:52"
+  },
+  {
+    "dive_key": ["nusa_penida_203"],
+    "species": ["Trapezia cymodoce"],
+    "image_path": "203-hard-coral-crab",
+    "date_time": "2026-08-31 8:57"
+  },
+  {
+    "dive_key": ["nusa_penida_203"],
+    "species": ["Scorpaenopsis oxycephala"],
+    "image_path": "203-scorpionfish",
+    "date_time": "2026-08-31 8:58"
+  },
+  {
+    "dive_key": ["nusa_penida_203"],
+    "species": ["Solenostomus cyanopterus"],
+    "image_path": "203-ghostpipefish",
+    "date_time": "2026-08-31 9:01"
   }
 ]
