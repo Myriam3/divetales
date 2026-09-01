@@ -3,7 +3,7 @@ class PagesController < ApplicationController
 
   def home
     @ongoing_trip = current_user.trips.find_by(
-      title: "Indonesia & Malaysia travel 2025"
+      title: "Indonesia & Malaysia travel 2026"
     )
     latest_species_ids = PictureSpecy
                          .joins(picture: { dive: :trip })
