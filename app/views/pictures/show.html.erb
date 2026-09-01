@@ -28,63 +28,43 @@
       </div>
     <% end %>
 
-    <div class="picture__inner">
-        <div class="trips-content">
-          <% if @picture.species.any? %>
-          <div class="d-flex align-items-center justify-content-between mb-4">
-              <div>
-            <% @picture.species.each do |s| %>
-                <div class="d-flex align-items-center gap-3 mt-4">
-                  <div class="text-primary">
-                    <%= render "shared/icon", icon_name: "fish", icon_size: 32 %>
-                  </div>
-                  <div>
-                    <p class="mb-0 fw-bold fs-4 text-dark"><%= s.name&.titleize || "Unknown species" %></p>
-                    <div class="text-muted fst-italic"><%= s.scientific_name %></div>
-                    <div class="d-flex gap-1">
-                      <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Class: <%= s.category.classification&.titleize %></div>
-                      <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Category: <%= s.category.name&.titleize %></div>
-                      <% if s.details %>
-                        <div class="badge bg-light mt-1 text-secondary border px-3 py-2 rounded-pill">Family: <%= s.details&.dig("family")&.titleize %></div>
-                      <% end %>
-                    </div>
-                  </div>
+    <div class="picture__info">
+        <div class="picture__info-top">
+          <div class="picture__info-top-content">
+            <% if @picture.species.any? %>
+              <ul class="picture__info-top-list list-unstyled">
+                <% @picture.species.each do |s| %>
+                  <li>
+                    <%= render "species_card", species: s %>
+                  </li>
+                <% end %>
+              </ul>
+            <% else %>
+                <div class="my-4">
+                  <p class="mb-0 fw-bold text-dark">
+                    <%= render "shared/icon", icon_name: "photo-question" %>
+                    Unidentified
+                  </p>
+                  <p class="mt-1">
+                    <%= render "shared/icon", icon_name: "photo-spark" %>
+                    <%= link_to "Identify this picture", identification_path(picture_id: @picture.id, dive_id: @picture.dive.id), class: "text-decoration-none" %>
+                  </p>
                 </div>
             <% end %>
-              </div>
 
-            <div>
-              <%= render "shared/delete_photo" %>
+            <div class="picture__info-top-btn">
               <%= render "shared/edit_photo" %>
+              <%= render "shared/delete_photo" %>
             </div>
           </div>
-
-          <% else %>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="my-4">
-              <p class="mb-0 fw-bold text-dark">
-                <%= render "shared/icon", icon_name: "photo-question" %>
-                Unidentified
-              </p>
-              <p class="mt-1">
-                <%= render "shared/icon", icon_name: "photo-spark" %>
-                <%= link_to "Identify this picture", identification_path(picture_id: @picture.id, dive_id: @picture.dive.id), class: "text-decoration-none" %>
-              </p>
-            </div>
-            <div>
-              <%= render "shared/delete_photo" %>
-              <%= render "shared/edit_photo" %>
-            </div>
-          </div>
-          <% end %>
         </div>
 
-        <div class="card shadow-sm border-0 rounded-4 overflow-hidden" data-controller="picture-info-tab">
-          <div class="card-header bg-white border-bottom-0 pt-3 pb-0 px-4">
+        <div class="picture__info-details" data-controller="picture-info-tab">
+          <div class="picture__info-tab pt-3 pb-0 px-4">
             <!-- The Tab Navigation -->
-            <ul class="trips-content nav nav-tabs border-bottom" id="pictureTabs" role="tablist">
+            <ul class="picture__info-tab-menu nav nav-tabs" id="pictureTabs" role="tablist">
               <li class="nav-item" role="presentation">
-                <button class="nav-link active fw-bold text-dark border-0 border-bottom border-primary border-3 bg-transparent pb-3" id="photo-details-tab" role="tab" aria-controls="photo-details" aria-selected="true"
+                <button class="nav-link active pb-3" id="photo-details-tab" role="tab" aria-controls="photo-details" aria-selected="true"
                         type="button"
                         data-picture-info-tab-target="tab"
                         data-action="click->picture-info-tab#switch"
@@ -107,62 +87,15 @@
             </ul>
           </div>
 
-          <div class="trips-content card-body p-4">
+          <div class="picture__info-tab-content p-4">
             <div class="tab-content">
-
               <div class="tab-pane fade show active" id="photo-details" role="tabpanel" aria-labelledby="photo-details-tab" data-picture-info-tab-target="panel">
-                <%= render "shared/picture_info",
-                    picture: @picture,
-                    dive: @picture.dive,
-                    details: true %>
-
-                <p><strong>Related Links</strong></p>
-
-                <p>
-                  <%= render "shared/icon", icon_name: "camera-spark" %>
-                  <%= link_to dive_path(@picture.dive, anchor: "pictures"), class: "text-decoration-none" do %>
-                    Dive pictures
-                  <% end %>
-                </p>
-
-                <p>
-                  <%= render "shared/icon", icon_name: "slideshow" %>
-                  <%= link_to pictures_path, class: "text-decoration-none" do %>
-                    All pictures
-                  <% end %>
-                </p>
-
-                <p>
-                  <%= render "shared/icon", icon_name: "scuba-mask" %>
-                  <%= link_to "View Dive Log", dive_path(@picture.dive), class: "text-decoration-none" %>
-                </p>
-
-                <p>
-                  <%= render "shared/icon", icon_name: "luggage" %>
-                  <%= link_to "Trip: #{@picture.dive.trip.title}", trip_path(@picture.dive.trip), class: "text-decoration-none" %>
-                </p>
-
+                <%= render "tab_picture_details", picture: @picture %>
               </div>
 
               <% if @picture.species.any? %>
                 <div class="tab-pane fade" id="species-details" role="tabpanel" aria-labelledby="species-details-tab" data-picture-info-tab-target="panel">
-
-                  <% @picture.species.each do |species| %>
-                    <div class="mb-5 border-bottom pb-4 last-border-none">
-                      <% if species.details.present? %>
-                        <%= render "shared/species_info", details: species.details %>
-                      <% else %>
-                        <%= turbo_stream_from "species-details-#{species.id}" %>
-                          <turbo-frame id="species-details-frame-<%= species.id %>" src="<%= generate_species_details_picture_path(@picture, species_id: species.id) %>" loading="lazy">
-                            <%= render "shared/loading_screen",
-                              animation: "fish",
-                              title: "Fetching #{species.name} Guide...",
-                              message: "Check out more about the habitat, diet, and fun facts." %>
-                          </turbo-frame>
-                      <% end %>
-                    </div>
-                  <% end %>
-
+                  <%= render "tab_species_details", picture: @picture %>
                 </div>
               <% end %>
             </div>
@@ -171,27 +104,26 @@
     </div>
   </div>
 
-
   <% @related_species.each do |species, pictures| %>
     <% if pictures.any? %>
-      <section class="picture__related">
+      <% is_related_species = true %>
+      <section class="picture-related <%= "picture-related--bg" if @related_categories.values.flatten.any? %>">
         <div class="container">
-        <h2 class="picture__related-title">
+          <h2 class="picture-related__title">
+            More <%= pictures.count > 1 ?  species.name.pluralize : species.name %>
+          </h2>
 
-        More <%= pictures.count > 1 ?  species.name.pluralize : species.name %>
-        </h2>
-
-        <div class="d-flex gap-2 overflow-auto">
-          <% pictures.each do |picture| %>
-            <% if picture.photo.attached? %>
-              <%= link_to picture_path(picture) do %>
-                <%= image_tag picture.photo,
-                    class: "rounded object-fit-cover",
-                    style: "width: 100px; height: 100px;" %>
+          <ul class="picture-related__list list-unstyled">
+            <% pictures.each do |picture| %>
+              <% if picture.photo.attached? %>
+                <li>
+                  <%= link_to picture_path(picture), class: "picture-related__img" do %>
+                    <%= image_tag picture.photo %>
+                  <% end %>
+                </li>
               <% end %>
             <% end %>
-          <% end %>
-        </div>
+          </ul>
         </div>
       </section>
     <% end %>
@@ -199,21 +131,23 @@
 
   <% @related_categories.each do |category, pictures| %>
     <% if pictures.any? %>
-      <section class="picture__related">
+      <section class="picture-related">
         <div class="container">
-          <h2 class="picture__related-title">More <%= pictures.count > 1 ?  category.name.pluralize : category.name %></h2>
+          <h2 class="picture-related__title">
+            More <%= pictures.count > 1 ?  category.name.pluralize : category.name %>
+          </h2>
 
-          <div class="d-flex gap-2 overflow-auto">
+          <ul class="picture-related__list list-unstyled">
             <% pictures.each do |picture| %>
               <% if picture.photo.attached? %>
-                <%= link_to picture_path(picture) do %>
-                  <%= image_tag picture.photo,
-                      class: "rounded object-fit-cover",
-                      style: "width: 100px; height: 100px;" %>
-                <% end %>
+                <li>
+                  <%= link_to picture_path(picture), class: "picture-related__img" do %>
+                    <%= image_tag picture.photo %>
+                  <% end %>
+                </li>
               <% end %>
             <% end %>
-          </div>
+          </ul>
         </div>
     </section>
     <% end %>

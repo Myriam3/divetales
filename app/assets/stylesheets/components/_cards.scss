@@ -57,3 +57,31 @@
   position: relative;
   height: 100%;
 }
+
+// Species card
+
+.species-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+
+  &__icon {
+    color: $dive-blue;
+  }
+
+  &__name {
+    margin-bottom: 0.25rem;
+  }
+
+  &__list {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  p {
+    margin: 0;
+  }
+}
