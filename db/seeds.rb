@@ -52,13 +52,16 @@ categories = {
     "Gobies & Blennies",
     "Groupers",
     "Wrasses",
-    "Lionfish & Scorpionfish",
+    "Lionfish, Scorpionfish & Stonefish",
     "Triggerfish & Filefish",
     "Pufferfish & Porcupinefish",
     "Damselfish & Anemonefish",
     "Parrotfish",
     "Angelfish & Butterflyfish",
     "Pelagic Fish",
+    "Catfish",
+    "Boxfish & Cowfish",
+    "Frogfish & Anglerfish",
     "Other Fish"
   ],
 

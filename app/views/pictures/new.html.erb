@@ -1,6 +1,9 @@
-<h1 class="mt-5 mb-5">Upload Photos Here</h1>
+<div class="trips-hero">
+  <h1 class="mt-5 mb-5">Upload Photos Here</h1>
+</div>
 
-<div data-controller="picture-form"
+<div class="trips-content"
+     data-controller="picture-form"
      data-picture-form-selected-trip-id-value="<%= @selected_trip_id %>"
      data-picture-form-selected-dive-id-value="<%= @selected_dive_id %>"
      data-picture-form-dives-url-value="<%= dives_for_trip_pictures_path %>"

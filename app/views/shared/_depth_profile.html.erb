@@ -11,7 +11,7 @@
     data-depth-chart-pictures-value="<%= dive.pictures.sort_by(&:date_time).map { |picture|
     {
       id: picture.id,
-      timestamp: picture.date_time.strftime('%Y-%m-%d %H:%M:%S.%3N'),
+      timestamp: picture.date_time&.strftime('%Y-%m-%d %H:%M:%S.%3N'),
       species: picture.species,
       category: picture.species&.first&.category
     }

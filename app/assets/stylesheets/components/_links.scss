@@ -1,0 +1,37 @@
+.back-link {
+  color: $dive-blue;
+  text-decoration: none;
+
+  &:hover {
+    color: $dive-blue-hover;
+  }
+}
+
+.dive-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: $dive-blue;
+  text-decoration: none;
+
+  &:hover {
+    color: $dive-blue-hover;
+  }
+}
+
+.dive-link-secondary {
+  color: $dive-text;
+
+  &:hover {
+    color: $dive-muted;
+  }
+}
+
+.dive-link-danger {
+  color: $dive-danger;
+
+  &:hover {
+    color: $dive-danger;
+    opacity: 0.8;
+  }
+}
