@@ -95,6 +95,7 @@ categories = {
     "Squids",
     "Cuttlefish",
     "Clams",
+    "Flatworms",
     "Other Mollusks"
   ],
 

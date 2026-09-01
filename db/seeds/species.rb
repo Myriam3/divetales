@@ -251,6 +251,14 @@ def species_list
       description: "A master of camouflage that closely resembles a piece of drifting seagrass or a dead leaf. It typically hangs vertically with its snout pointing downward, blending in perfectly with nearby vegetation or sponges to hide from predators and ambush tiny crustaceans.",
       wiki_link: "https://en.wikipedia.org/wiki/Robust_ghost_pipefish"
     },
+    {
+      name: "Leaf Scorpionfish",
+      scientific_name: "Taenianotus triacanthus",
+      category: "Lionfish, Scorpionfish & Stonefish",
+      tags: ["tropical", "reef", "venomous", "macro"],
+      description: "A highly laterally compressed scorpionfish that relies on its cryptic shape and swaying movements to camouflage itself as drifting vegetation. Despite its delicate appearance, its dorsal spines are venomous.",
+      wiki_link: "https://en.wikipedia.org/wiki/Taenianotus_triacanthus"
+    },
 
 
     # ----------------------------------------
@@ -359,6 +367,22 @@ def species_list
       description: "A small, symbiotic crab that lives exclusively within the tightly packed branches of hard corals, primarily Pocillopora. As seen in your photograph, it can often be identified by a striking blue line across its eyes and upper carapace. These crabs aggressively defend their host corals from predators like the crown-of-thorns starfish.",
       wiki_link: "https://en.wikipedia.org/wiki/Trapezia_cymodoce"
     },
+    {
+      name: "Bubble Coral Shrimp",
+      scientific_name: "Vir philippinensis",
+      category: "Shrimps",
+      tags: ["tropical", "reef", "macro"],
+      description: "A small, glass-like commensal shrimp that lives symbiotically among the tentacles of bubble corals. It relies on its transparency for camouflage and is most easily spotted by looking for the distinct, fine reddish-purple lines running along its long antennae.",
+      wiki_link: "https://en.wikipedia.org/wiki/Vir_philippinensis"
+    },
+    {
+      name: "Magnificent Anemone Shrimp",
+      scientific_name: "Ancylomenes magnificus",
+      category: "Shrimps",
+      tags: ["tropical", "reef", "macro"],
+      description: "A highly transparent commensal shrimp that lives symbiotically within the protective tentacles of sea anemones. It is easily identified by its glass-like body and the striking purple and white bands ringing its long claws and walking legs.",
+      wiki_link: "https://en.wikipedia.org/wiki/Ancylomenes_magnificus"
+    },
 
 
     # ----------------------------------------
@@ -462,6 +486,14 @@ def species_list
       tags: ["tropical", "reef", "macro"],
       description: "A tiny marine gastropod featuring a glossy white shell that is often partially or fully enveloped by a brightly colored mantle. They are typically found living symbiotically on soft corals, using their vivid mantles to camouflage themselves among the host polyps.",
       wiki_link: "https://en.wikipedia.org/wiki/Ovulidae"
+    },
+    {
+      name: "Yellow-papillae Flatworm",
+      scientific_name: "Thysanozoon nigropapillosum",
+      category: "Flatworms",
+      tags: ["tropical", "reef", "macro"],
+      description: "A striking polyclad flatworm easily identified by its deep black body covered in small, raised papillae with bright yellow tips. Its highly ruffled outer margin is bordered in opaque white, and it glides smoothly over the substrate or swims through the water column using a rhythmic, undulating motion.",
+      wiki_link: "https://en.wikipedia.org/wiki/Thysanozoon_nigropapillosum"
     },
 
     # ----------------------------------------

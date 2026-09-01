@@ -530,8 +530,128 @@
   },
   {
     "dive_key": ["nusa_penida_203"],
-    "species": ["Gymnothorax flavimarginatus"],
-    "image_path": "203-spotted-porcelain-crab",
+    "species": ["Diminovula sp."],
+    "image_path": "203-sea-snail",
     "date_time": "2026-08-31 9:22"
+  },
+  {
+    "dive_key": ["nusa_penida_204"],
+    "species": ["Taenianotus triacanthus"],
+    "image_path": "204-leaf-scorpionfish",
+    "date_time": "2026-08-31 10:33"
+  },
+  {
+    "dive_key": ["nusa_penida_204"],
+    "species": ["Achaeus japonicus"],
+    "image_path": "204-orangutan-crab",
+    "date_time": "2026-08-31 10:46"
+  },
+  {
+    "dive_key": ["nusa_penida_204"],
+    "species": ["Antennarius commerson"],
+    "image_path": "204-frogfish",
+    "date_time": "2026-08-31 10:52"
+  },
+  {
+    "dive_key": ["nusa_penida_204"],
+    "species": ["Gelastocaris paronae"],
+    "image_path": "204-sponge-shrimp",
+    "date_time": "2026-08-31 10:56"
+  },
+  {
+    "dive_key": ["nusa_penida_204"],
+    "species": ["Trapezia rufopunctata"],
+    "image_path": "204-red-spotted-coral-crab",
+    "date_time": "2026-08-31 10:59"
+  },
+  {
+    "dive_key": ["nusa_penida_204"],
+    "species": ["Vir philippinensis"],
+    "image_path": "204-bubble-coral-shrimp",
+    "date_time": "2026-08-31 11:04"
+  },
+  {
+    "dive_key": ["nusa_penida_204"],
+    "species": ["Triaenodon obesus"],
+    "image_path": "204-baby-whitetip",
+    "date_time": "2026-08-31 11:07"
+  },
+  {
+    "dive_key": ["nusa_penida_204"],
+    "species": ["Chelonia mydas"],
+    "image_path": "204-green-turtle",
+    "date_time": "2026-08-31 11:09"
+  },
+  {
+    "dive_key": ["nusa_penida_204"],
+    "species": ["Thysanozoon nigropapillosum"],
+    "image_path": "204-flatworm",
+    "date_time": "2026-08-31 11:25"
+  },
+  {
+    "dive_key": ["nusa_penida_205"],
+    "species": ["Chelonia mydas"],
+    "image_path": "205-green-turtle",
+    "date_time": "2026-08-31 13:04"
+  },
+  {
+    "dive_key": ["nusa_penida_205"],
+    "species": ["Caranx ignobilis"],
+    "image_path": "205-giant-trevally",
+    "date_time": "2026-08-31 13:08"
+  },
+  {
+    "dive_key": ["nusa_penida_205"],
+    "species": ["Achaeus japonicus"],
+    "image_path": "205-orangutan-crab",
+    "date_time": "2026-08-31 13:14"
+  },
+  {
+    "dive_key": ["nusa_penida_205"],
+    "species": ["Ancylomenes magnificus"],
+    "image_path": "205-anemone-shrimp",
+    "date_time": "2026-08-31 13:20"
+  },
+  {
+    "dive_key": ["nusa_penida_205"],
+    "species": ["Camposcia retusa"],
+    "image_path": "205-decorator-crab",
+    "date_time": "2026-08-31 13:22"
+  },
+  {
+    "dive_key": ["nusa_penida_205"],
+    "species": ["Gymnothorax flavimarginatus"],
+    "image_path": "205-yellowmargin-moray",
+    "date_time": "2026-08-31 13:32"
+  },
+  {
+    "dive_key": ["nusa_penida_205"],
+    "species": ["Scorpaenopsis oxycephala"],
+    "image_path": "205-scorpionfish",
+    "date_time": "2026-08-31 13:33"
+  },
+  {
+    "dive_key": ["nusa_penida_205"],
+    "species": ["Bornella anguilla"],
+    "image_path": "205-bornella",
+    "date_time": "2026-08-31 13:37"
+  },
+  {
+    "dive_key": ["nusa_penida_205"],
+    "species": ["Stenopus hispidus"],
+    "image_path": "205-banded-coral-shrimp",
+    "date_time": "2026-08-31 13:43"
+  },
+  {
+    "dive_key": ["nusa_penida_205"],
+    "species": ["Arothron nigropunctatus"],
+    "image_path": "205-blackspotted-puffer",
+    "date_time": "2026-08-31 13:46"
+  },
+  {
+    "dive_key": ["nusa_penida_205"],
+    "species": ["Eretmochelys imbricata"],
+    "image_path": "205-hawsbill-turtle",
+    "date_time": "2026-08-31 13:52"
   }
 ]
