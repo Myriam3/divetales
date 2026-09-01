@@ -299,6 +299,7 @@
     "image_path": "199-boxfish",
     "date_time": "2026-08-28 13:31"
   },
+  // from here test minus one hour
   {
     "dive_key": ["nusa_penida_199"],
     "species": ["Hoplophrys oatesi"],
@@ -508,5 +509,29 @@
     "species": ["Solenostomus cyanopterus"],
     "image_path": "203-ghostpipefish",
     "date_time": "2026-08-31 9:01"
+  },
+  {
+    "dive_key": ["nusa_penida_203"],
+    "species": ["Neopetrolisthes maculatus"],
+    "image_path": "203-spotted-porcelain-crab",
+    "date_time": "2026-08-31 9:04"
+  },
+  {
+    "dive_key": ["nusa_penida_203"],
+    "species": ["Synapta maculata"],
+    "image_path": "203-snake-sea-cucumber",
+    "date_time": "2026-08-31 9:10"
+  },
+  {
+    "dive_key": ["nusa_penida_203"],
+    "species": ["Gymnothorax flavimarginatus"],
+    "image_path": "203-yellowmargin-moray",
+    "date_time": "2026-08-31 9:16"
+  },
+  {
+    "dive_key": ["nusa_penida_203"],
+    "species": ["Gymnothorax flavimarginatus"],
+    "image_path": "203-spotted-porcelain-crab",
+    "date_time": "2026-08-31 9:22"
   }
 ]
