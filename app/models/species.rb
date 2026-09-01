@@ -5,7 +5,8 @@ class Species < ApplicationRecord
     "reef",
     "seagrass",
     "macro",
-    "nocturnal"
+    "nocturnal",
+    "venomous"
   ].freeze
 
   belongs_to :category

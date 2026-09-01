@@ -1,0 +1,87 @@
+.dive-card-link {
+  display: block;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+.dive-card-link:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.dive-card {
+  height: 100%;
+  overflow: hidden;
+  background: $dive-white;
+  border: 1px solid $dive-border;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(11, 58, 102, 0.10);
+  transition: 0.2s;
+}
+
+.dive-card-link:hover .dive-card {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(11, 58, 102, 0.16);
+}
+
+.dive-card__image {
+  display: block;
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  border-bottom: 1px solid $dive-border;
+  object-position: center;
+}
+
+.dive-card__body {
+  padding: 1.25rem;
+}
+
+.dive-card__title {
+  margin: 0 0 0.75rem;
+  color: $dive-navy;
+  font-weight: 700;
+}
+
+.dive-card__body p {
+  margin: 0.5rem 0;
+  color: $dive-muted;
+}
+
+.dive-card__body .btn-dive {
+  margin-top: 0.75rem;
+}
+
+.dive-card-wrapper {
+  position: relative;
+  height: 100%;
+}
+
+// Species card
+
+.species-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+
+  &__icon {
+    color: $dive-blue;
+  }
+
+  &__name {
+    margin-bottom: 0.25rem;
+  }
+
+  &__list {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  p {
+    margin: 0;
+  }
+}

@@ -1,0 +1,36 @@
+<% if species.present? %>
+  <div class="species-card">
+    <div class="species-card__icon">
+      <%= render "shared/icon", icon_name: "fish", icon_size: 34 %>
+    </div>
+    <div class="species-card__content">
+      <p class="species-card__title mb-0 fw-bold fs-4 text-dark"><%= species.name&.titleize || "Unknown species" %></p>
+      <p class="species-card__sci text-muted fst-italic"><%= species.scientific_name %></p>
+      <ul class="species-card__list list-unstyled">
+        <li>
+          <span class="badge badge--species badge--class">
+            <%= render "shared/icon", icon_name: "binary-tree", icon_size: 16 %>
+            Class: <%= species.category.classification&.titleize %>
+          </span>
+        </li>
+        <% if species.details %>
+          <% family = species.details&.dig("family") %>
+          <% if family.present? %>
+            <li>
+              <span class="badge badge--species badge--family">
+                <%= render "shared/icon", icon_name: "binary-tree", icon_size: 16 %>
+                Family: <%= family&.titleize %>
+              </span>
+            </li>
+          <% end %>
+        <% end %>
+        <li>
+          <span class="badge badge--species badge--category">
+            <%= render "shared/icon", icon_name: "fish", icon_size: 16 %>
+            Category: <%= species.category.name&.titleize %>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+<% end %>

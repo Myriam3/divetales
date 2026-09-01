@@ -1,0 +1,24 @@
+<% filters.each do |label, value| %>
+  <li>
+    <span class="badge badge--filter">
+      <% case label
+        when "Trip" %>
+        <%= render "shared/icon", icon_name: "luggage", icon_size: 18 %>
+      <% when "Country" %>
+        <%= render "shared/icon", icon_name: "world-map", icon_size: 18 %>
+      <% when "Location" %>
+        <%= render "shared/icon", icon_name: "world-pin", icon_size: 18 %>
+      <% when "Year" %>
+        <%= render "shared/icon", icon_name: "calendar", icon_size: 18 %>
+      <% when "Year" %>
+        <%= render "shared/icon", icon_name: "calendar", icon_size: 18 %>
+      <% when "Species" %>
+        <%= render "shared/icon", icon_name: "fish", icon_size: 18 %>
+      <% when "Category" %>
+        <%= render "shared/icon", icon_name: "fish", icon_size: 18 %>
+      <% end %>
+      <span class="visually-hidden"><%= label %>:</span>
+      <%= value %>
+    </span>
+  </li>
+<% end %>

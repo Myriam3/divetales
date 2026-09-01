@@ -35,13 +35,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.1.0/chartjs-plugin-annotation.min.js"></script>
   </head>
 
-  <body>
+  <body class="<%= current_page? %>">
     <%= render "shared/navbar" %>
 
     <div class="container">
       <%= render "shared/flashes" %>
     </div>
 
-    <%= yield %>
+    <main>
+      <%= yield %>
+    </main>
+
+    <% paths = ["/dives", "/trips", "/pictures"] %>
+    <% if paths.any? { |path| request.path.include?(path) } %>
+      <%= render "shared/footer_wave" %>
+    <% end %>
   </body>
 </html>

@@ -16,8 +16,8 @@
     </div>
 
 <% else %>
-  <div class="card shadow-sm border-0 rounded-4 overflow-hidden mb-5">
-      <div class="card-body p-4 p-md-5">
+  <div class="border-0 rounded-4 overflow-hidden mb-5">
+      <div class="p-4 p-md-5">
 
         <!-- Species Header -->
         <div class="text-center mb-5 border-bottom pb-4">
@@ -29,40 +29,43 @@
                     alt: details["common_name"].presence || details["scientific_name"] %>
             </div>
           <% end %>
+          <div>
+            <h1 class="dive-heading fw-bold text-dark mb-1 d-flex align-items-center justify-content-center gap-2">
+              <%= render "shared/icon", icon_name: "fish", icon_size: 32 %>
+              <%= common_name.presence || "Unknown species" %>
+            </h1>
 
-          <h1 class="dive-heading fw-bold text-dark mb-1 d-flex align-items-center justify-content-center gap-2">
-            <%= render "shared/icon", icon_name: "fish", icon_size: 32 %>
-            <%= common_name.presence || "Unknown species" %>
-          </h1>
+            <p class="fst-italic text-muted fs-5 mb-2">
+              <%= scientific_name %>
+            </p>
 
-          <p class="fst-italic text-muted fs-5 mb-2">
-            <%= scientific_name %>
-          </p>
-
-          <% if details["family"].present? %>
-            <span class="badge bg-light text-secondary border px-3 py-2 rounded-pill">
-              <%= render "shared/icon", icon_name: "binary-tree", icon_size: 14 %> Family: <%= details["family"] %>
-            </span>
-          <% end %>
-
-          <!-- Confirm Button -->
-          <div class="mt-4">
-            <%= link_to identification_confirm_path(
-                  scientific_name: details["scientific_name"],
-                  common_name: details["common_name"],
-                  default_photo_url: details["default_photo_url"],
-                  identification_id: identification_id,
-                  dive_id: dive_id,
-                  picture_id: picture_id
-                ),
-                class: "btn btn-dive btn-dive-primary btn-lg d-inline-flex align-items-center justify-content-center gap-2 rounded-pill px-4 shadow-sm",
-                data: { turbo_frame: "_top" } do %>
-              <%= render "shared/icon", icon_name: "photo-check", icon_size: 20 %> Confirm this species
+            <% if details["family"].present? %>
+              <span class="badge bg-light text-secondary border px-3 py-2 rounded-pill">
+                <%= render "shared/icon", icon_name: "binary-tree", icon_size: 14 %> Family: <%= details["family"] %>
+              </span>
             <% end %>
+
+            <!-- Confirm Button -->
+            <div class="mt-4">
+              <%= link_to identification_confirm_path(
+                    scientific_name: details["scientific_name"],
+                    common_name: details["common_name"],
+                    default_photo_url: details["default_photo_url"],
+                    identification_id: identification_id,
+                    dive_id: dive_id,
+                    picture_id: picture_id
+                  ),
+                  class: "btn btn-dive btn-dive-primary btn-lg d-inline-flex align-items-center justify-content-center gap-2 rounded-pill px-4 shadow-sm",
+                  data: { turbo_frame: "_top" } do %>
+                <%= render "shared/icon", icon_name: "photo-check", icon_size: 20 %> Confirm this species
+              <% end %>
+            </div>
           </div>
         </div>
 
-        <%= render "shared/species_info", details: details %>
+        <div class="trips-content">
+          <%= render "shared/species_info", details: details %>
+        </div>
 
       </div>
     </div>

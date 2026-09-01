@@ -1,10 +1,10 @@
 <%
   button_label = local_assigns[:label] || "Add a new dive"
   button_icon = local_assigns[:icon] || "scuba-mask"
-  button_style = local_assigns[:button_style] || "btn-secondary"
+  button_style = local_assigns[:button_style] || "btn-dive btn-dive-accent"
   current_trip = local_assigns[:current_trip]
 %>
-<div class="dropdown">
+<div class="dives-select dropdown">
   <button class="btn <%= button_style %> dropdown-toggle" type="button" id="dropdownTrips" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <% unless button_icon == 'none' %>
       <%= render "shared/icon", icon_name: button_icon %>
@@ -24,7 +24,10 @@
         <div class="dropdown-divider mb-3"></div>
         <span>Or add to another trip:</span>
       <% else %>
-        <span>Select a trip:</span>
+        <span>
+          <%= render "shared/icon", icon_name: "luggage", icon_size: 18 %>
+          Select a trip:
+        </span>
       <% end %>
 
       <% other_trips.each do |trip| %>

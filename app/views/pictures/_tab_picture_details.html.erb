@@ -1,0 +1,41 @@
+<%= render "shared/picture_info",
+    picture: picture,
+    dive: picture.dive,
+    details: true %>
+
+<div class="picture__info-tab-links">
+  <p class="picture__info-tab-links-title">Dive</p>
+  <p>
+    <%= link_to dive_path(picture.dive, anchor: "pictures"), class: "dive-link dive-link-secondary" do %>
+      <%= render "shared/icon", icon_name: "camera-spark" %>
+      Dive pictures
+    <% end %>
+  </p>
+  <p>
+    <%= link_to dive_path(picture.dive), class: "dive-link dive-link-secondary" do %>
+      <%= render "shared/icon", icon_name: "scuba-mask" %>
+      Dive Log
+    <% end%>
+  </p>
+  <p class="picture__info-tab-links-title">Trip</p>
+  <p>
+    <%= link_to trip_path(picture.dive.trip), class: "dive-link dive-link-secondary" do %>
+      <%= render "shared/icon", icon_name: "luggage" %>
+      <%= picture.dive.trip.title %>
+    <% end %>
+  </p>
+
+  <p>
+    <%= link_to memory_trip_path(picture.dive.trip), class: "dive-link dive-link-secondary" do %>
+      <%= render "shared/icon", icon_name: "album" %>
+      Trip memories
+    <% end %>
+  </p>
+
+  <p class="picture__info-tab-links-all">
+    <%= link_to pictures_path, class: "dive-link dive-link-secondary" do %>
+      <%= render "shared/icon", icon_name: "slideshow" %>
+      See all pictures
+    <% end %>
+  </p>
+</div>

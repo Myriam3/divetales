@@ -34,7 +34,7 @@ Category.destroy_all
 user = User.find_or_create_by!(
   email: "demo@example.com"
 ) do |user|
-  user.name = "Demo Diver"
+  user.name = "Diver"
   user.password = "test123"
   user.admin = true
 end
@@ -52,13 +52,16 @@ categories = {
     "Gobies & Blennies",
     "Groupers",
     "Wrasses",
-    "Lionfish & Scorpionfish",
+    "Lionfish, Scorpionfish & Stonefish",
     "Triggerfish & Filefish",
     "Pufferfish & Porcupinefish",
     "Damselfish & Anemonefish",
     "Parrotfish",
     "Angelfish & Butterflyfish",
     "Pelagic Fish",
+    "Catfish",
+    "Boxfish & Cowfish",
+    "Frogfish & Anglerfish",
     "Other Fish"
   ],
 
