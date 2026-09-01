@@ -274,6 +274,14 @@ def species_list
       wiki_link: "https://en.wikipedia.org/wiki/Green_sea_turtle"
     },
     {
+      name: "Hawksbill Sea Turtle",
+      scientific_name: "Eretmochelys imbricata",
+      category: "Sea Turtles",
+      tags: ["tropical", "reef", "pelagic"],
+      description: "A critically endangered marine turtle easily distinguished by its narrow, pointed beak and a distinctive pattern of overlapping scales on its shell that form a serrated look along the edges. They are frequently spotted resting in caves and ledges in and around coral reefs throughout the day.",
+      wiki_link: "https://en.wikipedia.org/wiki/Hawksbill_sea_turtle"
+    },
+    {
       name: "Banded Sea Krait",
       scientific_name: "Laticauda colubrina",
       category: "Sea Snakes",
@@ -382,6 +390,22 @@ def species_list
       tags: ["tropical", "reef", "macro"],
       description: "A highly transparent commensal shrimp that lives symbiotically within the protective tentacles of sea anemones. It is easily identified by its glass-like body and the striking purple and white bands ringing its long claws and walking legs.",
       wiki_link: "https://en.wikipedia.org/wiki/Ancylomenes_magnificus"
+    },
+    {
+      name: "Decorator Crab",
+      scientific_name: "Camposcia retusa",
+      category: "Crabs",
+      tags: ["tropical", "reef", "macro"],
+      description: "A master of disguise belonging to the spider crab family. It uses tiny, hook-like bristles (setae) on its carapace and legs to attach pieces of surrounding algae, sponge, and stinging hydroids, creating a customized, living camouflage that makes it nearly invisible against the reef.",
+      wiki_link: "https://en.wikipedia.org/wiki/Camposcia_retusa"
+    },
+    {
+      name: "Banded Coral Shrimp",
+      scientific_name: "Stenopus hispidus",
+      category: "Shrimps",
+      tags: ["tropical", "reef", "macro"],
+      description: "A strikingly colored cleaner shrimp easily recognized by its red and white banded body and long, sweeping white antennae. They are frequently found in crevices or under overhangs, where they set up cleaning stations to remove parasites and dead tissue from visiting fish.",
+      wiki_link: "https://en.wikipedia.org/wiki/Stenopus_hispidus"
     },
 
 
@@ -521,6 +545,14 @@ def species_list
       tags: ["reef"],
       description: "A common sea star found on rocky and sandy seabeds in the North Atlantic.",
       wiki_link: "https://en.wikipedia.org/wiki/Asterias_rubens"
+    },
+    {
+      name: "Snake Sea Cucumber (Juvenile)",
+      scientific_name: "Synapta maculata",
+      category: "Sea Cucumbers",
+      tags: ["tropical", "reef", "macro"],
+      description: "Juveniles of this species look drastically different from the massive, brown adults. They can appear grayish-white with dark bands, and feature a crown of feather-like tentacles around their mouth. They use these tentacles continuously to collect food particles from the substrate by adhesion.",
+      wiki_link: "https://en.wikipedia.org/wiki/Synapta_maculata"
     },
 
 
