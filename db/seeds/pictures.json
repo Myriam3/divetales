@@ -383,5 +383,89 @@
     "species": ["Doriprismatica atromarginata"],
     "image_path": "200-dark-margin-glossodoris",
     "date_time": "2026-08-30 8:53"
+  },
+  {
+    "dive_key": ["nusa_penida_200"],
+    "species": ["Lysiosquillina maculata"],
+    "image_path": "200-giant-mantis-shrimp",
+    "date_time": "2026-08-30 9:03"
+  },
+  {
+    "dive_key": ["nusa_penida_200"],
+    "species": ["Odontodactylus scyllarus"],
+    "image_path": "200-peacock-mantis-shrimp",
+    "date_time": "2026-08-30 9:07"
+  },
+  {
+    "dive_key": ["nusa_penida_200"],
+    "species": ["Eucrossorhinus dasypogon"],
+    "image_path": "200-wobbegong",
+    "date_time": "2026-08-30 9:09"
+  },
+  {
+    "dive_key": ["nusa_penida_201"],
+    "species": ["Glaucus atlanticus"],
+    "image_path": "201-2-blue-dragons-mating",
+    "date_time": "2026-08-30 10:59"
+  },
+  {
+    "dive_key": ["nusa_penida_201"],
+    "species": ["Triaenodon obesus"],
+    "image_path": "201-baby-whitetip",
+    "date_time": "2026-08-30 10:49"
+  },
+  {
+    "dive_key": ["nusa_penida_201"],
+    "species": ["Chromodoris magnifica"],
+    "image_path": "201-chromodoris",
+    "date_time": "2026-08-30 11:12"
+  },
+  {
+    "dive_key": ["nusa_penida_201"],
+    "species": ["Nembrotha chamberlaini"],
+    "image_path": "201-nembrotha",
+    "date_time": "2026-08-30 11:02"
+  },
+  {
+    "dive_key": ["nusa_penida_201"],
+    "species": ["Scorpaenopsis diabolus"],
+    "image_path": "201-scorpionfish",
+    "date_time": "2026-08-30 11:02"
+  },
+  {
+    "dive_key": ["nusa_penida_202"],
+    "species": ["Nemateleotris magnifica"],
+    "image_path": "202-fire-dartfish",
+    "date_time": "2026-08-30 13:00"
+  },
+  {
+    "dive_key": ["nusa_penida_202"],
+    "species": ["Antennarius commerson"],
+    "image_path": "202-frogfish",
+    "date_time": "2026-08-30 12:44"
+  },
+  {
+    "dive_key": ["nusa_penida_202"],
+    "species": ["Caranx ignobilis"],
+    "image_path": "202-giant-trevally",
+    "date_time": "2026-08-30 12:41"
+  },
+  {
+    "dive_key": ["nusa_penida_202"],
+    "species": ["Phyllidia varicosa"],
+    "image_path": "202-nudi",
+    "date_time": "2026-08-30 12:57"
+  },
+  {
+    "dive_key": ["nusa_penida_202"],
+    "species": ["Odontodactylus scyllarus"],
+    "image_path": "202-peacock-mantis-shrimp",
+    "date_time": "2026-08-30 12:49"
+  },
+  {
+    "dive_key": ["nusa_penida_202"],
+    "species": ["Neopetrolisthes maculatus"],
+    "image_path": "202-spotted-porcelain-crab",
+    "date_time": "2026-08-30 12:31"
   }
 ]

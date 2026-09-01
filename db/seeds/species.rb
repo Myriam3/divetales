@@ -179,6 +179,54 @@ def species_list
       description: "Juveniles of this species look and behave completely differently from the horizontally striped adults. They feature a striking, high-contrast pattern of dark brown and white blotches and are famous for an erratic, fluttering swimming style thought to mimic a toxic flatworm.",
       wiki_link: "https://en.wikipedia.org/wiki/Plectorhinchus_vittatus"
     },
+    {
+      name: "Bluespotted Ribbontail Ray",
+      scientific_name: "Taeniura lymma",
+      category: "Rays",
+      tags: ["tropical", "reef", "venomous"],
+      description: "A small, colorful stingray easily identified by its yellowish-tan oval disc covered in bright blue spots, and two blue stripes running along its tail. It frequently hides under reef ledges or buries itself in sandy patches during the day.",
+      wiki_link: "https://en.wikipedia.org/wiki/Bluespotted_ribbontail_ray"
+    },
+    {
+      name: "Longhorn Cowfish",
+      scientific_name: "Lactoria cornuta",
+      category: "Boxfish & Cowfish",
+      tags: ["tropical", "reef"],
+      description: "A uniquely shaped reef fish encased in a bony, box-like carapace. It is easily identified by the distinctive, forward-pointing horns above its eyes and rear-facing horns near its tail, as well as its yellowish base color dotted with pale blue or purplish spots.",
+      wiki_link: "https://en.wikipedia.org/wiki/Longhorn_cowfish"
+    },
+    {
+      name: "Broadclub Cuttlefish",
+      scientific_name: "Sepia latimanus",
+      category: "Cuttlefish",
+      tags: ["tropical", "reef"],
+      description: "The second largest cuttlefish species, widely found on coral reefs across the Indo-Pacific. It is a master of camouflage capable of rapidly changing its skin texture and color to match its surroundings, and is easily recognized by its distinct W-shaped pupils.",
+      wiki_link: "https://en.wikipedia.org/wiki/Broadclub_cuttlefish"
+    },
+    {
+      name: "Tasselled Wobbegong",
+      scientific_name: "Eucrossorhinus dasypogon",
+      category: "Sharks",
+      tags: ["tropical", "reef", "nocturnal"],
+      description: "A beautifully patterned, bottom-dwelling carpet shark famous for the intricate fringe of branching skin flaps around its head and chin. It relies on this masterful camouflage to blend seamlessly into coral reefs and ambush passing prey.",
+      wiki_link: "https://en.wikipedia.org/wiki/Tasselled_wobbegong"
+    },
+    {
+      name: "Devil Scorpionfish",
+      scientific_name: "Scorpaenopsis diabolus",
+      category: "Lionfish, Scorpionfish & Stonefish",
+      tags: ["tropical", "reef", "venomous"],
+      description: "A master of camouflage that blends almost indistinguishably into coral rubble and algae-covered reef, exactly as captured in your photograph. Like other scorpionfish, it relies on its cryptic appearance to ambush prey and defends itself with highly venomous dorsal spines.",
+      wiki_link: "https://en.wikipedia.org/wiki/Scorpaenopsis_diabolus"
+    },
+    {
+      name: "Giant Trevally",
+      scientific_name: "Caranx ignobilis",
+      category: "Pelagic Fish",
+      tags: ["tropical", "pelagic", "reef"],
+      description: "A massive, powerful apex predator commonly found patrolling reef drop-offs and areas with strong currents. Known for their silvery, muscular bodies and steep head profiles, these jacks are highly aggressive hunters.",
+      wiki_link: "https://en.wikipedia.org/wiki/Giant_trevally"
+    },
 
 
     # ----------------------------------------
@@ -263,6 +311,14 @@ def species_list
       description: "A tiny, distinctively patterned crustacean famous for its unusual habit of waving its abdomen back and forth. It is commonly found living symbiotically among the tentacles of sea anemones or large tube anemones.",
       wiki_link: "https://en.wikipedia.org/wiki/Thor_amboinensis"
     },
+    {
+      name: "Giant Mantis Shrimp",
+      scientific_name: "Lysiosquillina maculata",
+      category: "Mantis Shrimps",
+      tags: ["tropical", "reef", "macro"],
+      description: "The largest of all mantis shrimp species, easily identifiable by its distinct black and pale yellow zebra-like bands. Unlike the smashing peacock mantis, this species is a 'spearer' that waits vertically in deep sandy burrows to ambush passing fish with its barbed appendages.",
+      wiki_link: "https://en.wikipedia.org/wiki/Lysiosquillina_maculata"
+    },
 
 
     # ----------------------------------------
@@ -318,6 +374,38 @@ def species_list
       tags: ["tropical"],
       description: "Very well-camouflaged and difficult to find",
       wiki_link: "https://en.wikipedia.org/wiki/Solenostomus_paradoxus"
+    },
+    {
+      name: "Magnificent Chromodoris",
+      scientific_name: "Chromodoris magnifica",
+      category: "Nudibranchs",
+      tags: ["tropical", "reef", "macro"],
+      description: "A stunning and highly photogenic sea slug characterized by a vibrant yellow or orange margin, contrasting black longitudinal stripes across a pale mantle, and brightly colored orange rhinophores and gills. It is a favorite subject for underwater macro photographers.",
+      wiki_link: "https://en.wikipedia.org/wiki/Chromodoris_magnifica"
+    },
+    {
+      name: "Dark-margin Glossodoris",
+      scientific_name: "Doriprismatica atromarginata",
+      category: "Nudibranchs",
+      tags: ["tropical", "reef", "macro"],
+      description: "A striking sea slug easily recognized by its pale, creamy-white to yellow body and the highly ruffled, undulating dark brown or black line running continuously around the entire margin of its mantle.",
+      wiki_link: "https://en.wikipedia.org/wiki/Doriprismatica_atromarginata"
+    },
+    {
+      name: "Chamberlain's Nembrotha",
+      scientific_name: "Nembrotha chamberlaini",
+      category: "Nudibranchs",
+      tags: ["tropical", "reef", "macro"],
+      description: "A vividly colored sea slug easily recognized by its pale cream or white body covered in large, irregular dark brown to black patches. It features striking bright red or orange rhinophores and gills, and a distinctive bright blue or purple margin along the edge of its foot.",
+      wiki_link: "https://en.wikipedia.org/wiki/Nembrotha_chamberlaini"
+    },
+    {
+      name: "Varicose Phyllidia",
+      scientific_name: "Phyllidia varicosa",
+      category: "Nudibranchs",
+      tags: ["tropical", "reef", "macro"],
+      description: "A highly recognizable, tough-bodied nudibranch featuring a black base covered by longitudinal blue-grey ridges and bright yellow-capped tubercles. As seen in your photograph, it is frequently found resting directly on the sponges it feeds upon.",
+      wiki_link: "https://en.wikipedia.org/wiki/Phyllidia_varicosa"
     },
 
     # ----------------------------------------
