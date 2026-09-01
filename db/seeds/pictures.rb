@@ -23,12 +23,15 @@ def create_pictures_species(dives)
 
     if image_path.present? && !picture.photo.attached?
       file_path = Rails.root.join("db", "seed_images", "#{image_path}.jpg")
+      file_path = Rails.root.join("db", "seed_images", "#{image_path}.JPG") unless File.exist?(file_path)
 
-      picture.photo.attach(
-        io: File.open(file_path),
-        filename: File.basename(file_path),
-        content_type: "image/jpeg"
-      )
+      if File.exist?(file_path)
+        picture.photo.attach(
+          io: File.open(file_path),
+          filename: File.basename(file_path),
+          content_type: "image/jpeg"
+        )
+      end
     end
 
     Array(species).each do |species|

@@ -181,8 +181,290 @@
   },
   {
     "dive_key": ["nusa_penida_197"],
+    "species": ["Chelonia mydas"],
+    "image_path": "197-green-turtle",
+    "date_time": "2026-08-28 09:29"
+  },
+  {
+    "dive_key": ["nusa_penida_197"],
     "species": [],
-    "image_path": "P8280157",
-    "date_time": "2026-08-28 09:08"
+    "image_path": "197-nudi",
+    "date_time": "2026-08-28 09:19"
+  },
+  {
+    "dive_key": ["nusa_penida_197"],
+    "species": ["Odontodactylus scyllarus"],
+    "image_path": "197-peacock-mantis-shrimp",
+    "date_time": "2026-08-28 09:38"
+  },
+  {
+    "dive_key": ["nusa_penida_197"],
+    "species": [],
+    "image_path": "197-pufferfish",
+    "date_time": "2026-08-28 09:38"
+  },
+  {
+    "dive_key": ["nusa_penida_197"],
+    "species": ["Trapezia rufopunctata"],
+    "image_path": "197-red-spotted-coral-crab",
+    "date_time": "2026-08-28 09:52"
+  },
+  {
+    "dive_key": ["nusa_penida_197"],
+    "species": ["Scorpaenopsis oxycephala"],
+    "image_path": "197-scorpionfish",
+    "date_time": "2026-08-28 09:16"
+  },
+  {
+    "dive_key": ["nusa_penida_197"],
+    "species": ["Pterois antennata"],
+    "image_path": "197-spotfin-lionfish",
+    "date_time": "2026-08-28 09:24"
+  },
+  {
+    "dive_key": ["nusa_penida_197"],
+    "species": ["Neopetrolisthes maculatus"],
+    "image_path": "197-spotted-porcelain-crab",
+    "date_time": "2026-08-28 09:22"
+  },
+  {
+    "dive_key": ["nusa_penida_197"],
+    "species": ["Plotosus lineatus"],
+    "image_path": "197-stripped-catfish",
+    "date_time": "2026-08-28 09:55"
+  },
+  {
+    "dive_key": ["nusa_penida_198"],
+    "species": ["Cetoscarus bicolor"],
+    "image_path": "198-baby-bicolor-parrotfish",
+    "date_time": "2026-08-28 11:33"
+  },
+  {
+    "dive_key": ["nusa_penida_198"],
+    "species": ["Arothron nigropunctatus"],
+    "image_path": "198-black-spotted-pufferfish",
+    "date_time": "2026-08-28 11:42"
+  },
+  {
+    "dive_key": ["nusa_penida_198"],
+    "species": ["Glaucus atlanticus"],
+    "image_path": "198-blue-dragon",
+    "date_time": "2026-08-28 11:22"
+  },
+  {
+    "dive_key": ["nusa_penida_198"],
+    "species": ["Spirobranchus giganteus"],
+    "image_path": "198-christmas-tree-worm",
+    "date_time": "2026-08-28 11:51"
+  },
+  {
+    "dive_key": ["nusa_penida_198"],
+    "species": [],
+    "image_path": "198-nudi",
+    "date_time": "2026-08-28 11:31"
+  },
+  {
+    "dive_key": ["nusa_penida_198"],
+    "species": ["Achaeus japonicus"],
+    "image_path": "198-orangutan-crab",
+    "date_time": "2026-08-28 11:18"
+  },
+  {
+    "dive_key": ["nusa_penida_198"],
+    "species": ["Istigobius ornatus"],
+    "image_path": "198-shrimpgoby",
+    "date_time": "2026-08-28 11:59"
+  },
+  {
+    "dive_key": ["nusa_penida_198"],
+    "species": ["Gelastocaris paronae"],
+    "image_path": "198-sponge-shrimp",
+    "date_time": "2026-08-28 11:13"
+  },
+  {
+    "dive_key": ["nusa_penida_199"],
+    "species": ["Triaenodon obesus"],
+    "image_path": "199-baby-whitetip",
+    "date_time": "2026-08-28 13:50"
+  },
+  {
+    "dive_key": ["nusa_penida_199"],
+    "species": ["Laticauda colubrina"],
+    "image_path": "199-banded-sea-snake",
+    "date_time": "2026-08-28 13:34"
+  },
+  {
+    "dive_key": ["nusa_penida_199"],
+    "species": ["Ostracion meleagris"],
+    "image_path": "199-boxfish",
+    "date_time": "2026-08-28 13:31"
+  },
+  {
+    "dive_key": ["nusa_penida_199"],
+    "species": ["Hoplophrys oatesi"],
+    "image_path": "199-candy-crab",
+    "date_time": "2026-08-28 13:10"
+  },
+  {
+    "dive_key": ["nusa_penida_199"],
+    "species": ["Pterois volitans"],
+    "image_path": "199-common-lionfish",
+    "date_time": "2026-08-28 12:52"
+  },
+  {
+    "dive_key": ["nusa_penida_199"],
+    "species": ["Nemateleotris magnifica"],
+    "image_path": "199-fire-dartfish",
+    "date_time": "2026-08-28 12:28"
+  },
+  {
+    "dive_key": ["nusa_penida_199"],
+    "species": ["Antennarius commerson"],
+    "image_path": "199-frogfish",
+    "date_time": "2026-08-28 12:39"
+  },
+  {
+    "dive_key": ["nusa_penida_199"],
+    "species": ["Odontodactylus scyllarus"],
+    "image_path": "199-peacock-mantis-shrimp",
+    "date_time": "2026-08-28 12:53"
+  },
+  {
+    "dive_key": ["nusa_penida_199"],
+    "species": ["Trapezia rufopunctata"],
+    "image_path": "199-red-spotted-coral-crab",
+    "date_time": "2026-08-28 13:14"
+  },
+  {
+    "dive_key": ["nusa_penida_199"],
+    "species": ["Thor amboinensis"],
+    "image_path": "199-squat-shrimp",
+    "date_time": "2026-08-28 12:44"
+  },
+  {
+    "dive_key": ["nusa_penida_200"],
+    "species": ["Plectorhinchus vittatus"],
+    "image_path": "200-baby-oriental-sweetlip",
+    "date_time": "2026-08-30 8:58"
+  },
+  {
+    "dive_key": ["nusa_penida_200"],
+    "species": ["Laticauda colubrina"],
+    "image_path": "200-banded-sea-snake",
+    "date_time": "2026-08-30 9:10"
+  },
+  {
+    "dive_key": ["nusa_penida_200"],
+    "species": ["Taeniura lymma"],
+    "image_path": "200-blue-spotted-stingray",
+    "date_time": "2026-08-30 8:44"
+  },
+  {
+    "dive_key": ["nusa_penida_200"],
+    "species": ["Chromodoris magnifica"],
+    "image_path": "200-chromodoris",
+    "date_time": "2026-08-30 9:00"
+  },
+  {
+    "dive_key": ["nusa_penida_200"],
+    "species": ["Lactoria cornuta"],
+    "image_path": "200-cowfish",
+    "date_time": "2026-08-30 8:52"
+  },
+  {
+    "dive_key": ["nusa_penida_200"],
+    "species": ["Sepia latimanus"],
+    "image_path": "200-cuttlefish",
+    "date_time": "2026-08-30 8:42"
+  },
+  {
+    "dive_key": ["nusa_penida_200"],
+    "species": ["Doriprismatica atromarginata"],
+    "image_path": "200-dark-margin-glossodoris",
+    "date_time": "2026-08-30 8:53"
+  },
+  {
+    "dive_key": ["nusa_penida_200"],
+    "species": ["Lysiosquillina maculata"],
+    "image_path": "200-giant-mantis-shrimp",
+    "date_time": "2026-08-30 9:03"
+  },
+  {
+    "dive_key": ["nusa_penida_200"],
+    "species": ["Odontodactylus scyllarus"],
+    "image_path": "200-peacock-mantis-shrimp",
+    "date_time": "2026-08-30 9:07"
+  },
+  {
+    "dive_key": ["nusa_penida_200"],
+    "species": ["Eucrossorhinus dasypogon"],
+    "image_path": "200-wobbegong",
+    "date_time": "2026-08-30 9:09"
+  },
+  {
+    "dive_key": ["nusa_penida_201"],
+    "species": ["Glaucus atlanticus"],
+    "image_path": "201-2-blue-dragons-mating",
+    "date_time": "2026-08-30 10:59"
+  },
+  {
+    "dive_key": ["nusa_penida_201"],
+    "species": ["Triaenodon obesus"],
+    "image_path": "201-baby-whitetip",
+    "date_time": "2026-08-30 10:49"
+  },
+  {
+    "dive_key": ["nusa_penida_201"],
+    "species": ["Chromodoris magnifica"],
+    "image_path": "201-chromodoris",
+    "date_time": "2026-08-30 11:12"
+  },
+  {
+    "dive_key": ["nusa_penida_201"],
+    "species": ["Nembrotha chamberlaini"],
+    "image_path": "201-nembrotha",
+    "date_time": "2026-08-30 11:02"
+  },
+  {
+    "dive_key": ["nusa_penida_201"],
+    "species": ["Scorpaenopsis diabolus"],
+    "image_path": "201-scorpionfish",
+    "date_time": "2026-08-30 11:02"
+  },
+  {
+    "dive_key": ["nusa_penida_202"],
+    "species": ["Nemateleotris magnifica"],
+    "image_path": "202-fire-dartfish",
+    "date_time": "2026-08-30 13:00"
+  },
+  {
+    "dive_key": ["nusa_penida_202"],
+    "species": ["Antennarius commerson"],
+    "image_path": "202-frogfish",
+    "date_time": "2026-08-30 12:44"
+  },
+  {
+    "dive_key": ["nusa_penida_202"],
+    "species": ["Caranx ignobilis"],
+    "image_path": "202-giant-trevally",
+    "date_time": "2026-08-30 12:41"
+  },
+  {
+    "dive_key": ["nusa_penida_202"],
+    "species": ["Phyllidia varicosa"],
+    "image_path": "202-nudi",
+    "date_time": "2026-08-30 12:57"
+  },
+  {
+    "dive_key": ["nusa_penida_202"],
+    "species": ["Odontodactylus scyllarus"],
+    "image_path": "202-peacock-mantis-shrimp",
+    "date_time": "2026-08-30 12:49"
+  },
+  {
+    "dive_key": ["nusa_penida_202"],
+    "species": ["Neopetrolisthes maculatus"],
+    "image_path": "202-spotted-porcelain-crab",
+    "date_time": "2026-08-30 12:31"
   }
 ]
