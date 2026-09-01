@@ -1,75 +1,79 @@
 <%
   select_trip_list = @trip ? @other_trips : @last_trips
 %>
-
-<div class="trips-hero">
-  <% if @trip %>
-    <h1>
-      Dives logged in <%= @trip.title %>
-    </h1>
-    <p class="mb-2 mt-4">
-      <%= link_to trip_path(@trip), class: "trip-back-link" do %>
-      <%= render "shared/icon", icon_name: "luggage" %>
-        <%= @trip.title %>
-      <% end %>
-    </p>
-    <p>
-      <%= link_to dives_path, class: "trip-back-link" do %>
-        <%= render "shared/icon", icon_name: "scuba-mask" %>
-        See all dives
-      <% end %>
-    </p>
-  <% else %>
-    <h1>All dives</h1>
-    <h2>Every dive has a story.</h2>
-    <p>Find all your dive logs</p>
-  <% end %>
-</div>
-
-<div class="container">
-  <div class="dives__header">
-    <div class="dives__header-info">
-      <div class="dives__header-col">
-        <p>
-          <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 26 %>
-          <%= pluralize(@dives.count, "dive") %>
-        </p>
-
-        <p>
-          <%= render "shared/icon", icon_name: "world-map", icon_size: 26 %>
-          <%= @countries_count %>
-          <%= "country".pluralize(@countries_count) %>
-        </p>
-
-        <p>
-          <%= render "shared/icon", icon_name: "camera-spark", icon_size: 26 %>
-          <%= @pictures_count %>
-          <%= "picture".pluralize(@pictures_count) %>
-        </p>
-
-        <p>
-          <%= render "shared/icon", icon_name: "fish", icon_size: 26 %>
-          <%= @species_count %>
-          <%= "species" %> identified
-        </p>
-      </div>
-    </div>
-
-    <% if select_trip_list && select_trip_list.length > 1 %>
-      <%= render "new_dive_trip_select",
-          other_trips: select_trip_list,
-          current_trip: @trip
-      %>
+<div class="dives">
+  <div class="trips-hero">
+    <% if @trip %>
+      <h1>
+        Dives logged in <%= @trip.title %>
+      </h1>
+      <p class="mb-2 mt-4">
+        <%= link_to trip_path(@trip), class: "trip-back-link" do %>
+        <%= render "shared/icon", icon_name: "luggage" %>
+          <%= @trip.title %>
+        <% end %>
+      </p>
+      <p>
+        <%= link_to dives_path, class: "trip-back-link" do %>
+          <%= render "shared/icon", icon_name: "scuba-mask" %>
+          See all dives
+        <% end %>
+      </p>
+    <% else %>
+      <h1>All dives</h1>
+      <h2>Every dive has a story.</h2>
+      <p>Find all your dive logs</p>
     <% end %>
   </div>
 
-  <% if @dives.any? %>
-    <ul class="dives__list list-unstyled">
-      <% @dives.each do |dive| %>
-        <li>
-          <%= render "shared/dive_card", dive: dive %>
-        </li>
-      <% end %>
-    </ul>
-  <% end %>
+  <div class="container">
+    <div class="dives__header">
+      <div class="dives__header-top">
+        <% if select_trip_list && select_trip_list.length > 1 %>
+          <%= render "new_dive_trip_select",
+              other_trips: select_trip_list,
+              current_trip: @trip
+          %>
+        <% end %>
+      </div>
+      <div class="dives__header-inner">
+        <div class="dives__header-info">
+          <div class="dives__header-col">
+            <p>
+              <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 22 %>
+              <%= pluralize(@dives.count, "dive") %>
+            </p>
+
+            <p>
+              <%= render "shared/icon", icon_name: "world-map", icon_size: 22 %>
+              <%= @countries_count %>
+              <%= "country".pluralize(@countries_count) %>
+            </p>
+
+            <p>
+              <%= render "shared/icon", icon_name: "camera-spark", icon_size: 22 %>
+              <%= @pictures_count %>
+              <%= "picture".pluralize(@pictures_count) %>
+            </p>
+
+            <p>
+              <%= render "shared/icon", icon_name: "fish", icon_size: 22 %>
+              <%= @species_count %>
+              <%= "species" %> identified
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% if @dives.any? %>
+      <ul class="dives__list list-unstyled">
+        <% @dives.each do |dive| %>
+          <li>
+            <%= render "shared/dive_card", dive: dive %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
 </div>

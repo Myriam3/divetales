@@ -2,7 +2,8 @@
   color: $dive-blue;
   text-decoration: none;
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     color: $dive-blue-hover;
   }
 }
@@ -14,7 +15,8 @@
   color: $dive-blue;
   text-decoration: none;
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     color: $dive-blue-hover;
   }
 }
@@ -22,7 +24,8 @@
 .dive-link-secondary {
   color: $dive-text;
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     color: $dive-muted;
   }
 }
@@ -30,8 +33,13 @@
 .dive-link-danger {
   color: $dive-danger;
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     color: $dive-danger;
     opacity: 0.8;
   }
+}
+
+.dive-link-accent {
+  color: $dive-wave-dark;
 }

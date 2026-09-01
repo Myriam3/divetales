@@ -38,7 +38,7 @@
   padding: 1.25rem;
 }
 
-.dive-card__body h3 {
+.dive-card__title {
   margin: 0 0 0.75rem;
   color: $dive-navy;
   font-weight: 700;
@@ -56,4 +56,32 @@
 .dive-card-wrapper {
   position: relative;
   height: 100%;
+}
+
+// Species card
+
+.species-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+
+  &__icon {
+    color: $dive-blue;
+  }
+
+  &__name {
+    margin-bottom: 0.25rem;
+  }
+
+  &__list {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  p {
+    margin: 0;
+  }
 }

@@ -101,15 +101,6 @@
       flex-wrap: wrap;
       gap: 0.25rem;
     }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 2px;
-      background-color: $dive-banner;
-      color: $dive-text;
-      border-radius: 24px;
-    }
   }
 
   &__list {
@@ -224,7 +215,9 @@
     left: 0;
     z-index: 2;
     width: 100%;
-    background: rgba(255,255,255,.85);
+    background: rgba(255,255,255,.8);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
     font-size: 0.9rem;
     text-align: center;
 
@@ -253,20 +246,12 @@
     margin-bottom: 0.1rem;
 
     .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      background: #25A7DE;
-      color: #fff;
-      border-radius: 24px;
-
-      &--cat {
-        background: $dive-wave-blue
-      }
-
-      &--family {
-        background: $dive-wave-dark;
-      }
+      // display: inline-flex;
+      // align-items: center;
+      // gap: 4px;
+      // background: #25A7DE;
+      // color: #fff;
+      // border-radius: 24px;
     }
   }
 

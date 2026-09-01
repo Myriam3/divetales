@@ -34,7 +34,7 @@ Category.destroy_all
 user = User.find_or_create_by!(
   email: "demo@example.com"
 ) do |user|
-  user.name = "Demo Diver"
+  user.name = "Diver"
   user.password = "test123"
   user.admin = true
 end

@@ -15,7 +15,13 @@
         <% end %>
 
       <div class="dive-card__body">
-        <h3><%= dive.display_name_html %></h3>
+        <% if local_assigns[:heading_level] == 3 %>
+          <h3 class="dive-card__title"><%= dive.display_name_html %></h3>
+        <% else %>
+          <h2 class="dive-card__title"><%= dive.display_name_html %></h2>
+        <% end %>
+
+        <%= render "shared/dive_types", dive: dive %>
 
         <p>
           <%= render "shared/icon", icon_name: "calendar" %>

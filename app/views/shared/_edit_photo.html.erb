@@ -1,8 +1,6 @@
 <div>
-  <p>
-    <%= link_to edit_picture_path(@picture), class: "text-decoration-none" do %>
-      Edit
-      <%= render "shared/icon", icon_name: "photo-edit" %>
-    <% end %>
-  </p>
+  <%= link_to edit_picture_path(@picture), class: "btn btn-link dive-link dive-link-secondary" do %>
+    Edit
+    <%= render "shared/icon", icon_name: "photo-edit" %>
+  <% end %>
 </div>

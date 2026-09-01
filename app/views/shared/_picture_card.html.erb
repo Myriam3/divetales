@@ -49,14 +49,14 @@
         <div class="picture-card__id-list">
           <% picture.species.each do |s| %>
           <div>
-            <span class="badge badge--cat">
+            <span class="badge badge--species badge--category">
               <span class="visually-hidden">Category:</span>
               <%= render "shared/icon", icon_name: "fish", icon_size: 16 %>
               <%= s.category.name&.titleize %></span>
               <% if s.details.present? %>
                 <% family = s.details&.dig("family")&.titleize %>
                 <% if family.present? %>
-                  <span  class="badge badge--family">
+                  <span class="badge badge--species badge--family">
                     <%= render "shared/icon", icon_name: "binary-tree", icon_size: 16 %>
                     Family: <%= s.details&.dig("family")&.titleize %>
                   </span>

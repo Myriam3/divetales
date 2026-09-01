@@ -63,7 +63,7 @@
     <div class="trip-dives-grid">
       <% @dives.each do |dive| %>
       <li>
-        <%= render "shared/dive_card", dive: dive %>
+        <%= render "shared/dive_card", dive: dive, heading_level: 3 %>
       </li>
       <% end %>
     </div>

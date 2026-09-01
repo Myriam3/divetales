@@ -1,21 +1,37 @@
 .dives {
+  .trips-hero {
+    margin-bottom: 1.5rem;
+  }
+
   &__header {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 2rem;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    background: $dive-white;
-    border: 1px solid $dive-border;
-    border-radius: 14px;
-    box-shadow: 0 10px 25px rgba(11, 58, 102, 0.10);
+    // display: grid;
+    // grid-template-columns: 1fr auto;
+    // gap: 2rem;
+
+    &-top {
+      margin-bottom: 1.5rem;
+      text-align: right;
+    }
+
+    &-inner {
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      background: $dive-white;
+      border: 1px solid $dive-border;
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(11, 58, 102, 0.10);
+    }
 
     p {
-      margin: 0 0 1rem;
+      margin: 0 0 0.5rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
 
     &-info {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
 
       .t-icon {
         color: $dive-blue;
@@ -62,6 +78,19 @@
       &:focus,
       &:hover {
         background-color: $dive-background;
+      }
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .dives {
+    &__header {
+      //grid-template-columns: 1fr;
+
+      .dives-select {
+        text-align: center;
+        order: -1;
       }
     }
   }

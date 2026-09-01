@@ -1,0 +1,9 @@
+<% if dive.dive_types.any? %>
+  <ul class="list-unstyled">
+    <% dive.dive_types.each do |type| %>
+      <span class="badge badge--type badge--<%= type %>">
+        <%= type.capitalize %>
+      </span>
+    <% end %>
+  </ul>
+<% end %>
