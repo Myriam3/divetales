@@ -455,6 +455,14 @@ def species_list
       description: "A highly distinct nudibranch characterized by a pale body covered in a mosaic pattern of black, brown, and yellow-orange spots. It features unique, branched cerata along its back and is famous for its ability to swim with a vigorous, eel-like undulating motion when disturbed.",
       wiki_link: "https://en.wikipedia.org/wiki/Bornella_anguilla"
     },
+    {
+      name: "Orange Allied Cowrie",
+      scientific_name: "Diminovula sp.",
+      category: "Sea Snails",
+      tags: ["tropical", "reef", "macro"],
+      description: "A tiny marine gastropod featuring a glossy white shell that is often partially or fully enveloped by a brightly colored mantle. They are typically found living symbiotically on soft corals, using their vivid mantles to camouflage themselves among the host polyps.",
+      wiki_link: "https://en.wikipedia.org/wiki/Ovulidae"
+    },
 
     # ----------------------------------------
     # Cnidarians
