@@ -16,7 +16,7 @@ export default class extends Controller {
         perMove: 1,
         //focus: 'center',
         arrows: true,
-        pagination: true,
+        pagination: false,
         //updateOnMove : true,
         gap: '10px'
     }

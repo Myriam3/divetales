@@ -21,9 +21,9 @@
             <%= link_to trip_path(trip), class: "trip-card-link" do %>
               <article class="trip-card">
                 <% if trip.cover_photo.attached? %>
-                  <%= image_tag trip.cover_photo, alt: trip.title, class: "trip-card__image" %>
+                  <%= image_tag trip.cover_photo, alt: trip.title, class: "trip-card__image", loading: "lazy" %>
                 <% else %>
-                  <%= image_tag "trip-waves.png", alt: "Blue ocean waves", class: "trip-card__image" %>
+                  <%= image_tag "trip-waves.png", alt: "Blue ocean waves", class: "trip-card__image", loading: "lazy" %>
                 <% end %>
 
                 <div class="trip-card__body">

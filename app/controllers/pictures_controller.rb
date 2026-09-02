@@ -213,7 +213,7 @@ class PicturesController < ApplicationController
   end
 
   def load_lightbox_pictures
-    pictures = policy_scope(Picture).includes(:species, dive: { location: :country })
+    pictures = policy_scope(Picture).includes(:species, dive: { location: :country }).limit(16)
 
     if params[:trip_id]
       pictures = pictures.where(dives: { trip_id: params[:trip_id] })

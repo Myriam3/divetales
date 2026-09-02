@@ -31,7 +31,12 @@
         <% if picture.photo.attached? %>
           <div>
             <%= image_tag picture.photo,
-                  class: "position-absolute top-0 start-0 w-100 h-100 object-fit-cover" %>
+                  class: "position-absolute top-0 start-0 w-100 h-100 object-fit-cover",
+                  loading: local_assigns[:index] && local_assigns[:index] < 3 ? "eager" : "lazy" ,
+                  alt: "",
+                  width: 421,
+                  height: 316
+            %>
 
             <% if picture.species_default? %>
               <span class="badge bg-secondary position-absolute bottom-0 start-0 m-2">

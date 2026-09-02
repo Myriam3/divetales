@@ -121,7 +121,7 @@
               <% if picture.photo.attached? %>
                 <li>
                   <%= link_to picture_path(picture), class: "picture-related__img" do %>
-                    <%= image_tag picture.photo %>
+                    <%= image_tag picture.photo, loading: "lazy", alt: "" %>
                   <% end %>
                 </li>
               <% end %>
@@ -145,7 +145,7 @@
                   <% if picture.photo.attached? %>
                     <li>
                       <%= link_to picture_path(picture), class: "picture-related__img" do %>
-                        <%= image_tag picture.photo %>
+                        <%= image_tag picture.photo, loading: "lazy", alt: "" %>
                       <% end %>
                     </li>
                   <% end %>
