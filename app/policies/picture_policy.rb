@@ -49,6 +49,6 @@ class PicturePolicy < ApplicationPolicy
   end
 
   def lightbox?
-    new?
+    true
   end
 end

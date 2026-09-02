@@ -132,13 +132,13 @@
     <% end %>
   <% end %>
 
-  <% @related_categories.each do |category, pictures| %>
-    <% if pictures.any? %>
-      <section class="picture-related">
-        <div class="container">
-          <h2 class="picture-related__title">
-            More <%= pictures.count > 1 ?  category.name.pluralize : category.name %>
-          </h2>
+  <div class="mt-3 trips-content">
+    <% related_species_ids = @related_species.values.flatten.map(&:id) %>
+    <% @related_categories.each do |category, pictures| %>
+      <% pictures = pictures.reject { |picture| related_species_ids.include?(picture.id) } %>
+
+      <% if pictures.any? %>
+        <h2>More <%= category.name %> Photos</h2>
 
           <ul class="picture-related__list list-unstyled">
             <% pictures.each do |picture| %>

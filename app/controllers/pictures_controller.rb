@@ -140,7 +140,6 @@ class PicturesController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream
-      puts @lightbox_selected_picture_id
       format.html
     end
   end
@@ -185,45 +184,47 @@ class PicturesController < ApplicationController
   end
 
   def related_species
-    species = @picture.species.includes(:pictures).limit(10)
+    species = @picture.species
     species.each_with_object({}) do |s, result|
-      result[s] = s.pictures.where.not(id: @picture.id).distinct.limit(10)
+      pictures = policy_scope(Picture).joins(:species)
+                                      .where(species: { id: s.id })
+                                      .where.not(id: @picture.id)
+                                      .includes(:species, dive: { location: :country })
+                                      .distinct
+                                      .limit(10)
+      result[s] = pictures
     end
   end
 
   def related_categories
     categories = @picture.species.includes(:category).map(&:category).uniq
     categories.each_with_object({}) do |category, result|
-      pictures = Picture
-                 .joins(:species)
-                 .where(species: { category_id: category.id })
-                 .where.not(id: @picture.id)
-                 .distinct
-                 .includes(:dive, :species)
-                 .limit(10)
+      pictures = policy_scope(Picture).joins(:species)
+                                      .where(species: { category_id: category.id })
+                                      .where.not(id: @picture.id)
+                                      .distinct
+                                      .includes(:dive, :species)
+                                      .limit(10)
       result[category] = pictures
     end
   end
 
   def load_lightbox_pictures
+    pictures = policy_scope(Picture).includes(:species, dive: { location: :country })
+
     if params[:trip_id]
-      Trip.find(params[:trip_id])
-          .dives
-          .includes(:pictures)
-          .flat_map(&:pictures)
+      pictures = pictures.where(dives: { trip_id: params[:trip_id] })
 
     elsif params[:dive_id]
-      Dive.find(params[:dive_id])
-          .pictures
+      pictures = pictures.where(dive_id: params[:dive_id])
 
     elsif params[:location_id]
-      Location.find(params[:location_id])
-              .dives
-              .includes(:pictures)
-              .flat_map(&:pictures)
+      pictures = pictures.joins(:dive).where(dives: { location_id: params[:location_id] })
     else
       Picture.none
     end
+
+    pictures
   end
 
   def load_filter_options(pictures)
