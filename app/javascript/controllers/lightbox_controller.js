@@ -22,7 +22,8 @@ export default class extends Controller {
     }
   }
 
-  open() {
+  open(e) {
+    console.log(e);
     if (this.dialogTarget.tagName !== 'DIALOG') return;
     this.contentTarget.classList.remove('visible');
     this.dialogTarget.style.display = 'block';

@@ -1,9 +1,19 @@
 .species-id-details {
   &__facts {
-    background: rgba(#E9634B, 0.1) !important;
+    background: $dive-banner !important;
 
     &-title {
-      color: $dive-coral !important;
+      color: $dive-blue !important;
     }
+  }
+
+  &__title {
+      &.text-danger {
+        color: $dive-coral !important;
+      }
+
+      &.text-success {
+        color: $dive-wave-blue !important;
+      }
   }
 }

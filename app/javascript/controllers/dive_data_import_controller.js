@@ -29,7 +29,6 @@ export default class extends Controller {
     try {
       const arrayBuffer = await file.arrayBuffer();
       const diveData = await this.parseFitFile(arrayBuffer);
-      const depthProfile = null;
 
       if (!diveData) return;
       this.showSuccess("FIT file imported");
@@ -60,6 +59,12 @@ export default class extends Controller {
     }
 
     return messages;
+  }
+
+  // Timezone offset in s
+  getTimeOffset(data) {
+    if (!data.deviceSettingsMesgs?.length || !data.deviceSettingsMesgs[0].timeOffset?.length) return
+    return Number(data.deviceSettingsMesgs[0].timeOffset[0]) || 0;
   }
 
   // Update the new dive form
@@ -103,17 +108,20 @@ export default class extends Controller {
     if (!(startDate instanceof Date)) return;
 
     if (dateInput && dateInput.type === 'date') {
-      dateInput.value = this.convertDatetime(startDate).split('T')[0];
+      dateInput.value = this.formatTimestamp(startDate, data).split('T')[0];
     }
 
     // Time
-    const startTime = this.convertDatetime(startDate);
+    //const startTime = this.convertDatetime(startDate);
+    const startTime = this.formatTimestamp(startDate, data);
     if (startTimeInput && startTimeInput.type === 'datetime-local') {
       startTimeInput.value = startTime;
     }
 
     const endDate = data.sessionMesgs[0]?.timestamp;
-    const endtime = endDate ?  this.convertDatetime(endDate) : this.calculateEndTime(startDate, duration);
+    //const endtime = endDate ?  this.convertDatetime(endDate) : this.calculateEndTime(startDate, duration);
+    const endtime = endDate ? this.formatTimestamp(endDate, data) : null;
+    // TODO check endtime
 
     if (endTimeInput && endTimeInput.type === 'datetime-local') {
       endTimeInput.value  = endtime;
@@ -233,17 +241,31 @@ export default class extends Controller {
 
     if (!(records && records.length && input)) return;
 
-    const depthProfile = this.getDepthRecords(records);
+    const depthProfile = this.getDepthRecords(records, data);
     input.value = JSON.stringify(depthProfile);
   }
 
-  getDepthRecords(records) {
+  getDepthRecords(records, data) {
     return records.map((record) => {
       return {
-        timestamp: record.timestamp,
+        timestamp: this.formatTimestamp(record.timestamp, data),
         depth: record.depth
       }
     });
+  }
+
+  formatTimestamp(date, data) {
+    const timeOffset = this.getTimeOffset(data);
+    // timeOffset FIT = secondes
+    const offsetTime = new Date(
+      date.getTime() + Number(timeOffset) * 1000
+    );
+
+    const pad = (value, length = 2) =>
+      String(value).padStart(length, "0");
+
+    return `${offsetTime.getUTCFullYear()}-${pad(offsetTime.getUTCMonth() + 1)}-${pad(offsetTime.getUTCDate())}` +
+      `T${pad(offsetTime.getUTCHours())}:${pad(offsetTime.getUTCMinutes())}:${pad(offsetTime.getUTCSeconds())}.${pad(offsetTime.getUTCMilliseconds(), 3)}`;
   }
 
   // Location selector update

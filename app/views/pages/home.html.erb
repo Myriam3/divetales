@@ -85,6 +85,7 @@
         <ul class="splide__list list-unstyled">
           <% @media_gallery.each do |dive| %>
             <% dive.pictures.take(3).each do |photo| %>
+              <% if photo.photo.present?%>
               <li class="splide__slide">
                 <div class="position-relative">
                   <%= image_tag photo.photo.variant(resize_to_fill: [220, 220]),
@@ -97,6 +98,7 @@
                   </span>
                 </div>
               </li>
+              <% end %>
             <% end %>
           <% end %>
         </ul>

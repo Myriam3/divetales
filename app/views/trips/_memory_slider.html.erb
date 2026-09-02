@@ -76,7 +76,8 @@
                   } do %>
               <%= render "shared/picture_slide", picture: picture, show_info: false %>
             <% end %>
-          </li>
+            <span><%= picture.date_time&.strftime('%Y-%m-%d %H:%M') %></span>
+\          </li>
         <% end %>
       </ol>
     </div>

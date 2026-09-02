@@ -137,10 +137,13 @@ class PicturesController < ApplicationController
 
     @lightbox_pictures = load_lightbox_pictures
     @lightbox_selected_picture_id = params[:picture_id]
+    picture = Picture.find_by(id: params[:picture_id])
 
     respond_to do |format|
       format.turbo_stream
-      format.html
+      format.html do
+        redirect_to picture.present? ? picture_path(picture) : pictures_path
+      end
     end
   end
 
@@ -224,7 +227,7 @@ class PicturesController < ApplicationController
       Picture.none
     end
 
-    pictures
+    pictures.order(date_time: :asc)
   end
 
   def load_filter_options(pictures)

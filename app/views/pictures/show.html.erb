@@ -132,28 +132,29 @@
     <% end %>
   <% end %>
 
-  <div class="mt-3 trips-content">
     <% related_species_ids = @related_species.values.flatten.map(&:id) %>
     <% @related_categories.each do |category, pictures| %>
       <% pictures = pictures.reject { |picture| related_species_ids.include?(picture.id) } %>
-
       <% if pictures.any? %>
-        <h2>More <%= category.name %> Photos</h2>
+          <section class="picture-related">
+            <div class="container">
+              <h2 class="picture-related__title">More <%= category.name %> Photos</h2>
 
-          <ul class="picture-related__list list-unstyled">
-            <% pictures.each do |picture| %>
-              <% if picture.photo.attached? %>
-                <li>
-                  <%= link_to picture_path(picture), class: "picture-related__img" do %>
-                    <%= image_tag picture.photo %>
+              <ul class="picture-related__list list-unstyled">
+                <% pictures.each do |picture| %>
+                  <% if picture.photo.attached? %>
+                    <li>
+                      <%= link_to picture_path(picture), class: "picture-related__img" do %>
+                        <%= image_tag picture.photo %>
+                      <% end %>
+                    </li>
                   <% end %>
-                </li>
-              <% end %>
-            <% end %>
-          </ul>
-        </div>
-    </section>
-    <% end %>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+      </section>
+      <% end %>
   <% end %>
 
   <%= render "shared/delete_modal", picture: @picture %>

@@ -6,7 +6,8 @@ export default class extends Controller {
   static values = {
     data: Array,
     pictures: Array,
-    icon: String
+    icon: String,
+    syncSlider: String
   }
 
   connect() {
@@ -28,7 +29,7 @@ export default class extends Controller {
       }))
       .filter(point => !isNaN(point.x.getTime()) && !isNaN(point.y));
 
-    const pictureLabels = this.picturesValue.length ? this.mapPictures(points) : {};
+    const pictureLabels = this.picturesValue.length && this.syncSliderValue== "true" ? this.mapPictures(points) : {};
 
     this.createDepthChart(points, pictureLabels);
   }
