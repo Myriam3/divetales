@@ -1,3 +1,16 @@
+<%
+  chart_pictures = dive.pictures.select(&:date_time)
+    .sort_by(&:date_time)
+    .map do |picture|
+    {
+      id: picture.id,
+      timestamp: picture.date_time&.strftime('%Y-%m-%d %H:%M:%S.%3N'),
+      species: picture.species,
+      category: picture.species&.first&.category
+    }
+    end
+%>
+
 <% unless local_assigns[:display_info] == false %>
   <div class="mb-2">
     <%= render "/shared/dive_info_log", dive: dive %>
@@ -6,16 +19,10 @@
 
 <div class="mb-5"
     data-controller="depth-chart"
+    data-depth-chart-sync-slider-value="<%= local_assigns[:display_pictures] || false %>"
     data-depth-chart-data-value="<%= html_escape(dive.depth_over_time) %>"
     data-depth-chart-icon-value="<%= asset_url("icon-camera-spark.svg") %>"
-    data-depth-chart-pictures-value="<%= dive.pictures.map { |picture|
-    {
-      id: picture.id,
-      timestamp: picture.date_time&.strftime('%Y-%m-%d %H:%M:%S.%3N'),
-      species: picture.species,
-      category: picture.species&.first&.category
-    }
-  }.to_json %>"
+    data-depth-chart-pictures-value="<%= chart_pictures.to_json %>"
 >
     <canvas data-depth-chart-target="canvas"
             height="400"

@@ -1,117 +1,119 @@
-<!-- Habitat & Range -->
-<div class="mb-5">
-  <h6 class="text-uppercase text-secondary small fw-bold mb-3 d-flex align-items-center gap-2">
-    <%= render "shared/icon", icon_name: "map-pin", icon_size: 18 %> Habitat & range
-  </h6>
-
-  <% if details["habitat"].present? %>
-    <p class="mb-2"><strong class="text-dark">Habitat:</strong> <%= details["habitat"] %></p>
-  <% end %>
-
-  <% if details["depth_range"].present? %>
-    <p class="mb-2"><strong class="text-dark">Depth:</strong> <%= details["depth_range"] %></p>
-  <% end %>
-
-  <% if details["distribution"].present? %>
-    <p class="mb-0"><strong class="text-dark">Distribution:</strong> <%= details["distribution"] %></p>
-  <% end %>
-</div>
-
-<!-- Size & Behavior -->
-<div class="mb-5 border-top pt-4">
-  <h6 class="text-uppercase text-secondary small fw-bold mb-3 d-flex align-items-center gap-2">
-    <%= render "shared/icon", icon_name: "activity", icon_size: 18 %> Size & behavior
-  </h6>
-
-  <% if details["size"].present? %>
-    <p class="mb-2"><strong class="text-dark">Size:</strong> <%= details["size"] %></p>
-  <% end %>
-
-  <% if details["behavior"].present? %>
-    <p class="mb-0"><strong class="text-dark">Behavior:</strong> <%= details["behavior"] %></p>
-  <% end %>
-</div>
-
-<!-- How to Identify -->
-<% if details["identification_features"].present? %>
-  <div class="mb-5 border-top pt-4">
-    <h6 class="text-uppercase text-secondary small fw-bold mb-3 d-flex align-items-center gap-2">
-      <%= render "shared/icon", icon_name: "list-search", icon_size: 18 %> How to identify
+<div class="species-id-details">
+  <!-- Habitat & Range -->
+  <div class="mb-5">
+    <h6 class="species-id-details__title text-uppercase text-secondary small fw-bold mb-3 d-flex align-items-center gap-2">
+      <%= render "shared/icon", icon_name: "map-pin", icon_size: 18 %> Habitat & range
     </h6>
-    <ul class="text-dark ps-4 mb-0">
-      <% details["identification_features"].each do |feature| %>
-        <li class="mb-2"><%= feature %></li>
-      <% end %>
-    </ul>
+
+    <% if details["habitat"].present? %>
+      <p class="mb-2"><strong class="text-dark">Habitat:</strong> <%= details["habitat"] %></p>
+    <% end %>
+
+    <% if details["depth_range"].present? %>
+      <p class="mb-2"><strong class="text-dark">Depth:</strong> <%= details["depth_range"] %></p>
+    <% end %>
+
+    <% if details["distribution"].present? %>
+      <p class="mb-0"><strong class="text-dark">Distribution:</strong> <%= details["distribution"] %></p>
+    <% end %>
   </div>
-<% end %>
 
-<!-- Similar Species -->
-<% if details["similar_species"].present? %>
+  <!-- Size & Behavior -->
   <div class="mb-5 border-top pt-4">
-    <h6 class="text-uppercase text-secondary small fw-bold mb-3 d-flex align-items-center gap-2">
-      <%= render "shared/icon", icon_name: "binary-tree", icon_size: 18 %> Similar species
+    <h6 class="species-id-details__title text-uppercase text-secondary small fw-bold mb-3 d-flex align-items-center gap-2">
+      <%= render "shared/icon", icon_name: "activity", icon_size: 18 %> Size & behavior
     </h6>
 
-    <div class="row g-3">
-      <% details["similar_species"].each do |species| %>
-        <div class="col-12 col-md-6">
-          <div class="card bg-light border-0 h-100 p-3 rounded-4">
-            <strong class="text-dark mb-1"><%= species["name"] %></strong>
-            <p class="mb-0 small text-muted"><%= species["difference"] %></p>
+    <% if details["size"].present? %>
+      <p class="mb-2"><strong class="text-dark">Size:</strong> <%= details["size"] %></p>
+    <% end %>
+
+    <% if details["behavior"].present? %>
+      <p class="mb-0"><strong class="text-dark">Behavior:</strong> <%= details["behavior"] %></p>
+    <% end %>
+  </div>
+
+  <!-- How to Identify -->
+  <% if details["identification_features"].present? %>
+    <div class="mb-5 border-top pt-4">
+      <h6 class="species-id-details__title text-uppercase text-secondary small fw-bold mb-3 d-flex align-items-center gap-2">
+        <%= render "shared/icon", icon_name: "list-search", icon_size: 18 %> How to identify
+      </h6>
+      <ul class="text-dark ps-4 mb-0">
+        <% details["identification_features"].each do |feature| %>
+          <li class="mb-2"><%= feature %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Similar Species -->
+  <% if details["similar_species"].present? %>
+    <div class="mb-5 border-top pt-4">
+      <h6 class="species-id-details__title text-uppercase text-secondary small fw-bold mb-3 d-flex align-items-center gap-2">
+        <%= render "shared/icon", icon_name: "binary-tree", icon_size: 18 %> Similar species
+      </h6>
+
+      <div class="row g-3">
+        <% details["similar_species"].each do |species| %>
+          <div class="col-12 col-md-6">
+            <div class="card bg-light border-0 h-100 p-3 rounded-4">
+              <strong class="text-dark mb-1"><%= species["name"] %></strong>
+              <p class="mb-0 small text-muted"><%= species["difference"] %></p>
+            </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
 
-<!-- Tips for Divers -->
-<% if details["diver_notes"].present? %>
-  <div class="mb-5 border-top pt-4">
-    <h6 class="text-uppercase text-secondary small fw-bold mb-3 d-flex align-items-center gap-2">
-      <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 18 %> Tips for divers
-    </h6>
-    <ul class="text-dark ps-4 mb-0">
-      <% details["diver_notes"].each do |note| %>
-        <li class="mb-2"><%= note %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-
-<!-- Safety -->
-<% if details["safety"].present? %>
-  <div class="mb-5 border-top pt-4">
-    <h6 class="text-uppercase text-danger small fw-bold mb-3 d-flex align-items-center gap-2">
-      <%= render "shared/icon", icon_name: "alert-triangle", icon_size: 18 %> Safety Warning
-    </h6>
-    <div class="mb-0 border-0 rounded-4">
-      <%= details["safety"] %>
+  <!-- Tips for Divers -->
+  <% if details["diver_notes"].present? %>
+    <div class="mb-5 border-top pt-4">
+      <h6 class="species-id-details__title text-uppercase text-secondary small fw-bold mb-3 d-flex align-items-center gap-2">
+        <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 18 %> Tips for divers
+      </h6>
+      <ul class="text-dark ps-4 mb-0">
+        <% details["diver_notes"].each do |note| %>
+          <li class="mb-2"><%= note %></li>
+        <% end %>
+      </ul>
     </div>
-  </div>
-<% end %>
+  <% end %>
 
-<!-- Conservation -->
-<% if details["conservation"].present? %>
-  <div class="mb-5 border-top pt-4">
-    <h6 class="text-uppercase text-success small fw-bold mb-3 d-flex align-items-center gap-2">
-      <%= render "shared/icon", icon_name: "leaf", icon_size: 18 %> Conservation
-    </h6>
-    <p class="mb-0 text-dark">
-      <%= details["conservation"] %>
-    </p>
-  </div>
-<% end %>
+  <!-- Safety -->
+  <% if details["safety"].present? %>
+    <div class="mb-5 border-top pt-4">
+      <h6 class="species-id-details__title text-uppercase text-danger small fw-bold mb-3 d-flex align-items-center gap-2">
+        <%= render "shared/icon", icon_name: "alert-triangle", icon_size: 18 %> Safety Warning
+      </h6>
+      <div class="mb-0 border-0 rounded-4">
+        <%= details["safety"] %>
+      </div>
+    </div>
+  <% end %>
 
-<!-- Interesting Fact -->
-<% if details["interesting_fact"].present? %>
-  <div class="mt-4 pt-4 border-top bg-primary-subtle p-4 rounded-4">
-    <h6 class="text-uppercase text-primary small fw-bold mb-2 d-flex align-items-center gap-2">
-      <%= render "shared/icon", icon_name: "bulb", icon_size: 18 %> Interesting fact
-    </h6>
-    <p class="mb-0 text-dark-emphasis fst-italic">
-      "<%= details["interesting_fact"] %>"
-    </p>
-  </div>
-<% end %>
+  <!-- Conservation -->
+  <% if details["conservation"].present? %>
+    <div class="mb-5 border-top pt-4">
+      <h6 class="species-id-details__title text-uppercase text-success small fw-bold mb-3 d-flex align-items-center gap-2">
+        <%= render "shared/icon", icon_name: "leaf", icon_size: 18 %> Conservation
+      </h6>
+      <p class="mb-0 text-dark">
+        <%= details["conservation"] %>
+      </p>
+    </div>
+  <% end %>
+
+  <!-- Interesting Fact -->
+  <% if details["interesting_fact"].present? %>
+    <div class="species-id-details__facts mt-4 pt-4 bg-primary-subtle p-4 rounded-4">
+      <h6 class="species-id-details__facts-title text-uppercase text-primary small fw-bold mb-2 d-flex align-items-center gap-2">
+        <%= render "shared/icon", icon_name: "bulb", icon_size: 18 %> Interesting fact
+      </h6>
+      <p class="mb-0 text-dark-emphasis fst-italic">
+        "<%= details["interesting_fact"] %>"
+      </p>
+    </div>
+  <% end %>
+</div>

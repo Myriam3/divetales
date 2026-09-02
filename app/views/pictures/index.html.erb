@@ -97,9 +97,9 @@
             <h2 class="pictures__toolbar-title"><%= pluralize(@pictures.length, "picture") %></h2>
 
             <ul class="pictures__list list-unstyled">
-              <% @pictures.each do |picture| %>
+              <% @pictures.each_with_index do |picture, index| %>
                 <li>
-                  <%= render "shared/picture_card", picture: picture, show_info: false %>
+                  <%= render "shared/picture_card", picture: picture, show_info: false, index: index %>
                 </li>
               <% end %>
             </ul>
