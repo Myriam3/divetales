@@ -46,7 +46,7 @@
       <%= yield %>
     </main>
 
-    <% paths = ["/dives", "/trips", "/pictures"] %>
+    <% paths = ["/dives", "/trips", "/pictures","/identification"] %>
     <% if paths.any? { |path| request.path.include?(path) } %>
       <%= render "shared/footer_wave" %>
     <% end %>

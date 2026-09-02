@@ -21,7 +21,8 @@
               <div class="position-relative flex-shrink-0">
                 <%= image_tag picture.photo,
                     class: "rounded object-fit-cover",
-                    style: "width: 100px; height: 100px;" %>
+                    style: "width: 100px; height: 100px;",
+                    loading: "lazy" %>
 
                 <% if picture.species_default? %>
                   <span class="badge bg-secondary position-absolute bottom-0 start-0 m-1">
@@ -75,9 +76,9 @@
 
     <% if @dive.pictures.any? %>
       <ul class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 list-unstyled">
-        <% @dive.pictures.each do |picture| %>
+        <% @dive.pictures.each_with_index do |picture, index| %>
           <li class="col">
-            <%= render "shared/picture_card", picture: picture, show_info: false, return_to: "dive" %>
+            <%= render "shared/picture_card", picture: picture, show_info: false, return_to: "dive", index: index %>
           </li>
         <% end %>
       </ul>

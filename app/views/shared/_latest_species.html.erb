@@ -15,12 +15,14 @@
                 <%= image_tag pic.photo.variant(resize_to_fill: [128, 128]),
                     class: "rounded object-fit-cover shadow-sm",
                     style: "width: 72px; height: 72px;",
-                    alt: "Your photo of #{s.name}" %>
+                    alt: "Your photo of #{s.name}",
+                    loading: "lazy", alt: "" %>
               <% elsif s.default_photo.attached? %>
                 <%= image_tag s.default_photo.variant(resize_to_fill: [128, 128]),
                     class: "rounded object-fit-cover shadow-sm",
                     style: "width: 72px; height: 72px;",
-                    alt: "Default photo of #{s.name}" %>
+                    alt: "Default photo of #{s.name}",
+                    loading: "lazy", alt: "" %>
               <% else %>
                 <div class="bg-light rounded d-flex align-items-center justify-content-center text-secondary" style="width: 72px; height: 72px;">
                   <%= render "shared/icon", icon_name: "camera", icon_size: 24 %>

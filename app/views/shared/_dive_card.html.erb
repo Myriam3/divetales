@@ -7,11 +7,11 @@
     <div class="dive-card">
       <% first_picture = dive.pictures.order(:created_at).first %>
         <% if dive.cover_photo.attached? %>
-          <%= image_tag dive.cover_photo, alt: dive.dive_site_name, class: "dive-card__image" %>
+          <%= image_tag dive.cover_photo, alt: dive.dive_site_name, class: "dive-card__image", loading: "lazy" %>
         <% elsif first_picture&.photo&.attached? %>
-          <%= image_tag first_picture.photo, alt: dive.dive_site_name, class: "dive-card__image" %>
+          <%= image_tag first_picture.photo, alt: dive.dive_site_name, class: "dive-card__image", loading: "lazy" %>
         <% else %>
-          <%= image_tag "dive-default.png", alt: "Underwater reef", class: "dive-card__image" %>
+          <%= image_tag "dive-default.png", alt: "Underwater reef", class: "dive-card__image", loading: "lazy" %>
         <% end %>
 
       <div class="dive-card__body">

@@ -85,6 +85,7 @@
         <ul class="splide__list list-unstyled">
           <% @media_gallery.each do |dive| %>
             <% dive.pictures.take(3).each do |photo| %>
+              <% if photo.photo.present?%>
               <li class="splide__slide">
                 <div class="position-relative">
                   <%= image_tag photo.photo.variant(resize_to_fill: [220, 220]),
@@ -97,6 +98,7 @@
                   </span>
                 </div>
               </li>
+              <% end %>
             <% end %>
           <% end %>
         </ul>
@@ -105,23 +107,23 @@
   </section>
 
   <div class="home-fish home-fish-one">
-    <%= image_tag "home-fish.png", alt: "" %>
+    <%= image_tag "home-fish.png", alt: "", loading: "lazy" %>
   </div>
 
   <div class="home-fish home-fish-two">
-    <%= image_tag "home-fish.png", alt: "" %>
+    <%= image_tag "home-fish.png", alt: "", loading: "lazy" %>
   </div>
 
   <div class="home-fish home-fish-three">
-    <%= image_tag "home-fish.png", alt: "" %>
+    <%= image_tag "home-fish.png", alt: "", loading: "lazy" %>
   </div>
 
   <div class="home-fish home-fish-four">
-    <%= image_tag "home-fish.png", alt: "" %>
+    <%= image_tag "home-fish.png", alt: "", loading: "lazy" %>
   </div>
 
   <div class="home-fish home-fish-five">
-    <%= image_tag "home-fish.png", alt: "" %>
+    <%= image_tag "home-fish.png", alt: "", loading: "lazy" %>
   </div>
 
   <%= image_tag "home-diving-helmet.png", alt: "Vintage diving helmet", class: "home-diving-helmet" %>

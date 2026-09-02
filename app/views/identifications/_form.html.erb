@@ -215,7 +215,7 @@
         </div>
       </div>
 
-      <%= f.button :button, class: "btn-dive-primary btn btn-secondary mt-5 d-flex align-items-center justify-content-center gap-2 w-100" do %>
+      <%= f.button :button, class: "btn-dive btn-dive-primary mt-5" do %>
         <%= render "shared/icon", icon_name: "photo-spark" %> Identify
       <% end %>
     </div>
@@ -224,7 +224,24 @@
    <div id="jellyfish-loading-ui"
          data-turbo-permanent="true"
          data-upload-ui-target="jellyfishUI"
-         class="<%= is_pending ? '' : 'd-none' %>">
+         class="bubble-background <%= is_pending ? '' : 'd-none' %>">
+      <div class="bubble-container">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+      </div>
 
       <div class="mb-4 text-center">
         <% if is_pending && @identification&.image&.attached? %>

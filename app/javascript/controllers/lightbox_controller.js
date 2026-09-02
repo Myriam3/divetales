@@ -16,13 +16,14 @@ export default class extends Controller {
         perMove: 1,
         //focus: 'center',
         arrows: true,
-        pagination: true,
+        pagination: false,
         //updateOnMove : true,
         gap: '10px'
     }
   }
 
-  open() {
+  open(e) {
+    console.log(e);
     if (this.dialogTarget.tagName !== 'DIALOG') return;
     this.contentTarget.classList.remove('visible');
     this.dialogTarget.style.display = 'block';
