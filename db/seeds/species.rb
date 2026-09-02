@@ -39,6 +39,14 @@ def species_list
       description: "A large moray eel found around rocky reefs and coastal waters of the tropical Atlantic.",
       wiki_link: "https://en.wikipedia.org/wiki/Green_moray"
     },
+    {
+      name: "Yellowmargin Moray",
+      scientific_name: "Gymnothorax flavimarginatus",
+      category: "Eels",
+      tags: ["tropical", "reef", "nocturnal"],
+      description: "A large moray eel characterized by its yellowish-brown mottled body and the distinctive bright yellow-green margin along the posterior edge of its fin. It is frequently encountered hiding in reef crevices, often with only its head visible.",
+      wiki_link: "https://en.wikipedia.org/wiki/Yellow-edged_moray"
+    },
 
     {
       name: "Moorish Idol",
@@ -227,6 +235,30 @@ def species_list
       description: "A massive, powerful apex predator commonly found patrolling reef drop-offs and areas with strong currents. Known for their silvery, muscular bodies and steep head profiles, these jacks are highly aggressive hunters.",
       wiki_link: "https://en.wikipedia.org/wiki/Giant_trevally"
     },
+    {
+      name: "Yellow Boxfish (Juvenile)",
+      scientific_name: "Ostracion cubicum",
+      category: "Boxfish & Cowfish",
+      tags: ["tropical", "reef", "macro"],
+      description: "Juveniles of this species are unmistakable, featuring a bright yellow, cube-shaped body covered in perfectly round black spots. As they mature into adults, their body elongates, the bright yellow fades to a mustard or brownish-blue, and the black spots become white spots with black margins.",
+      wiki_link: "https://en.wikipedia.org/wiki/Yellow_boxfish"
+    },
+    {
+      name: "Robust Ghostpipefish",
+      scientific_name: "Solenostomus cyanopterus",
+      category: "Seahorses & Pipefish",
+      tags: ["tropical", "reef", "macro"],
+      description: "A master of camouflage that closely resembles a piece of drifting seagrass or a dead leaf. It typically hangs vertically with its snout pointing downward, blending in perfectly with nearby vegetation or sponges to hide from predators and ambush tiny crustaceans.",
+      wiki_link: "https://en.wikipedia.org/wiki/Robust_ghost_pipefish"
+    },
+    {
+      name: "Leaf Scorpionfish",
+      scientific_name: "Taenianotus triacanthus",
+      category: "Lionfish, Scorpionfish & Stonefish",
+      tags: ["tropical", "reef", "venomous", "macro"],
+      description: "A highly laterally compressed scorpionfish that relies on its cryptic shape and swaying movements to camouflage itself as drifting vegetation. Despite its delicate appearance, its dorsal spines are venomous.",
+      wiki_link: "https://en.wikipedia.org/wiki/Taenianotus_triacanthus"
+    },
 
 
     # ----------------------------------------
@@ -240,6 +272,14 @@ def species_list
       tags: ["tropical", "reef", "seagrass"],
       description: "A widely distributed sea turtle commonly found around reefs, shallow coastal waters, and seagrass meadows.",
       wiki_link: "https://en.wikipedia.org/wiki/Green_sea_turtle"
+    },
+    {
+      name: "Hawksbill Sea Turtle",
+      scientific_name: "Eretmochelys imbricata",
+      category: "Sea Turtles",
+      tags: ["tropical", "reef", "pelagic"],
+      description: "A critically endangered marine turtle easily distinguished by its narrow, pointed beak and a distinctive pattern of overlapping scales on its shell that form a serrated look along the edges. They are frequently spotted resting in caves and ledges in and around coral reefs throughout the day.",
+      wiki_link: "https://en.wikipedia.org/wiki/Hawksbill_sea_turtle"
     },
     {
       name: "Banded Sea Krait",
@@ -318,6 +358,54 @@ def species_list
       tags: ["tropical", "reef", "macro"],
       description: "The largest of all mantis shrimp species, easily identifiable by its distinct black and pale yellow zebra-like bands. Unlike the smashing peacock mantis, this species is a 'spearer' that waits vertically in deep sandy burrows to ambush passing fish with its barbed appendages.",
       wiki_link: "https://en.wikipedia.org/wiki/Lysiosquillina_maculata"
+    },
+    {
+      name: "Crinoid Squat Lobster",
+      scientific_name: "Allogalathea elegans",
+      category: "Other Crustaceans",
+      tags: ["tropical", "reef", "macro"],
+      description: "A tiny, teardrop-shaped squat lobster that lives exclusively in a symbiotic relationship with feather stars (crinoids). Its coloration is highly variable, adapting to match its specific host to perfectly camouflage itself among the feathery arms.",
+      wiki_link: "https://en.wikipedia.org/wiki/Allogalathea_elegans"
+    },
+    {
+      name: "Coral Guard Crab",
+      scientific_name: "Trapezia cymodoce",
+      category: "Crabs",
+      tags: ["tropical", "reef", "macro"],
+      description: "A small, symbiotic crab that lives exclusively within the tightly packed branches of hard corals, primarily Pocillopora. As seen in your photograph, it can often be identified by a striking blue line across its eyes and upper carapace. These crabs aggressively defend their host corals from predators like the crown-of-thorns starfish.",
+      wiki_link: "https://en.wikipedia.org/wiki/Trapezia_cymodoce"
+    },
+    {
+      name: "Bubble Coral Shrimp",
+      scientific_name: "Vir philippinensis",
+      category: "Shrimps",
+      tags: ["tropical", "reef", "macro"],
+      description: "A small, glass-like commensal shrimp that lives symbiotically among the tentacles of bubble corals. It relies on its transparency for camouflage and is most easily spotted by looking for the distinct, fine reddish-purple lines running along its long antennae.",
+      wiki_link: "https://en.wikipedia.org/wiki/Vir_philippinensis"
+    },
+    {
+      name: "Magnificent Anemone Shrimp",
+      scientific_name: "Ancylomenes magnificus",
+      category: "Shrimps",
+      tags: ["tropical", "reef", "macro"],
+      description: "A highly transparent commensal shrimp that lives symbiotically within the protective tentacles of sea anemones. It is easily identified by its glass-like body and the striking purple and white bands ringing its long claws and walking legs.",
+      wiki_link: "https://en.wikipedia.org/wiki/Ancylomenes_magnificus"
+    },
+    {
+      name: "Decorator Crab",
+      scientific_name: "Camposcia retusa",
+      category: "Crabs",
+      tags: ["tropical", "reef", "macro"],
+      description: "A master of disguise belonging to the spider crab family. It uses tiny, hook-like bristles (setae) on its carapace and legs to attach pieces of surrounding algae, sponge, and stinging hydroids, creating a customized, living camouflage that makes it nearly invisible against the reef.",
+      wiki_link: "https://en.wikipedia.org/wiki/Camposcia_retusa"
+    },
+    {
+      name: "Banded Coral Shrimp",
+      scientific_name: "Stenopus hispidus",
+      category: "Shrimps",
+      tags: ["tropical", "reef", "macro"],
+      description: "A strikingly colored cleaner shrimp easily recognized by its red and white banded body and long, sweeping white antennae. They are frequently found in crevices or under overhangs, where they set up cleaning stations to remove parasites and dead tissue from visiting fish.",
+      wiki_link: "https://en.wikipedia.org/wiki/Stenopus_hispidus"
     },
 
 
@@ -407,6 +495,30 @@ def species_list
       description: "A highly recognizable, tough-bodied nudibranch featuring a black base covered by longitudinal blue-grey ridges and bright yellow-capped tubercles. As seen in your photograph, it is frequently found resting directly on the sponges it feeds upon.",
       wiki_link: "https://en.wikipedia.org/wiki/Phyllidia_varicosa"
     },
+    {
+      name: "Eel Bornella",
+      scientific_name: "Bornella anguilla",
+      category: "Nudibranchs",
+      tags: ["tropical", "reef", "macro"],
+      description: "A highly distinct nudibranch characterized by a pale body covered in a mosaic pattern of black, brown, and yellow-orange spots. It features unique, branched cerata along its back and is famous for its ability to swim with a vigorous, eel-like undulating motion when disturbed.",
+      wiki_link: "https://en.wikipedia.org/wiki/Bornella_anguilla"
+    },
+    {
+      name: "Orange Allied Cowrie",
+      scientific_name: "Diminovula sp.",
+      category: "Sea Snails",
+      tags: ["tropical", "reef", "macro"],
+      description: "A tiny marine gastropod featuring a glossy white shell that is often partially or fully enveloped by a brightly colored mantle. They are typically found living symbiotically on soft corals, using their vivid mantles to camouflage themselves among the host polyps.",
+      wiki_link: "https://en.wikipedia.org/wiki/Ovulidae"
+    },
+    {
+      name: "Yellow-papillae Flatworm",
+      scientific_name: "Thysanozoon nigropapillosum",
+      category: "Flatworms",
+      tags: ["tropical", "reef", "macro"],
+      description: "A striking polyclad flatworm easily identified by its deep black body covered in small, raised papillae with bright yellow tips. Its highly ruffled outer margin is bordered in opaque white, and it glides smoothly over the substrate or swims through the water column using a rhythmic, undulating motion.",
+      wiki_link: "https://en.wikipedia.org/wiki/Thysanozoon_nigropapillosum"
+    },
 
     # ----------------------------------------
     # Cnidarians
@@ -433,6 +545,14 @@ def species_list
       tags: ["reef"],
       description: "A common sea star found on rocky and sandy seabeds in the North Atlantic.",
       wiki_link: "https://en.wikipedia.org/wiki/Asterias_rubens"
+    },
+    {
+      name: "Snake Sea Cucumber (Juvenile)",
+      scientific_name: "Synapta maculata",
+      category: "Sea Cucumbers",
+      tags: ["tropical", "reef", "macro"],
+      description: "Juveniles of this species look drastically different from the massive, brown adults. They can appear grayish-white with dark bands, and feature a crown of feather-like tentacles around their mouth. They use these tentacles continuously to collect food particles from the substrate by adhesion.",
+      wiki_link: "https://en.wikipedia.org/wiki/Synapta_maculata"
     },
 
 
