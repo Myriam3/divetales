@@ -224,7 +224,24 @@
    <div id="jellyfish-loading-ui"
          data-turbo-permanent="true"
          data-upload-ui-target="jellyfishUI"
-         class="<%= is_pending ? '' : 'd-none' %>">
+         class="bubble-background <%= is_pending ? '' : 'd-none' %>">
+      <div class="bubble-container">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+      </div>
 
       <div class="mb-4 text-center">
         <% if is_pending && @identification&.image&.attached? %>
