@@ -60,13 +60,13 @@
   </div>
 
   <% if @dives.any? %>
-    <div class="trip-dives-grid">
+    <ul class="trip-dives-grid list-unstyled">
       <% @dives.each do |dive| %>
       <li>
         <%= render "shared/dive_card", dive: dive, heading_level: 3 %>
       </li>
       <% end %>
-    </div>
+    </ul>
   <% else %>
     <div class="trips-empty">
       <h3>No dives yet</h3>
