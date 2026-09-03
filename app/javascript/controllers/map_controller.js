@@ -23,6 +23,7 @@ export default class extends Controller {
   };
 
   connect() {
+    this.currentLocation = null;
     this.currentDive = null;
     this.points = {};
     this.init();
@@ -304,12 +305,39 @@ export default class extends Controller {
       }
 
       // Toggle current location
-      if (this.currentLocation) this.currentLocation.style.border = '0';
-        btn.style.border = 'solid 2px red';
+      if (this.currentLocation) this.currentLocation.classList.remove('selected');
+        btn.classList.add('selected');
         this.currentLocation = btn;
+        this.onMove(btn, bounds);
       } catch (error) {
         console.log(error);
       }
+  }
+
+  onMove(el, bounds) {
+    const corners = this.expandBounds(bounds);
+
+    const handleZoomEnd = () => {
+      if (!corners.contains(this.map.getCenter())) {
+        el.classList.remove('selected');
+        this.map.off("moveend", handleZoomEnd);
+      }
+    }
+
+    this.map.on("moveend", handleZoomEnd);
+  }
+
+  expandBounds(bounds, margin = 0.05) {
+    return new mapboxgl.LngLatBounds(
+      [
+        bounds.getWest() - margin,
+        bounds.getSouth() - margin
+      ],
+      [
+        bounds.getEast() + margin,
+        bounds.getNorth() + margin
+      ]
+    );
   }
 
   // Set location bounds with dives

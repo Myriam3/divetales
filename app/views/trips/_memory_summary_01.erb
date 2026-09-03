@@ -1,0 +1,96 @@
+<% if local_assigns[:stats] && local_assigns[:stats].any? %>
+  <div class="trip-summary">
+    <ul class="trip-summary__list list-unstyled">
+      <li>
+        <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 36 %>
+        <div>
+          <p class="trip-summary__title"><%= pluralize(@stats[:dives_count], "Dive") %></p>
+          <p class="trip-summary__subtitle"><%= pluralize(@stats[:dive_days_count], "Diving day") %></p>
+        </div>
+      </li>
+      <% if @stats[:total_duration].positive? %>
+      <li>
+        <%= render "shared/icon", icon_name: "chart-bubble", icon_size: 36 %>
+        <div>
+          <p class="trip-summary__title"><%= @stats[:total_duration] %>min</p>
+          <p class="trip-summary__subtitle">Total underwater</p>
+        </div>
+      </li>
+      <% end %>
+      <% if @stats[:max_depth].present? %>
+        <li>
+          <%= render "shared/icon", icon_name: "arrow-bar-to-down", icon_size: 36 %>
+          <div>
+            <p class="trip-summary__title"><%= @stats[:max_depth].round %>m</p>
+            <p class="trip-summary__subtitle">Deepest dive</p>
+          </div>
+        </li>
+      <% end %>
+      <% if @stats[:max_duration].positive? %>
+        <li>
+          <%= render "shared/icon", icon_name: "clock", icon_size: 36 %>
+          <div>
+            <p class="trip-summary__title"><%= @stats[:max_duration] %>min</p>
+            <p class="trip-summary__subtitle">Longest dive</p>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+  <!-- <div class="row">
+    <% if local_assigns[:dives_by_time] && local_assigns[:dives_by_time].any? %>
+      <div class="col">
+        <div style="width: 300px; max-width: 100%;">
+          <canvas id="diveTimeChart"></canvas>
+        </div>
+      </div>
+    <% end %>
+
+    <% if local_assigns[:dives_by_entry] && local_assigns[:dives_by_time].any? %>
+      <div class="col">
+        <div style="width: 300px; max-width: 100%;">
+          <canvas id="diveEntryChart"></canvas>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>-->
+
+<script>
+    (() => {
+        window.addEventListener('DOMContentLoaded', (e) => {
+          console.log(e)
+          const chartTimeCtx = document.getElementById('diveTimeChart')?.getContext('2d');
+          const chartEntryCtx = document.getElementById('diveEntryChart')?.getContext('2d');
+
+          if (chartTimeCtx) {
+            const chartTime = new Chart(chartTimeCtx, {
+              type: 'pie',
+              data: {
+                labels: ['Night', 'Morning', 'Afternoon'],
+                datasets: [{
+                  data: [<%= dives_by_time[:night] %>, <%= dives_by_time[:morning] %>, <%= dives_by_time[:afternoon] %>],
+                  backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56']
+                }]
+              }
+            });
+          }
+
+          if (chartEntryCtx) {
+            const chartEntry = new Chart(chartEntryCtx, {
+              type: 'pie',
+              data: {
+                labels: ['Boat', 'Shore', 'Other'],
+                datasets: [{
+                  data: [<%= @dives_by_entry[:boat] %>, <%= @dives_by_entry[:shore] %>, <%= @dives_by_entry[:other] %>],
+                  backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56']
+                }]
+              }
+            });
+          }
+
+        });
+    })();
+  </script>
