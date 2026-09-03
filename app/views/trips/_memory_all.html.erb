@@ -8,11 +8,11 @@
 
   <% if pictures.length > 1  %>
     <p class="memory-pictures__btn">
-      <%= link_to pictures_path,
+      <%= link_to pictures_path(trip_id: @trip.id),
           class: "btn-dive btn-dive-accent", data: { turbo: false } do %>
           <%= render "shared/icon", icon_name: "library-photo", icon_size: 20 %>
           All trip pictures<small> (<%= pictures.length %>)</small>
-        <% end %>
+      <% end %>
     </p>
   <% end %>
 </section>
