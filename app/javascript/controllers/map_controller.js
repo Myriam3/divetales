@@ -67,7 +67,9 @@ export default class extends Controller {
 
   initMapbox(lat, long, settings) {
     if (!(lat && long)) return;
-    this.displayMap([long, lat], 8, settings);
+    if (this.hasMapCanvasTarget) {
+      this.displayMap([long, lat], 8, settings);
+    }
     this.setGeoInfo(lat, long, settings.token);
   }
 
@@ -250,17 +252,19 @@ export default class extends Controller {
   // Geocoding info
   async setGeoInfo(lat, long, token) {
     // Display coordinates
-    if (this.coordinatesContainerTarget) {
+    if (this.hasCoordinatesContainerTarget) {
       this.coordinatesContainerTarget.insertAdjacentHTML('beforeend', `${lat}, ${long}`);
       this.coordinatesContainerTarget.style.display = 'block';
     }
 
     // Display geo info
     const geoInfo = await this.fetchGeocodingPlace(lat, long, token);
-    if (!geoInfo || !this.mapInfoContainerTarget) return;
+    if (!geoInfo) return;
 
-    this.mapInfoContainerTarget.insertAdjacentHTML('beforeend', geoInfo.name);
-    this.mapInfoContainerTarget.style.display = 'block';
+    if (this.hasMapInfoContainerTarget) {
+      this.mapInfoContainerTarget.insertAdjacentHTML('beforeend', geoInfo.name);
+      this.mapInfoContainerTarget.style.display = 'block';
+    }
 
     // Event for updating the form
     this.dispatch("geoinfo", {
@@ -304,12 +308,16 @@ export default class extends Controller {
       }
 
       // Toggle current location
-      if (this.currentLocation) this.currentLocation.style.border = '0';
-        btn.style.border = 'solid 2px red';
-        this.currentLocation = btn;
-      } catch (error) {
-        console.log(error);
+      if (this.currentLocation) {
+        this.currentLocation.classList.remove('is-selected');
+        this.currentLocation.setAttribute('aria-pressed', 'false');
       }
+      btn.classList.add('is-selected');
+      btn.setAttribute('aria-pressed', 'true');
+      this.currentLocation = btn;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   // Set location bounds with dives

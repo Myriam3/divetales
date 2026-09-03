@@ -1,42 +1,43 @@
-<ol class="row list-unstyled">
-<% itinerary.each do |item| %>
-    <li class="col col-3 mb-1 px-1 fs-6"
-        role="button"
-        tabindex="0"
+<ol class="memory-itinerary">
+  <% itinerary.each do |item| %>
+    <li>
+      <button type="button"
+        class="memory-stop"
+        aria-pressed="false"
         data-map-target="itinaryBtn"
         data-location="<%= item[:location].id %>">
-      <div class="card bg-white" style="border:1px solid #C8DCE8;">
-        <div class="card-body">
-          <h3 class="card-title fs-5 fw-bold">
-            <% if countries_count.positive? %>
-              <span title="<%= item[:location].country.name %>">
-                <%= icon item[:location].country.code.downcase, library: "flags", width: 20, height: 20 %>
-                <span class="visually-hidden"><%= item[:location].country.name %></span>
-              </span>
-            <% end %>
-            <%= item[:location].name %>
-          </h3>
-          <p class="mb-1 card-subtitle text-muted" style="font-size: 0.8rem;">
-            <%= render "shared/icon", icon_name: "calendar-week", icon_size: 16 %>
-            <%= l(item[:start_date]) %>
-            <% if item[:end_date] != item[:start_date] %>
-              → <%= l(item[:end_date]) %>
-            <% end %>
-          </p>
-          <% if item[:dives_count].positive? %>
-            <p class="mb-0">
-              <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 18 %>
-              <%= pluralize(item[:dives_count], "dive") %>
-            </p>
-            <% if item[:pictures_count].positive? %>
-              <p class="mb-0">
-                <%= render "shared/icon", icon_name: "camera-spark", icon_size: 18 %>
-                <%= pluralize(item[:pictures_count], "picture") %>
-              </p>
-            <% end %>
+
+        <span class="memory-stop-title">
+          <% if countries_count.positive? %>
+            <span title="<%= item[:location].country.name %>">
+              <%= icon item[:location].country.code.downcase, library: "flags", width: 20, height: 20 %>
+              <span class="visually-hidden"><%= item[:location].country.name %></span>
+            </span>
           <% end %>
-        </div>
-      </div>
+          <%= item[:location].name %>
+        </span>
+
+        <span class="memory-stop-date">
+          <%= render "shared/icon", icon_name: "calendar-week", icon_size: 16 %>
+          <%= l(item[:start_date]) %>
+          <% if item[:end_date] != item[:start_date] %>
+            → <%= l(item[:end_date]) %>
+          <% end %>
+        </span>
+
+        <% if item[:dives_count].positive? %>
+          <span class="memory-stop-count">
+            <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 18 %>
+            <%= pluralize(item[:dives_count], "dive") %>
+          </span>
+          <% if item[:pictures_count].positive? %>
+            <span class="memory-stop-count">
+              <%= render "shared/icon", icon_name: "camera-spark", icon_size: 18 %>
+              <%= pluralize(item[:pictures_count], "picture") %>
+            </span>
+          <% end %>
+        <% end %>
+      </button>
     </li>
   <% end %>
 </ol>

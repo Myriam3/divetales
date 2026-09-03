@@ -1,81 +1,74 @@
-<div id="memory-dive-container" class="mt-3">
-  <% unless dive.dive_site_name.blank? %>
-    <h3 class="fw-bold text-center">
-      <%= render "shared/icon", icon_name: "anchor", icon_size: 36 %>
-      <%= dive.dive_site_name %>
-      <br>
-      <small class="fs-6 fw-normal" style="font-size: 0.7rem;">
-        <%= dive.latitude %>, <%= dive.longitude %>
-      </small>
-    </h3>
-  <% end %>
-
-  <div data-map-target="itineraryLocationWrapper" style="display: none;">
-    <div class="container">
-      <div data-map-target="itineraryLocation"></div>
-    </div>
-  </div>
-
-  <div class="container-fluid">
-    <p class="text-center">
-      <%= render "shared/icon", icon_name: "camera-spark" %>
-      <%= pluralize(dive.pictures.count, "pictures") %>
-    </p>
-    <% if dive.pictures.any? %>
-      <% dive_pictures = dive.pictures.sort_by do |picture|
-          [
-            picture.date_time.nil? ? 1 : 0,
-            picture.date_time || dive.date.to_time
-          ]
-          end
-      %>
-      <%= render "memory_slider",
-          pictures: dive_pictures,
-          max: [dive_pictures.length, 16].min,
-          label: "Dive pictures",
-          context: "dive"
-      %>
-    <% end %>
-  </div>
-
-  <div class="container">
-    <div class="row">
-      <div class="col col-3">
-        <h4>
-          <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 36 %>
-          <%= dive.display_name_html %>
-        </h4>
-        <%= render "shared/dive_types", dive: dive %>
-        <p>
-          <%= render "shared/icon", icon_name: "calendar", label: "Date: " %>
-          <%= dive.date.strftime("%d %B %Y") %>
-        </p>
-        <p>
-          <% unless dive.start_time.blank? %>
-            <%= render "shared/icon", icon_name: "ripple-down" %>
-            Start: <%= dive.start_time.strftime("%H:%M") %>
-          <% end %>
-        </p>
-
-        <%= render "/shared/dive_info_log",
-            dive: dive,
-            display_time: false
-        %>
-        <p>
-          <%= link_to dive_path(dive, anchor: "log"), class: "text-decoration-none" do %>
-            <%= render "shared/icon", icon_name: "device-watch-stats" %>
-            View full dive log
-          <% end %>
-        </p>
-      </div>
-
-      <% if dive.depth_over_time.present? %>
-        <div class="col col-9">
-          <%= render "/shared/depth_profile",
-              dive: dive, display_info: false, display_pictures: true
-          %>
-        </div>
+<div id="memory-dive-container" class="memory-dive">
+  <div class="memory-section-heading">
+    <div>
+      <% unless dive.dive_site_name.blank? %>
+        <h3>
+          <%= render "shared/icon", icon_name: "anchor", icon_size: 28 %>
+          <%= dive.dive_site_name %>
+        </h3>
+        <p class="memory-coordinates"><%= dive.latitude %>, <%= dive.longitude %></p>
       <% end %>
     </div>
+
+    <p class="memory-picture-count">
+      <%= render "shared/icon", icon_name: "camera-spark" %>
+      <%= pluralize(dive.pictures.count, "picture") %>
+    </p>
+  </div>
+
+  <div class="memory-location-dives" data-map-target="itineraryLocationWrapper" style="display: none;">
+    <div data-map-target="itineraryLocation"></div>
+  </div>
+
+  <% if dive.pictures.any? %>
+    <% dive_pictures = dive.pictures.sort_by do |picture|
+      [
+        picture.date_time.nil? ? 1 : 0,
+        picture.date_time || dive.date.to_time
+      ]
+    end %>
+    <%= render "memory_slider",
+      pictures: dive_pictures,
+      max: [dive_pictures.length, 16].min,
+      label: "Dive pictures",
+      context: "dive" %>
+  <% end %>
+
+  <div class="memory-dive-details">
+    <div class="memory-dive-log">
+      <h4>
+        <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 28 %>
+        <%= dive.display_name_html %>
+      </h4>
+
+      <%= render "shared/dive_types", dive: dive %>
+
+      <p>
+        <%= render "shared/icon", icon_name: "calendar", label: "Date: " %>
+        <%= dive.date.strftime("%d %B %Y") %>
+      </p>
+      <% unless dive.start_time.blank? %>
+        <p>
+          <%= render "shared/icon", icon_name: "ripple-down" %>
+          Start: <%= dive.start_time.strftime("%H:%M") %>
+        </p>
+      <% end %>
+
+      <%= render "shared/dive_info_log", dive: dive, display_time: false %>
+
+      <%= link_to dive_path(dive, anchor: "log"), class: "btn-dive btn-dive-secondary" do %>
+        <%= render "shared/icon", icon_name: "device-watch-stats" %>
+        View full dive log
+      <% end %>
+    </div>
+
+    <% if dive.depth_over_time.present? %>
+      <div class="memory-depth-profile">
+        <%= render "shared/depth_profile",
+          dive: dive,
+          display_info: false,
+          display_pictures: true %>
+      </div>
+    <% end %>
   </div>
 </div>
