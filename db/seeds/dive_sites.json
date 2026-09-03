@@ -96,6 +96,18 @@
     "location_key": "nusa_penida"
   },
   {
+    "name": "PMG (Pura Mas Gading)",
+    "latitude": -8.66826,
+    "longitude": 115.53497,
+    "location_key": "nusa_penida"
+  },
+  {
+    "name": "Karang Sari",
+    "latitude": -8.70355,
+    "longitude": 115.59437,
+    "location_key": "nusa_penida"
+  },
+  {
     "name": "Sental",
     "latitude": -8.6775,
     "longitude": 115.5311,
@@ -735,6 +747,36 @@
     "name": "Tiger Reef",
     "latitude": 2.8531,
     "longitude": 104.0955,
+    "location_key": "tioman"
+  },
+  {
+    "name": "Varella Wreck",
+    "latitude": 3.25569,
+    "longitude": 103.76038,
+    "location_key": "tioman"
+  },
+  {
+    "name": "Soyak Island",
+    "latitude": 2.87528,
+    "longitude": 104.14726,
+    "location_key": "tioman"
+  },
+  {
+    "name": "Chebeh Island",
+    "latitude": 2.93310,
+    "longitude": 104.09829,
+    "location_key": "tioman"
+  },
+  {
+    "name": "Fan Canyon",
+    "latitude": 2.91051,
+    "longitude": 104.11336,
+    "location_key": "tioman"
+  },
+  {
+    "name": "KM Sipadan",
+    "latitude": 2.84163,
+    "longitude": 104.14378,
     "location_key": "tioman"
   },
   {

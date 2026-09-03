@@ -1,0 +1,45 @@
+.back-link {
+  color: $dive-blue;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    color: $dive-blue-hover;
+  }
+}
+
+.dive-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: $dive-blue;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    color: $dive-blue-hover;
+  }
+}
+
+.dive-link-secondary {
+  color: $dive-text;
+
+  &:hover,
+  &:focus-visible {
+    color: $dive-muted;
+  }
+}
+
+.dive-link-danger {
+  color: $dive-danger;
+
+  &:hover,
+  &:focus-visible {
+    color: $dive-danger;
+    opacity: 0.8;
+  }
+}
+
+.dive-link-accent {
+  color: $dive-wave-dark;
+}

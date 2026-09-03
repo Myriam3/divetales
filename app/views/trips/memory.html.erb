@@ -1,72 +1,52 @@
-<% if @trip %>
-  <div class="mt-5 mb-5">
-    <%= link_to trip_path(@trip) do %>
-      <%= render "shared/icon", icon_name: "arrow-left" %>
-      Back to trip page
-    <% end %>
-  </div>
 
-  <div>
-    <h1 class="mt-5 mb-4 text-center">
-      <%= render "shared/icon", icon_name: "album", icon_size: 42 %>
-      <strong>Memories</strong><br>
-      <%= @trip.title %>
-    </h1>
 
-    <div>
-      <% if @trip.countries.any? %>
-      <p class="text-center">
-        <strong>Countries:</strong>
-        <% @trip.countries.each do |country| %>
-          <span>
-            <%= icon country.code.downcase, library: "flags", width: 20, height: 20 %>
-            <%= country.name %>
-          </span>
+<div class="memory">
+  <% if @trip %>
+    <div class="memory__back">
+      <div class="memory__back-inner">
+        <%= link_to trip_path(@trip), class: "back-link" do %>
+          <%= render "shared/icon", icon_name: "arrow-left", icon_size: 16 %>
+          All trip dives
         <% end %>
-      </p>
-      <% end %>
-
-      <p class="text-center">
-        <%= render "shared/icon", icon_name: "calendar-week", icon_size: 24 %>
-        <%= @trip.start_date.strftime("%d %B %Y") %>
-          -
-        <%= @trip.end_date.strftime("%d %B %Y") %>
-      </p>
-
-      <% if @trip.info.present? %>
-        <p class="text-center"><%= @trip.info %></p>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="container">
-    <%= #render "memory_summary",
-        #stats: @stats,
-        #dives_by_time: @dives_by_time,
-        #dives_by_entry: @dives_by_entry
-    %>
-  </div>
-  <div data-controller="lightbox">
-    <section class="mb-5">
-      <div class="container">
-        <h2 class="mb-4 mt-5 fw-bold" id="itinerary">
-          <%= render "shared/icon", icon_name: "route", icon_size: 40 %>
-          Itinerary
-        </h2>
       </div>
+    </div>
 
-      <%= render 'memory_map',
-          dives: @dives,
-          trip: @trip,
-          itinerary: @itinerary,
-          stats: @stats
+    <div class="memory__top">
+      <%= render 'memory_header', trip: @trip %>
+    </div>
+
+    <div class="memory__main">
+      <%= render "memory_summary_01",
+        stats: @stats,
+        dives_by_time: @dives_by_time,
+        dives_by_entry: @dives_by_entry
       %>
-    </section>
 
-    <% if @pictures.any? %>
-      <%= render "memory_all", pictures: @pictures %>
-    <% end %>
+      <div class="memory__main-inner">
+        <div class="memory__wave memory__wave--bottom">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="currentColor" fill-opacity="1" d="M0,64L26.7,80C53.3,96,107,128,160,128C213.3,128,267,96,320,106.7C373.3,117,427,171,480,197.3C533.3,224,587,224,640,202.7C693.3,181,747,139,800,128C853.3,117,907,139,960,154.7C1013.3,171,1067,181,1120,165.3C1173.3,149,1227,107,1280,101.3C1333.3,96,1387,128,1413,144L1440,160L1440,0L1413.3,0C1386.7,0,1333,0,1280,0C1226.7,0,1173,0,1120,0C1066.7,0,1013,0,960,0C906.7,0,853,0,800,0C746.7,0,693,0,640,0C586.7,0,533,0,480,0C426.7,0,373,0,320,0C266.7,0,213,0,160,0C106.7,0,53,0,27,0L0,0Z"></path></svg>
+        </div>
 
-    <%= render 'pictures/lightbox' %>
-  </div>
-<% end %>
+        <div data-controller="lightbox">
+          <%= render 'memory_map',
+              dives: @dives,
+              trip: @trip,
+              itinerary: @itinerary,
+              stats: @stats
+          %>
+
+          <%#= render "memory_summary_02",
+            #stats: @stats,
+            #dives_by_time: @dives_by_time
+          %>
+
+          <% if @pictures.any? %>
+            <%= render "memory_all", pictures: @pictures %>
+          <% end %>
+
+          <%= render 'pictures/lightbox' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

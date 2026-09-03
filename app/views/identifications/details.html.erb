@@ -1,29 +1,32 @@
-<%= turbo_stream_from "identification-details-#{@identification.id}-#{@scientific_name.parameterize}" %>
+<div>
 
-<div class="species-details-page">
+  <%= turbo_stream_from "identification-details-#{@identification.id}-#{@scientific_name.parameterize}" %>
 
   <div class="species-details-page">
 
-    <div class="mb-4">
-      <%= link_to identification_path(identification_id: @identification.id, dive_id: params[:dive_id], picture_id: @picture&.id),
-                  class: "trip-back-link d-inline-flex align-items-center gap-2 px-3 pt-4",
-                  data: { turbo: false } do %>
-        <%= render "shared/icon", icon_name: "arrow-left", icon_size: 18 %> Back to possible matches
-      <% end %>
+    <div class="species-details-page">
+
+      <div>
+        <%= link_to identification_path(identification_id: @identification.id, dive_id: params[:dive_id], picture_id: @picture&.id),
+                    class: "trip-back-link d-inline-flex align-items-center gap-2 px-3 pt-4",
+                    data: { turbo: false } do %>
+          <%= render "shared/icon", icon_name: "arrow-left", icon_size: 18 %> Back to possible matches
+        <% end %>
+      </div>
+
+
+        <%= render "identifications/species_details",
+              details: @details,
+              scientific_name: @scientific_name,
+              common_name: @common_name,
+              identification_id: @identification.id,
+              dive_id: params[:dive_id],
+              default_photo_url: @default_photo_url,
+              picture_id: @picture&.id %>
+
+
+
     </div>
 
-
-      <%= render "identifications/species_details",
-            details: @details,
-            scientific_name: @scientific_name,
-            common_name: @common_name,
-            identification_id: @identification.id,
-            dive_id: params[:dive_id],
-            default_photo_url: @default_photo_url,
-            picture_id: @picture&.id %>
-
-
-
   </div>
-
 </div>

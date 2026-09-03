@@ -1,6 +1,6 @@
 <% if picture && picture.photo.attached? %>
-  <div class="pic-slide">
-    <%= image_tag picture.photo, size: "1000x750" %>
+  <div class="picture-slide">
+    <%= image_tag picture.photo, size: "1000x750", alt: "", loading: "lazy" %>
 
     <% if picture.species_default? %>
       <span class="badge bg-secondary position-absolute bottom-0 start-0 m-2">

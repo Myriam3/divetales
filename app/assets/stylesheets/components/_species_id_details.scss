@@ -1,0 +1,19 @@
+.species-id-details {
+  &__facts {
+    background: $dive-banner !important;
+
+    &-title {
+      color: $dive-blue !important;
+    }
+  }
+
+  &__title {
+      &.text-danger {
+        color: $dive-coral !important;
+      }
+
+      &.text-success {
+        color: $dive-wave-blue !important;
+      }
+  }
+}

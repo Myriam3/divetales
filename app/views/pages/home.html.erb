@@ -16,68 +16,115 @@
     <%= image_tag "home-wave.png", alt: "", class: "home-wave home-wave-right" %>
   </div>
 
-  <div class="home-content">
-    <%= render "shared/latest_species", species: @latest_species %>
-    <%= render "shared/media_gallery", dives: @media_gallery %>
+  <div class="home-dashboard">
+    <div class="home-dashboard__main">
+      <% if @ongoing_trip.present? %>
+        <%= link_to trip_path(@ongoing_trip), class: "home-ongoing-trip-link" do %>
+          <article class="card shadow-sm home-ongoing-trip">
+            <div class="card-header bg-white">
+              <p class="mb-0">Ongoing trip</p>
+            </div>
+
+            <div class="card-body">
+              <h2><%= @ongoing_trip.title %></h2>
+
+              <p>
+                <%= @ongoing_trip.start_date.strftime("%d %B %Y") %> -
+                <%= @ongoing_trip.end_date.strftime("%d %B %Y") %>
+              </p>
+
+              <% if @ongoing_trip.info.present? %>
+                <p><%= @ongoing_trip.info %></p>
+              <% end %>
+
+              <span class="btn-dive btn-dive-primary">View trip</span>
+            </div>
+          </article>
+        <% end %>
+      <% else %>
+        <article class="card shadow-sm home-ongoing-trip">
+          <div class="card-body">
+            <h2>Ongoing trip</h2>
+            <p>The selected trip could not be found.</p>
+          </div>
+        </article>
+      <% end %>
+
+      <%# TODO: Remove this placeholder when the real dive heat map is added. %>
+      <section class="card shadow-sm home-heat-map-placeholder">
+        <div class="card-header bg-white">
+          <p class="mb-0">Dive heat map</p>
+        </div>
+
+        <div class="card-body">
+          <p class="mb-0">Heat map coming soon.</p>
+        </div>
+      </section>
+    </div>
+
+    <aside class="home-dashboard__discoveries">
+      <%= render "shared/latest_species", species: @latest_species %>
+    </aside>
   </div>
 
-    <div class="mt-5"
-        data-controller="slider"
-        data-slider-page-value="3"
-        data-slider-arrows-value="false"
-        data-slider-type-value="slide"
-        data-slider-rewind-value="false"
-        data-slider-width-value="270"
-        data-slider-padding-value="calc((100vw - 1100px - (1.5rem * 2)) / 2)",
-        data-slider-pagination-value="false">
-    <div class="splide"
-          aria-label="Lastest pictures"
-          data-slider-target="sliderContainer"
-      >
-        <div class="splide__track">
-          <ul class="splide__list list-unstyled">
-            <% @media_gallery.each do |dive| %>
-              <% dive.pictures.take(3).each do |photo| %>
-                <li class="splide__slide">
-                  <div class="position-relative">
-                    <%= image_tag photo.photo.variant(resize_to_fill: [280, 280]),
-                        class: "w-100 h-100 object-fit-cover rounded shadow-sm",
-                        alt: "Dive media from #{dive.dive_site_name}" %>
+  <section class="home-photo-slider"
+      data-controller="slider"
+      data-slider-page-value="3"
+      data-slider-arrows-value="false"
+      data-slider-type-value="slide"
+      data-slider-rewind-value="false"
+      data-slider-width-value="210"
+      data-slider-padding-value="0px"
+      data-slider-pagination-value="false">
 
-                      <span class="position-absolute bottom-0 start-0 w-100 p-1 text-white text-truncate"
-                            style="font-size: 0.7rem; background: rgba(0,0,0,0.5); border-bottom-left-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);">
-                        <%= dive.location.name %>
-                      </span>
-                  </div>
-                </li>
+    <div class="splide"
+        aria-label="Latest pictures"
+        data-slider-target="sliderContainer">
+
+      <div class="splide__track">
+        <ul class="splide__list list-unstyled">
+          <% @media_gallery.each do |dive| %>
+            <% dive.pictures.take(3).each do |photo| %>
+              <% if photo.photo.present?%>
+              <li class="splide__slide">
+                <div class="position-relative">
+                  <%= image_tag photo.photo.variant(resize_to_fill: [220, 220]),
+                      class: "w-100 object-fit-cover rounded shadow-sm home-photo-slider__image",
+                      alt: "Dive media from #{dive.dive_site_name}" %>
+
+                  <span class="position-absolute bottom-0 start-0 w-100 p-1 text-white text-truncate"
+                        style="font-size: 0.7rem; background: rgba(0,0,0,0.5);">
+                    <%= dive.location.name %>
+                  </span>
+                </div>
+              </li>
               <% end %>
             <% end %>
-          </ul>
-        </div>
+          <% end %>
+        </ul>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div class="home-fish home-fish-one">
-    <%= image_tag "home-fish.png", alt: "" %>
-  </div>
+    <div class="home-fish home-fish-one">
+      <%= image_tag "home-fish-purple.png", alt: "", loading: "lazy" %>
+    </div>
 
-  <div class="home-fish home-fish-two">
-    <%= image_tag "home-fish.png", alt: "" %>
-  </div>
+    <div class="home-fish home-fish-two">
+      <%= image_tag "home-fish-pink.png", alt: "", loading: "lazy" %>
+    </div>
 
-  <div class="home-fish home-fish-three">
-    <%= image_tag "home-fish.png", alt: "" %>
-  </div>
+    <div class="home-fish home-fish-three">
+      <%= image_tag "home-fish-purple.png", alt: "", loading: "lazy" %>
+    </div>
 
-  <div class="home-fish home-fish-four">
-    <%= image_tag "home-fish.png", alt: "" %>
-  </div>
+    <div class="home-fish home-fish-four">
+      <%= image_tag "home-fish-yellow.png", alt: "", loading: "lazy" %>
+    </div>
 
-  <div class="home-fish home-fish-five">
-    <%= image_tag "home-fish.png", alt: "" %>
-  </div>
+    <div class="home-fish home-fish-five">
+      <%= image_tag "home-fish-purple.png", alt: "", loading: "lazy" %>
+    </div>
 
-  <%= image_tag "home-diving-helmet.png", alt: "Vintage diving helmet", class: "home-diving-helmet" %>
-  <%= image_tag "home-coral-reef.png", alt: "Colorful coral reef", class: "home-coral" %>
-  <%# image_tag "test_4.png", alt: "Colorful coral reef", class: "home-coral" %>
-</section>
+    <%= render "shared/footer_wave" %>
+  </section>

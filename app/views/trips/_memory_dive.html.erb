@@ -10,26 +10,31 @@
     </h3>
   <% end %>
 
-  <div data-map-target="itineraryLocationWrapper" style="display: none;">
+  <div data-map-target="itineraryLocationWrapper">
     <div class="container">
       <div data-map-target="itineraryLocation"></div>
     </div>
   </div>
 
-  <div class="container-fluid">
+  <div>
+    <p class="text-center">
+      <%= render "shared/icon", icon_name: "camera-spark" %>
+      <%= pluralize(dive.pictures.count, "pictures") %>
+    </p>
     <% if dive.pictures.any? %>
       <% dive_pictures = dive.pictures.sort_by do |picture|
           [
             picture.date_time.nil? ? 1 : 0,
-            picture.date_time || dive.start.to_time
+            picture.date_time || dive.date.to_time
           ]
           end
       %>
       <%= render "memory_slider",
           pictures: dive_pictures,
-          max: [dive_pictures.length, 20].min,
+          max: [dive_pictures.length, 16].min,
           label: "Dive pictures",
-          context: "dive"
+          context: "dive",
+          page: 5
       %>
     <% end %>
   </div>
@@ -41,11 +46,15 @@
           <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 36 %>
           <%= dive.display_name_html %>
         </h4>
+        <%= render "shared/dive_types", dive: dive %>
         <p>
           <%= render "shared/icon", icon_name: "calendar", label: "Date: " %>
           <%= dive.date.strftime("%d %B %Y") %>
+        </p>
+        <p>
           <% unless dive.start_time.blank? %>
-            <%= dive.start_time.strftime("%H:%M") %>
+            <%= render "shared/icon", icon_name: "ripple-down" %>
+            Start: <%= dive.start_time.strftime("%H:%M") %>
           <% end %>
         </p>
 
@@ -56,7 +65,7 @@
         <p>
           <%= link_to dive_path(dive, anchor: "log"), class: "text-decoration-none" do %>
             <%= render "shared/icon", icon_name: "device-watch-stats" %>
-            View dive log
+            View full dive log
           <% end %>
         </p>
       </div>
@@ -64,8 +73,8 @@
       <% if dive.depth_over_time.present? %>
         <div class="col col-9">
           <%= render "/shared/depth_profile",
-              dive: dive, display_info: false
-        %>
+              dive: dive, display_info: false, display_pictures: true
+          %>
         </div>
       <% end %>
     </div>

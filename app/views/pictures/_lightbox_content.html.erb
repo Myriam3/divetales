@@ -30,7 +30,7 @@
               <%= render "shared/picture_slide", picture: picture, show_info: false %>
 
               <div class="lightbox__footer">
-                <div class="ligthbox__info">
+                <div class="lightbox__info">
                   <span>
                     <%= icon dive.location.country.code.downcase, library: "flags", width: 18, height: 18 %>
                     <span class="visually-hidden"><%= dive.location.country.name %></span>
@@ -42,7 +42,7 @@
                       <%= dive.dive_site_name %>
                     </span>
                   <% end %>
-                  <% if picture.date_time.present? %>
+                  <% unless picture.date_time.blank? %>
                     <span>
                       <%= render "shared/icon", icon_name: "calendar" %>
                       <% if picture.date_time.is_a?(String) %>
@@ -62,11 +62,11 @@
               </p>
               </div>
               <% if picture.species.any? %>
-                <div class="ligthbox__species" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px;">
+                <div class="lightbox__species" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px;">
                   <% picture.species.each do |s| %>
                     <div style="display: flex; flex-wrap:wrap; justify-content: center; align-items: center; margin-top: 20px;">
                       <strong style="margin-right: 20px;"><%= s.name %></strong>
-                      <div class="badge bg-light text-secondary border px-3 py-1 rounded-pill" style=" opacity: 0.7;"><%= s.category.name.titleize %></div>
+                      <div class="badge bg-light text-secondary border px-3 py-1 rounded-pill" style=" opacity: 0.7;"><%= s.category.name&.titleize %></div>
                     </div>
                   <% end %>
                 </div>

@@ -1,70 +1,64 @@
-<% if dive %>
-  <%
-    all_page = current_page?(dives_path) || current_page?(root_path)
-    dive_title = all_page ? dive.display_name_html(include_date: true) : dive.display_name_html
-  %>
+<%
+  link_path = current_page?(trip_path(dive.trip))? trip_dive_path(dive.trip, dive) : dive_path(dive)
+%>
 
-  <%= link_to(
-      all_page ? dive_path(dive) : trip_dive_path(dive.trip, dive),
-      class: 'card text-decoration-none text-reset'
-    ) do %>
-    <div class="card-body">
-      <% if local_assigns[:heading_level] == 3 %>
-        <h3 class="card-title"><%= dive_title %></h3>
-      <% else %>
-        <h2 class="card-title"><%= dive_title %></h2>
-      <% end %>
-
-      <% if all_page %>
-        <p>
-        <%= render "shared/icon", icon_name: "luggage", label: "Trip: " %>
-        <%= dive.trip.title %>
-      </p>
-      <% end %>
-      <p>
-        <%= render "shared/icon", icon_name: "calendar", label: "Date: " %>
-        <%= dive.date.strftime("%Y-%m-%d") %>
-        <% unless dive.start_time.blank? %>
-          <%= dive.start_time.strftime("%H:%M") %>
+<div class="dive-card-wrapper">
+  <%= link_to link_path, class: "dive-card-link" do %>
+    <div class="dive-card">
+      <% first_picture = dive.pictures.order(:created_at).first %>
+        <% if dive.cover_photo.attached? %>
+          <%= image_tag dive.cover_photo, alt: dive.dive_site_name, class: "dive-card__image", loading: "lazy" %>
+        <% elsif first_picture&.photo&.attached? %>
+          <%= image_tag first_picture.photo, alt: dive.dive_site_name, class: "dive-card__image", loading: "lazy" %>
+        <% else %>
+          <%= image_tag "dive-default.png", alt: "Underwater reef", class: "dive-card__image", loading: "lazy" %>
         <% end %>
-      </p>
 
-      <% unless dive.dive_site_name.blank? %>
-      <p>
-        <%= render "shared/icon", icon_name: "anchor", label: "Dive site: " %>
-        <%= dive.dive_site_name %>
-      </p>
-      <% end %>
+      <div class="dive-card__body">
+        <% if local_assigns[:heading_level] == 3 %>
+          <h3 class="dive-card__title"><%= dive.display_name_html %></h3>
+        <% else %>
+          <h2 class="dive-card__title"><%= dive.display_name_html %></h2>
+        <% end %>
 
-      <p>
-        <%= render "shared/icon", icon_name: "world-pin", label: "Location: " %>
-        <%= dive.location.name %>
-        <%= icon dive.location.country.code.downcase, library: "flags", width: 20, height: 20 %>
-        <span class="visually-hidden"><%= dive.location.country.name %></span>
-      </p>
+        <%= render "shared/dive_types", dive: dive %>
 
-      <% species = dive.pictures.flat_map(&:species).uniq %>
-      <% if species.any? %>
         <p>
-          <%= render "shared/icon", icon_name: "fish" %>
-          <%= species.count %> species identified
+          <%= render "shared/icon", icon_name: "calendar" %>
+          <%= dive.date.strftime("%d %B %Y") %>
         </p>
-      <% end %>
 
-      <% if dive.pictures.any? %>
         <p>
-          <%= render "shared/icon", icon_name: "camera-spark" %>
-          <%= dive.pictures.count %> pictures
+          <%= render "shared/icon", icon_name: "world-pin" %>
+          <%= dive.location.name %>
         </p>
-      <% end %>
 
-      <% unless dive.max_depth.blank? %>
-        <p>
-          <%= render "shared/icon", icon_name: "arrow-bar-to-down" %>
-          <span>Max-depth:</span>
-          <%= number_with_precision(dive.max_depth, precision: 1, strip_insignificant_zeros: true) %>m
-        </p>
-      <% end %>
+        <% if dive.max_depth.present? %>
+          <p>
+            <%= render "shared/icon", icon_name: "arrow-bar-to-down" %>
+            Maximum depth:
+            <%= number_with_precision(dive.max_depth, precision: 1, strip_insignificant_zeros: true) %>m
+          </p>
+        <% end %>
+
+        <% if dive.duration.present? %>
+          <p>
+            <%= render "shared/icon", icon_name: "clock" %>
+            Duration: <%= dive.duration %> minutes
+          </p>
+        <% end %>
+
+        <span class="btn-dive btn-dive-primary">View dive</span>
+      </div>
     </div>
   <% end %>
-<% end %>
+
+  <%= form_with model: dive, url: update_cover_photo_dive_path(dive), method: :patch, html: { class: "cover-photo-form", multipart: true } do |form| %>
+    <label for="dive_cover_photo_<%= dive.id %>" class="cover-photo-button">
+      <%= render "shared/icon", icon_name: "camera", icon_size: 16 %>
+      Edit
+    </label>
+
+    <%= form.file_field :cover_photo, id: "dive_cover_photo_#{dive.id}", accept: "image/png,image/jpeg,image/webp", class: "cover-photo-input", onchange: "this.form.requestSubmit()" %>
+  <% end %>
+</div>

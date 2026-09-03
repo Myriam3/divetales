@@ -1,0 +1,15 @@
+<% picture.species.each do |species| %>
+    <div class="mb-5 border-bottom pb-4 last-border-none">
+      <% if species.details.present? %>
+        <%= render "shared/species_info", details: species.details %>
+      <% else %>
+        <%= turbo_stream_from "species-details-#{species.id}" %>
+          <turbo-frame id="species-details-frame-<%= species.id %>" src="<%= generate_species_details_picture_path(picture, species_id: species.id) %>" loading="lazy">
+            <%= render "shared/loading_screen",
+              animation: "fish",
+              title: "Fetching #{species.name} Guide...",
+              message: "Check out more about the habitat, diet, and fun facts." %>
+          </turbo-frame>
+      <% end %>
+    </div>
+  <% end %>
