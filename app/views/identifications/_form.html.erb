@@ -215,9 +215,11 @@
         </div>
       </div>
 
-      <%= f.button :button, class: "btn-dive btn-dive-primary mt-5" do %>
-        <%= render "shared/icon", icon_name: "photo-spark" %> Identify
-      <% end %>
+      <p class="text-center">
+        <%= f.button :button, class: "btn-dive btn-dive-primary mt-5 px-5" do %>
+          <%= render "shared/icon", icon_name: "photo-spark" %> Identify
+        <% end %>
+      </p>
     </div>
 
     <!-- 2. The Loading UI with the Server-Side Image Check -->
