@@ -19,6 +19,7 @@
 
 <div class="mb-5"
     data-controller="depth-chart"
+    data-action="slider:slider-active@window->depth-chart#toggleLabel"
     data-depth-chart-sync-slider-value="<%= local_assigns[:display_pictures] || false %>"
     data-depth-chart-data-value="<%= html_escape(dive.depth_over_time) %>"
     data-depth-chart-icon-value="<%= asset_url("icon-camera-spark.svg") %>"

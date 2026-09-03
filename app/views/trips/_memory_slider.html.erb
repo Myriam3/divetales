@@ -2,10 +2,6 @@
   # Slider
   max = local_assigns[:max] || 16
   label = local_assigns[:label] || "Pictures"
-  focus = local_assigns[:focus] || "center"
-  type = local_assigns[:type] || "loop"
-  rewind = local_assigns[:type] || true
-
   # Lightbox
   dive = pictures.first.dive
   lightbox_params =
@@ -20,41 +16,14 @@
     end
 %>
 
-<style>
-  .memory-slider .splide__slide {
-    transition: width;
-    width: 250px;
-    transition: width 0.3s;
-  }
-
-  .memory-slider .splide__slide .pic-slide {
-    width: 100%;
-    overflow: hidden;
-    aspect-ratio: 3/2;
-    transition: width 0.3s;
-    border-radius: 4px;
-  }
-
-  .memory-slider .splide__slide .pic-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .memory-slider .splide__slide.is-selected {
-    width: 360px;
-  }
-</style>
-
-<div class="memory-slider"
+<div class="memory-slider <%= "memory-slider--dive" if local_assigns[:context] == "dive" %>"
     data-controller="slider"
     data-action="depth-chart:picture-selected@window->slider#selectPicture"
-    data-slider-type-value="slide"
-    data-slider-rewind-value="false"
+    data-slider-type-value="loop"
     data-slider-auto-width-value="true"
     data-slider-arrows-value="false"
-    data-slider-focus-value="0"
-    data-slider-padding-left-value="calc((100vw - 1200px) / 2)"
+    data-slider-pagination-value="false"
+    data-slider-focus-value="center"
     class="mt-3"
     style="min-height: 250px;"
 >
@@ -65,17 +34,19 @@
     <div class="splide__track">
       <ol class="splide__list list-unstyled">
         <% pictures.first(max).each do |picture| %>
-          <li class="splide__slide" data-time="<%= picture.date_time&.iso8601 %>"  data-id="<%= picture.id %>">
+          <li class="splide__slide" data-time="<%= picture.date_time&.strftime("%H:%M") %>"  data-id="<%= picture.id %>">
             <%
               lightbox_params = lightbox_params.merge(picture_id: picture.id)
             %>
-            <%= link_to lightbox_pictures_path(lightbox_params),
+            <div class="memory-slider__item">
+              <%= link_to lightbox_pictures_path(lightbox_params),
                   data: {
                     turbo_stream: true,
                     action: "click->lightbox#open"
                   } do %>
               <%= render "shared/picture_slide", picture: picture, show_info: false %>
-            <% end %>
+              <% end %>
+            </div>
           </li>
         <% end %>
       </ol>

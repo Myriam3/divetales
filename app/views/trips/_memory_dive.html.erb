@@ -10,13 +10,13 @@
     </h3>
   <% end %>
 
-  <div data-map-target="itineraryLocationWrapper" style="display: none;">
+  <div data-map-target="itineraryLocationWrapper">
     <div class="container">
       <div data-map-target="itineraryLocation"></div>
     </div>
   </div>
 
-  <div class="container-fluid">
+  <div>
     <p class="text-center">
       <%= render "shared/icon", icon_name: "camera-spark" %>
       <%= pluralize(dive.pictures.count, "pictures") %>
@@ -33,7 +33,8 @@
           pictures: dive_pictures,
           max: [dive_pictures.length, 16].min,
           label: "Dive pictures",
-          context: "dive"
+          context: "dive",
+          page: 5
       %>
     <% end %>
   </div>

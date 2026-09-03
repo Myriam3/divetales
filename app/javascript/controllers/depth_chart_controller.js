@@ -17,7 +17,8 @@ export default class extends Controller {
     this.iconColor = '#FFFFF';
     this.iconBgColor = '#145DA0';
     this.iconBgColorSelected = "#E9634B";
-    this.selectedLabel = null;
+    this.selectedId = null;
+
     this.init();
   }
 
@@ -30,7 +31,6 @@ export default class extends Controller {
       .filter(point => !isNaN(point.x.getTime()) && !isNaN(point.y));
 
     const pictureLabels = this.picturesValue.length && this.syncSliderValue== "true" ? this.mapPictures(points) : {};
-
     this.createDepthChart(points, pictureLabels);
   }
 
@@ -145,7 +145,7 @@ export default class extends Controller {
         icon.alt = "Picture";
       }
 
-      annotations[`annotation${index + 1}`] = {
+      annotations[picture.id] = {
         type: 'label',
         //type: 'point',
         xValue: new Date(picture.timestamp),
@@ -162,20 +162,8 @@ export default class extends Controller {
           bottom: 6
         },
         font: [{size: 20}],
-        click: ({element}) => {
-          if (this.selectedLabel) {
-            this.selectedLabel.options.backgroundColor = this.iconBgColor;
-          }
-
-          if (this.selectedLabel === element) {
-            this.selectedLabel = null;
-          } else {
-            element.options.backgroundColor = this.iconBgColorSelected;
-            this.selectedLabel = element;
-          }
-          // TODO prevent reset at window resize ↓
-          //this.chart.options.plugins.annotation.annotations.annotation1.backgroundColor = this.iconBgColorSelected
-
+        click: (e) => {
+          const element = e.element;
           this.dispatch("picture-selected", {
             detail: { picture, element }
           });
@@ -184,6 +172,20 @@ export default class extends Controller {
     }, {});
 
     return annotations;
+  }
+
+  // Toggle annotation (in sync with slideer)
+  toggleLabel(e) {
+    const newId = e.detail.pictureId;
+    if (e.type !== 'slider:slider-active' || newId === this.selectedId) return;
+    const newItem = this.chart.options.plugins.annotation.annotations[newId];
+    const currentItem = this.selectedId ? this.chart.options.plugins.annotation.annotations[this.selectedId] : null;
+
+    if (newItem) newItem.backgroundColor = this.iconBgColorSelected;
+    if (currentItem) currentItem.backgroundColor = this.iconBgColor;
+
+    this.selectedId = newId;
+    this.chart.update();
   }
 
   // Find closest timestamp point

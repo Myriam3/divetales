@@ -750,6 +750,36 @@
     "location_key": "tioman"
   },
   {
+    "name": "Varella Wreck",
+    "latitude": 3.25569,
+    "longitude": 103.76038,
+    "location_key": "tioman"
+  },
+  {
+    "name": "Soyak Island",
+    "latitude": 2.87528,
+    "longitude": 104.14726,
+    "location_key": "tioman"
+  },
+  {
+    "name": "Chebeh Island",
+    "latitude": 2.93310,
+    "longitude": 104.09829,
+    "location_key": "tioman"
+  },
+  {
+    "name": "Fan Canyon",
+    "latitude": 2.91051,
+    "longitude": 104.11336,
+    "location_key": "tioman"
+  },
+  {
+    "name": "KM Sipadan",
+    "latitude": 2.84163,
+    "longitude": 104.14378,
+    "location_key": "tioman"
+  },
+  {
     "name": "Maaya Thila",
     "latitude": 4.0415,
     "longitude": 72.8421,
