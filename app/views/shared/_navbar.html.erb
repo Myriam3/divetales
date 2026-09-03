@@ -1,4 +1,6 @@
-<nav class="navbar navbar-expand-sm navbar-light">
+<nav class="navbar navbar-expand-sm navbar-light"
+     data-controller="navbar-scroll"
+     data-action="scroll@window->navbar-scroll#handleScroll">
   <div class="navbar-container">
     <%= link_to root_path, class: "navbar-brand" do %>
       <span class="navbar-brand-logo">
