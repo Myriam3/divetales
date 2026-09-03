@@ -1,72 +1,62 @@
+<% content_for :title, "Memory Map | DiveTales" %>
+
 <% if @trip %>
-  <div class="mt-5 mb-5">
-    <%= link_to trip_path(@trip) do %>
-      <%= render "shared/icon", icon_name: "arrow-left" %>
-      Back to trip page
-    <% end %>
-  </div>
-
-  <div>
-    <h1 class="mt-5 mb-4 text-center">
-      <%= render "shared/icon", icon_name: "album", icon_size: 42 %>
-      <strong>Memories</strong><br>
-      <%= @trip.title %>
-    </h1>
-
-    <div>
-      <% if @trip.countries.any? %>
-      <p class="text-center">
-        <strong>Countries:</strong>
-        <% @trip.countries.each do |country| %>
-          <span>
-            <%= icon country.code.downcase, library: "flags", width: 20, height: 20 %>
-            <%= country.name %>
-          </span>
+  <section class="memory-page">
+    <div class="memory-hero">
+      <div class="memory-content">
+        <%= link_to trip_path(@trip), class: "btn-dive btn-dive-secondary memory-back" do %>
+          <%= render "shared/icon", icon_name: "arrow-left" %>
+          Back to trip
         <% end %>
-      </p>
-      <% end %>
 
-      <p class="text-center">
-        <%= render "shared/icon", icon_name: "calendar-week", icon_size: 24 %>
-        <%= @trip.start_date.strftime("%d %B %Y") %>
-          -
-        <%= @trip.end_date.strftime("%d %B %Y") %>
-      </p>
+        <p class="memory-eyebrow">
+          <%= render "shared/icon", icon_name: "album", icon_size: 24 %>
+          Memory Map
+        </p>
+        <h1><%= @trip.title %></h1>
 
-      <% if @trip.info.present? %>
-        <p class="text-center"><%= @trip.info %></p>
-      <% end %>
+        <% if @trip.countries.any? %>
+          <p class="memory-countries">
+            <% @trip.countries.each do |country| %>
+              <span>
+                <%= icon country.code.downcase, library: "flags", width: 20, height: 20 %>
+                <%= country.name %>
+              </span>
+            <% end %>
+          </p>
+        <% end %>
+
+        <p>
+          <%= render "shared/icon", icon_name: "calendar-week", icon_size: 22 %>
+          <%= @trip.start_date.strftime("%d %B %Y") %> -
+          <%= @trip.end_date.strftime("%d %B %Y") %>
+        </p>
+
+        <% if @trip.info.present? %>
+          <p class="memory-description"><%= @trip.info %></p>
+        <% end %>
+      </div>
     </div>
-  </div>
 
-  <div class="container">
-    <%= #render "memory_summary",
-        #stats: @stats,
-        #dives_by_time: @dives_by_time,
-        #dives_by_entry: @dives_by_entry
-    %>
-  </div>
-  <div data-controller="lightbox">
-    <section class="mb-5">
-      <div class="container">
-        <h2 class="mb-4 mt-5 fw-bold" id="itinerary">
-          <%= render "shared/icon", icon_name: "route", icon_size: 40 %>
+    <div class="memory-content" data-controller="lightbox">
+      <section class="memory-section">
+        <h2 id="itinerary">
+          <%= render "shared/icon", icon_name: "route", icon_size: 30 %>
           Itinerary
         </h2>
-      </div>
 
-      <%= render 'memory_map',
+        <%= render "memory_map",
           dives: @dives,
           trip: @trip,
           itinerary: @itinerary,
-          stats: @stats
-      %>
-    </section>
+          stats: @stats %>
+      </section>
 
-    <% if @pictures.any? %>
-      <%= render "memory_all", pictures: @pictures %>
-    <% end %>
+      <% if @pictures.any? %>
+        <%= render "memory_all", pictures: @pictures %>
+      <% end %>
 
-    <%= render 'pictures/lightbox' %>
-  </div>
+      <%= render "pictures/lightbox" %>
+    </div>
+  </section>
 <% end %>

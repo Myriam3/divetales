@@ -1,0 +1,277 @@
+.memory-page {
+  padding-bottom: 3rem;
+  color: $dive-text;
+  background: $dive-background;
+}
+
+.memory-page h1,
+.memory-page h2,
+.memory-page h3,
+.memory-page h4 {
+  color: $dive-navy;
+  font-family: $headers-font;
+  font-weight: 700;
+}
+
+.memory-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.memory-hero {
+  margin-bottom: 2.5rem;
+  padding: 2rem 0;
+  text-align: center;
+  background: $dive-banner;
+}
+
+.memory-back {
+  display: table;
+  margin-bottom: 1.75rem;
+}
+
+.memory-eyebrow {
+  margin-bottom: 0.5rem;
+  color: $dive-blue;
+  font-family: $headers-font;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.memory-hero h1 {
+  margin-bottom: 1rem;
+  font-size: 2.25rem;
+}
+
+.memory-hero p {
+  margin-bottom: 0.75rem;
+}
+
+.memory-description {
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.memory-countries {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.memory-section {
+  margin-bottom: 2.5rem;
+}
+
+.memory-section h2 {
+  margin-bottom: 1.25rem;
+  font-size: 1.6rem;
+}
+
+.memory-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.memory-section-heading h2,
+.memory-section-heading h3,
+.memory-section-heading p {
+  margin: 0;
+}
+
+.memory-itinerary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.memory-stop {
+  width: 100%;
+  height: 100%;
+  padding: 1.25rem;
+  text-align: left;
+  color: $dive-text;
+  background: $dive-white;
+  border: 2.5px solid $dive-border;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(11, 58, 102, 0.08);
+}
+
+.memory-stop:hover {
+  border-color: $dive-blue;
+}
+
+.memory-stop.is-selected {
+  background: $dive-banner;
+  border-color: $dive-blue;
+}
+
+.memory-stop:focus-visible {
+  outline: 3px solid $dive-blue;
+  outline-offset: 3px;
+}
+
+.memory-stop-title {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: $dive-navy;
+  font-family: $headers-font;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.memory-stop-date {
+  display: block;
+  margin-bottom: 0.6rem;
+  color: $dive-muted;
+  font-size: 0.85rem;
+}
+
+.memory-stop-count {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.95rem;
+}
+
+.memory-map {
+  border-radius: 16px;
+}
+
+.memory-map-canvas {
+  width: 100%;
+  height: 460px;
+  border: 2.5px solid $dive-border;
+  border-radius: 16px;
+}
+
+.memory-dive,
+.memory-gallery {
+  min-width: 0;
+  padding: 1.5rem;
+  background: $dive-white;
+  border: 2.5px solid $dive-border;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(11, 58, 102, 0.08);
+}
+
+.memory-dive {
+  margin-top: 1.5rem;
+}
+
+.memory-dive h3 {
+  font-size: 1.5rem;
+}
+
+.memory-coordinates,
+.memory-picture-count {
+  color: $dive-muted;
+  font-size: 0.9rem;
+}
+
+.memory-location-dives {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background: $dive-background;
+  border-radius: 10px;
+}
+
+.memory-location-dives .form-check {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.memory-dive-details {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.memory-dive-log h4 {
+  font-size: 1.2rem;
+}
+
+.memory-dive-log p {
+  margin-bottom: 0.75rem;
+}
+
+.memory-depth-profile {
+  min-width: 0;
+}
+
+.memory-page .memory-slider {
+  min-width: 0;
+  padding-bottom: 0.5rem;
+}
+
+.memory-page .memory-slider .splide__slide {
+  width: 250px;
+  transition: width 0.3s;
+}
+
+.memory-page .memory-slider .pic-slide {
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+  border: 2px solid $dive-border;
+  border-radius: 14px;
+}
+
+.memory-page .memory-slider .pic-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.memory-page .memory-slider .splide__slide.is-selected {
+  width: 360px;
+}
+
+.memory-page .memory-slider .splide__pagination {
+  position: static;
+  margin-top: 0.75rem;
+  padding: 0;
+}
+
+.memory-page .memory-slider .splide__pagination__page.is-active {
+  background: $dive-blue;
+}
+
+@media (max-width: 991px) {
+  .memory-itinerary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .memory-hero h1 {
+    font-size: 1.75rem;
+  }
+
+  .memory-dive,
+  .memory-gallery {
+    padding: 1rem;
+  }
+
+  .memory-map-canvas {
+    height: 360px;
+  }
+
+  .memory-dive-details {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 575px) {
+  .memory-itinerary {
+    grid-template-columns: 1fr;
+  }
+}

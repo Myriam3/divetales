@@ -1,25 +1,24 @@
-<section class="mb-5">
-  <h2 class="mb-5 fw-bold text-center">
-    <%= render "shared/icon", icon_name: "camera-spark", icon_size: 40 %>
-    Pictures from your trip
-  </h2>
+<section class="memory-section memory-gallery">
+  <div class="memory-section-heading">
+    <h2>
+      <%= render "shared/icon", icon_name: "camera-spark", icon_size: 30 %>
+      Pictures from your trip
+    </h2>
 
-  <%= render "memory_slider", pictures: pictures, context: 'trip', max: 16 %>
+    <% if pictures.length > 1 %>
+      <%= link_to pictures_path, class: "btn-dive btn-dive-primary", data: { turbo: false } do %>
+        <%= render "shared/icon", icon_name: "library-photo", icon_size: 20 %>
+        All trip pictures (<%= pictures.length %>)
+      <% end %>
+    <% end %>
+  </div>
 
-  <% if pictures.length > 1  %>
-    <p class="mt-5 text-center">
-      <%= link_to pictures_path,
-          class: "btn btn-secondary", data: { turbo: false } do %>
-          <%= render "shared/icon", icon_name: "library-photo", icon_size: 20 %>
-          All trip pictures<small> (<%= pictures.length %>)</small>
-        <% end %>
-    </p>
-  <% end %>
+  <%= render "memory_slider", pictures: pictures, context: "trip", max: 16 %>
 </section>
 
-<section class="mb-5 mb-5 container">
-  <h2 class="mb-3 fw-bold text-center">
-    <%= render "shared/icon", icon_name: "fish", icon_size: 44 %>
+<section class="memory-section">
+  <h2>
+    <%= render "shared/icon", icon_name: "fish", icon_size: 30 %>
     Encountered Marine life
   </h2>
 

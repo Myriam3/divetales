@@ -1,0 +1,225 @@
+.new-dive-page {
+  padding-bottom: 3rem;
+  color: $dive-text;
+  background: $dive-background;
+}
+
+.new-dive-page h1,
+.new-dive-page h2,
+.new-dive-page h3 {
+  color: $dive-navy;
+  font-family: $headers-font;
+  font-weight: 700;
+}
+
+.new-dive-hero {
+  margin-bottom: 2rem;
+  padding: 2.5rem 1rem;
+  text-align: center;
+  background: $dive-banner;
+}
+
+.new-dive-hero h1 {
+  margin-bottom: 0.5rem;
+  font-size: 2.25rem;
+}
+
+.new-dive-hero p {
+  margin: 0;
+}
+
+.new-dive-content {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.new-dive-trip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.new-dive-trip h2 {
+  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
+}
+
+.new-dive-trip p {
+  margin: 0;
+  color: $dive-muted;
+}
+
+.new-dive-trip .btn-dive {
+  white-space: nowrap;
+}
+
+.new-dive-panel {
+  min-width: 0;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  background: $dive-white;
+  border: 2.5px solid $dive-border;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(11, 58, 102, 0.08);
+}
+
+.new-dive-panel h2 {
+  margin-bottom: 1.25rem;
+  font-size: 1.5rem;
+}
+
+.new-dive-panel h3 {
+  margin: 1rem 0;
+  font-size: 1.15rem;
+}
+
+.new-dive-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.new-dive-panel-heading h2 {
+  margin: 0;
+}
+
+.new-dive-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.35rem;
+  color: $dive-blue;
+  background: $dive-banner;
+  border-radius: 50%;
+  font-size: 1rem;
+}
+
+.new-dive-optional {
+  color: $dive-muted;
+  font-size: 0.9rem;
+}
+
+.new-dive-import {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.new-dive-import > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.new-dive-import .btn-dive {
+  flex-shrink: 0;
+}
+
+.new-dive-feedback {
+  margin-top: 1rem;
+}
+
+.new-dive-import-help {
+  margin-top: 1rem;
+  padding: 1rem;
+  color: $dive-muted;
+  background: $dive-background;
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+.new-dive-import-help h3 {
+  margin-top: 0;
+  font-size: 1rem;
+}
+
+.new-dive-import-help p {
+  margin-bottom: 0.5rem;
+}
+
+.new-dive-import-help p:last-child {
+  margin-bottom: 0;
+}
+
+.new-dive-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.new-dive-page .form-label,
+.new-dive-page legend {
+  color: $dive-text;
+  font-weight: 600;
+}
+
+.new-dive-page .form-control,
+.new-dive-page .form-select {
+  min-height: 44px;
+  margin-bottom: 0.5rem;
+  border-color: $dive-border;
+  border-radius: 10px;
+}
+
+.new-dive-page .form-control:focus,
+.new-dive-page .form-select:focus {
+  border-color: $dive-blue;
+  box-shadow: 0 0 0 3px rgba(20, 93, 160, 0.12);
+}
+
+.new-dive-page .is-invalid {
+  border-color: $dive-danger;
+}
+
+.new-dive-page .form-check-inline {
+  margin-bottom: 0.75rem;
+}
+
+.new-dive-page .form-check-input:checked {
+  background-color: $dive-blue;
+  border-color: $dive-blue;
+}
+
+.new-dive-suggestions {
+  top: 100%;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.new-dive-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+@media (max-width: 767px) {
+  .new-dive-hero h1 {
+    font-size: 1.75rem;
+  }
+
+  .new-dive-trip,
+  .new-dive-import {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .new-dive-panel {
+    padding: 1rem;
+  }
+
+  .new-dive-panel h2 {
+    font-size: 1.3rem;
+  }
+
+  .new-dive-details {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
