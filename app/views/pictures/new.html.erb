@@ -1,8 +1,10 @@
 <div class="trips-hero">
-  <h1 class="mt-5 mb-5">Upload Photos Here</h1>
+  <h1>Upload your picutures</h1>
+  <h2>See beneath the surface.</h2>
+  <p>Keep your favorite ocean encounters alive.</p>
 </div>
 
-<div class="trips-content"
+<div class="trips-content picture-form"
      data-controller="picture-form"
      data-picture-form-selected-trip-id-value="<%= @selected_trip_id %>"
      data-picture-form-selected-dive-id-value="<%= @selected_dive_id %>"
@@ -11,7 +13,7 @@
   <%= form_with url: bulk_create_pictures_path, method: :post, local: true, html: { multipart: true } do %>
 
     <div class="mb-4">
-      <label for="pictures_bulk_photos" class="form-label">
+      <label for="pictures_bulk_photos" class="form-label fw-bold">
         <%= render "shared/icon", icon_name: "camera-spark" %>
         Select up to 5 photos *
       </label>
@@ -38,7 +40,7 @@
 
     <div class="mt-5">
       <%= button_tag type: "submit",
-        class: "btn btn-secondary",
+        class: "btn-dive btn-dive-primary",
         disabled: true,
         data: {
           "picture-form-target": "submit"
