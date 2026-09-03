@@ -40,6 +40,13 @@
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 1.5rem;
+
+  &__countries {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
 }
 
 .new-dive-trip h2 {
@@ -64,6 +71,10 @@
   border: 2.5px solid $dive-border;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(11, 58, 102, 0.08);
+
+  .collection_check_boxes {
+    margin-left: 0.5rem;
+  }
 }
 
 .new-dive-panel h2 {
@@ -221,5 +232,18 @@
   .new-dive-details {
     grid-template-columns: 1fr;
     gap: 0;
+  }
+}
+
+#newDiveModal {
+  .modal-header {
+    text-align: center;
+  }
+
+  .modal-body
+
+  .btn-dive {
+    width: 200px;
+    max-width: 100%;
   }
 }
