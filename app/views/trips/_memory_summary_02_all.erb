@@ -1,21 +1,59 @@
 <% if local_assigns[:stats] && local_assigns[:stats].any? %>
-  <div class="trip-summary trip-summary--02">
-    <ul class="trip-summary__list list-unstyled">
-      <% if local_assigns[:dives_by_time] && local_assigns[:dives_by_time].any? %>
+  <div class="trip-summary">
+    <ul class="trip-summary__list">
+      <li>
+        <%= render "shared/icon", icon_name: "scuba-mask", icon_size: 36 %>
+        <div>
+          <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= pluralize(@stats[:dives_count], "Dive") %></p>
+          <p class="px-3"><%= pluralize(@stats[:dive_days_count], "Diving day") %></p>
+        </div>
+      </li>
+      <% if @stats[:total_duration].positive? %>
+      <li>
+        <%= render "shared/icon", icon_name: "clock", icon_size: 36 %>
+        <div>
+          <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:total_duration] %>min</p>
+          <p class="px-3">Total underwater</p>
+        </div>
+      </li>
+      <% end %>
+      <% if @stats[:max_depth].present? %>
         <li>
-          <%= render "shared/icon", icon_name: "moon", icon_size: 36 %>
+          <%= render "shared/icon", icon_name: "arrow-bar-to-down", icon_size: 36 %>
           <div>
-            <p class="trip-summary__title"><%= dives_by_time[:night] %> Night</p>
-            <p class="trip-summary__subtitle">Dive<% if dives_by_time[:night] > 1  %>s<% end %></p>
+            <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:max_depth].round %>m</p>
+            <p class="px-3">Deepest dive</p>
           </div>
         </li>
       <% end %>
+      <% if @stats[:max_duration].positive? %>
+        <li>
+          <%= render "shared/icon", icon_name: "clock", icon_size: 36 %>
+          <div>
+            <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:max_duration] %>min</p>
+            <p class="px-3">Longest dive</p>
+          </div>
+        </li>
+      <% end %>
+      <li>
+        <%= render "shared/icon", icon_name: "camera-spark", icon_size: 36 %>
+        <div>
+          <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= pluralize(@stats[:pictures_count], "Picture") %></p>
+        </div>
+      </li>
+      <li>
+        <%= render "shared/icon", icon_name: "fish", icon_size: 36 %>
+        <div>
+          <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:species_count] %> Species</p>
+          <p class="px-3">Identified</p>
+        </div>
+      </li>
       <% if @stats[:drift_count].positive? %>
         <li>
           <%= render "shared/icon", icon_name: "wind", icon_size: 36 %>
           <div>
-            <p class="trip-summary__title"><%= @stats[:drift_count] %> Drift</p>
-            <p class="trip-summary__subtitle">Dive<% if @stats[:drift_count] > 1  %>s<% end %></p>
+            <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:drift_count] %> Drift</p>
+            <p class="px-3">Dive<% if @stats[:drift_count] > 1  %>s<% end %></p>
           </div>
         </li>
       <% end %>
@@ -23,8 +61,8 @@
         <li>
           <%= render "shared/icon", icon_name: "submarine", icon_size: 36 %>
           <div>
-            <p class="trip-summary__title"><%= @stats[:wreck_count] %> Wreck</p>
-            <p class="trip-summary__subtitle">Dive<% if @stats[:wreck_count] > 1  %>s<% end %></p>
+            <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:wreck_count] %> Wreck</p>
+            <p class="px-3">Dive<% if @stats[:wreck_count] > 1  %>s<% end %></p>
           </div>
         </li>
       <% end %>
@@ -32,8 +70,8 @@
         <li>
           <%= render "shared/icon", icon_name: "lighter", icon_size: 36 %>
           <div>
-            <p class="trip-summary__title"><%= @stats[:cave_count] %> Cave</p>
-            <p class="trip-summary__subtitle">Dive<% if @stats[:cave_count] > 1  %>s<% end %></p>
+            <p class="fw-bold px-3 mb-0 fs-4 text-body-emphasis"><%= @stats[:cave_count] %> Cave</p>
+            <p class="px-3">Dive<% if @stats[:cave_count] > 1  %>s<% end %></p>
           </div>
         </li>
       <% end %>

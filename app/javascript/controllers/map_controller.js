@@ -76,7 +76,7 @@ export default class extends Controller {
   // Trip Map
   initTripMap(settings) {
     const centerOptions = this.getDivesBounds(this.divesValue);
-    //this.displayMap(centerOptions.center, 6, settings, centerOptions.bounds);
+    this.displayMap(centerOptions.center, 6, settings, centerOptions.bounds);
   }
 
   // Display map

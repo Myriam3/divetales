@@ -48,7 +48,7 @@
 
     <% paths = ["/dives", "/trips", "/pictures"] %>
     <% if paths.any? { |path| request.path.include?(path) } %>
-      <%#= render "shared/footer_wave" %>
+      <%= render "shared/footer_wave" %>
     <% end %>
   </body>
 </html>
