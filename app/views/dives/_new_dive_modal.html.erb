@@ -18,20 +18,20 @@
 
       <div class="modal-body">
           <p class="text-center mb-4">New dive added!</p>
-          <p class="mb-4 text-center">
-            <%= link_to new_picture_path(dive_id: dive.id, trip_id: dive.trip_id), class: "btn btn-secondary", data: { turbo: false } do %>
+          <p class="mb-4 text-center fw-bold">
+            <%= link_to new_picture_path(dive_id: dive.id, trip_id: dive.trip_id), class: "btn-dive btn-dive-accent", data: { turbo: false } do %>
               <%= render "shared/icon", icon_name: "camera-spark" %>
               Add a picture
             <% end %>
           </p>
           <p class="mb-4 text-center">
-            <%= link_to identification_path(dive_id: dive.id), class: "btn btn-secondary", data: { turbo: false } do %>
+            <%= link_to identification_path(dive_id: dive.id), class: "btn-dive btn-dive-primary", data: { turbo: false } do %>
               <%= render "shared/icon", icon_name: "photo-spark" %>
               Identify a species
             <% end %>
           </p>
           <p class="mb-4 text-center">
-            <%= link_to trip_dive_path(dive.trip, dive), class: "btn btn-outline-secondary", data: { turbo: false } do %>
+            <%= link_to trip_dive_path(dive.trip, dive), class: "btn-dive btn-dive-secondary", data: { turbo: false } do %>
               <%= render "shared/icon", icon_name: "scuba-mask" %>
               See dive
             <% end %>

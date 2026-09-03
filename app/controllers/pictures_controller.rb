@@ -61,7 +61,7 @@ class PicturesController < ApplicationController
     end
 
     if errors.empty?
-      redirect_to dive_path(@dive), notice: "#{created.size} photos uploaded!"
+      redirect_to dive_path(@dive), anchor: "pictures", notice: "#{created.size} photos uploaded!"
     else
       redirect_to new_picture_path(dive_id: @dive.id, trip_id: @dive.trip_id),
                   alert: "Some photos failed: #{errors.flatten.join(', ')}"

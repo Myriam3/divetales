@@ -1,44 +1,40 @@
 <% if @trip %>
-  <div class="container mt-4">
-    <h2 class="mb-3">1. Import your dive log</h2>
+  <section class="new-dive-panel">
+    <div class="new-dive-panel-heading">
+      <h2><span class="new-dive-step">1</span> Import your dive log</h2>
+      <span class="new-dive-optional">Optional</span>
+    </div>
 
-    <div class="mb-3">
-      <div class="mb-3">
-        <label for="fit_file">FIT file (.fit)</label>
+    <p>Have a log from your dive computer? Import it here, or fill in the details below.</p>
+
+    <div class="new-dive-import">
+      <div>
+        <label for="fit_file" class="form-label">FIT file (.fit)</label>
         <%= file_field_tag :fit_file,
           accept: ".fit",
-          class: "form-control-file",
-          data: {
-            dive_data_import_target: "fileInput"
-          } %>
+          class: "form-control",
+          data: { dive_data_import_target: "fileInput" } %>
       </div>
-      <button
-        type="button"
-        class="btn btn-secondary mt-3"
+
+      <button type="button"
+        class="btn-dive btn-dive-primary"
         data-action="click->dive-data-import#importFile"
-        data-dive-data-import-target="submitButton"
-      >
+        data-dive-data-import-target="submitButton">
         <%= render "shared/icon", icon_name: "device-watch-stats" %>
         Import file
       </button>
-
-      <p class="mt-3" data-dive-data-import-target="feedback"></p>
-      <pre class="mt-3" data-dive-data-import-target="result"></pre>
     </div>
 
-    <div class="mb-5">
-      <h3 class="h5">
+    <p class="new-dive-feedback" data-dive-data-import-target="feedback"></p>
+    <pre data-dive-data-import-target="result"></pre>
+
+    <div class="new-dive-import-help">
+      <h3>
         <%= render "shared/icon", icon_name: "info-circle" %>
         Supported format
       </h3>
-      <p class="mb-2">
-        <small>
-          Currently supported: FIT format (Garmin, Suunto, ...), meters (depth), °C (temperature) units.
-        </small>
-      </p>
-      <p class="mb-0">Export your dive log as a <strong>FIT file</strong> from your dive app or dive computer.</p>
-      <p class="mb-0">If you do not use a compatible dive computer, you can also input your data manually below.</p>
-
+      <p>FIT files from Garmin, Suunto and other compatible dive computers. Depth in meters and temperature in °C.</p>
+      <p>Export your dive log as a FIT file from your dive app or dive computer.</p>
     </div>
-  </div>
+  </section>
 <% end %>

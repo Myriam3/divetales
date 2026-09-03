@@ -1,0 +1,19 @@
+.identification-page {
+  .btn-light {
+    --bs-btn-hover-bg: #{$dive-banner};
+    --bs-btn-active-bg: #{$dive-banner};
+
+    .t-icon {
+      color: $dive-blue;
+    }
+  }
+
+  form.identification {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .identification-content {
+    padding: 1rem;
+  }
+}
