@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import Splide from "@splidejs/splide"
+import { Grid } from '@splidejs/splide-extension-grid';
 
 export default class extends Controller {
   static targets = ["sliderContainer"];
@@ -15,7 +16,8 @@ export default class extends Controller {
     paddingLeft: String,
     pagination: String,
     trimSpace: String,
-    autoWidth: String
+    autoWidth: String,
+    speed: String
   };
 
   connect() {
@@ -30,14 +32,16 @@ export default class extends Controller {
     const trimSpace = this.trimSpaceValue === 'false' ? false : (this.trimSpaceValue || true)
     const options = {
         type: this.typeValue || 'loop',
-        rewind: this.arrowsValue === 'false' ? false : true,
+        rewind: this.arrowsValue === 'true' ? true : false,
         perMove: 1,
         focus: this.focusValue || 'center',
         arrows: this.arrowsValue === 'false' ? false : true,
         pagination: this.paginationValue === 'false' ? false : true,
-        updateOnMove : true,
+        //updateOnMove : true,
         gap: this.gapValue || '10px',
+        speed: Number(this.speed) || 600,
         trimSpace,
+        updateOnMove: true,
         padding: {
           left: this.paddingLeftValue || padding,
           right: padding
@@ -62,7 +66,16 @@ export default class extends Controller {
     this.slider = new Splide(this.sliderContainerTarget, options);
     this.slider.mount();
 
-    this.slider.Components.Slides.forEach((item) => {
+    this.slider.on('active', (item) => {
+      if (item.isClone) return;
+      const id = item.slide.getAttribute('data-id');
+      if (!id) return;
+      this.dispatch("slider-active", {
+        detail: { pictureId: id }
+      });
+    });
+
+    this.slider.Components.Slides.get(true).forEach((item) => {
       const id = item.slide.getAttribute('data-id');
       if (!id) return;
 

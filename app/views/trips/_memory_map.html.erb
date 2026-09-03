@@ -20,16 +20,16 @@
       data-map-dive-url-value ="<%= memory_dive_trip_path %>"
       data-map-dives-value ="<%=  map_dives.to_json %>"
   >
-    <h2 class="memory__map-title" id="itinerary">
+    <h2 class="memory__map-title" id="itinerary" style="display: none;">
       <%= render "shared/icon", icon_name: "route", icon_size: 40 %>
       Itinerary
     </h2>
 
-    <% if itinerary.any? %>
+    <%# if itinerary.any? %>
       <div data-controller="itinerary">
-        <%= render "memory_itinerary", itinerary: itinerary, countries_count: stats[:countries_count] %>
+        <%#= render "memory_itinerary", itinerary: itinerary, countries_count: stats[:countries_count] %>
       </div>
-    <% end %>
+    <%# end %>
 
     <div class="memory__map-wrapper">
       <div data-map-target="mapContainer" style="visibility: hidden; height: 0; oveflow: hidden;">
@@ -40,6 +40,6 @@
     </div>
 
     <div id="memory-dive-container"></div>
-    <%# render "trips/memory_dive", dive: @dives.find_by(dive_number: 184) %>
+    <%= render "trips/memory_dive", dive: @dives.find_by(dive_number: 217) %>
   </div>
 </section>

@@ -1,10 +1,4 @@
-<%
-  album_photos = @pictures
-                .select { |picture| picture.photo.attached? }
-                .shuffle
-                .first(6)
-  main_photo_1 = album_photos[0]
-%>
+
 
 <div class="memory">
   <% if @trip %>
@@ -18,58 +12,7 @@
     </div>
 
     <div class="memory__top">
-      <div class="memory__header <%= "album" if main_photo_1.present? %>">
-        <% if main_photo_1.present? %>
-          <div
-            class="memory-album">
-            <%= image_tag main_photo_1.photo,
-            class: "memory-album__img",
-            alt: "" %>
-            <% if album_photos[1].present? %>
-            <%= image_tag album_photos[1].photo,
-              class: "memory-album__img",
-              alt: "" %>
-          <% end %>
-          <% if album_photos[2].present? %>
-            <%= image_tag album_photos[2].photo,
-              class: "memory-album__img",
-              alt: "" %>
-          <% end %>
-          </div>
-        <% end %>
-        <div class="memory__header-text">
-          <h1 class="memory__title">
-            <span>
-              <strong>Trip memories</strong>
-            </span>
-            <%= @trip.title %>
-          </h1>
-
-          <div class="memory__intro">
-            <% if @trip.countries.any? %>
-            <p class="memory__intro-countries">
-              <% @trip.countries.each do |country| %>
-                <span>
-                  <%= icon country.code.downcase, library: "flags", width: 20, height: 20 %>
-                  <%= country.name %>
-                </span>
-              <% end %>
-            </p>
-            <% end %>
-
-            <p class="memory__intro-date">
-              <%= render "shared/icon", icon_name: "calendar-week" %>
-              <%= @trip.start_date.strftime("%d %B %Y") %>
-                -
-              <%= @trip.end_date.strftime("%d %B %Y") %>
-            </p>
-
-            <% if @trip.info.present? %>
-              <p class="memory__intro-info"><%= @trip.info %></p>
-            <% end %>
-          </div>
-        </div>
-      </div>
+      <%#= render 'memory_header', trip: @trip %>
     </div>
 
     <div class="memory__main">
@@ -77,16 +20,16 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="currentColor" fill-opacity="1" d="M0,160L48,176C96,192,192,224,288,208C384,192,480,128,576,112C672,96,768,128,864,154.7C960,181,1056,203,1152,186.7C1248,171,1344,117,1392,90.7L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
       </div>-->
 
-      <%= render "memory_summary_01",
-        stats: @stats,
-        dives_by_time: @dives_by_time,
-        dives_by_entry: @dives_by_entry
+      <%= #render "memory_summary_01",
+        #stats: @stats,
+        #dives_by_time: @dives_by_time,
+        #dives_by_entry: @dives_by_entry
       %>
 
       <div class="memory__main-inner">
         <div class="memory__wave memory__wave--bottom">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="currentColor" fill-opacity="1" d="M0,64L26.7,80C53.3,96,107,128,160,128C213.3,128,267,96,320,106.7C373.3,117,427,171,480,197.3C533.3,224,587,224,640,202.7C693.3,181,747,139,800,128C853.3,117,907,139,960,154.7C1013.3,171,1067,181,1120,165.3C1173.3,149,1227,107,1280,101.3C1333.3,96,1387,128,1413,144L1440,160L1440,0L1413.3,0C1386.7,0,1333,0,1280,0C1226.7,0,1173,0,1120,0C1066.7,0,1013,0,960,0C906.7,0,853,0,800,0C746.7,0,693,0,640,0C586.7,0,533,0,480,0C426.7,0,373,0,320,0C266.7,0,213,0,160,0C106.7,0,53,0,27,0L0,0Z"></path></svg>
-        </div>
+          <!--<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="currentColor" fill-opacity="1" d="M0,64L26.7,80C53.3,96,107,128,160,128C213.3,128,267,96,320,106.7C373.3,117,427,171,480,197.3C533.3,224,587,224,640,202.7C693.3,181,747,139,800,128C853.3,117,907,139,960,154.7C1013.3,171,1067,181,1120,165.3C1173.3,149,1227,107,1280,101.3C1333.3,96,1387,128,1413,144L1440,160L1440,0L1413.3,0C1386.7,0,1333,0,1280,0C1226.7,0,1173,0,1120,0C1066.7,0,1013,0,960,0C906.7,0,853,0,800,0C746.7,0,693,0,640,0C586.7,0,533,0,480,0C426.7,0,373,0,320,0C266.7,0,213,0,160,0C106.7,0,53,0,27,0L0,0Z"></path></svg>
+        </div>-->
 
         <div data-controller="lightbox">
           <%= render 'memory_map',
@@ -97,12 +40,12 @@
           %>
 
           <% if @pictures.any? %>
-            <%= render "memory_all", pictures: @pictures %>
+            <%#= render "memory_all", pictures: @pictures %>
           <% end %>
+
+          <%= render 'pictures/lightbox' %>
         </div>
       </div>
     </div>
   <% end %>
 </div>
-
-<%= render 'pictures/lightbox' %>

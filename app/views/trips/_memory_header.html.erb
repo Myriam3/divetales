@@ -1,0 +1,60 @@
+<%
+  album_photos = @pictures
+                .select { |picture| picture.photo.attached? }
+                .shuffle
+                .first(6)
+  main_photo_1 = album_photos[0]
+%>
+
+<div class="memory__header <%= "album" if main_photo_1.present? %>">
+  <% if main_photo_1.present? %>
+    <div
+      class="memory-album">
+      <%= image_tag main_photo_1.photo,
+      class: "memory-album__img",
+      alt: "" %>
+      <% if album_photos[1].present? %>
+      <%= image_tag album_photos[1].photo,
+        class: "memory-album__img",
+        alt: "" %>
+    <% end %>
+    <% if album_photos[2].present? %>
+      <%= image_tag album_photos[2].photo,
+        class: "memory-album__img",
+        alt: "" %>
+    <% end %>
+    </div>
+  <% end %>
+  <div class="memory__header-text">
+    <h1 class="memory__title">
+      <span>
+        <strong>Trip memories</strong>
+      </span>
+      <%= trip.title %>
+    </h1>
+
+    <div class="memory__intro">
+      <% if trip.countries.any? %>
+      <p class="memory__intro-countries">
+        <% trip.countries.each do |country| %>
+          <span>
+            <%= icon country.code.downcase, library: "flags", width: 20, height: 20 %>
+            <%= country.name %>
+          </span>
+        <% end %>
+      </p>
+      <% end %>
+
+      <p class="memory__intro-date">
+        <%= render "shared/icon", icon_name: "calendar-week" %>
+        <%= trip.start_date.strftime("%d %B %Y") %>
+          -
+        <%= trip.end_date.strftime("%d %B %Y") %>
+      </p>
+
+      <% if trip.info.present? %>
+        <p class="memory__intro-info"><%= trip.info %></p>
+      <% end %>
+    </div>
+  </div>
+</div>

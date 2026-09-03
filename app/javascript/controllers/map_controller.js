@@ -25,6 +25,7 @@ export default class extends Controller {
   connect() {
     this.currentLocation = null;
     this.currentDive = null;
+    this.currentMarker = null;
     this.points = {};
     this.init();
   }
@@ -75,7 +76,7 @@ export default class extends Controller {
   // Trip Map
   initTripMap(settings) {
     const centerOptions = this.getDivesBounds(this.divesValue);
-    this.displayMap(centerOptions.center, 6, settings, centerOptions.bounds);
+    //this.displayMap(centerOptions.center, 6, settings, centerOptions.bounds);
   }
 
   // Display map
@@ -137,14 +138,23 @@ export default class extends Controller {
 
   // Markers
   addDiveMarker(long, lat) {
+    const el = this.createMarker();
     try {
-      const marker = new mapboxgl.Marker()
+      const marker = new mapboxgl.Marker(
+        {
+          color: '#145DA0'
+        }
+      )
         .setLngLat([long, lat])
         .addTo(this.map);
       return marker;
     } catch(error) {
       console.log(error);
     }
+  }
+
+  createMarker() {
+
   }
 
   addTripMarkers() {
@@ -162,8 +172,8 @@ export default class extends Controller {
       if (!marker) return;
 
       // Click on marker handler
-      marker?.getElement().addEventListener('click', (e) => {
-        this.displayDive(point[0]);
+      marker?.getElement().addEventListener('click', () => {
+        this.displayDive(point[0], marker);
       });
     }
 
@@ -173,9 +183,10 @@ export default class extends Controller {
   }
 
   // Display dive on marker click
-  async displayDive(dive) {
+  async displayDive(dive, marker) {
     const url = new URL(this.diveUrlValue, window.location.origin);
     url.searchParams.set("dive_id", dive.id);
+    console.log(marker);
 
     try {
       const response = await fetch(url, {
@@ -184,7 +195,12 @@ export default class extends Controller {
       });
       const html = await response.text();
       Turbo.renderStreamMessage(html);
+
+      if (this.currentMarker) this.currentMarker.removeClassName('selected');
+      marker.addClassName('selected');
+      this.currentMarker = marker;
       this.currentDive = dive;
+      this.mapContainerTarget.scrollIntoView({ behavior: "smooth"});
 
     } catch (error) {
       console.log(error);

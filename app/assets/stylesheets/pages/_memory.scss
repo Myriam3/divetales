@@ -3,6 +3,10 @@ $container: 1200px;
 $gutter: 1.5rem;
 $wave_color: $dive-blue;
 
+.navbar {
+  display: none;
+}
+
 .memory {
   &__back {
     padding: 1rem $gutter;
@@ -131,6 +135,25 @@ $wave_color: $dive-blue;
       font-size: 2.4rem;
       color: $dive-navy;
       text-align: center;
+    }
+
+    .mapboxgl-marker {
+      svg {
+        transition: 0.25s;
+
+        path {
+          transition: 0.25s;
+        }
+      }
+
+      &.selected {
+        svg {
+          transform: scale(1.3);
+          path {
+            fill: #E9634B;
+          }
+        }
+      }
     }
   }
 }
@@ -338,5 +361,51 @@ $wave_color: $dive-blue;
 
   &:nth-child(2):not(:last-child) {
     transform: scale(0.9);
+  }
+}
+
+.memory-slider {
+  .splide {
+    &__slide {
+      --ratio: 3/2.5;
+      width: 270px;
+      aspect-ratio: var(--ratio);
+
+      .picture-slide {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        aspect-ratio: 3/2;
+        transition: width 0.3s;
+        border-radius: 4px;
+        background: rgba(0,0,0,0.1);
+        transition: 0.6s;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          opacity: 0;
+        }
+      }
+
+      &.is-active {
+          .picture-slide {
+            aspect-ratio: var(--ratio);
+          }
+      }
+    }
+  }
+
+  &__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+
+    > span {
+      position: absolute;
+    }
   }
 }
