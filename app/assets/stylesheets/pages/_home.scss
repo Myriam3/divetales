@@ -169,33 +169,42 @@
   font-weight: 700;
 }
 
-.home-diving-helmet {
+.home-hero .footer-waves {
   position: absolute;
-  right: 1rem;
+  right: 0;
   bottom: 0;
-  z-index: 3;
-  width: clamp(125px, 11vw, 165px);
-  height: auto;
-  filter:
-  drop-shadow(0 10px 8px rgba(11, 58, 102, 0.28))
-  saturate(0.9);
+  left: 0;
+  z-index: auto;
+  height: 250px;
+  min-height: 0;
+  margin: 0;
+  overflow: visible;
   pointer-events: none;
 }
 
-.home-coral {
+.home-hero .footer-waves__items svg {
   position: absolute;
-  bottom: -10px;
+  bottom: 0;
   left: 50%;
-  z-index: 3;
-  width: calc(100% + 80px);
-  max-width: none;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  min-width: 1000px;
   height: auto;
-  transform: translateX(-50%);
-  pointer-events: none;
+  transform: translate(-50%, 45%);
+}
+
+.home-hero .footer-waves__items svg:last-child {
+  z-index: 3;
+}
+
+.home-hero .footer-waves__copyright {
+  z-index: 4;
 }
 
 .home-fish {
   position: absolute;
+  z-index: 2;
   pointer-events: none;
 }
 
@@ -210,7 +219,6 @@
 
 .home-fish-one {
   bottom: 210px;
-  z-index: 2;
   width: 42px;
   animation: swim-right 20s linear infinite;
   animation-delay: -3s;
@@ -218,19 +226,13 @@
 
 .home-fish-two {
   bottom: 165px;
-  z-index: 4;
   width: 52px;
   animation: swim-left 24s linear infinite;
   animation-delay: -14s;
 }
 
-.home-fish-two img {
-  transform: scaleX(-1);
-}
-
 .home-fish-three {
   bottom: 115px;
-  z-index: 4;
   width: 34px;
   animation: swim-right 28s linear infinite;
   animation-delay: -19s;
@@ -238,19 +240,13 @@
 
 .home-fish-four {
   bottom: 225px;
-  z-index: 2;
   width: 32px;
   animation: swim-left 21s linear infinite;
   animation-delay: -6s;
 }
 
-.home-fish-four img {
-  transform: scaleX(-1);
-}
-
 .home-fish-five {
   bottom: 75px;
-  z-index: 4;
   width: 44px;
   animation: swim-right 25s linear infinite;
   animation-delay: -13s;
@@ -332,18 +328,6 @@
 
   .home-photo-slider {
     margin-top: 1rem;
-  }
-
-  .home-diving-helmet {
-    right: 1rem;
-    width: 110px;
-  }
-
-  .home-coral {
-    bottom: 0;
-    left: 50%;
-    width: 1000px;
-    height: auto;
   }
 
   .home-fish-one {
