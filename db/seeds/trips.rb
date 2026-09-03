@@ -3,12 +3,12 @@ def create_trips(user, countries)
 
   # Trip 1 Komodo
   komodo = Trip.find_or_create_by!(
-    title: "Komodo Diving Trip 2026"
+    title: "Komodo Diving Trip 2025"
   ) do |trip|
     trip.user = user
-    trip.start_date = Date.new(2026, 7, 10)
-    trip.end_date = Date.new(2026, 7, 16)
-    trip.info = "Komodo National Park, Indonesia 2026"
+    trip.start_date = Date.new(2025, 7, 10)
+    trip.end_date = Date.new(2025, 7, 16)
+    trip.info = "Komodo National Park, Indonesia 2025"
   end
 
   komodo.countries << countries["id"]
@@ -20,8 +20,8 @@ def create_trips(user, countries)
     title: "Mikomoto Diving Trip"
   ) do |trip|
     trip.user = user
-    trip.start_date = Date.new(2026, 9, 20)
-    trip.end_date = Date.new(2026, 9, 21)
+    trip.start_date = Date.new(2025, 9, 20)
+    trip.end_date = Date.new(2025, 9, 21)
     trip.info = "A short diving trip to explore the strong currents and pelagic life around Mikomoto."
   end
 
@@ -43,6 +43,19 @@ def create_trips(user, countries)
   indonesia_malaysia.countries << countries["my"]
 
   trips["indonesia_malaysia"] = indonesia_malaysia
+
+  # Trip 4 Bali
+  bali_2025 = Trip.find_or_create_by!(
+    title: "Bali 2025"
+  ) do |trip|
+    trip.user = user
+    trip.start_date = Date.new(2025, 7, 10)
+    trip.end_date = Date.new(2025, 7, 16)
+    trip.info = ""
+  end
+
+  bali_2025.countries << countries["id"]
+  trips["bali_2025"] = bali_2025
 
   return trips
 end
