@@ -75,12 +75,9 @@
 
   <section class="home-photo-slider"
       data-controller="slider"
-      data-slider-page-value="3"
-      data-slider-arrows-value="false"
       data-slider-type-value="slide"
-      data-slider-rewind-value="false"
+      data-slider-arrows-value="false"
       data-slider-width-value="210"
-      data-slider-padding-value="0px"
       data-slider-pagination-value="false">
 
     <div class="splide"
@@ -89,7 +86,7 @@
 
       <div class="splide__track">
         <ul class="splide__list list-unstyled">
-          <% @media_gallery.each do |dive| %>
+          <% @media_gallery.take(5).each do |dive| %>
             <% dive.pictures.take(3).each do |photo| %>
               <% if photo.photo.present?%>
               <li class="splide__slide">
