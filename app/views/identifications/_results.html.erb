@@ -1,7 +1,7 @@
 <div id="identification-results" data-controller="results">
   <% if identification&.image&.attached? %>
     <details class="mb-4 bg-light rounded-3 p-2 border">
-      <summary class="fw-bold text-muted" style="cursor: pointer;">
+      <summary class="fw-bold dive-text" style="cursor: pointer;">
         <i class="bi bi-camera"></i> View original photo
       </summary>
 
@@ -29,7 +29,9 @@
                   class="nav-link <%= 'active' if index == 0 %> d-flex align-items-center gap-2">
 
             <%= render "shared/icon", icon_name: "fish", icon_size: 18 %>
-            <%= result[:common_name].presence || result[:scientific_name] %>
+            <span class="dive-text">
+              <%= result[:common_name].presence || result[:scientific_name] %>
+            </span>
 
             <span class="ms-2 badge bg-secondary">
               <%= result[:confidence] %>%
@@ -57,10 +59,10 @@
   </div>
 
   <div class="my-5 pt-4 border-top text-center">
-    <p class="text-muted d-flex align-items-center justify-content-center gap-2">
+    <p class="dive-text d-flex align-items-center justify-content-center gap-2">
       <%= render "shared/icon", icon_name: "photo-question" %> Not seeing the right match?
     </p>
-    <p class="small text-muted mb-3">
+    <p class="small dive-muted mb-3">
       The Identification sometimes needs a little help. Provide a bit more context to narrow it down!
     </p>
 

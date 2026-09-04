@@ -14,12 +14,12 @@
                   alt: result[:common_name] || result[:scientific_name] %>
           </div>
         <% end %>
-        <p class="card-title fw-bold fs-3 mb-0 d-flex align-items-center gap-2">
+        <p class="dive-text card-title fw-bold fs-3 mb-0 d-flex align-items-center gap-2">
           <%= render "shared/icon", icon_name: "fish" %>
           <%= result[:common_name].presence || "Unknown Common Name" %>
         </p>
 
-        <p class="card-subtitle mt-1 text-muted fst-italic">
+        <p class="card-subtitle mt-1 dive-muted fst-italic">
           <%= result[:scientific_name] %>
         </p>
       </div>
@@ -37,7 +37,7 @@
         <%= render "shared/icon", icon_name: "bulb", icon_size: 16 %> Reasoning
       </p>
 
-      <p class="card-text text-dark">
+      <p class="card-text dive-text">
         <%= result[:reasoning] %>
       </p>
     </div>
@@ -50,7 +50,7 @@
           <%= render "shared/icon", icon_name: "list-search", icon_size: 16 %> Evidence
         </p>
 
-        <ul class="text-dark small ps-3 mb-0">
+        <ul class="dive-text small ps-3 mb-0">
           <% result[:evidence].each do |item| %>
             <li><%= item %></li>
           <% end %>
@@ -96,11 +96,11 @@
       </div>
 
       <div>
-        <p class="fw-bold mb-1">
+        <p class="dive-text fw-bold mb-1">
           Limitations
         </p>
 
-        <p class="mb-0 small">
+        <p class="dive-muted mb-0 small">
           <%= result[:uncertainty] %>
         </p>
       </div>
