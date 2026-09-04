@@ -85,8 +85,7 @@
 
   &__grid {
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 2rem 5vw;
+    gap: 2rem;
   }
 
   &__subtitle {
@@ -100,12 +99,13 @@
       margin-bottom: 2rem;
 
       &-top {
-        padding: 1.5rem 0;
+        //padding: 1.5rem 0;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
         gap: 1rem;
+        margin: 0 0 1rem;
       }
 
       h3 {
@@ -114,7 +114,7 @@
         align-items: center;
         margin: 0;
         font-weight: 700;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         color: $dive-navy;
       }
     }
@@ -151,7 +151,72 @@
     width: 100%;
     grid-column: 1 / -1;
   }
+
+  &__species,
+  &__pictures {
+    &-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+
+      h2 {
+        font-weight: 700;
+      }
+    }
+  }
+
+  &__pictures {
+    h2 {
+
+    }
+  }
+
+  &__species-list {
+    display: grid;
+    gap: 1rem;
+  }
 }
+
+.dive-pictures {
+  &__item {
+
+
+    a {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      border-radius: 6px;
+
+      &:after {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 100%;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        opacity: 0;
+        transition: 0.3s ease;
+        background: rgba(255,255,255, .1);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        z-index: 1;
+      }
+
+      &:hover,
+      &:focus {
+        &:after {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}
+
 
 @media (min-width: 700px) {
 .dive-page {
@@ -166,7 +231,21 @@
     }
 
     &__grid {
+      gap: 2rem 5vw;
       grid-template-columns: 1fr 1fr;
+    }
+
+    &__species-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+@media (min-width: 1100px) {
+  .dive-page {
+    &__species-list {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 }

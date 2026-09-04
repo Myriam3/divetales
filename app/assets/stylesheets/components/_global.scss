@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   min-height: 100vh;
   color: $dive-text;
@@ -10,4 +14,8 @@ body > main {
 
 .depth-chart {
   max-width: 100%;
+
+  canvas {
+    max-width: 100%;
+  }
 }

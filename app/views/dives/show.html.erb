@@ -129,31 +129,31 @@
               <%= render "shared/icon", icon_name: "scuba-diving", icon_size: 40 %>
               Depth profile
             </h3>
-            <%= render "/shared/depth_profile", dive: @dive, display_info: false %>
+            <div class="dive-page__depth-profile">
+              <%= render "/shared/depth_profile", dive: @dive %>
+            </div>
           </div>
         <% end %>
       </div>
     </div>
+    </div>
   </div>
 </div>
 
-<div class="dive-page__container">
-  <p class="dive-page__delete">
-    <%= button_to dive_path(@dive),
-                method: :delete,
-                class: "btn-dive btn-dive-secondary",
-                data: {
-                  turbo_confirm: "Are you sure? This will delete also the dive pictures and identified species."
-                } do %>
-      <%= render "shared/icon", icon_name: "trash", icon_size: 24 %>
-      Delete dive
-    <% end %>
-  </p>
-</div>
-
-
-<div class="container">
   <!-- Dive details -->
   <%= render "dive_details", dive: @dive %>
+
+  <div class="dive-page__container">
+    <p class="dive-page__delete">
+      <%= button_to dive_path(@dive),
+                  method: :delete,
+                  class: "btn-dive btn-dive-secondary mt-5",
+                  data: {
+                    turbo_confirm: "Are you sure? This will delete also the dive pictures and identified species."
+                  } do %>
+        <%= render "shared/icon", icon_name: "trash", icon_size: 24 %>
+        Delete dive
+      <% end %>
+    </p>
+  </div>
 <% end %>
-</div>
