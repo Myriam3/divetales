@@ -1,3 +1,5 @@
+<% content_for :meta_title, "Dive at #{@dive.dive_site_name} | Dive Tales" %>
+<% content_for :meta_description, "Dive log details for #{@dive.dive_site_name} on #{@dive.date.strftime('%B %d, %Y')}. View metrics and sightings." %>
 <% if @dive %>
 <div class="container">
   <div class="mt-5 mb-2 text-end">
