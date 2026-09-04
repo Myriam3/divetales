@@ -1,4 +1,6 @@
 <% content_for :title, "#{@trip.title} | DiveTales" %>
+<% content_for :meta_title, "#{@trip.title} | Dive Tales" %>
+<% content_for :meta_description, "Explore dive logs, memories, and photos from my trip to #{@trip.title}." %>
 
 <section class="trip-show">
   <%= link_to trips_path, class: "trip-back-link" do %>

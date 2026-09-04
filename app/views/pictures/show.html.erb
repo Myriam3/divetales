@@ -1,3 +1,6 @@
+<% content_for :meta_title, "Dive Photo from #{@picture.dive.dive_site_name} | Dive Tales" %>
+<% content_for :meta_description, "View this underwater photograph taken at #{@picture.dive.dive_site_name}." %>
+
 <% if @picture %>
   <div class="picture">
     <% if @picture.photo.attached? %>
