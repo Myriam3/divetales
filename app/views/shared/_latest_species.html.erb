@@ -1,6 +1,6 @@
 <div class="card shadow-sm mb-4">
   <div class="card-header bg-white pt-3 pb-0 border-bottom-0">
-    <p class="mb-0">
+    <p class="mb-0 dive-text">
       <%= render "shared/icon", icon_name: "fish", icon_size: 24 %>
       Latest Discoveries
     </p>
@@ -30,10 +30,10 @@
               <% end %>
             </div>
             <div class="flex-grow-1 text-start">
-              <p class="mb-0 fw-bold text-dark"><%= s.name %></p>
+              <p class="mb-0 fw-bold dive-text"><%= s.name %></p>
               <% dive = s.dives.last %>
               <% if dive %>
-                <small class="text-muted">
+                <small class="dive-muted">
                   <%= dive.date.strftime("%b %d") %> • <%= dive.location.name %>
                 </small>
               <% else %>
