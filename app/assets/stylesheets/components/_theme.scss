@@ -10,6 +10,10 @@
 
 .dive-muted {
   color: $dive-muted;
+  &::placeholder {
+    color: $dive-muted;
+    opacity: 1; /* Required for Firefox */
+  }
 }
 
 .dive-page {
