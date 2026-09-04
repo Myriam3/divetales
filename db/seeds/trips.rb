@@ -34,9 +34,9 @@ def create_trips(user, countries)
     title: "Indonesia & Malaysia travel 2026"
   ) do |trip|
     trip.user = user
-    trip.start_date = Date.new(2026, 07, 01)
-    trip.end_date = Date.new(2026, 07, 31)
-    trip.info = "1 month traveling to Bali, Mabul, Sipadan, North Sulawesi and Raja Ampat"
+    trip.start_date = Date.new(2026, 8, 19)
+    trip.end_date = Date.new(2026, 9, 04)
+    trip.info = "Traveling to Tioman, Nusa Penida and Komodo National Park!"
   end
 
   indonesia_malaysia.countries << countries["id"]
