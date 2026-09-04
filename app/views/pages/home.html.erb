@@ -22,11 +22,13 @@
         <%= link_to trip_path(@ongoing_trip), class: "home-ongoing-trip-link" do %>
           <article class="card shadow-sm home-ongoing-trip">
             <div class="card-header bg-white">
-              <p class="mb-0">Ongoing trip</p>
+              <p class="mb-0">
+                <%= render "shared/icon", icon_name: "plane", icon_size: 24 %>
+                Ongoing trip</p>
             </div>
 
             <div class="card-body">
-              <h2><%= @ongoing_trip.title %></h2>
+              <h2><%= render "shared/icon", icon_name: "luggage", icon_size: 30 %><%= @ongoing_trip.title %></h2>
 
               <p>
                 <%= @ongoing_trip.start_date.strftime("%d %B %Y") %> -
@@ -53,11 +55,15 @@
       <%# TODO: Remove this placeholder when the real dive heat map is added. %>
       <section class="card shadow-sm home-heat-map-placeholder">
         <div class="card-header bg-white">
-          <p class="mb-0">Dive heat map</p>
+          <p class="mb-0">
+            <%= render "shared/icon", icon_name: "map", icon_size: 24 %>
+            Dive heat map</p>
         </div>
 
         <div class="card-body">
-          <p class="mb-0">Heat map coming soon.</p>
+          <%= image_tag "dive_heatmap.png",
+            alt: "Map of dive locations in Southeast Asia and Japan",
+            class: "w-100 object-fit-cover rounded-bottom" %>
         </div>
       </section>
     </div>
