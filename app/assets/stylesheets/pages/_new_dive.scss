@@ -77,15 +77,28 @@
   }
 }
 
-.new-dive-panel h2 {
-  margin-bottom: 1.25rem;
-  font-size: 1.5rem;
+.new-dive-panel {
+  h2,
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    margin: 1rem 0;
+    font-size: 1.15rem;
 }
 
-.new-dive-panel h3 {
-  margin: 1rem 0;
-  font-size: 1.15rem;
+  &__subtitle {
+    border-top: solid 1px $dive-border;
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+  }
 }
+
 
 .new-dive-panel-heading {
   display: flex;
@@ -131,6 +144,7 @@
 
 .new-dive-import .btn-dive {
   flex-shrink: 0;
+  margin-bottom: 0.5rem;
 }
 
 .new-dive-feedback {
@@ -239,8 +253,6 @@
   .modal-header {
     text-align: center;
   }
-
-  .modal-body
 
   .btn-dive {
     width: 200px;
