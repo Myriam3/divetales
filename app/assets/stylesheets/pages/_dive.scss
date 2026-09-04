@@ -89,6 +89,12 @@
     gap: 2rem 5vw;
   }
 
+  &__subtitle {
+    margin: 1.5rem 0 0.5rem;
+    font-weight: 700;
+    font-size: 1.3rem;
+  }
+
   &__summary {
     &-item {
       margin-bottom: 2rem;
