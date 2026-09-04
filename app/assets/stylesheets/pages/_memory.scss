@@ -196,6 +196,12 @@ $wave_color: $dive-blue;
       text-align: center;
     }
   }
+
+  &__location {
+    .form-check {
+      //border: solid 1px;
+    }
+  }
 }
 
 @media (min-width: 700px) {
