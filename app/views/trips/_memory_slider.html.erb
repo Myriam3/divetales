@@ -19,7 +19,7 @@
 <div class="memory-slider <%= "memory-slider--dive" if local_assigns[:context] == "dive" %>"
     data-controller="slider"
     data-action="depth-chart:picture-selected@window->slider#selectPicture"
-    data-slider-type-value="loop"
+    data-slider-type-value="<%= pictures.count > 4 ? "loop" : "slide" %>"
     data-slider-auto-width-value="true"
     data-slider-arrows-value="false"
     data-slider-pagination-value="false"
