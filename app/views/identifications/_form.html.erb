@@ -31,7 +31,7 @@
                   <div class="text-primary">
                     <%= render "shared/icon", icon_name: "photo-spark", icon_size: 28 %>
                   </div>
-                  <span class="fw-bold text-dark small">Upload</span>
+                  <span class="fw-bold dive-text small">Upload</span>
                 </label>
 
                 <!-- The Hidden Input -->
@@ -53,7 +53,7 @@
                   <div class="text-primary">
                     <%= render "shared/icon", icon_name: "camera-spark", icon_size: 28 %>
                   </div>
-                  <span class="fw-bold text-dark small">Camera</span>
+                  <span class="fw-bold dive-text small">Camera</span>
                 </label>
 
                 <!-- The Hidden Input -->
@@ -107,8 +107,8 @@
                 <%= render "shared/icon", icon_name: "fish", icon_size: 24 %>
               </div>
               <div>
-                <div class="fw-bold text-dark">What did you see?</div>
-                <div class="small text-muted fw-normal mt-1">color, size, shape, behavior, etc.</div>
+                <div class="fw-bold dive-text">What did you see?</div>
+                <div class="small dive-muted fw-normal mt-1">color, size, shape, behavior, etc.</div>
               </div>
             </div>
             <div class="text-muted fs-4 lh-1">+</div>
@@ -119,24 +119,28 @@
                   as: :text,
                   label: "<span class='dive-text d-flex align-items-center gap-2'>#{render 'shared/icon', icon_name: 'palette'} Color & Pattern</span>".html_safe,
                   placeholder: "e.g. blue body with yellow stripes",
+                  input_html: { class: "dive-muted" },
                   required: false %>
 
             <%= f.input :size,
                   as: :text,
                   label: "<span class='d-flex align-items-center gap-2'>#{render 'shared/icon', icon_name: 'ruler'} Approximate size</span>".html_safe,
                   placeholder: "e.g. about 10 cm",
+                  input_html: { class: "dive-muted" },
                   required: false %>
 
             <%= f.input :shape,
                   as: :text,
                   label: "<span class='d-flex align-items-center gap-2'>#{render 'shared/icon', icon_name: 'category'} Shape & Features</span>".html_safe,
                   placeholder: "e.g. long body, pointed nose, large eyes",
+                  input_html: { class: "dive-muted" },
                   required: false %>
 
             <%= f.input :behavior,
                   as: :text,
                   label: "<span class='d-flex align-items-center gap-2'>#{render 'shared/icon', icon_name: 'activity'} Behavior</span>".html_safe,
                   placeholder: "e.g. hiding under rocks, swimming in a group",
+                  input_html: { class: "dive-muted" },
                   required: false %>
           </div>
         </div>
@@ -148,8 +152,8 @@
                 <%= render "shared/icon", icon_name: "world-pin", icon_size: 24 %>
               </div>
               <div>
-                <div class="fw-bold text-dark">Where and when did you see it?</div>
-                <div class="small text-muted fw-normal mt-1">location, dive site, date, depth, etc.</div>
+                <div class="fw-bold dive-text">Where and when did you see it?</div>
+                <div class="small dive-muted fw-normal mt-1">location, dive site, date, depth, etc.</div>
               </div>
             </div>
             <div class="text-muted fs-4 lh-1">+</div>
@@ -161,28 +165,33 @@
                   label: "<span class='d-flex align-items-center gap-2'>#{render 'shared/icon', icon_name: 'world-pin'} Location</span>".html_safe,
                   placeholder: "e.g. Komodo National Park",
                   input_html: { value: @dive&.location&.name },
+                  input_html: { class: "dive-muted" },
                   required: false %>
             <%= f.input :dive_site,
               as: :text,
               label: "#{render 'shared/icon', icon_name: 'anchor'} Dive site".html_safe,
               placeholder: "e.g. shotgun",
               input_html: { value: @dive&.dive_site_name },
+              input_html: { class: "dive-muted" },
               required: false %>
             <%= f.input :date,
               as: :text,
               label: "#{render 'shared/icon', icon_name: 'calendar'} Date".html_safe,
               placeholder: "e.g. 2025-10-01",
               input_html: { value: @dive&.date },
+              input_html: { class: "dive-muted" },
               required: false %>
             <%= f.input :depth,
               as: :text,
               label: "#{render 'shared/icon', icon_name: 'arrow-bar-to-down'} Depth".html_safe,
               placeholder: "e.g. around 15m",
+              input_html: { class: "dive-muted" },
               required: false %>
             <%= f.input :habitat,
                   as: :text,
                   label: "<span class='d-flex align-items-center gap-2'>#{render 'shared/icon', icon_name: 'leaf'} Habitat</span>".html_safe,
                   placeholder: "e.g. fan coral",
+                  input_html: { class: "dive-muted" },
                   required: false %>
           </div>
         </div>
@@ -194,8 +203,8 @@
                 <%= render "shared/icon", icon_name: "scuba-diving", icon_size: 24 %>
               </div>
               <div>
-                <div class="fw-bold text-dark">What else would you like to add?</div>
-                <div class="small text-muted fw-normal mt-1">Anything else that might help identify it...</div>
+                <div class="fw-bold dive-text">What else would you like to add?</div>
+                <div class="small dive-muted fw-normal mt-1">Anything else that might help identify it...</div>
               </div>
             </div>
             <div class="text-muted fs-4 lh-1">+</div>
@@ -210,6 +219,7 @@
                     value: @dive&.dive_types&.any? ? "Dive type: #{@dive.dive_types.join(", ")}" : nil
                   },
                   placeholder: "Anything else that might help identify it...",
+                  input_html: { class: "dive-muted" },
                   required: false %>
           </div>
         </div>
