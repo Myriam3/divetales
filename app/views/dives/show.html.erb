@@ -104,7 +104,7 @@
                   <div class="dive-page__summary-item-top">
                     <h3>
                       <%= render "shared/icon", icon_name: "fish", icon_size: 30 %>
-                      Identified pecies
+                      Identified species
                     </h3>
                     <%= link_to "See all species (#{species.count})", "#species", class: "btn-dive btn-dive-secondary" %>
                   </div>
@@ -129,9 +129,7 @@
               <%= render "shared/icon", icon_name: "scuba-diving", icon_size: 40 %>
               Depth profile
             </h3>
-            <div class="dive-page__depth-profile">
-              <%= render "/shared/depth_profile", dive: @dive %>
-            </div>
+            <%= render "/shared/depth_profile", dive: @dive, display_info: false %>
           </div>
         <% end %>
       </div>

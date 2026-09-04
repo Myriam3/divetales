@@ -142,12 +142,8 @@
   }
 
   &__depth {
+    width: 100%;
     grid-column: 1 / -1;
-  }
-
-  &__depth-profile {
-    display: grid;
-    gap: 3rem;
   }
 }
 
@@ -165,11 +161,6 @@
 
     &__grid {
       grid-template-columns: 1fr 1fr;
-    }
-
-    &__depth-profile {
-      grid-template-columns: auto 1fr;
-      gap: 5vw;
     }
   }
 }
