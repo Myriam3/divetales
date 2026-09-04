@@ -26,7 +26,7 @@
         Edit dive
       <% end %>
       <%= render "new_dive_trip_select", other_trips: @other_trips, current_trip: @dive.trip %>
-  </div>
+    </div>
 
     <div class="dive-page__panel">
       <div class="dive-page__panel-grid">
@@ -53,6 +53,10 @@
                 <%= render "shared/icon", icon_name: "notebook" %>
                 <%= @dive.note %>
               </p>
+          <% end %>
+          <%= link_to memory_trip_path(@dive.trip), class: "btn-dive btn-dive-secondary mt-4" do %>
+            <%= render "shared/icon", icon_name: "album" %>
+            Trip memories
           <% end %>
         </div>
 
@@ -132,7 +136,7 @@
               Depth profile
             </h3>
             <div class="dive-page__depth-profile">
-              <%= render "/shared/depth_profile", dive: @dive %>
+              <%= render "/shared/depth_profile", dive: @dive, display_info: false %>
             </div>
           </div>
         <% end %>
