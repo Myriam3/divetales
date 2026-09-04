@@ -162,6 +162,69 @@ $wave_color: $dive-blue;
   }
 }
 
+.memory-dive {
+  max-width: calc(1200px + 2rem);
+  padding: 0 1rem;
+  margin: 1rem auto 0;
+
+  &__inner {
+    padding: 1.5rem 0;
+    border: solid 2.5px $dive-border;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(11, 58, 102, 0.08);
+  }
+
+  &__title {
+    font-weight: 700;
+    text-align: center;
+
+    small {
+      display: block;
+      font-weight: normal;
+      font-size: 0.7rem;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    gap: 1rem 2rem;
+  }
+
+  &__pictures {
+    &-count {
+      margin: 1rem 0;
+      text-align: center;
+    }
+  }
+}
+
+@media (min-width: 700px) {
+  .memory-dive {
+    &__inner {
+      padding: 1rem 0;
+    }
+
+    &__grid {
+      grid-template-columns: auto 1fr;
+      gap: 2rem;
+      padding: 0 1rem;
+    }
+
+
+  }
+}
+
+@media (max-width: 699.9px) {
+  .memory-dive {
+    &__depth {
+      order: -1;
+    }
+
+    &__info {
+      padding: 0 1rem;
+    }
+  }
+}
 
 .trip-summary {
   padding: 3rem $gutter;
@@ -310,6 +373,29 @@ $wave_color: $dive-blue;
   }
 }
 
+@media (max-width: 500px) {
+  .itinerary {
+    &__list {
+      display: grid;
+      gap: 2rem;
+    }
+
+    &__item:not(:last-child) {
+      &:after {
+        right: calc(50% - 1rem);
+        top: auto;
+        bottom: -2rem;
+        z-index: 1;
+        background-color: transparent;
+      }
+
+      &:before {
+        display: none;
+      }
+    }
+  }
+}
+
 
 .memory-album {
   position: relative;
@@ -408,15 +494,17 @@ $wave_color: $dive-blue;
 }
 
 .memory-pictures {
-  padding: 5rem 1.5rem 3rem;
+  padding: 5rem 0 3rem;
 
   &__title {
     margin: 0 0 2rem;
+    padding: 0 1.5rem;
     font-weight: 700;
     text-align: center;
   }
 
   &__btn {
+    padding: 0 1.5rem;
     text-align: center;
     color: $dive-navy;
   }
