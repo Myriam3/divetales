@@ -131,6 +131,8 @@
       display: block;
       max-width: 80px;
       aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 4px;
 
       img {
         display: block;
@@ -183,7 +185,8 @@
 
 .dive-pictures {
   &__item {
-
+    overflow: hidden;
+      border-radius: 6px;
 
     a {
       position: relative;

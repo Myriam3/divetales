@@ -1,7 +1,7 @@
 <%
   album_photos = @pictures
                 .select { |picture| picture.photo.attached? }
-                .shuffle
+                #.shuffle
                 .first(6)
   main_photo_1 = album_photos[0]
 %>
@@ -12,16 +12,19 @@
       class="memory-album">
       <%= image_tag main_photo_1.photo,
       class: "memory-album__img",
-      alt: "" %>
+      alt: "",
+      loading: "eager" %>
       <% if album_photos[1].present? %>
       <%= image_tag album_photos[1].photo,
         class: "memory-album__img",
-        alt: "" %>
+        alt: "",
+        loading: "eager" %>
     <% end %>
     <% if album_photos[2].present? %>
       <%= image_tag album_photos[2].photo,
         class: "memory-album__img",
-        alt: "" %>
+        alt: "",
+        loading: "eager" %>
     <% end %>
     </div>
   <% end %>
