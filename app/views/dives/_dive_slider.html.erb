@@ -1,0 +1,22 @@
+<div class="dive-pictures"
+      data-controller="slider"
+      data-slider-arrows-value="false"
+      data-slider-pagination-value="false">
+
+    <div class="splide"
+        aria-label="Dive pictures"
+        data-slider-target="sliderContainer">
+
+      <div class="splide__track">
+        <ul class="splide__list list-unstyled">
+          <% pictures.each_with_index do |picture, index| %>
+            <li class="splide__slide"  data-id="<%= picture.id %>">
+              <div class="dive-pictures__item">
+                <%= render "shared/picture_card", picture: picture, show_info: false, return_to: "dive", index: index %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+</div>

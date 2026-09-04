@@ -1,129 +1,161 @@
 <% content_for :meta_title, "Dive at #{@dive.dive_site_name} | Dive Tales" %>
 <% content_for :meta_description, "Dive log details for #{@dive.dive_site_name} on #{@dive.date.strftime('%B %d, %Y')}. View metrics and sightings." %>
 <% if @dive %>
-<div class="container">
-  <div class="mt-5 mb-2 text-end">
-    <%= render "new_dive_trip_select", other_trips: @other_trips, current_trip: @dive.trip %>
-  </div>
-
-  <div class="mb-2">
-    <%= link_to trip_path(@dive.trip), class: "text-decoration-none" do %>
-      <%= render "shared/icon", icon_name: "arrow-left" %>
-      <%= @dive.trip.title %>
-    <% end %>
-  </div>
-
-  <div class="mb-5">
-    <%= link_to dives_path, class: "text-decoration-none" do %>
-      <%= render "shared/icon", icon_name: "arrow-left" %>
-      Dives
-    <% end %>
-  </div>
-
-  <h1 class="mb-4"><%= render "shared/icon", icon_name: "scuba-mask", icon_size: 40 %><%= @dive.display_name_html %></h1>
-
-  <p class="text-end mb-4">
-    <%= link_to "#", class: "btn btn-outline-secondary" do %>
-      <%= render "shared/icon", icon_name: "edit" %>
-      Edit dive
-    <% end %>
-  </p>
-
-  <!-- Dive info -->
-  <%= render "dive_info", dive: @dive, display_site: true, display_coordinates: true %>
-
-  <hr>
-
-  <!-- Trip -->
-  <p>
-    <%= link_to trip_path(@dive.trip), class: "text-decoration-none" do %>
-      <%= render "shared/icon", icon_name: "luggage", label: "Trip:" %>
-      <%= @dive.trip.title %>
-    <% end %>
-  </p>
-
-  <!-- Memo -->
-  <% unless @dive.note.blank? %>
-      <hr>
-      <h2>Memo</h2>
+<div class="dive-page">
+  <div class="dive-page__back">
+    <div class="dive-page__back-inner">
       <p>
-        <%= render "shared/icon", icon_name: "notebook" %>
-        <%= @dive.note %>
+        <%= link_to trip_path(@dive.trip), class: "dive-link" do %>
+        <%= render "shared/icon", icon_name: "arrow-left" %>
+          <%= @dive.trip.title %>
+        <% end %>
       </p>
-  <% end %>
-
-  <hr>
-
-  <!-- Summary -->
-  <% if @dive.pictures.any? %>
-    <p>
-      <%= render "shared/icon", icon_name: "camera-spark" %>
-      <%= @dive.pictures.size %> pictures
-      <br>
-      <%= link_to "See pictures", "#pictures" %>
-    </p>
-  <% end %>
-
-  <% species = @dive.pictures.flat_map(&:species).uniq %>
-  <% if species.any? %>
-    <p>
-      <%= render "shared/icon", icon_name: "fish" %>
-      <%= species.count %> species
-      <br>
-      <% species.each do |item| %>
-        <span class="badge text-bg-secondary">
-          <%= item.name %>
-        </span>
-      <% end %>
-        <br>
-      <%= link_to "See all species", "#species" %>
-    </p>
-  <% end %>
-
-  <hr>
-
-  <!-- Map -->
-  <% unless @dive.latitude.blank? || @dive.longitude.blank? %>
-    <div data-controller="map"
-        data-map-api-url-value="<%= api_mapbox_path %>"
-        data-map-latitude-value="<%= @dive.latitude %>"
-        data-map-longitude-value="<%= @dive.longitude %>">
-      <%= render "/shared/map" %>
+      <p>
+        <%= link_to dives_path, class: "dive-link" do %>
+          <%= render "shared/icon", icon_name: "scuba-mask" %>
+          See all Dives
+        <% end %>
+      </p>
     </div>
-  <% end %>
+  </div>
 
-  <hr>
+  <div class="dive-page__container">
+    <div class="dive-page__top">
+      <%= link_to "#", class: "btn-dive btn-dive-secondary" do %>
+        <%= render "shared/icon", icon_name: "edit" %>
+        Edit dive
+      <% end %>
+      <%= render "new_dive_trip_select", other_trips: @other_trips, current_trip: @dive.trip %>
+  </div>
 
-  <!-- Dive log -->
-  <%= render "dive_log", dive: @dive %>
+    <div class="dive-page__panel">
+      <div class="dive-page__panel-grid">
+        <div class="dive-page__panel-col">
+          <h1 class="dive-page__title"><%= render "shared/icon", icon_name: "scuba-mask", icon_size: 40 %><%= @dive.display_name_html %></h1>
 
-  <hr>
+          <!-- Trip -->
+          <p class="dive-page__trip">
+            <%= link_to trip_path(@dive.trip), class: "dive-link" do %>
+              <%= render "shared/icon", icon_name: "luggage", label: "Trip:", icon_size: 26 %>
+              <%= @dive.trip.title %>
+            <% end %>
+          </p>
+
+          <!-- Dive info -->
+          <div class="dive-page__info">
+            <%= render "dive_page_info", dive: @dive, display_site: true, display_coordinates: true %>
+          </div>
+
+          <% unless @dive.note.blank? %>
+          <!-- Memo -->
+              <h2 class="dive-page__subtitle">Memo</h2>
+              <p>
+                <%= render "shared/icon", icon_name: "notebook" %>
+                <%= @dive.note %>
+              </p>
+          <% end %>
+        </div>
+
+        <% unless @dive.latitude.blank? || @dive.longitude.blank? %>
+          <!-- Map -->
+          <div class="dive-page__panel-col">
+            <div data-controller="map"
+                data-map-api-url-value="<%= api_mapbox_path %>"
+                data-map-latitude-value="<%= @dive.latitude %>"
+                data-map-longitude-value="<%= @dive.longitude %>">
+              <%= render "/shared/map" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<
+  <div class="dive-page__container">
+    <div class="dive-page__panel">
+      <!-- Dive log -->
+      <div class="dive-page__grid">
+        <div class="dive-page__log">
+          <%= render "dive_log", dive: @dive %>
+        </div>
+
+          <% if @dive.pictures.any? %>
+          <div class="dive-page__summary">
+            <div class="dive-page__summary-item">
+              <div class="dive-page__summary-item-top">
+                <h3>
+                  <%= render "shared/icon", icon_name: "camera-spark", icon_size: 28 %>
+                  Pictures
+                </h3>
+                <%= link_to "See all pictures (#{ @dive.pictures.count})", "#pictures", class: "btn-dive btn-dive-secondary" %>
+              </div>
+              <ul class="dive-page__summary-list list-unstyled">
+                  <% @dive.pictures.first(12).each do |item| %>
+                    <li>
+                      <%= link_to picture_path(item), class: "dive-page__summary-img" do %>
+                        <%= image_tag item.photo, loading: "lazy", alt: "" %>
+                      <% end %>
+                    </li>
+                  <% end %>
+                  </ul>
+            </div>
+
+            <% species = @dive.pictures.flat_map(&:species).uniq %>
+              <% if species.any? %>
+                <div class="dive-page__summary-item">
+                  <div class="dive-page__summary-item-top">
+                    <h3>
+                      <%= render "shared/icon", icon_name: "fish", icon_size: 30 %>
+                      Identified species
+                    </h3>
+                    <%= link_to "See all species (#{species.count})", "#species", class: "btn-dive btn-dive-secondary" %>
+                  </div>
+                  <ul class="dive-page__summary-list list-unstyled">
+                    <% species.first(12).each do |item| %>
+                      <li>
+                        <span class="badge badge--filter">
+                          <%= item.name %>
+                        </span>
+                      </li>
+                    <% end %>
+                  </ul>
+              <% end %>
+              </div>
+          <% end %>
+        </div>
+
+        <!-- Depth profile -->
+        <% if @dive.depth_over_time.present? %>
+          <div class="dive-page__depth">
+            <h3>
+              <%= render "shared/icon", icon_name: "scuba-diving", icon_size: 40 %>
+              Depth profile
+            </h3>
+            <div class="dive-page__depth-profile">
+              <%= render "/shared/depth_profile", dive: @dive %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
 
   <!-- Dive details -->
   <%= render "dive_details", dive: @dive %>
 
-  <!-- Depth profile -->
-  <% if @dive.depth_over_time.present? %>
-    <hr>
-    <h2 class="mt-5 mb-2">
-      <%= render "shared/icon", icon_name: "scuba-diving", icon_size: 40 %>
-      Depth profile
-    </h2>
-
-    <%= render "/shared/depth_profile", dive: @dive %>
-    <hr>
-  <% end %>
-
-  <p class="mt-5 mb-5">
-    <%= button_to dive_path(@dive),
-                method: :delete,
-                class: "btn btn-outline-secondary",
-                data: {
-                  turbo_confirm: "Are you sure? This will delete also the dive pictures and identified species."
-                } do %>
-      <%= render "shared/icon", icon_name: "trash", icon_size: 24 %>
-      Delete dive
-    <% end %>
-  </p>
+  <div class="dive-page__container">
+    <p class="dive-page__delete">
+      <%= button_to dive_path(@dive),
+                  method: :delete,
+                  class: "btn-dive btn-dive-secondary mt-5",
+                  data: {
+                    turbo_confirm: "Are you sure? This will delete also the dive pictures and identified species."
+                  } do %>
+        <%= render "shared/icon", icon_name: "trash", icon_size: 24 %>
+        Delete dive
+      <% end %>
+    </p>
+  </div>
 <% end %>
-</div>
