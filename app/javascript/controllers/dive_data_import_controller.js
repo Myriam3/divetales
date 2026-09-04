@@ -7,7 +7,8 @@ export default class extends Controller {
     "submitButton",
     "feedback",
     "diveForm",
-    "mapInfoContainer"
+    "mapContainer",
+    "detailsContainer"
   ];
 
   connect() {
@@ -76,7 +77,15 @@ export default class extends Controller {
     this.setDepth(data);
     this.setTemperature(data);
     this.setGas(data);
-    this.setCoordinates(data);
+    const isCoordinates = this.setCoordinates(data);
+
+    console.log(isCoordinates)
+
+    if (isCoordinates && this.mapContainerTarget) {
+      this.mapContainerTarget.scrollIntoView({smooth: true})
+    } else if (this.detailsContainerTarget) {
+      this.detailsContainerTarget.scrollIntoView({smooth: true})
+    }
   }
 
   // Dive number
@@ -201,10 +210,10 @@ export default class extends Controller {
     if (latInput && lat) {
       latInput.value = lat;
     } else {
-      return;
+      return false;
     }
 
-    if (!(longInput && long)) return;
+    if (!(longInput && long)) return false;
 
     longInput.value = long;
 
@@ -212,6 +221,8 @@ export default class extends Controller {
       detail: { lat, long },
       bubbles: true
     });
+
+    return true;
   }
 
   // Semicircles to lat/long
