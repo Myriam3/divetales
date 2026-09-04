@@ -22,6 +22,7 @@ export default class extends Controller {
 
   connect() {
     if (!this.sliderContainerTarget) return;
+    this.slider = null;
     this.slidePictures = {};
     this.currentSelected = null;
     this.init();

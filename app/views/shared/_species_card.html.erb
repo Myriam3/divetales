@@ -1,0 +1,39 @@
+<div class="species-card-02">
+  <% picture = species.pictures.find { |picture| picture.photo.attached? } %>
+  <% if picture %>
+    <div class="species-card-02__img">
+      <%= image_tag picture.photo,
+          class: "rounded object-fit-cover",
+          style: "width: 100px; height: 100px;",
+          loading: "lazy" %>
+
+      <% if picture.species_default? %>
+        <span class="badge bg-secondary position-absolute bottom-0 start-0 m-1">
+          Reference
+        </span>
+      <% end %>
+    </div>
+  <% end %>
+
+  <p class="species-card-02__text">
+    <strong><%= species.name %></strong>
+    <em><%= species.scientific_name %></em>
+
+    <span>
+      <%= render "shared/icon", icon_name: "binary-tree" %>
+      <%= species.category.classification.humanize %>
+    </span>
+    <span>
+      <%= render "shared/icon", icon_name: "fish" %>
+      <%= species.category.name %>
+    </span>
+
+  <% unless species.wiki_link.blank? %>
+    <a href="<%= species.wiki_link %>" class="dive-link" target="_blank">
+      <%= render "shared/icon", icon_name: "brand-wikipedia" %>
+      Wikipedia
+    </a>
+  <% end %>
+
+  </p>
+</div>

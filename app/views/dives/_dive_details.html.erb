@@ -1,89 +1,77 @@
-<% if dive %>
-  <section id="species" class="mt-5">
-    <h2 class="mb-4">
-      <%= render "shared/icon", icon_name: "fish", icon_size: 36 %>
-      Encountered marine life
-    </h2>
+<div class="dive-page__container">
+  <div class="dive-page__panel">
+  <section id="species" class="dive-page__species">
+    <div class="dive-page__species-top">
+      <h2>
+        <%= render "shared/icon", icon_name: "fish", icon_size: 36 %>
+        Encountered marine life
+      </h2>
 
-    <p class="mb-4">
-      <%= link_to identification_path(dive_id: @dive.id), class: "btn btn-secondary" do %>
-      <%= render "shared/icon", icon_name: "photo-spark" %>
-        Identify a new species
-      <% end %>
-    </p>
+      <p class="dive-page__species-btn">
+        <%= link_to identification_path(dive_id: @dive.id), class: "btn btn-dive btn-dive-accent" do %>
+        <%= render "shared/icon", icon_name: "photo-spark" %>
+          Identify a new species
+        <% end %>
+      </p>
+    </div>
 
     <% if @species.any? %>
-      <ul class="list-unstyled">
-        <% @species.each do |species| %>
-          <li class="d-flex align-items-center gap-3 mb-3">
-            <% picture = species.pictures.find { |picture| picture.photo.attached? } %>
-            <% if picture %>
-              <div class="position-relative flex-shrink-0">
-                <%= image_tag picture.photo,
-                    class: "rounded object-fit-cover",
-                    style: "width: 100px; height: 100px;",
-                    loading: "lazy" %>
-
-                <% if picture.species_default? %>
-                  <span class="badge bg-secondary position-absolute bottom-0 start-0 m-1">
-                    Reference
-                  </span>
-                <% end %>
-              </div>
-            <% end %>
-
-            <p>
-              <strong><%= species.name %></strong>
-              <br>
-              <em><%= species.scientific_name %></em>
-              <br>
-              <%= render "shared/icon", icon_name: "binary-tree" %>
-              <span><%= species.category.classification.humanize %>
-              <br>
-              <%= render "shared/icon", icon_name: "fish" %>
-              <span><%= species.category.name %>
-            </span>
-
-            <% unless species.wiki_link.blank? %>
-              <br>
-              <a href="<%= species.wiki_link %>" class="text-decoration-none" target="_blank">
-                <%= render "shared/icon", icon_name: "brand-wikipedia" %>
-                Wikipedia
-              </a>
-            <% end %>
-
-            </p>
+      <ul class="dive-page__species-list list-unstyled">
+        <% @species.first(20).sort_by(&:name).each do |species| %>
+          <li>
+            <%= render "shared/species_card", species: species %>
           </li>
         <% end %>
-    </ul>
+      </ul>
+      <% if @species.count > 20 %>
+        <p class="text-center">
+          <%= link_to pictures_path, class: "btn btn-dive btn-dive-primary" do %>
+          <%= render "shared/icon", icon_name: "camera-spark" %>
+            See all identified species
+          <% end %>
+        </p>
+      <% end %>
     <% else %>
       <p>No species identified for this dive.</p>
     <% end %>
   </section>
+  </div>
+</div>
 
-  <section id="pictures" class="mt-5" data-turbo-preserve-scroll>
-    <h2 class="mb-4">
-      <%= render "shared/icon", icon_name: "library-photo", icon_size: 36 %>
-      Dive pictures
-    </h2>
+<section id="pictures" class="mt-5" data-turbo-preserve-scroll>
+  <div class="dive-page__container">
+    <div class="dive-page__pictures-top">
+      <h2 class="mb-4">
+        <%= render "shared/icon", icon_name: "library-photo", icon_size: 36 %>
+        Dive pictures
+      </h2>
 
-    <p class="mb-4">
-      <%= link_to new_picture_path(dive_id: @dive.id, trip_id: @dive.trip_id), class: "btn btn-secondary" do %>
-      <%= render "shared/icon", icon_name: "camera-spark" %>
-        Add a new picture
-      <% end %>
-    </p>
-
-    <% if @dive.pictures.any? %>
-      <ul class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 list-unstyled">
-        <% @dive.pictures.each_with_index do |picture, index| %>
-          <li class="col">
-            <%= render "shared/picture_card", picture: picture, show_info: false, return_to: "dive", index: index %>
-          </li>
+      <p class="dive-page__pictures-btn">
+        <%= link_to new_picture_path(dive_id: @dive.id, trip_id: @dive.trip_id), class: "btn btn-dive btn-dive-accent" do %>
+        <%= render "shared/icon", icon_name: "camera-spark" %>
+          Add a new picture
         <% end %>
-      </ul>
-    <% else %>
+      </p>
+    </div>
+  </div>
+
+  <% if @dive.pictures.any? %>
+  <div class="container-fluid">
+    <div class="dive-page__pictures-list">
+      <%= render "dive_slider", pictures: @dive.pictures.first(20) %>
+    </div>
+    <% if @dive.pictures.count > 20 %>
+        <p class="text-center mt-5">
+          <%= link_to pictures_path, class: "btn btn-dive btn-dive-primary" do %>
+          <%= render "shared/icon", icon_name: "camera-spark" %>
+            See all pictures
+          <% end %>
+        </p>
+      <% end %>
+  </div>
+  <% else %>
+    <div class="dive-page__container">
       <p>No pictures for this dive.</p>
-    <% end %>
-  </section>
-<% end %>
+    </div>
+  <% end %>
+</section>
